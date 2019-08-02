@@ -150,6 +150,10 @@ return [
         /*
          * Package Service Providers...
          */
+        //Debugbar, Shopping Cart and DataTables
+        Barryvdh\Debugbar\ServiceProvider::class,
+        Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -208,6 +212,10 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        //Debugbar and Shopping Cart
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 
