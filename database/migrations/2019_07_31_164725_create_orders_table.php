@@ -32,6 +32,7 @@ class CreateOrdersTable extends Migration
             $table->text('order_message')->nullable();
             $table->integer('order_status')->default(0);//Don hang da dong goi hay duyet chua
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

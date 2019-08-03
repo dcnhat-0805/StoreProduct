@@ -27,6 +27,7 @@ class CreateProductTypesTable extends Migration
                 ->onDelete('cascade')->onUpdate('cascade');
             $table->integer('product_type_status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

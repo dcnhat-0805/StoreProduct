@@ -23,6 +23,7 @@ class CreateProductImagesTable extends Migration
             $table->integer('product_image_order')->default(0);
             $table->integer('product_image_status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

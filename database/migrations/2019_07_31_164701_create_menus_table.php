@@ -22,6 +22,7 @@ class CreateMenusTable extends Migration
             $table->integer('menu_order');
             $table->integer('menu_status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

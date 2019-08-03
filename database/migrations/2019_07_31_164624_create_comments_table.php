@@ -27,6 +27,7 @@ class CreateCommentsTable extends Migration
             $table->integer('count_like');
             $table->integer('comment_status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

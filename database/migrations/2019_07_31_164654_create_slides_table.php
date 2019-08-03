@@ -21,6 +21,7 @@ class CreateSlidesTable extends Migration
             $table->integer('slide_order')->default(1);
             $table->integer('slide_status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

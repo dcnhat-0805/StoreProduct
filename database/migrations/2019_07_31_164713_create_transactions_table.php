@@ -27,6 +27,7 @@ class CreateTransactionsTable extends Migration
             $table->string('security')->nullable();
             $table->integer('transaction_status');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

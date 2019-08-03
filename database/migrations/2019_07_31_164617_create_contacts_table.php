@@ -21,6 +21,7 @@ class CreateContactsTable extends Migration
                 ->onDelete('cascade')->onUpdate('cascade');
             $table->text('message');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

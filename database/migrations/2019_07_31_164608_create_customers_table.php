@@ -20,6 +20,7 @@ class CreateCustomersTable extends Migration
                 ->references('id')->on('users')
                 ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

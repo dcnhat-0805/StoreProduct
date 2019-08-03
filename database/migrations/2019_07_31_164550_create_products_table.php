@@ -38,6 +38,7 @@ class CreateProductsTable extends Migration
             $table->integer('view');
             $table->integer('product_status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

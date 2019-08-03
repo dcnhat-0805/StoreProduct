@@ -23,6 +23,7 @@ class CreateProductCategoriesTable extends Migration
             $table->string('product_category_slug');
             $table->integer('product_category_status')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
