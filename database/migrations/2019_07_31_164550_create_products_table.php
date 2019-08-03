@@ -28,14 +28,14 @@ class CreateProductsTable extends Migration
                 ->references('id')->on('product_types')
                 ->onDelete('cascade')->onUpdate('cascade');
             $table->string('product_name');
-            $table->string('product_image');
             $table->string('product_slug');
+            $table->string('product_image');
             $table->text('product_description');
             $table->text('product_content');
             $table->float('product_price');
             $table->float('product_promotional');
             $table->integer('count_buy');
-            $table->integer('view');
+            $table->integer('product_view');
             $table->integer('product_status')->default(1);
             $table->timestamps();
             $table->softDeletes();
