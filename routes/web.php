@@ -17,4 +17,9 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Backend'], function(){
     Route::get('index', 'HomeController@index');
+
+    Route::group(['prefix' => 'category'], function(){
+        Route::get('list', 'CategoryController@index');
+        Route::post('add', 'CategoryController@store');
+    });
 });
