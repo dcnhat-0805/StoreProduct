@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        return view('backend.pages.category.list');
     }
 
     /**
@@ -35,7 +36,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $input = $request->all();
+            $category = Category::createCategory($input);
+            $category = Category::showCategoryByName($input['category_name']);
+            return response()->json(['message' => 'OK', $category], 200);
+        }
     }
 
     /**
