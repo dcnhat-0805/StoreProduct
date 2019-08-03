@@ -16,6 +16,9 @@
 .modal-dialog {
     margin: 50px auto;
 }
+.modal-header .close{
+    margin-top: -30px;
+}
 .modal-close-area .close{
 	opacity:1;
 }
