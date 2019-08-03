@@ -68,6 +68,12 @@
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/style.css">
+    <!-- modal CSS
+		============================================ -->
+    <link rel="stylesheet" href="backend/css/modals.css">
+    <!-- buttons CSS
+		============================================ -->
+    <link rel="stylesheet" href="backend/css/buttons.css">
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/responsive.css">
@@ -173,6 +179,9 @@
     <!-- main JS
 		============================================ -->
     <script src="backend/js/main.js"></script>
+    <!-- store-online JS
+		============================================ -->
+    <script src="backend/js/store-online.js"></script>
     <!-- tawk chat JS
 		============================================ -->
 {{--    <script src="backend/js/tawk-chat.js"></script>--}}
