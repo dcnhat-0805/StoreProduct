@@ -36,41 +36,47 @@ class Category extends Model
         return $this->hasMany('App\Models\Product', 'category_id', 'id');
     }
 
-    public function getListAllCategory()
+    public static function getListAllCategory()
     {
-        return $this->select('category_name', 'category_status')->orderBy('id', 'DESC')->get();
+        return Category::select('category_name', 'category_status')->orderBy('id', 'DESC')->get();
     }
 
-    public function getListCategory()
+    public static function getListCategory()
     {
-        return $this->select('category_name', 'category_status')->orderBy('id', 'DESC')->paginate(1);
+        return Category::select('category_name', 'category_status')->orderBy('id', 'DESC')->paginate(1);
     }
 
-    public function createCategory($request)
+    public static function createCategory($request)
     {
         if ($request['category_name'] != '') {
             $request['category_slug'] = utf8ToUrl($request['category_name']);
         }
-        return $this->create($request);
+        return Category::create($request);
     }
 
-    public function showCategoryById($category_id)
+    public static function showCategoryById($category_id)
     {
-        return $this->find($category_id);
+        return Category::find($category_id);
     }
 
-    public function updateCategory($category_id, $request)
+    public static function showCategoryByName($category_name)
     {
-        $category = $this->showCategory($category_id);
+        return Category::select('category_name', 'category_slug',  'category_status')
+                        ->where('category_name', $category_name)->first();
+    }
+
+    public static function updateCategory($category_id, $request)
+    {
+        $category = Category::showCategory($category_id);
         if ($request['category_name'] != '') {
             $request['category_slug'] = utf8ToUrl($request['category_name']);
         }
         return $category->update($request);
     }
 
-    public function deleteCategory($category_id)
+    public static function deleteCategory($category_id)
     {
-        $category = $this->showCategory($category_id);
+        $category = Category::showCategory($category_id);
         return $category->delete();
     }
 
