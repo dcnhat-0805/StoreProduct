@@ -12,7 +12,7 @@ class Category extends Model
     protected $table = 'categories';
 
     protected $fillable = [
-        'category_name', 'category_slug', 'category_status',
+        'category_name', 'category_slug', 'category_order', 'category_status',
     ];
 
     protected $dates = [
@@ -38,12 +38,13 @@ class Category extends Model
 
     public static function getListAllCategory()
     {
-        return Category::select('category_name', 'category_status')->orderBy('id', 'DESC')->get();
+        return Category::select('id', 'category_name', 'category_order', 'category_status')
+            ->orderBy('id', 'DESC')->get();
     }
 
     public static function getListCategory()
     {
-        return Category::select('category_name', 'category_status')->orderBy('id', 'DESC')->paginate(1);
+        return Category::select('id', 'category_name', 'category_order', 'category_status')->orderBy('id', 'DESC')->paginate(1);
     }
 
     public static function createCategory($request)
@@ -61,8 +62,9 @@ class Category extends Model
 
     public static function showCategoryByName($category_name)
     {
-        return Category::select('category_name', 'category_slug',  'category_status')
+        $category = Category::select('id', 'category_name', 'category_order', 'category_status')
                         ->where('category_name', $category_name)->first();
+        return $category;
     }
 
     public static function updateCategory($category_id, $request)
