@@ -2614,7 +2614,7 @@ li.multipleInput-email {
     border-radius: 2px;
 }
 li.multipleInput-email a{
-    background: #none;
+    background: none;
     color: #fff;
     margin-left: 4px;
     display: inline-block;
@@ -4269,7 +4269,7 @@ div#sparklinehome canvas {
     cursor: pointer;
 }
 .payment-adress .waves-effect.waves-light{
-	cursor:poiner;
+	cursor: pointer;
 }
 .comment .form-group{
 	margin-bottom:0px;

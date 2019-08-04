@@ -19,6 +19,13 @@
 .modal-header .close{
     margin-top: -30px;
 }
+.modal-delete {
+    display: flex;
+    justify-content: center;
+}
+.modal-delete > button {
+    margin-left: 10px;
+}
 .modal-close-area .close{
 	opacity:1;
 }
