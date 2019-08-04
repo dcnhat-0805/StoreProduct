@@ -36,16 +36,26 @@
                         <th data-field="action">Action</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td></td>
-                        <td>1</td>
-                        <td>Web Development</td>
-                        <td>admin@uttara.com</td>
-                        <td>+8801962067309</td>
-                        <td class="datatable-ct"><i class="fa fa-check"></i>
-                        </td>
-                    </tr>
+                    <tbody class="list-category">
+                    @if($category)
+                        @foreach($category as $category)
+                            <tr id="category-{{$category->id}}">
+                                <td></td>
+                                <td>{{$category->id}}</td>
+                                <td>{{$category->category_name}}</td>
+                                <td>{{$category->category_order}}</td>
+                                <td>@if($category->category_status == 1) Display @else Not display @endif</td>
+                                <td class="datatable-ct">
+                                    <button data-toggle="tooltip" title="" class="pd-setting-ed"
+                                            data-original-title="Edit">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                                    <button data-toggle="modal" title="Delete {{$category->category_name}}" class="pd-setting-ed"
+                                            data-original-title="Trash" data-target="#delete" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     </tbody>
                 </table>
             </div>
@@ -78,8 +88,9 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="order">Order</label>
-                                            <input type="number" class="form-control category-order" name="category_order"
-                                                   placeholder="Category Order ...." min="0" maxlength="128">
+                                            <input type="number" class="form-control category-order"
+                                                   name="category_order"
+                                                   placeholder="Category Order ...." min="0" maxlength="128" value="0">
                                             <div class="alert alert-danger error-category-order hidden"></div>
                                         </div>
                                     </div>
@@ -98,8 +109,31 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-custon-three btn-success"><i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Add</button>
-                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal"><i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel</button>
+                    <button type="button" class="btn btn-custon-three btn-success add-category"><i
+                            class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Add
+                    </button>
+                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal"><i
+                            class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- delete Modal-->
+    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Do you want to delete ?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body modal-delete">
+                    <button type="button" class="btn btn-success del-Category">Yes</button>
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">No</button>
+                    <div>
+                    </div>
                 </div>
             </div>
         </div>
