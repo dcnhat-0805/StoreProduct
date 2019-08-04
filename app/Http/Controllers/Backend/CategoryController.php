@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 
 class CategoryController extends Controller
@@ -15,7 +16,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('backend.pages.category.list');
+        $category = Category::getListAllCategory();
+        return view('backend.pages.category.list', compact('category'));
     }
 
     /**
@@ -34,13 +36,14 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         if ($request->ajax()) {
             $input = $request->all();
             $category = Category::createCategory($input);
-            $category = Category::showCategoryByName($input['category_name']);
-            return response()->json(['message' => 'OK', $category], 200);
+            if ($category) {
+                return response()->json(['message' => 'Successfully add new category !', 'category' => $category], 200);
+            }
         }
     }
 
@@ -73,7 +76,7 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $request, $id)
     {
         //
     }
