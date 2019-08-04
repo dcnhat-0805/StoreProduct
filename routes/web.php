@@ -16,10 +16,10 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'admin', 'namespace' => 'Backend'], function(){
-    Route::get('index', 'HomeController@index');
+    Route::get('index', 'HomeController@index')->name('dashboard');
 
     Route::group(['prefix' => 'category'], function(){
-        Route::get('list', 'CategoryController@index');
-        Route::post('add', 'CategoryController@store');
+        Route::get('list', 'CategoryController@index')->name('category.list');
+        Route::post('add', 'CategoryController@store')->name('category.add');
     });
 });
