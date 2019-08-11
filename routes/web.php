@@ -15,11 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'admin', 'namespace' => 'Backend'], function(){
-    Route::get('index', 'HomeController@index')->name('dashboard');
+Route::namespace('Backend')->group(function(){
+    Route::group(['prefix' => 'admin'], function(){
+        Route::get('/', 'HomeController@index')->name(ADMIN_DASHBOARD);
 
-    Route::group(['prefix' => 'category'], function(){
-        Route::get('list', 'CategoryController@index')->name('category.list');
-        Route::post('add', 'CategoryController@store')->name('category.add');
+        Route::group(['prefix' => 'category'], function(){
+            Route::get('/', 'CategoryController@index')->name(ADMIN_CATEGORY_INDEX);
+            Route::post('add', 'CategoryController@store')->name(ADMIN_CATEGORY_ADD);
+        });
     });
 });

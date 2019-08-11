@@ -1,14 +1,14 @@
 <div class="left-sidebar-pro">
     <nav id="sidebar" class="">
         <div class="sidebar-header">
-            <a href="{{route('dashboard')}}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
+            <a href="{{route(ADMIN_DASHBOARD)}}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
             {{--            <strong><a href="index.html"><img src="backend/img/logo/logosn.png" alt=""/></a></strong>--}}
         </div>
         <div class="left-custom-menu-adp-wrap comment-scrollbar">
             <nav class="sidebar-nav left-sidebar-menu-pro">
                 <ul class="metismenu" id="menu1">
                     <li class="active">
-                        <a title="Landing Page" href="{{route('dashboard')}}" aria-expanded="false"><span
+                        <a title="Landing Page" href="{{route(ADMIN_DASHBOARD)}}" aria-expanded="false"><span
                                 class="educate-icon educate-home icon-wrap sub-icon-mg" aria-hidden="true"></span>
                             <span class="mini-click-non">Dashboard</span></a>
                     </li>
@@ -31,7 +31,7 @@
                                 class="educate-icon educate-pages icon-wrap"></span> <span
                                 class="mini-click-non">Pages</span></a>
                         <ul class="submenu-angle page-mini-nb-dp" aria-expanded="false">
-                            <li><a title="Login" href="{{route('category.list')}}"><span class="mini-sub-pro">Category</span></a></li>
+                            <li><a title="Login" href="{{route(ADMIN_CATEGORY_INDEX)}}"><span class="mini-sub-pro">Category</span></a></li>
                         </ul>
                     </li>
                 </ul>
