@@ -26,12 +26,26 @@
 {{--                            </li>--}}
 {{--                        </ul>--}}
 {{--                    </li>--}}
-                    <li id="removable">
+                    <?php
+                        $isShowpages = in_array(request()->route()->getPrefix(), ['admin/category']);
+                    ?>
+                    <li class=" {{ $isShowpages ? 'active' : '' }} ">
                         <a class="has-arrow" href="#" aria-expanded="false"><span
                                 class="educate-icon educate-pages icon-wrap"></span> <span
                                 class="mini-click-non">Pages</span></a>
-                        <ul class="submenu-angle page-mini-nb-dp" aria-expanded="false">
-                            <li><a title="Login" href="{{route(ADMIN_CATEGORY_INDEX)}}"><span class="mini-sub-pro">Category</span></a></li>
+                        <ul class="submenu-angle {{ $isShowpages ? 'in show' : '' }}" aria-expanded="false">
+                            <li class="{{request()->route()->getPrefix() == 'admin/category' ? 'active' : ''}}"><a title="Login" href="{{route(ADMIN_CATEGORY_INDEX)}}"><span class="mini-sub-pro">Category</span></a></li>
+                        </ul>
+                    </li>
+                    <?php
+                        $isShowUser = in_array(request()->route()->uri(), ['admin/list']);
+                    ?>
+                    <li class=" {{ $isShowUser ? 'active' : '' }} ">
+                        <a class="has-arrow" href="#" aria-expanded="false"><span
+                                class="educate-icon educate-professor icon-wrap"></span> <span
+                                class="mini-click-non">User</span></a>
+                        <ul class="submenu-angle {{ $isShowUser ? 'in show' : '' }}" aria-expanded="false">
+                            <li class="{{request()->route()->getPrefix() == 'admin/list' ? 'active' : ''}}"><a title="Login" href="{{route(ADMIN_INDEX)}}"><span class="mini-sub-pro">Admin</span></a></li>
                         </ul>
                     </li>
                 </ul>

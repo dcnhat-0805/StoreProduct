@@ -86,6 +86,7 @@
                     return ['<a href="javascript:void(0)"',
                         ' data-name="' + column.field + '"',
                         ' data-pk="' + row[that.options.idField] + '"',
+                        ' data-id="' + row['id'] + '"',
                         ' data-value="' + result + '"',
                         editableDataMarkup.join(''),
                         '>' + '</a>'

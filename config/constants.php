@@ -12,5 +12,16 @@
 
 const ADMIN_DASHBOARD = 'admin.dashboard';
 
+const ADMIN_SHOW_LOGIN = 'login';
+const ADMIN_LOGIN = 'admin.login';
+const ADMIN_LOGOUT = 'admin.logout';
+
 const ADMIN_CATEGORY_INDEX = 'admin.category.index';
 const ADMIN_CATEGORY_ADD = 'admin.category.add';
+
+const ADMIN_INDEX = 'admin.list';
+const ADMIN_INDEX_BLADE = 'backend.pages.admin.index';
+const ADMIN_ADD = 'admin.add';
+
+const LIMIT = 5;
+

@@ -177,7 +177,7 @@
                                         <li class="nav-item">
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
                                                class="nav-link dropdown-toggle">
-                                                <img src="backend/img/product/pro4.jpg" alt=""/>
+                                                <img src="backend/img/profile/user_icon.png" alt=""/>
                                                 <span class="admin-name">Prof.Anderson</span>
                                                 <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
                                             </a>
@@ -197,8 +197,11 @@
                                                 <li><a href="#"><span
                                                             class="edu-icon edu-settings author-log-ic"></span>Settings</a>
                                                 </li>
-                                                <li><a href="#"><span class="edu-icon edu-locked author-log-ic"></span>Log
-                                                        Out</a>
+                                                <li><a href="{{ route(ADMIN_LOGOUT) }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
+                                                    <form id="logout-form" action="{{ route(ADMIN_LOGOUT) }}" method="POST" style="display: none;">
+                                                        @csrf
+                                                    </form>
                                                 </li>
                                             </ul>
                                         </li>
@@ -978,9 +981,9 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <ul class="breadcome-menu">
-                                    <li><a href="#">Home</a> <span class="bread-slash">/</span>
+                                    <li><a href="#">Dashboard</a> <span class="bread-slash">/</span>
                                     </li>
-                                    <li><span class="bread-blod">Dashboard V.1</span>
+                                    <li><span class="bread-blod">@yield('titleMenu')</span>
                                     </li>
                                 </ul>
                             </div>

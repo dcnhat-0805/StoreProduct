@@ -1,9 +1,14 @@
-var Common = (function ($) {
+var StoreJs = (function ($) {
     var Common = {};
 
     Common.hasData = function ($name = 'nhat') {
         console.log($name);
     }
+
+    $('#add').on('hide.bs.modal', function(e) {
+        $('.error').addClass('hidden');
+        $('.error').text('');
+    });
 
     return Common;
 })(jQuery);
@@ -14,7 +19,7 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
-    Common.createCategory = function () {
+    StoreJs.createCategory = function () {
         $('.add-category').on('click', function (e) {
             var formData = $('#create-category').serialize();
             $.ajax({
@@ -41,7 +46,7 @@ $(document).ready(function () {
                             $('.error-category-name').text('');
                             $('.error-category-name').addClass('hidden');
                         }
-                        if(error.errors.category_order != '') {
+                        if(error.errors.category_order != null) {
                             $('.error-category-order').text(error.errors.category_order);
                             $('.error-category-order').removeClass('hidden');
                         } else {
@@ -52,7 +57,8 @@ $(document).ready(function () {
                 }
             });
         })
-    }
-    Common.createCategory();
+    };
+
+    StoreJs.createCategory();
 })
 

@@ -14,7 +14,7 @@
     <link rel="shortcut icon" type="image/x-icon" href="backend/img/store-online.ico">
     <!-- Google Fonts
 		============================================ -->
-    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,700,900" rel="stylesheet">
+    <link href="backend/css/font.css" rel="stylesheet">
     <!-- Bootstrap CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/bootstrap.min.css">
@@ -71,6 +71,7 @@
     <link rel="stylesheet" href="backend/css/notifications/notifications.css">
     <!-- style CSS
 		============================================ -->
+    <link rel="stylesheet" href="backend/css/custom.css">
     <link rel="stylesheet" href="backend/style.css">
     <!-- modal CSS
 		============================================ -->
@@ -81,9 +82,18 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/responsive.css">
+    <link rel="stylesheet" href="backend/css/vendor-custom.min.css">
+
     <!-- modernizr JS
 		============================================ -->
     <script src="backend/js/vendor/modernizr-2.8.3.min.js"></script>
+    @yield('cssCustom')
+    <style>
+        .form-control.is-valid, .was-validated .form-control:valid {
+            border-color: #28a745;
+            padding-right: calc(1.5em + .75rem);
+        }
+    </style>
 </head>
 
 <body>
@@ -184,9 +194,6 @@
 <!-- main JS
     ============================================ -->
 <script src="backend/js/main.js"></script>
-<!-- store-online JS
-    ============================================ -->
-<script src="backend/js/store-online.js"></script>
 <!-- notification JS
     ============================================ -->
 <script src="backend/js/notifications/Lobibox.js"></script>
@@ -194,10 +201,20 @@
 <!-- tawk chat JS
     ============================================ -->
 {{--    <script src="backend/js/tawk-chat.js"></script>--}}
+<!-- Laravel Javascript Validation
+    ============================================ -->
+<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+@yield('jsCustom')
 
-@if(Session::has('message'))
+@if(Session::has('success'))
     <script type="text/javascript">
-        jQuery.getMessageSuccess("{{Session::get('message')}}")
+        jQuery.getMessageSuccess("{{Session::get('success')}}")
+    </script>
+@endif
+
+@if(Session::has('error'))
+    <script type="text/javascript">
+        jQuery.getMessageError("{{Session::get('error')}}")
     </script>
 @endif
 </body>

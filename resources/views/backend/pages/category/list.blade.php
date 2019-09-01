@@ -1,7 +1,6 @@
 @extends('backend.layouts.app')
-@section('title')
-    List category
-@endsection
+@section('title', 'List category')
+@section('titleMenu', 'Category')
 @section('content')
     <div class="sparkline13-list">
         <div class="sparkline13-hd">
@@ -46,8 +45,8 @@
                                 <td>{{$category->category_order}}</td>
                                 <td>@if($category->category_status == 1) Display @else Not display @endif</td>
                                 <td class="datatable-ct">
-                                    <button data-toggle="tooltip" title="" class="pd-setting-ed"
-                                            data-original-title="Edit">
+                                    <button data-toggle="modal" title="Edit {{$category->category_name}}" class="pd-setting-ed"
+                                            data-original-title="Edit" data-target="#edit" type="button">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                     <button data-toggle="modal" title="Delete {{$category->category_name}}" class="pd-setting-ed"
                                             data-original-title="Trash" data-target="#delete" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
@@ -82,7 +81,7 @@
                                             <label for="name">Category Name</label>
                                             <input type="text" class="form-control category-name" name="category_name"
                                                    placeholder="Category Name ...." maxlength="128">
-                                            <div class="alert alert-danger error-category-name hidden"></div>
+                                            <div class="alert alert-danger error error-category-name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -91,7 +90,65 @@
                                             <input type="number" class="form-control category-order"
                                                    name="category_order"
                                                    placeholder="Category Order ...." min="0" maxlength="128" value="0">
-                                            <div class="alert alert-danger error-category-order hidden"></div>
+                                            <div class="alert alert-danger error error-category-order hidden"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="status">Status</label>
+                                            <select class="form-control caategory-status" name="category_status">
+                                                <option value="1" class="display">Display</option>
+                                                <option value="0" class="not-display">Not Display</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div><!-- /.box-body -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-custon-three btn-success add-category"><i
+                            class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Add
+                    </button>
+                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal"><i
+                            class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Add Modal-->
+    <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="min-width: 700px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="text-transform: capitalize;">Edit Category
+                        &raquo; <span class="title"></span></h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="margin: 5px">
+                        <div class="col-lg-12">
+                            <form role="form" method="post" id="create-category">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="name">Category Name</label>
+                                            <input type="text" class="form-control category-name" name="category_name"
+                                                   placeholder="Category Name ...." maxlength="128">
+                                            <div class="alert alert-danger error error-category-name hidden"></div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="order">Order</label>
+                                            <input type="number" class="form-control category-order"
+                                                   name="category_order"
+                                                   placeholder="Category Order ...." min="0" maxlength="128" value="0">
+                                            <div class="alert alert-danger error error-category-order hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -138,4 +195,7 @@
             </div>
         </div>
     </div>
+@endsection
+@section('jsCustom')
+    <script src="{{ \App\Helpers\Helper::asset('backend/js/category.js') }}"></script>
 @endsection

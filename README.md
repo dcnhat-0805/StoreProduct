@@ -21,9 +21,9 @@
 
     MYSQL_DATABASE=storeonline
 
-    MYSQL_USER=storeonline
+    MYSQL_USER=root
 
-    MYSQL_PASSWORD=storeonline
+    MYSQL_PASSWORD=root
 
     MYSQL_ROOT_PASSWORD=root
 7. (sudo) docker-compose build nginx mysql phpmyadmin

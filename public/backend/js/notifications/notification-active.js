@@ -367,16 +367,16 @@
             jQuery.getMessageSuccess = function(message) {
                 Lobibox.notify('success', {
                     size: 'mini',
-                    delay: 3000,
-                    msg: 'Notification!  '+ message
+                    delay: 5000,
+                    msg: 'Thông báo !   '+ message
                 });
             }
 
             jQuery.getMessageError = function(error) {
                 Lobibox.notify('error', {
                     size: 'mini',
-                    delay: 3000,
-                    msg: 'Notification!  '+ error
+                    delay: 5000,
+                    msg: 'Thông báo !   '+ error
                 });
             }
 

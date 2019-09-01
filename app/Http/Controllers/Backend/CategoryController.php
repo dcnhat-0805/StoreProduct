@@ -40,6 +40,7 @@ class CategoryController extends Controller
     {
         if ($request->ajax()) {
             $input = $request->all();
+            dd($input);
             $category = Category::createCategory($input);
             if ($category) {
                 return response()->json(['message' => 'Successfully add new category !', 'category' => $category], 200);

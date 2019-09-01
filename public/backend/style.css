@@ -3344,6 +3344,7 @@ td.text-right.mail-date {
 }
 .login-footer {
     margin-top: 15px;
+    margin-bottom: 20px;
 }
 .main-spark-hd h1, .smart-main-spark-hd h1{
 	font-size:20px;
@@ -4611,6 +4612,12 @@ div#sparklinehome canvas {
     width: 80%;
     position: relative;
     margin: 0 auto;
+    border: 1px solid #006DF0;
+    -webkit-box-shadow: 10px 10px #eee;
+    -moz-box-shadow: 0 15px 10px #ccc;
+    box-shadow: 10px 10px #ccc;
+    border-radius: 10px;
+    background-color: #fff;
 }
 .content-error a{
 	margin:5px 5px;

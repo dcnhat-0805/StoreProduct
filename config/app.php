@@ -80,6 +80,7 @@ return [
 
     'locale' => 'en',
 
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale
@@ -150,10 +151,11 @@ return [
         /*
          * Package Service Providers...
          */
-        //Debugbar, Shopping Cart and DataTables
+        //Debugbar, Shopping Cart, DataTables, Form collective
         Barryvdh\Debugbar\ServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -212,11 +214,12 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-        //Debugbar and Shopping Cart
+        //Debugbar and Shopping Cart and Form collection
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];

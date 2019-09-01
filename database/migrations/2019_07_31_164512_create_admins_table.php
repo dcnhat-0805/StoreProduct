@@ -23,6 +23,7 @@ class CreateAdminsTable extends Migration
                 ->references('id')->on('admin_groups')
                 ->onDelete('cascade')->onUpdate('cascade');
             $table->timestamp('email_verified_at')->nullable();
+            $table->tinyInteger('admin_status');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
