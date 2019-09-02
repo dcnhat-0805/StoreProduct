@@ -21,7 +21,6 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $user = Auth::guard('admins')->user();
         $admin = Admin::getListAdmin();
         $permission = AdminGroup::all();
         return view(ADMIN_INDEX_BLADE, compact('admin', 'permission'));
@@ -45,11 +44,15 @@ class AdminController extends Controller
      */
     public function store(AdminRequest $request)
     {
-        $input = $request->all();
-        $admin = Admin::createNewAdmin($input);
-        if ($admin) {
-            Session::flash("success", trans("messages.admin.create_success"));
-            return response()->json();
+        $user = Auth::guard('admins')->user();
+
+        if ($user->can('createAdmin', Admin::class)) {
+            $input = $request->all();
+            $admin = Admin::createNewAdmin($input);
+            if ($admin) {
+                Session::flash("success", trans("messages.admin.create_success"));
+                return response()->json();
+            }
         }
     }
 
@@ -131,11 +134,14 @@ class AdminController extends Controller
      */
     public function update(AdminRequest $request, $id)
     {
-        $input = $request->all();
-        $admin = Admin::updateAdmin($id, $input);
-        if ($admin) {
-            Session::flash("success", trans("messages.admin.update_success"));
-            return redirect()->route(ADMIN_INDEX);
+        $user = Auth::guard('admins')->user();
+        if ($user->can('updateAdmin', Admin::class)) {
+            $input = $request->all();
+            $admin = Admin::updateAdmin($id, $input);
+            if ($admin) {
+                Session::flash("success", trans("messages.admin.update_success"));
+                return response()->json();
+            }
         }
     }
 
@@ -147,9 +153,10 @@ class AdminController extends Controller
      */
     public function delete($id)
     {
+        $user = Auth::guard('admins')->user();
         $admin = Admin::deleteAdmin($id);
 
-        if (isset($admin)) {
+        if ($user->can('deleteAdmin', Admin::class) && isset($admin)) {
             Session::flash("success", trans("messages.admin.delete_success"));
             return response()->json();
         } else {

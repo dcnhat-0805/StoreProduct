@@ -52,7 +52,7 @@
                                 class="mini-click-non">User</span></a>
                         <ul class="submenu-angle {{ $isShowUser ? 'in show' : '' }}" aria-expanded="false">
                             @if ($user->can('viewAdmin', $admin))
-                                <li class="{{request()->route()->getPrefix() == 'admin/list' ? 'active' : ''}}"><a title="Login" href="{{route(ADMIN_INDEX)}}"><span class="mini-sub-pro">Admin</span></a></li>
+                                <li class="{{request()->route()->uri() == 'admin/list' ? 'active' : ''}}"><a title="Login" href="{{route(ADMIN_INDEX)}}"><span class="mini-sub-pro">Admin</span></a></li>
                             @endif
                         </ul>
                     </li>

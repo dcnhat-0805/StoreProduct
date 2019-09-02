@@ -19,8 +19,7 @@ class AdminPolicy
     /**
      * Determine whether the user can view the admin.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Admin  $admin
+     * @param  Admin  $admin
      * @return mixed
      */
     public function viewAdmin(Admin $admin)
@@ -31,7 +30,7 @@ class AdminPolicy
     /**
      * Determine whether the user can create admins.
      *
-     * @param  \App\Models\User  $user
+     * @param  Admin  $admin
      * @return mixed
      */
     public function createAdmin(Admin $admin)
@@ -42,8 +41,7 @@ class AdminPolicy
     /**
      * Determine whether the user can update the admin.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Admin  $admin
+     * @param  Admin  $admin
      * @return mixed
      */
     public function updateAdmin(Admin $admin)
@@ -54,8 +52,7 @@ class AdminPolicy
     /**
      * Determine whether the user can delete the admin.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Admin  $admin
+     * @param  Admin  $admin
      * @return mixed
      */
     public function deleteAdmin(Admin $admin)
@@ -66,8 +63,7 @@ class AdminPolicy
     /**
      * Determine whether the user can restore the admin.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Admin  $admin
+     * @param  Admin  $admin
      * @return mixed
      */
     public function restoreAdmin(Admin $admin)
@@ -78,8 +74,7 @@ class AdminPolicy
     /**
      * Determine whether the user can permanently delete the admin.
      *
-     * @param  \App\Models\User  $user
-     * @param  \App\Admin  $admin
+     * @param  Admin  $admin
      * @return mixed
      */
     public function forceDeleteAdmin(Admin $admin)

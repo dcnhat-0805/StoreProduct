@@ -92,14 +92,14 @@
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="name">Name</label>
+                                            <label for="name" class="required after">Name</label>
                                             <input type="text" class="form-control admin-name" name="name" placeholder="Name ....">
                                             <div class="alert alert-danger error error-name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="email">Email</label>
+                                            <label for="email" class="required after">Email</label>
                                             <input type="email" class="form-control admin-email"
                                                    name="email" placeholder="Email ....">
                                             <div class="alert alert-danger error error-email hidden"></div>
@@ -107,7 +107,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="password">Password</label>
+                                            <label for="password" class="required after">Password</label>
                                             <input type="password" class="form-control admin-password"
                                                    name="password" placeholder="Password ....">
                                             <div class="alert alert-danger error error-password hidden"></div>
@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="confirm password">Confirm password</label>
+                                            <label for="confirm password" class="required after">Confirm password</label>
                                             <input type="password" class="form-control confirm-password"
                                                    name="confirm_password" placeholder="Confirm password ....">
                                             <div class="alert alert-danger error error-confirm-password hidden"></div>
@@ -123,7 +123,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="admin_group_id">Permission</label>
+                                            <label for="admin_group_id" class="required after">Permission</label>
                                             <select name="admin_group_id" id="admin_group_id" class="form-control admin-permission">
                                                 @foreach($permission as $per)
                                                     <option value="{{ $per->id }}">{{$per->permission_name}}</option>
@@ -134,7 +134,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="status">Status</label>
+                                            <label for="status" class="required after">Status</label>
                                             <select class="form-control admin-status" name="admin_status">
                                                 <option value="1" class="display">Display</option>
                                                 <option value="0" class="not-display">Not Display</option>
@@ -178,18 +178,19 @@
                                         <div class="form-group">
                                             <label for="name">ID</label>
                                             <input type="text" class="form-control" name="id" readonly="readonly" disabled>
+                                            <input type="hidden" class="form-control" id="url_edit">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="name">Name</label>
+                                            <label for="name" class="required after">Name</label>
                                             <input type="text" class="form-control admin-name" name="name" placeholder="Name ....">
                                             <div class="alert alert-danger error error-name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="email">Email</label>
+                                            <label for="email" class="required after">Email</label>
                                             <input type="email" class="form-control admin-email"
                                                    name="email" placeholder="Email ....">
                                             <div class="alert alert-danger error error-email hidden"></div>
@@ -197,7 +198,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="admin_group_id">Permission</label>
+                                            <label for="admin_group_id" class="required after">Permission</label>
                                             <select name="admin_group_id" class="form-control admin-permission">
                                                 @foreach($permission as $per)
                                                     <option value="{{ $per->id }}">{{$per->permission_name}}</option>
@@ -208,7 +209,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="status">Status</label>
+                                            <label for="status" class="required after">Status</label>
                                             <select class="form-control admin-status" name="admin_status">
                                                 <option value="1" class="display">Display</option>
                                                 <option value="0" class="not-display">Not Display</option>

@@ -26,7 +26,7 @@ class AdminRequest extends FormRequest
         return [
             'name' => "required|min:5|max:50|unique:admins,name,".($this->id ?? " "),
             'email' => 'required|email|unique:admins,email,'.($this->id ?? " "),
-            'password' => ($this->id ? 'nullable' : 'required').'|min:8',
+            'password' => ($this->id ? 'nullable' : 'required').'|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
             'confirm_password' => ($this->id ? 'nullable' : 'required').'|same:password',
         ];
     }
@@ -39,7 +39,8 @@ class AdminRequest extends FormRequest
             'max' => ':attribute phải từ 5 - 50 ký tự.',
             'password.min' => ':attribute phải từ 8 ký tự',
             'unique' => ':attribute đã được sử dụng.',
-            'same' => ':attribute không trùng khớp với mật khẩu đã nhập.'
+            'same' => ':attribute không trùng khớp với mật khẩu đã nhập.',
+            'password.regex' => ' phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 ký tự đặc biệt.'
         ];
     }
     public function attributes()

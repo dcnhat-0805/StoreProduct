@@ -35,17 +35,38 @@ let AdminJs = (function ($) {
         }
     };
 
+    modules.editAdmin = function (url, data) {
+        $.ajax({
+            url : url,
+            dataType : 'JSON',
+            type : 'POST',
+            data: data,
+            success : function (data) {
+                location.reload();
+            },
+            error : function (data) {
+                let error = $.parseJSON(data.responseText).errors;
+
+                modules.getErrorMessage(error.name, '.error-name');
+                modules.getErrorMessage(error.email, '.error-email');
+                modules.getErrorMessage(error.password, '.error-password');
+                modules.getErrorMessage(error.confirm_password, '.error-confirm-password');
+            }
+        });
+    };
+
     $('#edit').on('show.bs.modal', function (e) {
-        var id = $(e.relatedTarget).data('id');
-        var name = $(e.relatedTarget).data('name');
-        var email = $(e.relatedTarget).data('email');
-        var permission = $(e.relatedTarget).data('permission');
-        var status = $(e.relatedTarget).data('status');
-        var url = $(e.relatedTarget).data('url');
+        let id = $(e.relatedTarget).data('id');
+        let name = $(e.relatedTarget).data('name');
+        let email = $(e.relatedTarget).data('email');
+        let permission = $(e.relatedTarget).data('permission');
+        let status = $(e.relatedTarget).data('status');
+        let url = $(e.relatedTarget).data('url');
         $(e.currentTarget).find('input[name="id"]').val(id);
         $(e.currentTarget).find('.title').text(name);
         $(e.currentTarget).find('input[name="name"]').val(name);
         $(e.currentTarget).find('input[name="email"]').val(email);
+        $(e.currentTarget).find('#url_edit').val(url);
         $(e.currentTarget).find('.admin-permission option[value="'+ permission +'"]').attr('selected', 'selected');
         $(e.currentTarget).find('.admin-status option[value="'+ status +'"]').attr('selected', 'selected');
     });
@@ -57,10 +78,11 @@ let AdminJs = (function ($) {
         $('input').removeClass('is-invalid');
         $('input[name=btSelectItem]').removeAttr('checked');
         $('input[name=id]').val('');
+        $('#url_edit').val('');
     });
 
     $('#delete').on('show.bs.modal', function (e) {
-        var id = $(e.relatedTarget).data('id');
+        let id = $(e.relatedTarget).data('id');
         $(e.currentTarget).find('input[name="id"]').val(id);
     });
 
@@ -98,5 +120,11 @@ $(document).ready(function () {
         if (id != null) {
             AdminJs.deleteAdmin(id);
         }
+    });
+
+    btnEditAdmin.on('click', function () {
+        let url = $('#url_edit').val();
+        let formData = $('#edit_admin').serialize();
+        AdminJs.editAdmin(url, formData);
     });
 });
