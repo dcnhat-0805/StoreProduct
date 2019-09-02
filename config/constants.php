@@ -22,6 +22,8 @@ const ADMIN_CATEGORY_ADD = 'admin.category.add';
 const ADMIN_INDEX = 'admin.list';
 const ADMIN_INDEX_BLADE = 'backend.pages.admin.index';
 const ADMIN_ADD = 'admin.add';
+const ADMIN_EDIT = 'admin.edit';
+const ADMIN_DELETE = 'admin.delete';
 
 const LIMIT = 5;
 

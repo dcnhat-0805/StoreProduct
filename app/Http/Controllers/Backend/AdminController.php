@@ -49,7 +49,7 @@ class AdminController extends Controller
         $admin = Admin::createNewAdmin($input);
         if ($admin) {
             Session::flash("success", trans("messages.admin.create_success"));
-            return redirect()->route(ADMIN_INDEX);
+            return response()->json();
         }
     }
 
@@ -125,15 +125,18 @@ class AdminController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param AdminRequest $request
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, $id)
+    public function update(AdminRequest $request, $id)
     {
-        //
+        $input = $request->all();
+        $admin = Admin::updateAdmin($id, $input);
+        if ($admin) {
+            Session::flash("success", trans("messages.admin.update_success"));
+            return redirect()->route(ADMIN_INDEX);
+        }
     }
 
     /**
@@ -142,8 +145,16 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $admin = Admin::deleteAdmin($id);
+
+        if (isset($admin)) {
+            Session::flash("success", trans("messages.admin.delete_success"));
+            return response()->json();
+        } else {
+            Session::flash("success", trans("messages.admin.delete_failed"));
+            return response()->json();
+        }
     }
 }

@@ -28,7 +28,6 @@ class AdminRequest extends FormRequest
             'email' => 'required|email|unique:admins,email,'.($this->id ?? " "),
             'password' => ($this->id ? 'nullable' : 'required').'|min:8',
             'confirm_password' => ($this->id ? 'nullable' : 'required').'|same:password',
-            'confirm_password' => ($this->id ? 'nullable' : 'required').'|same:password',
         ];
     }
     public function messages()

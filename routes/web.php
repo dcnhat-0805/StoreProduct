@@ -41,6 +41,8 @@ Route::namespace('Backend')->group(function(){
         Route::get('/', 'HomeController@index')->name(ADMIN_DASHBOARD);
         Route::get('/list', 'AdminController@index')->name(ADMIN_INDEX);
         Route::post('add', 'AdminController@store')->name(ADMIN_ADD);
+        Route::post('edit/{id}', 'AdminController@update')->name(ADMIN_EDIT);
+        Route::delete('delete/{id}', 'AdminController@delete')->name(ADMIN_DELETE);
 
         Route::group(['prefix' => 'category'], function(){
             Route::get('/', 'CategoryController@index')->name(ADMIN_CATEGORY_INDEX);

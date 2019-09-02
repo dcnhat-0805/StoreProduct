@@ -79,13 +79,13 @@ class Admin extends Authenticatable
 
     public static function updateAdmin($id, $request)
     {
-        $user = self::showUser($id);
+        $user = self::showAdmin($id);
         return $user->update($request);
     }
 
     public static function deleteAdmin($id)
     {
-        $user = self::showUser($id);
+        $user = self::showAdmin($id);
         return $user->delete();
     }
 }

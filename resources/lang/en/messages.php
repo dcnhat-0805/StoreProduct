@@ -14,6 +14,9 @@
 return [
     'admin' => [
         'create_success' => 'Đăng ký thành công người quản trị mới.',
+        'update_success' => 'Cập nhật thành công người quản trị.',
+        'delete_success' => 'Xóa thành công người quản trị.',
+        'delete_failed' => 'Xóa không thành công người quản trị.',
         'login_success' => 'Đăng nhập thành công.',
         'login_failed' => 'Đăng nhập thất bại.',
         'logout_success' => 'Đăng xuất thành công.',
