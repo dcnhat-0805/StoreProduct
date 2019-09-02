@@ -25,3 +25,5 @@ const ADMIN_ADD = 'admin.add';
 
 const LIMIT = 5;
 
+const ADMIN = 1;
+

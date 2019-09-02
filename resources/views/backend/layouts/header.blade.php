@@ -1,3 +1,6 @@
+<?php
+    $user = Auth::guard('admins')->user();
+?>
 <div class="header-advance-area">
     <div class="header-top-area">
         <div class="container-fluid">
@@ -178,7 +181,7 @@
                                             <a href="#" data-toggle="dropdown" role="button" aria-expanded="false"
                                                class="nav-link dropdown-toggle">
                                                 <img src="backend/img/profile/user_icon.png" alt=""/>
-                                                <span class="admin-name">Prof.Anderson</span>
+                                                <span class="admin-name">{{ $user->name }}</span>
                                                 <i class="fa fa-angle-down edu-icon edu-down-arrow"></i>
                                             </a>
                                             <ul role="menu"

@@ -35,6 +35,7 @@ class AdminRequest extends FormRequest
     {
         return [
             'required' => ':attribute không được để trống.',
+            'email' => ':attribute không đúng định dạng email.',
             'min' => ':attribute phải từ 5 - 50 ký tự.',
             'max' => ':attribute phải từ 5 - 50 ký tự.',
             'password.min' => ':attribute phải từ 8 ký tự',

@@ -1,14 +1,21 @@
+<?php
+    use App\Models\Admin;
+
+    $user = Auth::guard('admins')->user();
+    $admins = Admin::class;
+?>
 @extends('backend.layouts.app')
 @section('title', 'List admin')
 @section('titleMenu', 'admin')
 @section('content')
     <div class="sparkline13-list">
-        <div class="sparkline13-hd">
-            <div class="main-sparkline13-hd">
-                <h1>Danh sách <span class="table-project-n">các</span> quản trị viên</h1>
+        @if ($user->can('viewAdmin', $admins))
+            <div class="sparkline13-hd">
+                <div class="main-sparkline13-hd">
+                    <h1>Danh sách <span class="table-project-n">các</span> quản trị viên</h1>
+                </div>
             </div>
-        </div>
-        <div class="sparkline13-graph">
+            <div class="sparkline13-graph">
             <div class="datatable-dashv1-list custom-datatable-overright">
                 <div id="toolbar">
                     <!-- Button to Open the Add Modal -->
@@ -61,6 +68,9 @@
                 </table>
             </div>
         </div>
+        @else
+            @include('backend.permission')
+        @endif
     </div>
     <!-- Add Modal-->
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

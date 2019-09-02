@@ -1,3 +1,9 @@
+<?php
+    use App\Models\Admin;
+
+    $user = Auth::guard('admins')->user();
+    $admin = Admin::class;
+?>
 <div class="left-sidebar-pro">
     <nav id="sidebar" class="">
         <div class="sidebar-header">
@@ -45,7 +51,9 @@
                                 class="educate-icon educate-professor icon-wrap"></span> <span
                                 class="mini-click-non">User</span></a>
                         <ul class="submenu-angle {{ $isShowUser ? 'in show' : '' }}" aria-expanded="false">
-                            <li class="{{request()->route()->getPrefix() == 'admin/list' ? 'active' : ''}}"><a title="Login" href="{{route(ADMIN_INDEX)}}"><span class="mini-sub-pro">Admin</span></a></li>
+                            @if ($user->can('viewAdmin', $admin))
+                                <li class="{{request()->route()->getPrefix() == 'admin/list' ? 'active' : ''}}"><a title="Login" href="{{route(ADMIN_INDEX)}}"><span class="mini-sub-pro">Admin</span></a></li>
+                            @endif
                         </ul>
                     </li>
                 </ul>

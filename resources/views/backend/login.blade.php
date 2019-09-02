@@ -59,6 +59,7 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/responsive.css">
+    <link rel="stylesheet" href="backend/css/vendor-custom.min.css">
     <!-- modernizr JS
 		============================================ -->
     <script src="backend/js/vendor/modernizr-2.8.3.min.js"></script>
@@ -186,6 +187,7 @@
 <!-- Laravel Javascript Validation
     ============================================ -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+{!! JsValidator::formRequest('App\Http\Requests\LoginRequest', '#loginForm') !!}
 </body>
 
 </html>

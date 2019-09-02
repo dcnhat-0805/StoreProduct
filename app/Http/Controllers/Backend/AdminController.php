@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Http\Requests\LoginRequest;
 use App\Models\AdminGroup;
-use App\Models\User;
 use App\Models\UserLog;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,6 +21,7 @@ class AdminController extends Controller
      */
     public function index()
     {
+        $user = Auth::guard('admins')->user();
         $admin = Admin::getListAdmin();
         $permission = AdminGroup::all();
         return view(ADMIN_INDEX_BLADE, compact('admin', 'permission'));
@@ -68,7 +69,7 @@ class AdminController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
         $email = $request['email'];
         $message = trans("messages.admin.login_success");
