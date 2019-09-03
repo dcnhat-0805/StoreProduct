@@ -11,11 +11,10 @@ let ForgetPasswordJs = (function ($) {
         setTimeout(function () {
             $('#loading').css('display', 'none');
             $('.error-pagewrap').removeClass('hidden');
-        },6000);
+        },3000);
     };
 
     modules.submitEmailForgetPassword = function (email) {
-        modules.getLoading();
         $.ajax({
             url : '/admin/checkEmailAdmin',
             dataType : 'JSON',
@@ -24,6 +23,7 @@ let ForgetPasswordJs = (function ($) {
                 email : email,
             },
             success : function (data) {
+                modules.getLoading();
                 $('.error').text('');
                 $('.step-1').addClass('hidden');
                 $('.step-2').removeClass('hidden');
@@ -39,7 +39,6 @@ let ForgetPasswordJs = (function ($) {
     };
 
     modules.updatePassword = function (email, auth_key, new_password, confirm_password) {
-        modules.getLoading();
         $.ajax({
             url: '/admin/updatePassword',
             dataType : 'JSON',
@@ -51,6 +50,7 @@ let ForgetPasswordJs = (function ($) {
                 confirm_password : confirm_password,
             },
             success: function () {
+                modules.getLoading();
                 btnSubmitEmail.prop('disabled', true);
                 modules.getLoading();
                 $('.error').text('');
@@ -79,10 +79,25 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
+
     btnSubmitEmail.on('click', function () {
-        // ForgetPasswordJs.getLoading();
+        $(this).prop('disabled', true);
+        let _this = $(this);
+        setTimeout(function () {
+            _this.prop('disabled', false);
+        },6000);
+
         let email = $('#email').val();
         ForgetPasswordJs.submitEmailForgetPassword(email);
+    });
+
+    $('#email').on('keyup', function () {
+       let value = $(this).val();
+
+       if (value.length !== 0 && $('#submit-email').prop('disabled') === true) {
+           $('.error-email').text('');
+           $('#submit-email').prop('disabled', false);
+       }
     });
 
     btnSubmitPassword.on('click', function () {

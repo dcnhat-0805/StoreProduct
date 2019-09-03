@@ -127,10 +127,8 @@
         <p>Copyright © 2019 Store Online. All rights reserved.</p>
         <nav class="nav-footer">
             <ul>
-                <li><a href="#"><font style="vertical-align: inherit;"><font
-                                style="vertical-align: inherit;">Chính sách bảo mật</font></font></a></li>
-                <li><a href="#"><font style="vertical-align: inherit;"><font
-                                style="vertical-align: inherit;">Điều khoản sử dụng</font></font></a></li>
+                <li><a href="#">Chính sách bảo mật</a></li>
+                <li><a href="#">Điều khoản sử dụng</a></li>
             </ul>
         </nav>
     </div>
