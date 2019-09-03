@@ -20,5 +20,11 @@ return [
         'login_success' => 'Đăng nhập thành công.',
         'login_failed' => 'Đăng nhập thất bại.',
         'logout_success' => 'Đăng xuất thành công.',
+        'password_reset' => [
+            'email' => [
+                'required' => 'Email không được để trống.',
+                'not_exists' => 'Email không tồn tại.'
+            ],
+        ],
     ]
 ];

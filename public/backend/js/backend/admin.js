@@ -17,10 +17,12 @@ let AdminJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                modules.getErrorMessage(error.name, '.error-name');
-                modules.getErrorMessage(error.email, '.error-email');
-                modules.getErrorMessage(error.password, '.error-password');
-                modules.getErrorMessage(error.confirm_password, '.error-confirm-password');
+                if (typeof error != 'undefined') {
+                    modules.getErrorMessage(error.name, '.error-name');
+                    modules.getErrorMessage(error.email, '.error-email');
+                    modules.getErrorMessage(error.password, '.error-password');
+                    modules.getErrorMessage(error.confirm_password, '.error-confirm-password');
+                }
             }
         });
     };

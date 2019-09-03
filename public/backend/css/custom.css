@@ -18,3 +18,20 @@
 .nav-footer ul li:last-child {
     border-right: none;
 }
+
+.error {
+    color: red;
+    margin-top: 5px;
+    text-align: left;
+}
+
+.content-error {
+    text-align: left !important;
+}
+
+.content-error a {
+    background-color: transparent !important;
+    color: #0f0f0f !important;
+    padding: 0 !important;
+    text-decoration: underline !important;
+}

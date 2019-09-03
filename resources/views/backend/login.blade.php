@@ -63,6 +63,9 @@
     <!-- modernizr JS
 		============================================ -->
     <script src="backend/js/vendor/modernizr-2.8.3.min.js"></script>
+    <!-- buttons CSS
+		============================================ -->
+    <link rel="stylesheet" href="backend/css/buttons.css">
 </head>
 
 <body>
@@ -113,8 +116,8 @@
                         <div class="checkbox login-checkbox">
                             <label><input type="checkbox" class="i-checks" name="remember_token" {{ old('remember_token') ? 'checked' : '' }}> Remember me </label>
                         </div>
-                        <button class="btn btn-success btn-block loginbtn">Login</button>
-                        <a class="forget-password" href="#">Quên mật khẩu ?</a>
+                        <button class="btn btn-custon-three btn-primary btn-block loginbtn">Login</button>
+                        <a class="forget-password" href="{{ route(ADMIN_FORGET_PASSWORD) }}">Quên mật khẩu ?</a>
                     </form>
                 </div>
             </div>
