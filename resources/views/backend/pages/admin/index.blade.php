@@ -223,7 +223,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-custon-three btn-success btn-edit-admin">
-                        <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Add
+                        <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Update
                     </button>
                     <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal">
                         <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
@@ -259,7 +259,7 @@
     </div>
 @endsection
 @section('jsCustom')
-    <script src="{{ \App\Helpers\Helper::asset('backend/js/admin.js') }}"></script>
+    <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/admin.js') }}"></script>
 {{--    {!! JsValidator::formRequest('App\Http\Requests\AdminRequest', '#create_admin') !!}--}}
 {{--    {!! JsValidator::formRequest('App\Http\Requests\AdminRequest', '#edit_admin') !!}--}}
 @endsection

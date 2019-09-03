@@ -20,20 +20,22 @@ Route::get('/', function () {
 Route::group(
     ['prefix' => 'admin', 'namespace' => 'Backend'],
     function () {
-//        Route::get('/login_password_reset', 'PasswordResetController@index')
-//            ->name(ADMIN_NEW_FORGOT_PASSWORD);
 //        Route::group(
 //            ['prefix' => 'account'], function () {
 //            Route::get('/edit_mail/confirm','ConfirmEmailController@editEmailStore')
 //                ->name(ADMIN_NEW_UPDATE_MAIL_CONFIRM_ACCOUNT);
 //        }
 //        );
-        Route::get('/login', 'AdminController@showLoginForm')
+        Route::get('/login', 'LoginController@showLoginForm')
             ->name(ADMIN_SHOW_LOGIN);
-        Route::post('/login', 'AdminController@login')
+        Route::post('/login', 'LoginController@login')
             ->name(ADMIN_LOGIN);
-        Route::post('/logout', 'AdminController@logout')
+        Route::post('/logout', 'LoginController@logout')
             ->name(ADMIN_LOGOUT);
+        Route::get('/forget_password', 'PasswordResetController@getForgetPassword')
+            ->name(ADMIN_FORGET_PASSWORD);
+        Route::post('/checkEmailAdmin', 'PasswordResetController@checkEmailAdmin');
+        Route::post('/updatePassword', 'PasswordResetController@updatePasswordAjax');
     }
 );
 Route::namespace('Backend')->group(function(){
