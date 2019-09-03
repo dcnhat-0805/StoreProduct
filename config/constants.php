@@ -34,4 +34,8 @@ const EMAIL_SUBJECT = 'Thông báo về khóa xác thực đặt lại mật kh�
 const LIMIT = 5;
 
 const ADMIN = 1;
-
+const CATEGORY = 2;
+const PRODUCT_CATEGORY = 3;
+const PRODUCT_TYPE = 4;
+const PRODUCT = 5;
+const ADMIN_PERMISSION = [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT];

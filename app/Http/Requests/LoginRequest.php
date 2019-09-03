@@ -35,7 +35,7 @@ class LoginRequest extends FormRequest
             'required' => ':attribute không được để trống.',
             'email' => ':attribute không đúng định dạng email.',
             'password.min' => ':attribute phải từ 8 ký tự',
-            'password.regex' => ' phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 ký tự đặc biệt.'
+            'password.regex' => ':attribute phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 ký tự đặc biệt.'
         ];
     }
 
