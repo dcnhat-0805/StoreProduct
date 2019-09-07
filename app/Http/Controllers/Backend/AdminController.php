@@ -49,9 +49,12 @@ class AdminController extends Controller
         if ($user->can('createAdmin', Admin::class)) {
             $input = $request->all();
             $admin = Admin::createNewAdmin($input);
+
             if ($admin) {
                 Session::flash("success", trans("messages.admin.create_success"));
                 return response()->json();
+            } else {
+                Session::flash("error", trans("messages.admin.update_fail"));
             }
         }
     }
@@ -89,9 +92,12 @@ class AdminController extends Controller
         if ($user->can('updateAdmin', Admin::class)) {
             $input = $request->all();
             $admin = Admin::updateAdmin($id, $input);
+
             if ($admin) {
                 Session::flash("success", trans("messages.admin.update_success"));
                 return response()->json();
+            } else {
+                Session::flash("error", trans("messages.admin.update_success"));
             }
         }
     }

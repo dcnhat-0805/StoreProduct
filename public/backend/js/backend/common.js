@@ -67,6 +67,7 @@ var Commons = (function ($) {
         $('input[name=btSelectItem], input[name=btSelectAll]').prop('checked', false);
         $('input[name=id]').val('');
         $('#url_edit, #urlDelete').val('');
+        $('form').trigger("reset");
     });
 
     return modules;

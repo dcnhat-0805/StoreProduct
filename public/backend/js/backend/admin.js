@@ -12,26 +12,7 @@ let AdminJs = (function ($) {
             type : 'POST',
             data: data,
             success : function (data) {
-                location.reload();
-            },
-            error : function (data) {
-                let error = $.parseJSON(data.responseText).errors;
-
-                Commons.getErrorMessage(error, error.name, '.error-name');
-                Commons.getErrorMessage(error, error.email, '.error-email');
-                Commons.getErrorMessage(error, error.password, '.error-password');
-                Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
-            }
-        });
-    };
-
-    modules.editAdmin = function (url, data) {
-        $.ajax({
-            url : url,
-            dataType : 'JSON',
-            type : 'POST',
-            data: data,
-            success : function (data) {
+                btnAddAdmin.prop('disabled', true);
                 location.reload();
             },
             error : function (data) {
@@ -61,6 +42,27 @@ let AdminJs = (function ($) {
         $(e.currentTarget).find('.admin-status option[value="'+ status +'"]').attr('selected', 'selected');
     });
 
+    modules.editAdmin = function (url, data) {
+        $.ajax({
+            url : url,
+            dataType : 'JSON',
+            type : 'POST',
+            data: data,
+            success : function (data) {
+                btnEditAdmin.prop('disabled', true);
+                location.reload();
+            },
+            error : function (data) {
+                let error = $.parseJSON(data.responseText).errors;
+
+                Commons.getErrorMessage(error, error.name, '.error-name');
+                Commons.getErrorMessage(error, error.email, '.error-email');
+                Commons.getErrorMessage(error, error.password, '.error-password');
+                Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
+            }
+        });
+    };
+
     $('#delete').on('show.bs.modal', function (e) {
         let id = $(e.relatedTarget).data('id');
         $(e.currentTarget).find('input[name="id"]').val(id);
@@ -75,6 +77,11 @@ let AdminJs = (function ($) {
                 id : id
             },
             success : function (data) {
+                btnDeleteAdmin.prop('disabled', true);
+                location.reload();
+            },
+            error : function (data) {
+                btnDeleteAdmin.prop('disabled', true);
                 location.reload();
             }
         });
