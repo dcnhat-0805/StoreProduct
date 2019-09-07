@@ -49,9 +49,8 @@ class Category extends Model
 
     public static function createCategory($request)
     {
-        if ($request['category_name'] != '') {
-            $request['category_slug'] = utf8ToUrl($request['category_name']);
-        }
+        $request['category_slug'] = utf8ToUrl($request['category_name']);
+
         return Category::create($request);
     }
 
@@ -64,21 +63,21 @@ class Category extends Model
     {
         $category = Category::select('id', 'category_name', 'category_order', 'category_status')
                         ->where('category_name', $category_name)->first();
+
         return $category;
     }
 
     public static function updateCategory($category_id, $request)
     {
-        $category = Category::showCategory($category_id);
-        if ($request['category_name'] != '') {
-            $request['category_slug'] = utf8ToUrl($request['category_name']);
-        }
+        $category = Category::showCategoryById($category_id);
+        $request['category_slug'] = utf8ToUrl($request['category_name']);
+
         return $category->update($request);
     }
 
     public static function deleteCategory($category_id)
     {
-        $category = Category::showCategory($category_id);
+        $category = Category::showCategoryById($category_id);
         return $category->delete();
     }
 

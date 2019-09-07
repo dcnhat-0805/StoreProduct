@@ -47,15 +47,27 @@ var Commons = (function ($) {
         localStorage.removeItem($key);
     };
 
-    modules.getErrorMessage = function (error, className) {
-        if(error != null) {
-            $(className).text(error);
-            $(className).removeClass('hidden');
-        } else {
-            $(className).text('');
-            $(className).addClass('hidden');
+    modules.getErrorMessage = function (error, errorItem,className) {
+        if (typeof error != 'undefined') {
+            if(errorItem != null) {
+                $(className).text(errorItem);
+                $(className).removeClass('hidden');
+            } else {
+                $(className).text('');
+                $(className).addClass('hidden');
+            }
         }
     };
+
+    $('#add, #edit, #delete').on('hide.bs.modal', function(e) {
+        $('.error').addClass('hidden');
+        $('.error').text('');
+        $('.invalid-feedback').text('');
+        $('input').removeClass('is-invalid');
+        $('input[name=btSelectItem], input[name=btSelectAll]').prop('checked', false);
+        $('input[name=id]').val('');
+        $('#url_edit, #urlDelete').val('');
+    });
 
     return modules;
 

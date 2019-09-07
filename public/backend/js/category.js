@@ -1,16 +1,85 @@
-var StoreJs = (function ($) {
-    var Common = {};
+const btnAddCategory = $('#btnAddCategory');
+const btnUpdateCategory = $('#btnUpdateCategory');
+const btnDeleteCategory = $('#btnDeleteCategory');
 
-    Common.hasData = function ($name = 'nhat') {
-        console.log($name);
-    }
+let CategoryJs = (function ($) {
+    let modules = {};
 
-    $('#add').on('hide.bs.modal', function(e) {
-        $('.error').addClass('hidden');
-        $('.error').text('');
+    modules.createCategory = function(data) {
+        $.ajax({
+            url : 'admin/category/add',
+            dataType : 'JSON',
+            type : 'POST',
+            data: data,
+            success : function (data) {
+                location.reload();
+            },
+            error : function (data) {
+                let error = $.parseJSON(data.responseText).errors;
+
+                Commons.getErrorMessage(error, error.category_name, '.error-category-name');
+                Commons.getErrorMessage(error, error.category_order, '.error-category-order');
+            }
+        });
+    };
+
+    $('#edit').on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).data('id');
+        let name = $(e.relatedTarget).data('name');
+        let order = $(e.relatedTarget).data('order');
+        let status = $(e.relatedTarget).data('status');
+        let url = $(e.relatedTarget).data('url');
+        $(e.currentTarget).find('input[name="id"]').val(id);
+        $(e.currentTarget).find('.title').text(name);
+        $(e.currentTarget).find('input[name="category_name"]').val(name);
+        $(e.currentTarget).find('input[name="category_order"]').val(order);
+        $(e.currentTarget).find('#url_edit').val(url);
+        $(e.currentTarget).find('.category-status option[value="'+ status +'"]').attr('selected', 'selected');
     });
 
-    return Common;
+    modules.updateCategory = function (url, data) {
+        $.ajax({
+            url : url,
+            dataType : 'JSON',
+            type : 'POST',
+            data: data,
+            success : function (data) {
+                location.reload();
+            },
+            error : function (data) {
+                let error = $.parseJSON(data.responseText).errors;
+
+                Commons.getErrorMessage(error, error.category_name, '.error-category-name');
+                Commons.getErrorMessage(error, error.category_order, '.error-category-order');
+            }
+        });
+    };
+
+    $('#delete').on('show.bs.modal', function (e) {
+        let id = $(e.relatedTarget).data('id');
+        let url = $(e.relatedTarget).data('url');
+        $(e.currentTarget).find('input[name="id"]').val(id);
+        $(e.currentTarget).find('#urlDelete').val(url);
+    });
+
+    modules.deleteCategory = function (url, id) {
+        $.ajax({
+            url : url,
+            dataType : 'JSON',
+            type : 'DELETE',
+            data: {
+                id : id
+            },
+            success : function (data) {
+                location.reload();
+            },
+            error : function (data) {
+                location.reload();
+            }
+        });
+    };
+
+    return modules;
 })(jQuery);
 
 $.ajaxSetup({
@@ -19,46 +88,24 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
-    StoreJs.createCategory = function () {
-        $('.add-category').on('click', function (e) {
-            var formData = $('#create-category').serialize();
-            $.ajax({
-                url : 'admin/category/add',
-                dataType : 'JSON',
-                type : 'POST',
-                data: formData,
-                success : function (data) {
-                    $('#create-category')[0].reset();
-                    jQuery.getMessageSuccess(data.message);
-                    $('#add').modal('hide');
-                    setTimeout(function () {
-                        location.reload();
-                    }, 3000);
-                },
-                error : function (data) {
-                    let error = $.parseJSON(data.responseText);
+   btnAddCategory.on('click', function () {
+      let data = $('#createCategory').serialize();
 
-                    if(data.status === 422) {
-                        if(error.errors.category_name != null) {
-                            $('.error-category-name').text(error.errors.category_name);
-                            $('.error-category-name').removeClass('hidden');
-                        } else {
-                            $('.error-category-name').text('');
-                            $('.error-category-name').addClass('hidden');
-                        }
-                        if(error.errors.category_order != null) {
-                            $('.error-category-order').text(error.errors.category_order);
-                            $('.error-category-order').removeClass('hidden');
-                        } else {
-                            $('.error-category-order').text('');
-                            $('.error-category-order').addClass('hidden');
-                        }
-                    }
-                }
-            });
-        })
-    };
+      CategoryJs.createCategory(data);
+   });
 
-    StoreJs.createCategory();
-})
+   btnUpdateCategory.on('click', function () {
+       let data = $('#editCategory').serialize();
+       let url = $('#url_edit').val();
+
+       CategoryJs.updateCategory(url, data);
+   });
+
+   btnDeleteCategory.on('click', function () {
+       let id = $('#categoryId').val();
+       let url = $('#urlDelete').val();
+
+       CategoryJs.deleteCategory(url, id);
+   });
+});
 

@@ -26,5 +26,24 @@ return [
                 'not_exists' => 'Email không tồn tại.'
             ],
         ],
+    ],
+
+    'category' => [
+        'create_success' => 'Successfully add new category.',
+        'create_failed' => 'Unsuccessfully add new category.',
+        'update_success' => 'Successfully edit category.',
+        'update_failed' => 'Unsuccessfully edit category.',
+        'delete_success' => 'Successfully delete category.',
+        'delete_failed' => 'Unsuccessfully delete new category.',
+        'name' => [
+            'required' => 'cannot be left blank.',
+            'min' => 'must be between 3-100 characters.',
+            'max' => 'must be between 3-100 characters.',
+            'unique' => 'was used in the database.',
+        ],
+        'order' => [
+            'min' => 'must be greater than or equal to 0.',
+            'numeric' => 'must be numeric format.',
+        ],
     ]
 ];

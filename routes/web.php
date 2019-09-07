@@ -49,6 +49,8 @@ Route::namespace('Backend')->group(function(){
         Route::group(['prefix' => 'category'], function(){
             Route::get('/', 'CategoryController@index')->name(ADMIN_CATEGORY_INDEX);
             Route::post('add', 'CategoryController@store')->name(ADMIN_CATEGORY_ADD);
+            Route::post('edit/{id}', 'CategoryController@update')->name(ADMIN_CATEGORY_EDIT);
+            Route::delete('delete/{id}', 'CategoryController@delete')->name(ADMIN_CATEGORY_DELETE);
         });
     });
 });

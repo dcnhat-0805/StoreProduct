@@ -111,7 +111,7 @@ class AdminController extends Controller
             Session::flash("success", trans("messages.admin.delete_success"));
             return response()->json();
         } else {
-            Session::flash("success", trans("messages.admin.delete_failed"));
+            Session::flash("error", trans("messages.admin.delete_failed"));
             return response()->json();
         }
     }

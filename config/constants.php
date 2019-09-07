@@ -19,6 +19,8 @@ const ADMIN_FORGET_PASSWORD = 'admin.forget.password';
 
 const ADMIN_CATEGORY_INDEX = 'admin.category.index';
 const ADMIN_CATEGORY_ADD = 'admin.category.add';
+const ADMIN_CATEGORY_EDIT = 'admin.category.edit';
+const ADMIN_CATEGORY_DELETE = 'admin.category.delete';
 
 const ADMIN_INDEX = 'admin.list';
 const ADMIN_INDEX_BLADE = 'backend.pages.admin.index';

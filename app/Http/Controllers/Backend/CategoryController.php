@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
 {
@@ -40,10 +41,13 @@ class CategoryController extends Controller
     {
         if ($request->ajax()) {
             $input = $request->all();
-            dd($input);
             $category = Category::createCategory($input);
+
             if ($category) {
-                return response()->json(['message' => 'Successfully add new category !', 'category' => $category], 200);
+                Session::flash("success", trans("messages.category.create_success"));
+                return response()->json($category, 200);
+            } else {
+                Session::flash("error", trans("messages.category.create_failed"));
             }
         }
     }
@@ -79,7 +83,17 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $input = $request->all();
+            $category = Category::updateCategory($id, $input);
+
+            if ($category) {
+                Session::flash("success", trans("messages.category.update_success"));
+                return response()->json($category, 200);
+            } else {
+                Session::flash("error", trans("messages.category.update_failed"));
+            }
+        }
     }
 
     /**
@@ -88,8 +102,16 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
-        //
+        $category = Category::deleteCategory($id);
+
+        if (isset($category)) {
+            Session::flash("success", trans("messages.category.delete_success"));
+            return response()->json();
+        } else {
+            Session::flash("error", trans("messages.category.delete_failed"));
+            return response()->json();
+        }
     }
 }
