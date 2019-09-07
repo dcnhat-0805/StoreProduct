@@ -12,6 +12,7 @@ let CategoryJs = (function ($) {
             type : 'POST',
             data: data,
             success : function (data) {
+                btnAddCategory.prop('disabled', true);
                 location.reload();
             },
             error : function (data) {
@@ -44,6 +45,7 @@ let CategoryJs = (function ($) {
             type : 'POST',
             data: data,
             success : function (data) {
+                btnUpdateCategory.prop('disabled', true);
                 location.reload();
             },
             error : function (data) {
@@ -71,6 +73,7 @@ let CategoryJs = (function ($) {
                 id : id
             },
             success : function (data) {
+                btnDeleteCategory.prop('disabled', true);
                 location.reload();
             },
             error : function (data) {

@@ -37,12 +37,12 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => ':attribute '.trans("messages.category.name.required"),
-            'min' => ':attribute '.trans("messages.category.name.min"),
-            'max' => ':attribute '.trans("messages.category.name.max"),
-            'unique' => ':attribute '.trans("messages.category.name.unique"),
-            'numeric' => ':attribute '.trans("messages.category.name.numeric"),
-            'category_order.min' => ':attribute '.trans("messages.category.order.min"),
+            'required' => trans("messages.category.name.required"),
+            'min' => trans("messages.category.name.min"),
+            'max' => trans("messages.category.name.max"),
+            'unique' => trans("messages.category.name.unique"),
+            'numeric' => trans("messages.category.name.numeric"),
+            'category_order.min' => trans("messages.category.order.min"),
         ];
     }
 
