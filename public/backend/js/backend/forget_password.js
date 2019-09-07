@@ -31,9 +31,7 @@ let ForgetPasswordJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                if (typeof error != 'undefined') {
-                    Commons.getErrorMessage(error.email, '.error-email');
-                }
+                Commons.getErrorMessage(error, error.email, '.error-email');
             }
         });
     };
@@ -61,9 +59,10 @@ let ForgetPasswordJs = (function ($) {
 
                 if (typeof error != 'undefined') {
                     btnSubmitPassword.prop('disabled', false);
-                    Commons.getErrorMessage(error.auth_key, '.error-auth-key');
-                    Commons.getErrorMessage(error.new_password, '.error-new-password');
-                    Commons.getErrorMessage(error.confirm_password, '.error-confirm-password');
+
+                    Commons.getErrorMessage(error, error.auth_key, '.error-auth-key');
+                    Commons.getErrorMessage(error, error.new_password, '.error-new-password');
+                    Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
                 }
             },
         });

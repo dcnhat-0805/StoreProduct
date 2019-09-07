@@ -17,24 +17,12 @@ let AdminJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                if (typeof error != 'undefined') {
-                    Commons.getErrorMessage(error.name, '.error-name');
-                    Commons.getErrorMessage(error.email, '.error-email');
-                    Commons.getErrorMessage(error.password, '.error-password');
-                    Commons.getErrorMessage(error.confirm_password, '.error-confirm-password');
-                }
+                Commons.getErrorMessage(error, error.name, '.error-name');
+                Commons.getErrorMessage(error, error.email, '.error-email');
+                Commons.getErrorMessage(error, error.password, '.error-password');
+                Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
             }
         });
-    };
-
-    modules.getErrorMessage = function (error, className) {
-        if(error != null) {
-            $(className).text(error);
-            $(className).removeClass('hidden');
-        } else {
-            $(className).text('');
-            $(className).addClass('hidden');
-        }
     };
 
     modules.editAdmin = function (url, data) {
@@ -49,10 +37,10 @@ let AdminJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error.name, '.error-name');
-                Commons.getErrorMessage(error.email, '.error-email');
-                Commons.getErrorMessage(error.password, '.error-password');
-                Commons.getErrorMessage(error.confirm_password, '.error-confirm-password');
+                Commons.getErrorMessage(error, error.name, '.error-name');
+                Commons.getErrorMessage(error, error.email, '.error-email');
+                Commons.getErrorMessage(error, error.password, '.error-password');
+                Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
             }
         });
     };
@@ -71,16 +59,6 @@ let AdminJs = (function ($) {
         $(e.currentTarget).find('#url_edit').val(url);
         $(e.currentTarget).find('.admin-permission option[value="'+ permission +'"]').attr('selected', 'selected');
         $(e.currentTarget).find('.admin-status option[value="'+ status +'"]').attr('selected', 'selected');
-    });
-
-    $('#add, #edit, #delete').on('hide.bs.modal', function(e) {
-        $('.error').addClass('hidden');
-        $('.error').text('');
-        $('.invalid-feedback').text('');
-        $('input').removeClass('is-invalid');
-        $('input[name=btSelectItem]').removeAttr('checked');
-        $('input[name=id]').val('');
-        $('#url_edit').val('');
     });
 
     $('#delete').on('show.bs.modal', function (e) {

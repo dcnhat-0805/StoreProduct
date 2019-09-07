@@ -368,7 +368,7 @@
                 Lobibox.notify('success', {
                     size: 'mini',
                     delay: 5000,
-                    msg: 'Thông báo !   '+ message
+                    msg: 'Notification !   '+ message
                 });
             }
 
@@ -376,7 +376,7 @@
                 Lobibox.notify('error', {
                     size: 'mini',
                     delay: 5000,
-                    msg: 'Thông báo !   '+ error
+                    msg: 'Notification !   '+ error
                 });
             }
 

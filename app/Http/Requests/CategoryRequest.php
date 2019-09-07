@@ -25,7 +25,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'category_name' => 'required|min:3|max:100|unique:categories,category_name,'.($this->id ?? " "),
-            'category_order' => 'required|numeric|unique:categories,category_order,'.($this->id ?? " "),
+            'category_order' => 'required|min:0|numeric|unique:categories,category_order,'.($this->id ?? " "),
         ];
     }
 
@@ -37,11 +37,12 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => ':attribute cannot be left blank',
-            'min' => ':attribute must be between 3-100 characters',
-            'max' => ':attribute must be between 3-100 characters',
-            'unique' => ':attribute was used in the database',
-            'numeric' => ':attribute must be numeric format',
+            'required' => ':attribute '.trans("messages.category.name.required"),
+            'min' => ':attribute '.trans("messages.category.name.min"),
+            'max' => ':attribute '.trans("messages.category.name.max"),
+            'unique' => ':attribute '.trans("messages.category.name.unique"),
+            'numeric' => ':attribute '.trans("messages.category.name.numeric"),
+            'category_order.min' => ':attribute '.trans("messages.category.order.min"),
         ];
     }
 
