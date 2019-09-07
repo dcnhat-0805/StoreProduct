@@ -37,6 +37,7 @@ class PasswordResetController extends Controller
     {
         $adminPasswordReset = $this->_savePasswordReset($request);
         $this->_sendPasswordResetMail($adminPasswordReset);
+        
         return response()->json($adminPasswordReset, 200);
     }
 

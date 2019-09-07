@@ -90,7 +90,7 @@
                                 </font></p>
 
                             <div class="form-group mb-55">
-                                <label for="email">Địa chỉ email</label>
+                                <label for="email" class="required after">Địa chỉ email</label>
                                 {{ Form::text('email', null, [
                                     'class' => 'form-control simple',
                                     'id' => 'email',
@@ -116,7 +116,7 @@
                             <p class="info xsmall mb-30">Nếu không đóng màn hình này, hãy nhập mã xác thực được ghi trong văn bản email, đặt mật khẩu mới và tiếp tục với nút tiếp theo.</p>
 
                             <div class="form-group mb-10">
-                                <label for="auth-key">Mã xác thực</label>
+                                <label for="auth-key" class="required after">Mã xác thực</label>
                                 <input type="text" id="auth_key" name="auth_key" class="form-control simple" autofocus>
                                 <div class="error error-auth-key hidden"></div>
                             </div>
@@ -124,12 +124,12 @@
                             <p class="info warn xsmall mb-25">Nếu bạn không thay đổi mật khẩu mới trong vòng 30 phút sau khi lấy mã xác thực, mã xác thực sẽ không hợp lệ.</p>
 
                             <div class="form-group">
-                                <label for="new-password">Mật khẩu mới</label>
+                                <label for="new-password" class="required after">Mật khẩu mới</label>
                                 <input type="password" id="new_password" name="new_password" class="form-control simple">
                                 <div class="error error-new-password hidden"></div>
                             </div>
                             <div class="form-group">
-                                <label for="confirm-password">Nhập lại mật khẩu mới</label>
+                                <label for="confirm-password" class="required after">Nhập lại mật khẩu mới</label>
                                 <input type="password" id="confirm_password" name="confirm_password" class="form-control simple">
                                 <div class="error error-confirm-password hidden"></div>
                             </div>
@@ -137,7 +137,7 @@
                             <!-- ボタンエリア -->
                             <div class="submit-group">
                                 <button type="button" class="btn btn-custon-three btn-primary next" id="submit-password" style="display: block; margin: 0 auto;">Tiếp theo</button>
-                                <p class="info xsmall mt-25">Nếu không nhận được email,<a href="#">ở đây</a>vui lòng liên hê với chúng tôi.</p>
+                                <p class="info xsmall mt-25">Nếu không nhận được email,<a href="mailto:store.online.232@gmail.com">ở đây</a>vui lòng liên hê với chúng tôi.</p>
                             </div>
                         </form>
                     </div>
@@ -226,7 +226,7 @@
         ============================================ -->
     <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
     {!! JsValidator::formRequest('App\Http\Requests\LoginRequest', '#loginForm') !!}
-    <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/admin.js') }}"></script>
+    <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/common.js') }}"></script>
     <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/forget_password.js') }}"></script>
 </body>
 

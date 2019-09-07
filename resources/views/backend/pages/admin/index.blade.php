@@ -94,7 +94,7 @@
                                         <div class="form-group">
                                             <label for="name" class="required after">Name</label>
                                             <input type="text" class="form-control admin-name" name="name" placeholder="Name ....">
-                                            <div class="alert alert-danger error error-name hidden"></div>
+                                            <div class="error error-name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -102,7 +102,7 @@
                                             <label for="email" class="required after">Email</label>
                                             <input type="email" class="form-control admin-email"
                                                    name="email" placeholder="Email ....">
-                                            <div class="alert alert-danger error error-email hidden"></div>
+                                            <div class="error error-email hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -110,7 +110,7 @@
                                             <label for="password" class="required after">Password</label>
                                             <input type="password" class="form-control admin-password"
                                                    name="password" placeholder="Password ....">
-                                            <div class="alert alert-danger error error-password hidden"></div>
+                                            <div class="error error-password hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -118,7 +118,7 @@
                                             <label for="confirm password" class="required after">Confirm password</label>
                                             <input type="password" class="form-control confirm-password"
                                                    name="confirm_password" placeholder="Confirm password ....">
-                                            <div class="alert alert-danger error error-confirm-password hidden"></div>
+                                            <div class="error error-confirm-password hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -129,7 +129,7 @@
                                                     <option value="{{ $per->id }}">{{$per->permission_name}}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="alert alert-danger error error-permission hidden"></div>
+                                            <div class="error error-permission hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -185,7 +185,7 @@
                                         <div class="form-group">
                                             <label for="name" class="required after">Name</label>
                                             <input type="text" class="form-control admin-name" name="name" placeholder="Name ....">
-                                            <div class="alert alert-danger error error-name hidden"></div>
+                                            <div class="error error-name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -193,7 +193,7 @@
                                             <label for="email" class="required after">Email</label>
                                             <input type="email" class="form-control admin-email"
                                                    name="email" placeholder="Email ....">
-                                            <div class="alert alert-danger error error-email hidden"></div>
+                                            <div class="error error-email hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -204,7 +204,7 @@
                                                     <option value="{{ $per->id }}">{{$per->permission_name}}</option>
                                                 @endforeach
                                             </select>
-                                            <div class="alert alert-danger error error-permission hidden"></div>
+                                            <div class="error error-permission hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">

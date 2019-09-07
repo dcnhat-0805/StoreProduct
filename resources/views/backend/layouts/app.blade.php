@@ -204,6 +204,7 @@
 <!-- Laravel Javascript Validation
     ============================================ -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+<script src="backend/js/backend/common.js"></script>
 @yield('jsCustom')
 
 @if(Session::has('success'))

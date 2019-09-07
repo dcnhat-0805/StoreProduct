@@ -18,10 +18,10 @@ let AdminJs = (function ($) {
                 let error = $.parseJSON(data.responseText).errors;
 
                 if (typeof error != 'undefined') {
-                    modules.getErrorMessage(error.name, '.error-name');
-                    modules.getErrorMessage(error.email, '.error-email');
-                    modules.getErrorMessage(error.password, '.error-password');
-                    modules.getErrorMessage(error.confirm_password, '.error-confirm-password');
+                    Commons.getErrorMessage(error.name, '.error-name');
+                    Commons.getErrorMessage(error.email, '.error-email');
+                    Commons.getErrorMessage(error.password, '.error-password');
+                    Commons.getErrorMessage(error.confirm_password, '.error-confirm-password');
                 }
             }
         });
@@ -49,10 +49,10 @@ let AdminJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                modules.getErrorMessage(error.name, '.error-name');
-                modules.getErrorMessage(error.email, '.error-email');
-                modules.getErrorMessage(error.password, '.error-password');
-                modules.getErrorMessage(error.confirm_password, '.error-confirm-password');
+                Commons.getErrorMessage(error.name, '.error-name');
+                Commons.getErrorMessage(error.email, '.error-email');
+                Commons.getErrorMessage(error.password, '.error-password');
+                Commons.getErrorMessage(error.confirm_password, '.error-confirm-password');
             }
         });
     };

@@ -32,7 +32,7 @@ let ForgetPasswordJs = (function ($) {
                 let error = $.parseJSON(data.responseText).errors;
 
                 if (typeof error != 'undefined') {
-                    AdminJs.getErrorMessage(error.email, '.error-email');
+                    Commons.getErrorMessage(error.email, '.error-email');
                 }
             }
         });
@@ -52,7 +52,6 @@ let ForgetPasswordJs = (function ($) {
             success: function () {
                 modules.getLoading();
                 btnSubmitEmail.prop('disabled', true);
-                modules.getLoading();
                 $('.error').text('');
                 $('.step-2').addClass('hidden');
                 $('.step-3').removeClass('hidden');
@@ -62,9 +61,9 @@ let ForgetPasswordJs = (function ($) {
 
                 if (typeof error != 'undefined') {
                     btnSubmitPassword.prop('disabled', false);
-                    AdminJs.getErrorMessage(error.auth_key, '.error-auth-key');
-                    AdminJs.getErrorMessage(error.new_password, '.error-new-password');
-                    AdminJs.getErrorMessage(error.confirm_password, '.error-confirm-password');
+                    Commons.getErrorMessage(error.auth_key, '.error-auth-key');
+                    Commons.getErrorMessage(error.new_password, '.error-new-password');
+                    Commons.getErrorMessage(error.confirm_password, '.error-confirm-password');
                 }
             },
         });
@@ -88,6 +87,7 @@ $(document).ready(function () {
         },6000);
 
         let email = $('#email').val();
+
         ForgetPasswordJs.submitEmailForgetPassword(email);
     });
 
