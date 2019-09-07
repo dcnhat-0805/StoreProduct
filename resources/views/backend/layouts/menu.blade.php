@@ -13,7 +13,10 @@
         <div class="left-custom-menu-adp-wrap comment-scrollbar">
             <nav class="sidebar-nav left-sidebar-menu-pro">
                 <ul class="metismenu" id="menu1">
-                    <li class="active">
+                    <?php
+                        $isShowDashboard = in_array(request()->route()->uri(), ['admin']);
+                    ?>
+                    <li class=" {{ $isShowDashboard ? 'active' : '' }} ">
                         <a title="Landing Page" href="{{route(ADMIN_DASHBOARD)}}" aria-expanded="false"><span
                                 class="educate-icon educate-home icon-wrap sub-icon-mg" aria-hidden="true"></span>
                             <span class="mini-click-non">Dashboard</span></a>
