@@ -58,14 +58,15 @@ return [
         'delete_success' => 'Successfully delete category.',
         'delete_failed' => 'Unsuccessfully delete new category.',
         'name' => [
-            'required' => 'cannot be left blank.',
-            'min' => 'must be between 3-100 characters.',
-            'max' => 'must be between 3-100 characters.',
-            'unique' => 'was used in the database.',
+            'required' => ':attribute cannot be left blank.',
+            'min' => ':attribute must be between 3-100 characters.',
+            'max' => ':attribute must be between 3-100 characters.',
+            'unique' => ':attribute was used in the database.',
         ],
         'order' => [
-            'min' => 'must be greater than or equal to 0.',
-            'numeric' => 'must be numeric format.',
+            'required' => ':attribute cannot be left blank.',
+            'min' => ':attribute must be greater than or equal to 0.',
+            'numeric' => ':attribute must be numeric format.',
         ],
     ]
 ];

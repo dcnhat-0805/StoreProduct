@@ -5,7 +5,7 @@
     <div class="sparkline13-list">
         <div class="sparkline13-hd">
             <div class="main-sparkline13-hd">
-                <h1>Projects <span class="table-project-n">Data</span> Table</h1>
+                <h1 style="text-transform: capitalize;">List <span class="table-project-n">Of</span> Category</h1>
             </div>
         </div>
         <div class="sparkline13-graph">
