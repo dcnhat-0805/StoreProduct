@@ -33,14 +33,14 @@ class AdminRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => ':attribute không được để trống.',
-            'email' => ':attribute không đúng định dạng email.',
-            'min' => ':attribute phải từ 5 - 50 ký tự.',
-            'max' => ':attribute phải từ 5 - 50 ký tự.',
-            'password.min' => ':attribute phải từ 8 ký tự',
-            'unique' => ':attribute đã được sử dụng.',
-            'same' => ':attribute không trùng khớp với mật khẩu đã nhập.',
-            'password.regex' => ' phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 ký tự đặc biệt.'
+            'required' => trans("messages.admin.name.required"),
+            'email' => trans("messages.admin.email.email_format"),
+            'min' => trans("messages.admin.name.min"),
+            'max' => trans("messages.admin.name.max"),
+            'unique' => trans("messages.admin.name.unique"),
+            'password.min' => trans("messages.admin.password.min"),
+            'password.regex' => trans("messages.admin.password.regex"),
+            'same' => trans("messages.admin.confirm_password.same"),
         ];
     }
     public function attributes()

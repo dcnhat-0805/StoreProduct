@@ -260,6 +260,7 @@
 @endsection
 @section('jsCustom')
     <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/admin.js') }}"></script>
+    <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/disabled_button_submit.js') }}"></script>
 {{--    {!! JsValidator::formRequest('App\Http\Requests\AdminRequest', '#create_admin') !!}--}}
 {{--    {!! JsValidator::formRequest('App\Http\Requests\AdminRequest', '#edit_admin') !!}--}}
 @endsection
