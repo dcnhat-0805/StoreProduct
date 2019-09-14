@@ -114,4 +114,31 @@ class CategoryController extends Controller
             return response()->json();
         }
     }
+
+    public function getListCategory()
+    {
+        $category = Category::getListAllCategory();$data = [];
+
+        if (count($category)) {
+            foreach ($category as $cate) {
+                $data[] = [
+                    'id' => $cate->id
+                ];
+            }
+        }
+
+        return response()->json(array_flatten($data));
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            Category::destroy($request->input('ids'));
+            if ($request->input('ids') != DELETE_ALL) {
+                Session::flash("success", trans("messages.category.delete_success"));
+            }
+        } catch (\Exception $e) {
+            Session::flash("error", trans("messages.category.delete_failed"));
+        }
+    }
 }

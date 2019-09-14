@@ -12,13 +12,14 @@
             <div class="datatable-dashv1-list custom-datatable-overright">
                 <div id="toolbar">
                     <!-- Button to Open the Add Modal -->
-                    <button class="btn btn-default" data-toggle="modal" data-target="#add" type="button"
-                            title="Add new category"><i class="fa fa-plus"></i></button>
-                    <select class="form-control dt-tb hidden">
-                        <option value="">Export Basic</option>
-                        <option value="all">Export All</option>
-                        <option value="selected">Export Selected</option>
-                    </select>
+                    <button class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#add" type="button"
+                            title="Add new category"><i class="fa fa-plus"></i> Register
+                    </button>
+                    <!-- Button to Open the Delete Modal -->
+                    <button id="remove" class="btn btn-custon-three btn-danger"
+                            data-toggle="modal" data-target="#delete" data-id="all">
+                        <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Delete
+                    </button>
                 </div>
                 <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"
                        data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true"
@@ -30,32 +31,32 @@
                         <th data-field="state" data-checkbox="true"></th>
                         <th data-field="id">ID</th>
                         <th data-field="name" data-editable="true">Name</th>
-                        <th data-field="email" data-editable="true">Order</th>
-                        <th data-field="phone" data-editable="true">Status</th>
+                        <th data-field="order" data-editable="true">Order</th>
+                        <th data-field="status" data-editable="true">Status</th>
                         <th data-field="action">Action</th>
                     </tr>
                     </thead>
                     <tbody class="list-category">
                     @if($category)
-                        @foreach($category as $category)
-                            <tr id="category-{{$category->id}}">
+                        @foreach($category as $cate)
+                            <tr id="category-{{$cate->id}}" data-id="{{ $cate->id }}">
                                 <td></td>
-                                <td>{{$category->id}}</td>
-                                <td>{{$category->category_name}}</td>
-                                <td>{{$category->category_order}}</td>
-                                <td>@if($category->category_status == 1) Display @else Not display @endif</td>
+                                <td>{{$cate->id}}</td>
+                                <td>{{$cate->category_name}}</td>
+                                <td>{{$cate->category_order}}</td>
+                                <td>@if($cate->category_status == 1) Display @else Not display @endif</td>
                                 <td class="datatable-ct">
-                                    <button data-toggle="modal" title="Edit {{$category->category_name}}" class="pd-setting-ed"
+                                    <button data-toggle="modal" title="Edit {{$cate->category_name}}" class="pd-setting-ed"
                                             data-original-title="Edit" data-target="#edit"
-                                            data-id="{{$category->id}}" data-name="{{$category->category_name}}"
-                                            data-order="{{$category->category_order}}" data-status="{{$category->category_status}}"
-                                            data-url="{{route(ADMIN_CATEGORY_EDIT, ['id' => $category->id])}}"
+                                            data-id="{{$cate->id}}" data-name="{{$cate->category_name}}"
+                                            data-order="{{$cate->category_order}}" data-status="{{$cate->category_status}}"
+                                            data-url="{{route(ADMIN_CATEGORY_EDIT, ['id' => $cate->id])}}"
                                             type="button">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                    <button data-toggle="modal" title="Delete {{$category->category_name}}" class="pd-setting-ed"
-                                            data-id="{{$category->id}}" data-url="{{route(ADMIN_CATEGORY_DELETE, ['id' => $category->id])}}"
-                                            data-original-title="Trash" data-target="#delete" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </button>
+{{--                                    <button data-toggle="modal" title="Delete {{$cate->category_name}}" class="pd-setting-ed"--}}
+{{--                                            data-id="{{$cate->id}}" data-url="{{route(ADMIN_CATEGORY_DELETE, ['id' => $cate->id])}}"--}}
+{{--                                            data-original-title="Trash" data-target="#delete" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>--}}
+{{--                                    </button>--}}
                                 </td>
                             </tr>
                         @endforeach

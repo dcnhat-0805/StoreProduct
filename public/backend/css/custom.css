@@ -35,3 +35,11 @@
     padding: 0 !important;
     text-decoration: underline !important;
 }
+
+.page-number a:hover {
+    cursor: pointer;
+}
+
+ul li.active {
+    background-color: #F6F6F6;
+}

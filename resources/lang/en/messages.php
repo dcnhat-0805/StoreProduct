@@ -56,7 +56,7 @@ return [
         'update_success' => 'Successfully edit category.',
         'update_failed' => 'Unsuccessfully edit category.',
         'delete_success' => 'Successfully delete category.',
-        'delete_failed' => 'Unsuccessfully delete new category.',
+        'delete_failed' => 'Unsuccessfully delete category.',
         'name' => [
             'required' => ':attribute cannot be left blank.',
             'min' => ':attribute must be between 3-100 characters.',
