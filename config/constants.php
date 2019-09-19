@@ -43,3 +43,7 @@ const PRODUCT = 5;
 const ADMIN_PERMISSION = [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT];
 
 const DELETE_ALL = 1;
+
+const SORT_PARAMS_ALLOWED = [
+    'id' => 'id',
+];

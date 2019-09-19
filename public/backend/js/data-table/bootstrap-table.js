@@ -311,10 +311,13 @@
         sidePagination: 'client', // client or server
         totalRows: 0, // server side need to set
         pageNumber: 1,
-        pageSize: 2,
-        pageList: [2, 4, 6, 8, 10],
+        // pageSize: 2,
+        // pageList: [2, 4, 6, 8, 10],
+        pageSize: 50,
+        pageList: [50, 100, 150, 200, 250],
         paginationHAlign: 'right', //right, left
-        paginationVAlign: 'bottom', //bottom, top, both
+        // paginationVAlign: 'bottom', //bottom, top, both
+        paginationVAlign: false, //bottom, top, both
         paginationDetailHAlign: 'left', //right, left
         paginationPreText: '&lsaquo;',
         paginationNextText: '&rsaquo;',
@@ -814,7 +817,7 @@
                     "tabindex='0'",
                     '>');
 
-                html.push(sprintf('<div class="th-inner %s">', that.options.sortable && column.sortable ?
+                html.push(sprintf('<div class="th-inner %s text-center">', that.options.sortable && column.sortable ?
                     'sortable both' : ''));
 
                 text = that.options.escape ? escapeHTML(column.title) : column.title;

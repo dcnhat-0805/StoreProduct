@@ -78,4 +78,28 @@ class Helper
 
         return $url;
     }
+
+    /**
+     * Get Sort Param
+     *
+     * @param array $params param
+     *
+     * @return string
+     */
+    public static function getSortParam($params)
+    {
+        $order = '1 = 1';
+        if (isset($params['sort']) && in_array($params['sort'], SORT_PARAMS_ALLOWED)) {
+            $order = $params['sort'];
+        }
+        if (isset($params['sort']) && isset($params['desc'])) {
+            $order .= " desc";
+        }
+        return $order;
+    }
+
+    public static function setCheckedForm($name, $value, $status)
+    {
+        return isset($_GET[$name]) && (in_array($value, $_GET[$name])) || !isset($_GET[$name]) ? $status : "";
+    }
 }

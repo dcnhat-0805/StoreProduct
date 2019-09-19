@@ -17,7 +17,10 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $category = Category::getListAllCategory();
+        $params = request()->all();
+        $category = Category::getListAllCategory($params);
+//        dd($category);
+
         return view('backend.pages.category.list', compact('category'));
     }
 

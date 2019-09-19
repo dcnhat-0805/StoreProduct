@@ -20,7 +20,8 @@ return [
         'delete_success' => 'Successfully delete admin.',
         'delete_failed' => 'Unsuccessfully delete admin.',
         'login_success' => 'Login successfully.',
-        'login_failed' => 'Login failed.',
+        'login_failed' => 'Login failed. Please re-enter your account.',
+        'login_admin' => 'Please enter your account.',
         'logout_success' => 'Log out successfully.',
         'password_reset' => [
             'email' => [

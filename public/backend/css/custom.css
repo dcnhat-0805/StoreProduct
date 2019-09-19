@@ -43,3 +43,39 @@
 ul li.active {
     background-color: #F6F6F6;
 }
+
+.pagination-sm .page-item:first-child .page-link{
+    background-image: none !important;
+}
+
+.pagination-sm .page-item:last-child .page-link{
+    background-image: none !important;
+}
+
+.pagination-sm .page-item.disabled {
+    cursor: not-allowed !important;
+}
+
+.info, .pagination {
+    margin: 0;
+}
+
+span.info {
+     display: inline-block;
+    float: left;
+    line-height: 30px;
+    vertical-align: middle;
+}
+
+.fixed-table-body {
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+
+ul.pagination {
+    border-bottom: 2px solid #cccccc;
+}
+
+.jsDatepcker[readonly] {
+    background-color: #ffffff;
+}
