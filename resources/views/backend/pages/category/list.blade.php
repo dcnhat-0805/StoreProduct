@@ -1,8 +1,12 @@
 @php
+    use App\Models\Category;
     $params = $_GET;
     unset($params['sort']);
     unset($params['desc']);
-@endphp@extends('backend.layouts.app')
+
+    $user = Auth::guard('admins')->user();
+@endphp
+@extends('backend.layouts.app')
 @section('title', 'List category')
 @section('titleMenu', 'Category')
 @section('cssCustom')
@@ -12,6 +16,7 @@
 @endsection
 @section('content')
     <div class="sparkline13-list">
+        @if ($user->can('viewCategory', Category::class))
         <div class="sparkline13-hd">
             <div class="main-sparkline13-hd">
                 <h1 style="text-transform: capitalize;">List <span class="table-project-n">Of</span> Category</h1>
@@ -64,10 +69,10 @@
                                             data-url="{{route(ADMIN_CATEGORY_EDIT, ['id' => $cate->id])}}"
                                             type="button">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-{{--                                    <button data-toggle="modal" title="Delete {{$cate->category_name}}" class="pd-setting-ed"--}}
-{{--                                            data-id="{{$cate->id}}" data-url="{{route(ADMIN_CATEGORY_DELETE, ['id' => $cate->id])}}"--}}
-{{--                                            data-original-title="Trash" data-target="#delete" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>--}}
-{{--                                    </button>--}}
+                                    <button data-toggle="modal" title="Delete {{$cate->category_name}}" class="pd-setting-ed"
+                                            data-id="{{$cate->id}}" data-url="{{route(ADMIN_CATEGORY_DELETE, ['id' => $cate->id])}}"
+                                            data-original-title="Trash" data-target="#delete" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -87,6 +92,9 @@
                 <!--/ Pagination -->
             </div>
         </div>
+        @else
+            @include('backend.permission')
+        @endif
     </div>
     <!-- Search Modal-->
     <div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

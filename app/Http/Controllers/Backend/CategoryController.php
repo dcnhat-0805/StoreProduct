@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 class CategoryController extends Controller
@@ -19,7 +21,6 @@ class CategoryController extends Controller
     {
         $params = request()->all();
         $category = Category::getListAllCategory($params);
-//        dd($category);
 
         return view('backend.pages.category.list', compact('category'));
     }
@@ -42,15 +43,18 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request)
     {
-        if ($request->ajax()) {
-            $input = $request->all();
-            $category = Category::createCategory($input);
+        $user = Auth::guard('admins')->user();
+        if ($user->can('createCategory', Admin::class)) {
+            if ($request->ajax()) {
+                $input = $request->all();
+                $category = Category::createCategory($input);
 
-            if ($category) {
-                Session::flash("success", trans("messages.category.create_success"));
-                return response()->json($category, 200);
-            } else {
-                Session::flash("error", trans("messages.category.create_failed"));
+                if ($category) {
+                    Session::flash("success", trans("messages.category.create_success"));
+                    return response()->json($category, 200);
+                } else {
+                    Session::flash("error", trans("messages.category.create_failed"));
+                }
             }
         }
     }
@@ -86,15 +90,18 @@ class CategoryController extends Controller
      */
     public function update(CategoryRequest $request, $id)
     {
-        if ($request->ajax()) {
-            $input = $request->all();
-            $category = Category::updateCategory($id, $input);
+        $user = Auth::guard('admins')->user();
+        if ($user->can('updateCategory', Admin::class)) {
+            if ($request->ajax()) {
+                $input = $request->all();
+                $category = Category::updateCategory($id, $input);
 
-            if ($category) {
-                Session::flash("success", trans("messages.category.update_success"));
-                return response()->json($category, 200);
-            } else {
-                Session::flash("error", trans("messages.category.update_failed"));
+                if ($category) {
+                    Session::flash("success", trans("messages.category.update_success"));
+                    return response()->json($category, 200);
+                } else {
+                    Session::flash("error", trans("messages.category.update_failed"));
+                }
             }
         }
     }
@@ -107,14 +114,17 @@ class CategoryController extends Controller
      */
     public function delete($id)
     {
-        $category = Category::deleteCategory($id);
+        $user = Auth::guard('admins')->user();
+        if ($user->can('deleteCategory', Admin::class)) {
+            $category = Category::deleteCategory($id);
 
-        if (isset($category)) {
-            Session::flash("success", trans("messages.category.delete_success"));
-            return response()->json();
-        } else {
-            Session::flash("error", trans("messages.category.delete_failed"));
-            return response()->json();
+            if (isset($category)) {
+                Session::flash("success", trans("messages.category.delete_success"));
+                return response()->json();
+            } else {
+                Session::flash("error", trans("messages.category.delete_failed"));
+                return response()->json();
+            }
         }
     }
 
@@ -135,13 +145,16 @@ class CategoryController extends Controller
 
     public function destroy(Request $request)
     {
-        try {
-            Category::destroy($request->input('ids'));
-            if ($request->input('ids') != DELETE_ALL) {
-                Session::flash("success", trans("messages.category.delete_success"));
+        $user = Auth::guard('admins')->user();
+        if ($user->can('deleteCategory', Admin::class)) {
+            try {
+                Category::destroy($request->input('ids'));
+                if ($request->input('ids') != DELETE_ALL) {
+                    Session::flash("success", trans("messages.category.delete_success"));
+                }
+            } catch (\Exception $e) {
+                Session::flash("error", trans("messages.category.delete_failed"));
             }
-        } catch (\Exception $e) {
-            Session::flash("error", trans("messages.category.delete_failed"));
         }
     }
 }
