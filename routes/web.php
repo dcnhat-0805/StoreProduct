@@ -14,7 +14,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+//    return view('welcome');
 });
 
 Route::group(
@@ -51,6 +51,8 @@ Route::namespace('Backend')->group(function(){
             Route::post('add', 'CategoryController@store')->name(ADMIN_CATEGORY_ADD);
             Route::post('edit/{id}', 'CategoryController@update')->name(ADMIN_CATEGORY_EDIT);
             Route::delete('delete/{id}', 'CategoryController@delete')->name(ADMIN_CATEGORY_DELETE);
+            Route::get('/list-category', 'CategoryController@getListCategory');
+            Route::delete('/destroy', 'CategoryController@destroy');
         });
     });
 });

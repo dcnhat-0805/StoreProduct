@@ -27,7 +27,7 @@ class AdminLoginMiddleware
             }
         } else
         {
-            return redirect(route(ADMIN_SHOW_LOGIN))->with('danger', trans("messages.admin.login_failed"));
+            return redirect(route(ADMIN_SHOW_LOGIN))->with('info', trans("messages.admin.login_admin"));
         }
     }
 }

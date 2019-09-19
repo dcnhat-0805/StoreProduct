@@ -1,6 +1,15 @@
-@extends('backend.layouts.app')
+@php
+    $params = $_GET;
+    unset($params['sort']);
+    unset($params['desc']);
+@endphp@extends('backend.layouts.app')
 @section('title', 'List category')
 @section('titleMenu', 'Category')
+@section('cssCustom')
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/colorpicker.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/datepicker3.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/daterangepicker/daterangepicker.css') }}"/>
+@endsection
 @section('content')
     <div class="sparkline13-list">
         <div class="sparkline13-hd">
@@ -12,13 +21,14 @@
             <div class="datatable-dashv1-list custom-datatable-overright">
                 <div id="toolbar">
                     <!-- Button to Open the Add Modal -->
-                    <button class="btn btn-default" data-toggle="modal" data-target="#add" type="button"
-                            title="Add new category"><i class="fa fa-plus"></i></button>
-                    <select class="form-control dt-tb hidden">
-                        <option value="">Export Basic</option>
-                        <option value="all">Export All</option>
-                        <option value="selected">Export Selected</option>
-                    </select>
+                    <button class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#add" type="button"
+                            title="Add new category"><i class="fa fa-plus"></i> Register
+                    </button>
+                    <!-- Button to Open the Delete Modal -->
+                    <button id="remove" class="btn btn-custon-three btn-danger"
+                            data-toggle="modal" data-target="#delete" data-id="all">
+                        <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Delete
+                    </button>
                 </div>
                 <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"
                        data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true"
@@ -30,38 +40,102 @@
                         <th data-field="state" data-checkbox="true"></th>
                         <th data-field="id">ID</th>
                         <th data-field="name" data-editable="true">Name</th>
-                        <th data-field="email" data-editable="true">Order</th>
-                        <th data-field="phone" data-editable="true">Status</th>
+                        <th data-field="order" data-editable="true">Order</th>
+                        <th data-field="created_at" data-editable="true">Created date</th>
+                        <th data-field="status" data-editable="true">Status</th>
                         <th data-field="action">Action</th>
                     </tr>
                     </thead>
                     <tbody class="list-category">
                     @if($category)
-                        @foreach($category as $category)
-                            <tr id="category-{{$category->id}}">
+                        @foreach($category as $cate)
+                            <tr id="category-{{$cate->id}}" data-id="{{ $cate->id }}">
                                 <td></td>
-                                <td>{{$category->id}}</td>
-                                <td>{{$category->category_name}}</td>
-                                <td>{{$category->category_order}}</td>
-                                <td>@if($category->category_status == 1) Display @else Not display @endif</td>
+                                <td class="text-center">{{$cate->id}}</td>
+                                <td class="">{{$cate->category_name}}</td>
+                                <td class="text-center">{{$cate->category_order}}</td>
+                                <td class="text-center">{{$cate->created_at}}</td>
+                                <td class="text-center">@if($cate->category_status == 1) Display @else Not display @endif</td>
                                 <td class="datatable-ct">
-                                    <button data-toggle="modal" title="Edit {{$category->category_name}}" class="pd-setting-ed"
+                                    <button data-toggle="modal" title="Edit {{$cate->category_name}}" class="pd-setting-ed"
                                             data-original-title="Edit" data-target="#edit"
-                                            data-id="{{$category->id}}" data-name="{{$category->category_name}}"
-                                            data-order="{{$category->category_order}}" data-status="{{$category->category_status}}"
-                                            data-url="{{route(ADMIN_CATEGORY_EDIT, ['id' => $category->id])}}"
+                                            data-id="{{$cate->id}}" data-name="{{$cate->category_name}}"
+                                            data-order="{{$cate->category_order}}" data-status="{{$cate->category_status}}"
+                                            data-url="{{route(ADMIN_CATEGORY_EDIT, ['id' => $cate->id])}}"
                                             type="button">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                    <button data-toggle="modal" title="Delete {{$category->category_name}}" class="pd-setting-ed"
-                                            data-id="{{$category->id}}" data-url="{{route(ADMIN_CATEGORY_DELETE, ['id' => $category->id])}}"
-                                            data-original-title="Trash" data-target="#delete" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </button>
+{{--                                    <button data-toggle="modal" title="Delete {{$cate->category_name}}" class="pd-setting-ed"--}}
+{{--                                            data-id="{{$cate->id}}" data-url="{{route(ADMIN_CATEGORY_DELETE, ['id' => $cate->id])}}"--}}
+{{--                                            data-original-title="Trash" data-target="#delete" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>--}}
+{{--                                    </button>--}}
                                 </td>
                             </tr>
                         @endforeach
                     @endif
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <div class="pagination-wrapper header" style="margin-top: 20px;">
+                    <nav class="nav-pagination store-unit clearfix" aria-label="Page navigation">
+                        <span class="info">{{ $category->currentPage() }} / {{ $category->lastPage() }}pages（total of {{ $category->total() }}）</span>
+                        <ul class="pull-right">
+                            <li> {{ $category->appends($_GET)->links('backend.pagination') }}</li>
+                        </ul>
+                    </nav>
+                </div>
+                <!--/ Pagination -->
+            </div>
+        </div>
+    </div>
+    <!-- Search Modal-->
+    <div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="min-width: 700px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="text-transform: capitalize;">Search</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="margin: 5px">
+                        <div class="col-lg-12">
+                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_CATEGORY_INDEX) }}">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="name">Keyword</label>
+                                            <input type="text" class="form-control" name="keyword" value="{{ request()->get('keyword') }}">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="name">Created at</label>
+                                            <input type="text" readonly class="form-control jsDatepcker" name="created_at" value="{{ request()->get('created_at') }}" >
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <input type="checkbox" class="i-checks" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
+                                            <label for="status" style="margin-right: 20px;">Display</label>
+                                            <input type="checkbox" class="i-checks"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
+                                            <label for="status">Not display</label>
+                                        </div>
+                                    </div>
+                                </div><!-- /.box-body -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-custon-three btn-success" id="btnSearch"><i
+                                            class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
+                                    </button>
+                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" onclick="window.location.href = '{{route(ADMIN_CATEGORY_INDEX)}}'"><i
+                                            class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -122,7 +196,7 @@
             </div>
         </div>
     </div>
-    <!-- Add Modal-->
+    <!-- Edit Modal-->
     <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" style="min-width: 700px;">
             <div class="modal-content">
@@ -216,5 +290,8 @@
     </div>
 @endsection
 @section('jsCustom')
-    <script src="{{ \App\Helpers\Helper::asset('backend/js/category.js') }}"></script>
+    <script src="backend/js/calendar/moment.min.js"></script>
+    <script src="{{ App\Helpers\Helper::asset('backend/js/category.js') }}"></script>
+    <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/daterangepicker.min.js') }}"></script>
+    <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/datepicker_range.js') }}"></script>
 @endsection

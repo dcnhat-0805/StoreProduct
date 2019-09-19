@@ -32,8 +32,7 @@
 	$('#data_4 .input-group.date').datepicker({
 		minViewMode: 1,
 		keyboardNavigation: false,
-		forceParse: false,
-		forceParse: false,
+        forceParse: false,
 		autoclose: true,
 		todayHighlight: true
 	});

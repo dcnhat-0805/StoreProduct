@@ -311,10 +311,13 @@
         sidePagination: 'client', // client or server
         totalRows: 0, // server side need to set
         pageNumber: 1,
-        pageSize: 10,
-        pageList: [10, 25, 50, 100],
+        // pageSize: 2,
+        // pageList: [2, 4, 6, 8, 10],
+        pageSize: 50,
+        pageList: [50, 100, 150, 200, 250],
         paginationHAlign: 'right', //right, left
-        paginationVAlign: 'bottom', //bottom, top, both
+        // paginationVAlign: 'bottom', //bottom, top, both
+        paginationVAlign: false, //bottom, top, both
         paginationDetailHAlign: 'left', //right, left
         paginationPreText: '&lsaquo;',
         paginationNextText: '&rsaquo;',
@@ -814,14 +817,14 @@
                     "tabindex='0'",
                     '>');
 
-                html.push(sprintf('<div class="th-inner %s">', that.options.sortable && column.sortable ?
+                html.push(sprintf('<div class="th-inner %s text-center">', that.options.sortable && column.sortable ?
                     'sortable both' : ''));
 
                 text = that.options.escape ? escapeHTML(column.title) : column.title;
 
                 if (column.checkbox) {
                     if (!that.options.singleSelect && that.options.checkboxHeader) {
-                        text = '<input name="btSelectAll" type="checkbox" />';
+                        text = '<input name="btSelectAll" type="checkbox" class="btSelectAll"/>';
                     }
                     that.header.stateField = column.field;
                 }
@@ -1393,7 +1396,7 @@
                     } else {
                         active = page === that.options.pageSize ? ' class="active"' : '';
                     }
-                    pageNumber.push(sprintf('<li role="menuitem"%s><a href="#">%s</a></li>', active, page));
+                    pageNumber.push(sprintf('<li role="menuitem"%s><a >%s</a></li>', active, page));
                 }
             });
             pageNumber.push('</ul></span>');
@@ -1404,7 +1407,7 @@
             html.push('</div>',
                 '<div class="pull-' + this.options.paginationHAlign + ' pagination">',
                 '<ul class="pagination' + sprintf(' pagination-%s', this.options.iconSize) + '">',
-                '<li class="page-pre"><a href="#">' + this.options.paginationPreText + '</a></li>');
+                '<li class="page-pre"><a>' + this.options.paginationPreText + '</a></li>');
 
             if (this.totalPages < 5) {
                 from = 1;
@@ -1424,8 +1427,8 @@
 
             if (this.totalPages >= 6) {
                 if (this.options.pageNumber >= 3) {
-                    html.push('<li class="page-first' + (1 === this.options.pageNumber ? ' active' : '') + '">',
-                        '<a href="#">', 1, '</a>',
+                    html.push('<li class="page page-first' + (1 === this.options.pageNumber ? ' active' : '') + '">',
+                        '<a>', 1, '</a>',
                         '</li>');
 
                     from++;
@@ -1435,8 +1438,8 @@
                     if (this.options.pageNumber == 4 || this.totalPages == 6 || this.totalPages == 7) {
                         from--;
                     } else {
-                        html.push('<li class="page-first-separator disabled">',
-                            '<a href="#">...</a>',
+                        html.push('<li class="page page-first-separator disabled">',
+                            '<a>...</a>',
                             '</li>');
                     }
 
@@ -1460,30 +1463,32 @@
                 }
             }
 
+            let currentPage = Commons.getArrayValueLocalStorage(PAGE_IDS);
+            currentPage = parseInt(currentPage, 10);
             for (i = from; i <= to; i++) {
-                html.push('<li class="page-number' + (i === this.options.pageNumber ? ' active' : '') + '">',
-                    '<a href="#">', i, '</a>',
+                html.push('<li class="page page-number' + (i === this.options.pageNumber ? ' active' : '') + '">',
+                    '<a>', i, '</a>',
                     '</li>');
             }
 
             if (this.totalPages >= 8) {
                 if (this.options.pageNumber <= (this.totalPages - 4)) {
-                    html.push('<li class="page-last-separator disabled">',
-                        '<a href="#">...</a>',
+                    html.push('<li class="page page-last-separator disabled">',
+                        '<a>...</a>',
                         '</li>');
                 }
             }
 
             if (this.totalPages >= 6) {
                 if (this.options.pageNumber <= (this.totalPages - 3)) {
-                    html.push('<li class="page-last' + (this.totalPages === this.options.pageNumber ? ' active' : '') + '">',
-                        '<a href="#">', this.totalPages, '</a>',
+                    html.push('<li class="page page-last' + (this.totalPages === this.options.pageNumber ? ' active' : '') + '">',
+                        '<a>', this.totalPages, '</a>',
                         '</li>');
                 }
             }
 
             html.push(
-                '<li class="page-next"><a href="#">' + this.options.paginationNextText + '</a></li>',
+                '<li class="page-next"><a>' + this.options.paginationNextText + '</a></li>',
                 '</ul>',
                 '</div>');
         }
@@ -1749,8 +1754,12 @@
                     '<input' +
                     sprintf(' data-index="%s"', i) +
                     sprintf(' name="%s"', that.options.selectItemName) +
+                    sprintf(' class="%s"', that.options.selectItemName) +
                     sprintf(' type="%s"', type) +
                     sprintf(' value="%s"', item[that.options.idField]) +
+                    sprintf(' id="id-%s"', item['id']) +
+                    sprintf(' value="%s"', item['id']) +
+                    sprintf(' data-id="%s"', item['id']) +
                     sprintf(' checked="%s"', value === true ||
                         (value_ || value && value.checked) ? 'checked' : undefined) +
                     sprintf(' disabled="%s"', !column.checkboxEnabled ||

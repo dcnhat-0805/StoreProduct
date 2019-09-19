@@ -82,7 +82,6 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/responsive.css">
-    <link rel="stylesheet" href="backend/css/vendor-custom.min.css">
 
     <!-- modernizr JS
 		============================================ -->
@@ -198,6 +197,10 @@
     ============================================ -->
 <script src="backend/js/notifications/Lobibox.js"></script>
 <script src="backend/js/notifications/notification-active.js"></script>
+<!-- icheck JS
+    ============================================ -->
+<script src="backend/js/icheck/icheck.min.js"></script>
+<script src="backend/js/icheck/icheck-active.js"></script>
 <!-- tawk chat JS
     ============================================ -->
 {{--    <script src="backend/js/tawk-chat.js"></script>--}}
@@ -205,6 +208,8 @@
     ============================================ -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 <script src="backend/js/backend/common.js"></script>
+<script src="backend/js/calendar/moment.min.js"></script>
+<script src="{{ App\Helpers\Helper::asset('backend/js/datepicker/jquery-ui.min.js') }}"></script>
 @yield('jsCustom')
 
 @if(Session::has('success'))

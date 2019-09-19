@@ -120,7 +120,7 @@
     -webkit-border-bottom-left-radius: 5rem;
     -moz-border-radius-bottomleft: 5rem;
     border-bottom-left-radius: 5rem;
-    background-image: url(/images/icon_arrow_pagination_prev.svg);
+    background-image: url(../img/icon_arrow_pagination_prev.svg);
     background-repeat: no-repeat;
     background-position: 0 0;
     background-size: 24px auto
@@ -137,7 +137,7 @@
     -webkit-border-bottom-right-radius: 5rem;
     -moz-border-radius-bottomright: 5rem;
     border-bottom-right-radius: 5rem;
-    background-image: url(/images/icon_arrow_pagination_next.svg);
+    background-image: url(../img/icon_arrow_pagination_next.svg);
     background-repeat: no-repeat;
     background-position: 0 0;
     background-size: 24px auto
@@ -155,11 +155,11 @@
 
 .pagination-sm .page-item.disabled span {
     display: block;
-    background: white url(/images/icon_pagination_disabled.svg) no-repeat center center;
+    background: white url(../img/icon_pagination_disabled.svg) no-repeat center center;
     background-size: 20px auto;
     border: 1px solid #e7ecf1;
     font-size: 13px;
-    text-indent: -9999px;
+    /*text-indent: -9999px;*/
     margin: 0 0 0 -1px;
     padding: .5rem .4rem;
     line-height: 1
@@ -171,7 +171,7 @@
 }
 
 .pagination-sm .page-item:first-child.disabled span {
-    background-image: url(/images/icon_arrow_pagination_prev.svg);
+    background-image: url(../img/icon_arrow_pagination_prev.svg);
     -webkit-border-top-left-radius: 5rem;
     -moz-border-radius-topleft: 5rem;
     border-top-left-radius: 5rem;
@@ -181,7 +181,7 @@
 }
 
 .pagination-sm .page-item:last-child.disabled span {
-    background-image: url(/images/icon_arrow_pagination_next.svg);
+    background-image: url(../img/icon_arrow_pagination_next.svg);
     -webkit-border-top-right-radius: 5rem;
     -moz-border-radius-topright: 5rem;
     border-top-right-radius: 5rem;
@@ -245,7 +245,7 @@
 }
 
 .custom-checkbox .custom-control-input:checked ~ .custom-control-label:after {
-    background-image: url(/images/icon_check.svg);
+    background-image: url(../img/icon_check.svg);
     background-size: 100% auto
 }
 
@@ -274,7 +274,7 @@
     border: 1px solid #d1d1d1;
     border-radius: 50%;
     background-color: white;
-    background-image: url(/images/icon_radio.svg);
+    background-image: url(../img/icon_radio.svg);
     background-size: 100% auto
 }
 
@@ -308,7 +308,7 @@
 }
 
 .custom-select.caba2-custom {
-    background-image: url(/images/icon_arrow_select.svg);
+    background-image: url(../img/icon_arrow_select.svg);
     background-repeat: no-repeat;
     background-size: 30px auto;
     background-position: center right;
@@ -334,7 +334,7 @@
 .custom-select.caba2-custom[disabled] {
     cursor: default;
     background-color: white;
-    background-image: url(/images/icon_arrow_select_disabled.svg);
+    background-image: url(../img/icon_arrow_select_disabled.svg);
     border-color: #d1d1d1;
     color: #d1d1d1
 }
@@ -389,7 +389,7 @@ label.required.after::after {
 }
 
 .fa-analytics {
-    background: url(/images/fa-analytics.svg) no-repeat 0 -1px;
+    background: url(../img/fa-analytics.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -398,7 +398,7 @@ label.required.after::after {
 }
 
 .fa-bell {
-    background: url(/images/fa-bell.svg) no-repeat 0 -1px;
+    background: url(../img/fa-bell.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -407,7 +407,7 @@ label.required.after::after {
 }
 
 .fa-books {
-    background: url(/images/fa-books.svg) no-repeat 0 -1px;
+    background: url(../img/fa-books.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -416,7 +416,7 @@ label.required.after::after {
 }
 
 .fa-calendar-edit {
-    background: url(/images/fa-calendar-edit.svg) no-repeat 0 -1px;
+    background: url(../img/fa-calendar-edit.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -425,7 +425,7 @@ label.required.after::after {
 }
 
 .fa-cast {
-    background: url(/images/fa-cast.svg) no-repeat 0 -1px;
+    background: url(../img/fa-cast.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -434,7 +434,7 @@ label.required.after::after {
 }
 
 .fa-chart-bar {
-    background: url(/images/fa-chart-bar.svg) no-repeat 0 -1px;
+    background: url(../img/fa-chart-bar.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -443,7 +443,7 @@ label.required.after::after {
 }
 
 .fa-code {
-    background: url(/images/fa-code.svg) no-repeat 0 -1px;
+    background: url(../img/fa-code.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -452,7 +452,7 @@ label.required.after::after {
 }
 
 .fa-door-closed {
-    background: url(/images/fa-door-closed.svg) no-repeat 0 -1px;
+    background: url(../img/fa-door-closed.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -461,7 +461,7 @@ label.required.after::after {
 }
 
 .fa-edit {
-    background: url(/images/fa-edit.svg) no-repeat 0 -1px;
+    background: url(../img/fa-edit.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -470,7 +470,7 @@ label.required.after::after {
 }
 
 .fa-id-card {
-    background: url(/images/fa-id-card.svg) no-repeat 0 -1px;
+    background: url(../img/fa-id-card.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -479,7 +479,7 @@ label.required.after::after {
 }
 
 .fa-list-ul {
-    background: url(/images/fa-list-ul.svg) no-repeat 0 -1px;
+    background: url(../img/fa-list-ul.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -488,7 +488,7 @@ label.required.after::after {
 }
 
 .fa-home {
-    background: url(/images/fa-home.svg) no-repeat 0 -1px;
+    background: url(../img/fa-home.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -497,7 +497,7 @@ label.required.after::after {
 }
 
 .fa-sync-alt {
-    background: url(/images/fa-sync-alt.svg) no-repeat 0 -1px;
+    background: url(../img/fa-sync-alt.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -506,7 +506,7 @@ label.required.after::after {
 }
 
 .fa-tachometer-alt-fast {
-    background: url(/images/fa-tachometer-alt-fast.svg) no-repeat 0 -1px;
+    background: url(../img/fa-tachometer-alt-fast.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -515,7 +515,7 @@ label.required.after::after {
 }
 
 .fa-user-cog {
-    background: url(/images/fa-user-cog.svg) no-repeat 0 -1px;
+    background: url(../img/fa-user-cog.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -524,7 +524,7 @@ label.required.after::after {
 }
 
 .fa-window-restore {
-    background: url(/images/fa-window-restore.svg) no-repeat 0 -1px;
+    background: url(../img/fa-window-restore.svg) no-repeat 0 -1px;
     background-size: auto 22px
 }
 
@@ -669,7 +669,7 @@ label.required.after::after {
 }
 
 input.datepicker {
-    background: url(/images/icon_calendar.svg) no-repeat 15px center;
+    background: url(../img/icon_calendar.svg) no-repeat 15px center;
     background-size: 30px auto;
     border: 1px solid #a0cff2 !important;
     border-radius: 20px;
@@ -687,7 +687,7 @@ input.datepicker.month {
 }
 
 input.datepicker.sm:not(.plan):not(.rate_plan), input.datepicker.md:not(.plan):not(.rate_plan) {
-    background-image: url(/images/icon_calendar.svg), url(/images/icon_arrow_select.svg);
+    background-image: url(../img/icon_calendar.svg), url(../img/icon_arrow_select.svg);
     background-size: 30px auto, 30px auto;
     background-position: 15px center, right center
 }
@@ -761,13 +761,13 @@ div.datepicker table tr th.prev, div.datepicker table tr th.next {
 }
 
 div.datepicker table tr th.prev, div.datepicker table tr th.prev:hover {
-    background-image: url(/images/icon_arrow_calendar_prev.svg);
+    background-image: url(../img/icon_arrow_calendar_prev.svg);
     background-size: 30px auto;
     background-position: center center
 }
 
 div.datepicker table tr th.next, div.datepicker table tr th.next:hover {
-    background-image: url(/images/icon_arrow_calendar_next.svg);
+    background-image: url(../img/icon_arrow_calendar_next.svg);
     background-size: 30px auto;
     background-position: center center
 }
@@ -872,7 +872,7 @@ input.daterange {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
-    background: url(/images/icon_calendar.svg) no-repeat 15px center;
+    background: url(../img/icon_calendar.svg) no-repeat 15px center;
     background-size: 30px auto;
     border: 1px solid #a0cff2;
     border-radius: 20px;
@@ -883,7 +883,7 @@ input.daterange {
 }
 
 input.daterange.sm:not(.plan):not(.rate_plan), input.daterange.md:not(.plan):not(.rate_plan) {
-    background-image: url(/images/icon_calendar.svg), url(/images/icon_arrow_select.svg);
+    background-image: url(../img/icon_calendar.svg), url(../img/icon_arrow_select.svg);
     background-size: 30px auto, 30px auto;
     background-position: 15px center, right center
 }
@@ -953,13 +953,13 @@ input.daterange:active, input.daterange:focus {
 }
 
 .daterangepicker .calendar-table thead th.available.prev {
-    background-image: url(/images/icon_arrow_calendar_prev.svg);
+    background-image: url(../img/icon_arrow_calendar_prev.svg);
     background-size: 30px auto;
     background-position: center center
 }
 
 .daterangepicker .calendar-table thead th.available.next {
-    background-image: url(/images/icon_arrow_calendar_next.svg);
+    background-image: url(../img/icon_arrow_calendar_next.svg);
     background-size: 30px auto;
     background-position: center center
 }
@@ -1173,7 +1173,7 @@ input.daterange:active, input.daterange:focus {
 }
 
 .dropzone .dz-message .btn.btn-secondary.image .icon {
-    background-image: url(/images/icon_file_upload.svg);
+    background-image: url(../img/icon_file_upload.svg);
     margin-left: 5px;
     margin-right: 10px
 }
@@ -1220,7 +1220,7 @@ input.daterange:active, input.daterange:focus {
 
 .dropzone.previews .dz-preview .dz-remove {
     position: absolute;
-    background: url(/images/icon_file_delete.svg) no-repeat 0 0;
+    background: url(../img/icon_file_delete.svg) no-repeat 0 0;
     background-size: 30px auto;
     text-indent: -9999px;
     width: 30px;
@@ -1366,7 +1366,7 @@ div.calendar .fc-toolbar .fc-left .fc-toolbar > * > :not(:first-child) {
 }
 
 div.calendar .fc-toolbar .fc-left .fc-prev-button, div.calendar .fc-toolbar .fc-left .fc-next-button {
-    background-image: url(/images/icon_arrow_calendar_management.svg);
+    background-image: url(../img/icon_arrow_calendar_management.svg);
     background-repeat: no-repeat;
     background-size: 64px;
     height: 32px;
@@ -1449,7 +1449,7 @@ div.calendar table td.holiday, div.calendar table div.holiday {
 div.calendar table td.holiday:before {
     content: '';
     display: block;
-    background: url(/images/icon_holiday.svg) no-repeat 7px 7px;
+    background: url(../img/icon_holiday.svg) no-repeat 7px 7px;
     background-size: 18px auto;
     width: 30px;
     height: 30px
@@ -1649,7 +1649,7 @@ div.calendar .fc-highlight {
 }
 
 .select2-container--bootstrap4 .select2-selection--single {
-    background-image: url(/images/icon_arrow_select.svg);
+    background-image: url(../img/icon_arrow_select.svg);
     background-repeat: no-repeat;
     background-size: 30px auto;
     background-position: center right;
@@ -1782,7 +1782,7 @@ select.select2.is-invalid + .select2-container--bootstrap4 .select2-selection--s
 .caba2-tooltip {
     display: inline-block;
     vertical-align: top;
-    background: url(/images/icon_tooltip.svg) no-repeat 0 0;
+    background: url(../img/icon_tooltip.svg) no-repeat 0 0;
     background-size: 30px auto;
     cursor: pointer;
     text-indent: -9999px;

@@ -1,11 +1,14 @@
 (function ($) {
  "use strict";
- 
+
 	// Datepickers
 		$('#start').datepicker({
 			dateFormat: 'dd.mm.yy',
 			prevText: '<i class="fa fa-chevron-left"></i>',
 			nextText: '<i class="fa fa-chevron-right"></i>',
+            clearBtn: true,
+            multidateSeparator: true,
+            todayHighlight: true,
 			onSelect: function( selectedDate )
 			{
 				$('#finish').datepicker('option', 'minDate', selectedDate);
@@ -20,5 +23,5 @@
 				$('#start').datepicker('option', 'maxDate', selectedDate);
 			}
 		});
- 
-})(jQuery); 
+
+})(jQuery);

@@ -36,14 +36,14 @@
 {{--                        </ul>--}}
 {{--                    </li>--}}
                     <?php
-                        $isShowpages = in_array(request()->route()->getPrefix(), ['admin/category']);
+                        $isShowPages = in_array(request()->route()->getPrefix(), ['admin/category']);
                     ?>
-                    <li class=" {{ $isShowpages ? 'active' : '' }} ">
+                    <li>
                         <a class="has-arrow" href="#" aria-expanded="false">
                             <span class="educate-icon educate-pages icon-wrap"></span>
                             <span class="mini-click-non">Pages</span>
                         </a>
-                        <ul class="submenu-angle {{ $isShowpages ? 'in show' : '' }}" aria-expanded="false">
+                        <ul class="submenu-angle {{ $isShowPages ? 'show' : '' }}" aria-expanded="false">
                             <li class="{{request()->route()->getPrefix() == 'admin/category' ? 'active' : ''}}">
                                 <a title="Category" href="{{route(ADMIN_CATEGORY_INDEX)}}">
                                     <span class="mini-sub-pro">Category</span>
@@ -55,12 +55,12 @@
                     <?php
                         $isShowUser = in_array(request()->route()->uri(), ['admin/list']);
                     ?>
-                    <li class=" {{ $isShowUser ? 'active' : '' }} ">
+                    <li>
                         <a class="has-arrow" href="#" aria-expanded="false">
                             <span class="educate-icon educate-professor icon-wrap"></span>
                             <span class="mini-click-non">User</span>
                         </a>
-                        <ul class="submenu-angle {{ $isShowUser ? 'in show' : '' }}" aria-expanded="false">
+                        <ul class="submenu-angle {{ $isShowUser ? 'show' : '' }}" aria-expanded="false">
                             @if ($user->can('viewAdmin', $admin))
                                 <li class="{{request()->route()->uri() == 'admin/list' ? 'active' : ''}}">
                                     <a title="Login" href="{{route(ADMIN_INDEX)}}">
