@@ -10,12 +10,6 @@ class CategoryPolicy
 {
     use HandlesAuthorization;
 
-    public function before(Admin $admin)
-    {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
-            return true;
-        }
-    }
     /**
      * Determine whether the user can view the category.
      *
@@ -24,6 +18,10 @@ class CategoryPolicy
      */
     public function viewCategory(Admin $admin)
     {
+        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
+            return true;
+        }
+
         return false;
     }
 
@@ -35,6 +33,10 @@ class CategoryPolicy
      */
     public function createCategory(Admin $admin)
     {
+        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+            return true;
+        }
+
         return false;
     }
 
@@ -47,6 +49,10 @@ class CategoryPolicy
      */
     public function updateCategory(Admin $admin)
     {
+        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+            return true;
+        }
+
         return false;
     }
 
@@ -59,6 +65,10 @@ class CategoryPolicy
      */
     public function deleteCategory(Admin $admin)
     {
+        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+            return true;
+        }
+
         return false;
     }
 
@@ -71,6 +81,10 @@ class CategoryPolicy
      */
     public function restoreCategory(Admin $admin)
     {
+        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+            return true;
+        }
+
         return false;
     }
 
@@ -82,6 +96,10 @@ class CategoryPolicy
      */
     public function forceDeleteCategory(Admin $admin)
     {
+        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+            return true;
+        }
+
         return false;
     }
 }

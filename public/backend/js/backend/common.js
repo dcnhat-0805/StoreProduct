@@ -53,7 +53,7 @@ const BANNED_MAIL_IDS = 'banned_mail.ids';
 const BANNED_MAIL_DELETE_ALL = 'banned_mail.delete_all';
 const PAGE_IDS = 'page.ids';
 $.urlParam = function(name){
-    var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
+    let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     if (results==null){
         return null;
     }
@@ -65,9 +65,9 @@ $.urlParam = function(name){
 /*
 Commons modules
 */
-var Commons = (function ($) {
+let Commons = (function ($) {
 
-    var modules = {};
+    let modules = {};
 
     modules.setLocalStorageListIds = function ($key, $value) {
         localStorage.setItem($key, JSON.stringify($value));
@@ -78,7 +78,7 @@ var Commons = (function ($) {
     };
 
     modules.getArrayValueLocalStorage = function (key) {
-        var $value = [];
+        let $value = [];
 
         if (JSON.parse(localStorage.getItem(key))) {
             $value = JSON.parse(localStorage.getItem(key));
@@ -88,7 +88,7 @@ var Commons = (function ($) {
     };
 
     modules.getSingleValueLocalStorage = function (key) {
-        var $value = NOT_DELETE_ALL;
+        let $value = NOT_DELETE_ALL;
 
         if (localStorage.getItem(key)) {
             $value = localStorage.getItem(key);
@@ -113,15 +113,22 @@ var Commons = (function ($) {
         }
     };
 
+    modules.removeCheckedAndLocalStorage = function() {
+        $('input[name=btSelectItem], input[name=btSelectAll]').prop('checked', false);
+        btnDelete.attr('disabled', true);
+        Commons.removeLocalStorage(CATEGORY_IDS);
+        Commons.removeLocalStorage(CATEGORY_DELETE_ALL);
+    };
+
     $('#add, #edit, #delete').on('hide.bs.modal', function(e) {
         $('.error').addClass('hidden');
         $('.error').text('');
         $('.invalid-feedback').text('');
         $('input').removeClass('is-invalid');
-        // $('input[name=btSelectItem], input[name=btSelectAll]').prop('checked', false);
         $('input[name=id]').val('');
         $('#url_edit, #urlDelete').val('');
         $('form').trigger("reset");
+        modules.removeCheckedAndLocalStorage();
     });
 
     return modules;
