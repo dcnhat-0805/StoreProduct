@@ -29,10 +29,7 @@ let CategoryJs = (function ($) {
     };
 
     $('#edit').on('show.bs.modal', function (e) {
-        $('input[name=btSelectItem], input[name=btSelectAll]').prop('checked', false);
-        btnDelete.attr('disabled', true);
-        Commons.removeLocalStorage(CATEGORY_IDS);
-        Commons.removeLocalStorage(CATEGORY_DELETE_ALL);
+        Commons.removeCheckedAndLocalStorage();
         let id = $(e.relatedTarget).data('id');
         let name = $(e.relatedTarget).data('name');
         let order = $(e.relatedTarget).data('order');
@@ -66,6 +63,7 @@ let CategoryJs = (function ($) {
     };
 
     $('#delete').on('show.bs.modal', function (e) {
+        Commons.removeCheckedAndLocalStorage();
         let id = $(e.relatedTarget).data('id');
         let url = $(e.relatedTarget).data('url');
         $(e.currentTarget).find('input[name="id"]').val(id);
@@ -206,24 +204,6 @@ let CategoryJs = (function ($) {
         });
     };
 
-    modules.reloadPage = function () {
-        $(".page").each(function(index, value) {
-            console.log(value);
-            let currentPage = $(this).text();
-            let newPage = Commons.getArrayValueLocalStorage(PAGE_IDS);
-            // console.log(currentPage, newPage);
-
-            (newPage != currentPage && $(this).hasClass('active')) ? $(this).removeClass('active') : $(this).addClass('active');
-            // if (!newPage) {
-            //     newPage = 1;
-            // }
-            //
-            // if (newPage == currentPage) {
-            //     $(this).addClass('active');
-            // }
-        });
-    };
-
     return modules;
 })(window.jQuery, window, document);
 
@@ -234,7 +214,6 @@ $.ajaxSetup({
 });
 $(document).ready(function () {
     CategoryJs.reloadSelectAllCheckBox();
-    // CategoryJs.reloadPage();
 
    btnAddCategory.on('click', function () {
        $(this).button('Loading');

@@ -61,7 +61,7 @@
                                 <td class="text-center">{{$cate->category_order}}</td>
                                 <td class="text-center">{{$cate->created_at}}</td>
                                 <td class="text-center">@if($cate->category_status == 1) Display @else Not display @endif</td>
-                                <td class="datatable-ct">
+                                <td class="datatable-ct text-center">
                                     <button data-toggle="modal" title="Edit {{$cate->category_name}}" class="pd-setting-ed"
                                             data-original-title="Edit" data-target="#edit"
                                             data-id="{{$cate->id}}" data-name="{{$cate->category_name}}"
@@ -71,7 +71,8 @@
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                     <button data-toggle="modal" title="Delete {{$cate->category_name}}" class="pd-setting-ed"
                                             data-id="{{$cate->id}}" data-url="{{route(ADMIN_CATEGORY_DELETE, ['id' => $cate->id])}}"
-                                            data-original-title="Trash" data-target="#delete" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            data-original-title="Trash" data-target="#delete" type="button">
+                                        <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </button>
                                 </td>
                             </tr>
@@ -298,8 +299,10 @@
     </div>
 @endsection
 @section('jsCustom')
-    <script src="backend/js/calendar/moment.min.js"></script>
-    <script src="{{ App\Helpers\Helper::asset('backend/js/category.js') }}"></script>
+    <script src="{{ App\Helpers\Helper::asset('backend/js/backend/category.js') }}"></script>
+    @if ($user->cannot('updateCategory', Category::class))
+        <script src="{{ App\Helpers\Helper::asset('backend/js/backend/disabled_checkbox.js') }}"></script>
+    @endif
     <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/daterangepicker.min.js') }}"></script>
     <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/datepicker_range.js') }}"></script>
 @endsection
