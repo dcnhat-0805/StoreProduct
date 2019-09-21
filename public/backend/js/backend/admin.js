@@ -1,6 +1,9 @@
 let btnAddAdmin = $('.btn-add-admin');
 let btnEditAdmin = $('.btn-edit-admin');
 let btnDeleteAdmin = $('.btn-delete-admin');
+const btnDelete = $('#removeAdmin');
+const btnClear = $('#btnClear');
+const btnSearch = $('#btnSearch');
 
 let AdminJs = (function ($) {
     let modules = {};
@@ -22,6 +25,7 @@ let AdminJs = (function ($) {
                 Commons.getErrorMessage(error, error.email, '.error-email');
                 Commons.getErrorMessage(error, error.password, '.error-password');
                 Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
+                Commons.getErrorMessage(error, error.admin_group_id, '.error-permission');
             }
         });
     };
@@ -59,13 +63,16 @@ let AdminJs = (function ($) {
                 Commons.getErrorMessage(error, error.email, '.error-email');
                 Commons.getErrorMessage(error, error.password, '.error-password');
                 Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
+                Commons.getErrorMessage(error, error.admin_group_id, '.error-permission');
             }
         });
     };
 
     $('#delete').on('show.bs.modal', function (e) {
         let id = $(e.relatedTarget).data('id');
-        $(e.currentTarget).find('input[name="id"]').val(id);
+        if (Number.isInteger(id) === true) {
+            $(e.currentTarget).find('input[name="id"]').val(id);
+        }
     });
 
     modules.deleteAdmin = function (id) {
@@ -82,6 +89,101 @@ let AdminJs = (function ($) {
             },
             error : function (data) {
                 btnDeleteAdmin.prop('disabled', true);
+                location.reload();
+            }
+        });
+    };
+
+    modules.reloadSelectAllCheckBox = function () {
+        let isCheckAll = Commons.getSingleValueLocalStorage(ADMIN_DELETE_ALL);
+
+        if (isCheckAll == NOT_DELETE_ALL) {
+            let ids_admin = Commons.getArrayValueLocalStorage(ADMIN_IDS);
+
+            if (ids_admin.length) {
+                btnDelete.attr('disabled', false);
+            } else {
+                btnDelete.attr('disabled', true);
+            }
+
+            $('.btSelectItem').each(function (k, v) {
+                let id = $(v).data("id");
+                if (ids_admin.indexOf(id) != -1) {
+                    $(v).prop('checked', true);
+                } else {
+                    $(v).prop('checked', false);
+                }
+            });
+        } else {
+            $('.btSelectAll').prop('checked', true);
+            btnDelete.attr('disabled', false);
+            $('.btSelectItem').each(function (k, v) {
+                $(v).prop('checked', true);
+            });
+        }
+    };
+
+    modules.checkboxAdmin = function (checkbox) {
+        Commons.setLocalStorageDeleteAll(ADMIN_DELETE_ALL, NOT_DELETE_ALL);
+        let id = checkbox.data("id");
+        let ids_admin = Commons.getArrayValueLocalStorage(ADMIN_IDS);
+
+        if (checkbox.is(':checked')) {
+            ids_admin.push(id);
+            Commons.setLocalStorageListIds(ADMIN_IDS, ids_admin);
+        } else {
+            let idRemove = ids_admin.indexOf(id);
+            if (idRemove != -1) {
+                ids_admin.splice(idRemove, 1);
+                Commons.setLocalStorageListIds(ADMIN_IDS, ids_admin);
+            }
+            $('.btSelectAll').prop('checked', false);
+        }
+        modules.reloadSelectAllCheckBox();
+    };
+
+    modules.checkAllCatrgory = function () {
+        if ($('.btSelectAll').is(':checked')) {
+            modules.getAllListAdmin();
+            $('.btSelectAll').prop('checked', true);
+            Commons.setLocalStorageDeleteAll(ADMIN_DELETE_ALL, IS_DELETE_ALL);
+        } else {
+            Commons.setLocalStorageDeleteAll(ADMIN_DELETE_ALL, NOT_DELETE_ALL);
+            $('.btSelectAll').prop('checked', false);
+            Commons.setLocalStorageListIds(ADMIN_IDS, []);
+        }
+
+        modules.reloadSelectAllCheckBox();
+    };
+
+    modules.getAllListAdmin = function () {
+        let url = new URL(window.location.href);
+        $.ajax({
+            url: "/admin/list_admin",
+            dataType : 'JSON',
+            type: "GET",
+            success : function (data) {
+                Commons.setLocalStorageListIds(ADMIN_IDS, data);
+                Commons.setLocalStorageDeleteAll(ADMIN_DELETE_ALL, IS_DELETE_ALL);
+            }
+        });
+    };
+
+    modules.destroyAdmin = function () {
+        let data = {};
+        data['delete_all'] = Commons.getSingleValueLocalStorage(ADMIN_DELETE_ALL);
+        data['ids'] = Commons.getArrayValueLocalStorage(ADMIN_IDS);
+
+        $.ajax({
+            url: "/admin/destroy",
+            type: "DELETE",
+            data: data,
+            success : function (data) {
+                Commons.removeLocalStorage(ADMIN_IDS);
+                Commons.removeLocalStorage(ADMIN_DELETE_ALL);
+                location.reload();
+            },
+            error : function (data) {
                 location.reload();
             }
         });
@@ -104,7 +206,9 @@ $(document).ready(function () {
 
     btnDeleteAdmin.on('click', function () {
         let id = $('#admin_id').val();
-        if (id != null) {
+        if (!id) {
+            AdminJs.destroyAdmin();
+        } else {
             AdminJs.deleteAdmin(id);
         }
     });
@@ -113,5 +217,25 @@ $(document).ready(function () {
         let url = $('#url_edit').val();
         let formData = $('#edit_admin').serialize();
         AdminJs.editAdmin(url, formData);
+    });
+
+    AdminJs.reloadSelectAllCheckBox();
+
+    $('.btSelectItem').on('change', function () {
+        AdminJs.checkboxAdmin($(this));
+    });
+
+    $('.btSelectAll').change(function () {
+        AdminJs.checkAllCatrgory();
+    });
+
+    btnClear.on('click', function () {
+        Commons.removeLocalStorage(ADMIN_IDS);
+        Commons.removeLocalStorage(ADMIN_DELETE_ALL);
+    });
+
+    btnSearch.on('click', function () {
+        Commons.removeLocalStorage(ADMIN_IDS);
+        Commons.removeLocalStorage(ADMIN_DELETE_ALL);
     });
 });

@@ -17,4 +17,17 @@ class AdminGroup extends Model
     {
         return $this->hasMany('App\Models\Admin', 'admin_group_id', 'id');
     }
+
+    public static function getOptionPermission()
+    {
+        $adminGroups = self::all();
+        $permission = [];
+
+        $permission[''] = 'Please select an admin permission';
+        foreach ($adminGroups as $adminGroup) {
+            $permission[$adminGroup['permission']] = $adminGroup['permission_name'];
+        }
+
+        return $permission;
+    }
 }

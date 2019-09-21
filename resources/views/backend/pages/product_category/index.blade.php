@@ -27,7 +27,7 @@
                 <div id="toolbar">
                     <!-- Button to Open the Add Modal -->
                     <button id="addCategory" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#add" type="button"
-                            title="Add new category"><i class="fa fa-plus"></i> Register
+                            title="Add new product category"><i class="fa fa-plus"></i> Register
                     </button>
                     <!-- Button to Open the Delete Modal -->
                     <button id="removeProductCategory" class="btn btn-custon-three btn-danger"
@@ -312,7 +312,7 @@
                     </form>
                 </div>
                 <div class="modal-footer modal-delete">
-                    <button type="button" class="btn btn-custon-three btn-success" id="btnDeleteCategory"><i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Yes</button>
+                    <button type="button" class="btn btn-custon-three btn-success" id="btnDeleteProductCategory"><i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Yes</button>
                     <button class="btn btn-custon-three btn-danger" type="button" data-dismiss="modal"><i class="fa fa-times edu-danger-error" aria-hidden="true"></i> No</button>
                     <div>
                     </div>

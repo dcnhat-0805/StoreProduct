@@ -324,8 +324,7 @@
         search: false,
         searchOnEnterKey: false,
         strictSearch: false,
-        // searchAlign: 'right',
-        searchAlign: false,
+        searchAlign: 'right',
         selectItemName: 'btSelectItem',
         showHeader: true,
         showFooter: false,
@@ -1174,6 +1173,7 @@
         }
 
         if (this.options.search) {
+            return false;
             html = [];
             html.push(
                 '<div class="pull-' + this.options.searchAlign + ' search">',

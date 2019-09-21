@@ -21,8 +21,10 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $admin = Admin::getListAdmin();
-        $permission = AdminGroup::all();
+        $params = request()->all();
+        $permission = AdminGroup::getOptionPermission();
+        $admin = Admin::getListAllAdmin($params);
+
         return view(ADMIN_INDEX_BLADE, compact('admin', 'permission'));
     }
 
@@ -119,6 +121,34 @@ class AdminController extends Controller
         } else {
             Session::flash("error", trans("messages.admin.delete_failed"));
             return response()->json();
+        }
+    }
+
+    public function getListAdmin()
+    {
+        $admin = Admin::getListAllAdmin();
+        $data = [];
+
+        if (count($admin)) {
+            foreach ($admin as $ad) {
+                $data[] = [
+                    'id' => $ad->id
+                ];
+            }
+        }
+
+        return response()->json(array_flatten($data));
+    }
+
+    public function destroy(Request $request)
+    {
+        try {
+            Admin::destroy($request->input('ids'));
+            if ($request->input('ids') != DELETE_ALL) {
+                Session::flash("success", trans("messages.admin.delete_success"));
+            }
+        } catch (\Exception $e) {
+            Session::flash("error", trans("messages.admin.delete_failed"));
         }
     }
 }

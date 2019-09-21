@@ -2,8 +2,8 @@ const btnAddCategory = $('#btnAddCategory');
 const btnUpdateCategory = $('#btnUpdateCategory');
 const btnDeleteCategory = $('#btnDeleteCategory');
 const btnDelete = $('#remove');
-const btnClear = $('.btnClear');
-const btnSearch = $('.btnSearch');
+const btnClear = $('#btnClear');
+const btnSearch = $('#btnSearch');
 
 let CategoryJs = (function ($) {
     let modules = {};
@@ -63,7 +63,9 @@ let CategoryJs = (function ($) {
     $('#delete').on('show.bs.modal', function (e) {
         let id = $(e.relatedTarget).data('id');
         let url = $(e.relatedTarget).data('url');
-        $(e.currentTarget).find('input[name="id"]').val(id);
+        if (Number.isInteger(id) === true) {
+            $(e.currentTarget).find('input[name="id"]').val(id);
+        }
         $(e.currentTarget).find('#urlDelete').val(url);
     });
 
@@ -84,27 +86,6 @@ let CategoryJs = (function ($) {
             }
         });
     };
-
-    // let $table = $('#table');
-    // let $remove = $('#remove');
-    //
-    // $(function() {
-    //     $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
-    //         $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-    //     });
-    //     // $remove.on('click', function () {
-    //     //     let ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-    //     //         return row.id
-    //     //     });
-    //     //     console.log(ids);
-    //     //
-    //     //     $table.bootstrapTable('remove', {
-    //     //         field: 'id',
-    //     //         values: ids
-    //     //     });
-    //     //     $remove.prop('disabled', true)
-    //     // });
-    // });
 
     modules.reloadSelectAllCheckBox = function () {
         let isCheckAll = Commons.getSingleValueLocalStorage(CATEGORY_DELETE_ALL);
@@ -191,6 +172,7 @@ let CategoryJs = (function ($) {
             type: "DELETE",
             data: data,
             success : function (data) {
+                console.log(data);
                 Commons.removeLocalStorage(CATEGORY_IDS);
                 Commons.removeLocalStorage(CATEGORY_DELETE_ALL);
                 location.reload();
@@ -230,7 +212,11 @@ $(document).ready(function () {
        let id = $('#categoryId').val();
        let url = $('#urlDelete').val();
 
-       CategoryJs.deleteCategory(url, id);
+       if (!id && !url) {
+           CategoryJs.destroyCategory();
+       } else {
+           CategoryJs.deleteCategory(url, id);
+       }
    });
 
     $('.btSelectItem').on('change', function () {
