@@ -92,7 +92,7 @@ class Category extends Model
         $category = self::filter($params);
         $order = Helper::getSortParam($params);
         if ($order == '1 = 1') {
-            $order = "id";
+            $order = "id DESC ";
         }
         $now = date('Y-m-d');
         $category = $category->whereNull('deleted_at')
