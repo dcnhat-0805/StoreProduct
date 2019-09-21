@@ -36,6 +36,7 @@ class Category extends Model
     {
         return $this->hasMany('App\Models\Product', 'category_id', 'id');
     }
+
     private static function filter($params)
     {
         $category = new Category();
@@ -44,7 +45,8 @@ class Category extends Model
             $keyword = addslashes($params['keyword']);
             if ($keyword != 0 || $keyword != null) {
                 $category = $category->where('category_name', 'like', "%$keyword%")
-                    ->orWhere('category_slug', 'like', "%$keyword%");
+                    ->orWhere('category_slug', 'like', "%$keyword%")
+                    ->orWhere('category_order', 'like', "%$keyword%");
             }
         }
 
@@ -102,6 +104,22 @@ class Category extends Model
             ->paginate(LIMIT);
 
         return $category;
+    }
+
+    public static function getOptionCategory()
+    {
+        $categories = self::select('id', 'category_name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        $categoryOption = [];
+
+        $categoryOption[''] = 'Please select a category';
+        foreach ($categories as $category) {
+            $categoryOption[$category['id']] = $category['category_name'];
+        }
+
+        return $categoryOption;
     }
 
     public static function getListCategory()

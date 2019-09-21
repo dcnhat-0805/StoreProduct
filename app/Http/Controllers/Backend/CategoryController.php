@@ -130,7 +130,8 @@ class CategoryController extends Controller
 
     public function getListCategory()
     {
-        $category = Category::getListAllCategory();$data = [];
+        $category = Category::getListAllCategory();
+        $data = [];
 
         if (count($category)) {
             foreach ($category as $cate) {

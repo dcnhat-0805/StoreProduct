@@ -22,6 +22,11 @@ const ADMIN_CATEGORY_ADD = 'admin.category.add';
 const ADMIN_CATEGORY_EDIT = 'admin.category.edit';
 const ADMIN_CATEGORY_DELETE = 'admin.category.delete';
 
+const ADMIN_PRODUCT_CATEGORY_INDEX = 'admin.product.category.index';
+const ADMIN_PRODUCT_CATEGORY_ADD = 'admin.product.category.add';
+const ADMIN_PRODUCT_CATEGORY_EDIT = 'admin.product.category.edit';
+const ADMIN_PRODUCT_CATEGORY_DELETE = 'admin.product.category.delete';
+
 const ADMIN_INDEX = 'admin.list';
 const ADMIN_INDEX_BLADE = 'backend.pages.admin.index';
 const ADMIN_ADD = 'admin.add';

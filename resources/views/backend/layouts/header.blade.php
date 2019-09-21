@@ -837,7 +837,7 @@
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                                 <div class="breadcome-heading text-right">
-                                    <button type="button" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#search">
+                                    <button type="button" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#search" id="modalSearch">
                                         <i class="fa fa-tasks" aria-hidden="true"></i>
                                     </button>
                                 </div>
