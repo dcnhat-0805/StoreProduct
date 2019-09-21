@@ -1,28 +1,28 @@
-const btnAddCategory = $('#btnAddCategory');
-const btnUpdateCategory = $('#btnUpdateCategory');
+const btnAddProductCategory = $('#btnAddProductCategory');
+const btnUpdateProductCategory = $('#btnUpdateProductCategory');
 const btnDeleteCategory = $('#btnDeleteCategory');
-const btnDelete = $('#remove');
+const btnDelete = $('#removeProductCategory');
 const btnClear = $('.btnClear');
 const btnSearch = $('.btnSearch');
 
-let CategoryJs = (function ($) {
+let productCategoryJs = (function ($) {
     let modules = {};
 
-    modules.createCategory = function(data) {
+    modules.createProductCategory = function(data) {
         $.ajax({
-            url : 'admin/category/add',
+            url : 'admin/product_category/add',
             dataType : 'JSON',
             type : 'POST',
             data: data,
             success : function (data) {
-                btnAddCategory.prop('disabled', true);
+                btnAddProductCategory.prop('disabled', true);
                 location.reload();
             },
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_name, '.error-category-name');
-                Commons.getErrorMessage(error, error.category_order, '.error-category-order');
+                Commons.getErrorMessage(error, error.category_id, '.error-product-category-id');
+                Commons.getErrorMessage(error, error.product_category_name, '.error-product-category-name');
             }
         });
     };
@@ -30,32 +30,32 @@ let CategoryJs = (function ($) {
     $('#edit').on('show.bs.modal', function (e) {
         let id = $(e.relatedTarget).data('id');
         let name = $(e.relatedTarget).data('name');
-        let order = $(e.relatedTarget).data('order');
+        let category_id = $(e.relatedTarget).data('category');
         let status = $(e.relatedTarget).data('status');
         let url = $(e.relatedTarget).data('url');
         $(e.currentTarget).find('input[name="id"]').val(id);
         $(e.currentTarget).find('.title').text(name);
-        $(e.currentTarget).find('input[name="category_name"]').val(name);
-        $(e.currentTarget).find('input[name="category_order"]').val(order);
+        $(e.currentTarget).find('input[name="product_category_name"]').val(name);
+        $(e.currentTarget).find('select option[value="'+ category_id +'"]').prop('selected', true);
         $(e.currentTarget).find('#url_edit').val(url);
-        $(e.currentTarget).find('.category-status option[value="'+ status +'"]').attr('selected', 'selected');
+        $(e.currentTarget).find('.category-status option[value="'+ status +'"]').prop('selected', true);
     });
 
-    modules.updateCategory = function (url, data) {
+    modules.updateProductCategory = function (url, data) {
         $.ajax({
             url : url,
             dataType : 'JSON',
             type : 'POST',
             data: data,
             success : function (data) {
-                btnUpdateCategory.prop('disabled', true);
+                btnUpdateProductCategory.prop('disabled', true);
                 location.reload();
             },
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_name, '.error-category-name');
-                Commons.getErrorMessage(error, error.category_order, '.error-category-order');
+                Commons.getErrorMessage(error, error.category_id, '.error-product-category-id');
+                Commons.getErrorMessage(error, error.product_category_name, '.error-product-category-name');
             }
         });
     };
@@ -63,7 +63,9 @@ let CategoryJs = (function ($) {
     $('#delete').on('show.bs.modal', function (e) {
         let id = $(e.relatedTarget).data('id');
         let url = $(e.relatedTarget).data('url');
-        $(e.currentTarget).find('input[name="id"]').val(id);
+        if (Number.isInteger(id) === true) {
+            $(e.currentTarget).find('input[name="id"]').val(id);
+        }
         $(e.currentTarget).find('#urlDelete').val(url);
     });
 
@@ -85,32 +87,11 @@ let CategoryJs = (function ($) {
         });
     };
 
-    // let $table = $('#table');
-    // let $remove = $('#remove');
-    //
-    // $(function() {
-    //     $table.on('check.bs.table uncheck.bs.table check-all.bs.table uncheck-all.bs.table', function () {
-    //         $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
-    //     });
-    //     // $remove.on('click', function () {
-    //     //     let ids = $.map($table.bootstrapTable('getSelections'), function (row) {
-    //     //         return row.id
-    //     //     });
-    //     //     console.log(ids);
-    //     //
-    //     //     $table.bootstrapTable('remove', {
-    //     //         field: 'id',
-    //     //         values: ids
-    //     //     });
-    //     //     $remove.prop('disabled', true)
-    //     // });
-    // });
-
     modules.reloadSelectAllCheckBox = function () {
-        let isCheckAll = Commons.getSingleValueLocalStorage(CATEGORY_DELETE_ALL);
+        let isCheckAll = Commons.getSingleValueLocalStorage(PRODUCT_CATEGORY_DELETE_ALL);
 
         if (isCheckAll == NOT_DELETE_ALL) {
-            let ids_category = Commons.getArrayValueLocalStorage(CATEGORY_IDS);
+            let ids_category = Commons.getArrayValueLocalStorage(PRODUCT_CATEGORY_IDS);
 
             if (ids_category.length) {
                 btnDelete.attr('disabled', false);
@@ -136,18 +117,18 @@ let CategoryJs = (function ($) {
     };
 
     modules.checkboxCategory = function (checkbox) {
-        Commons.setLocalStorageDeleteAll(CATEGORY_DELETE_ALL, NOT_DELETE_ALL);
+        Commons.setLocalStorageDeleteAll(PRODUCT_CATEGORY_DELETE_ALL, NOT_DELETE_ALL);
         let id = checkbox.data("id");
-        let ids_category = Commons.getArrayValueLocalStorage(CATEGORY_IDS);
+        let ids_category = Commons.getArrayValueLocalStorage(PRODUCT_CATEGORY_IDS);
 
         if (checkbox.is(':checked')) {
             ids_category.push(id);
-            Commons.setLocalStorageListIds(CATEGORY_IDS, ids_category);
+            Commons.setLocalStorageListIds(PRODUCT_CATEGORY_IDS, ids_category);
         } else {
             let idRemove = ids_category.indexOf(id);
             if (idRemove != -1) {
                 ids_category.splice(idRemove, 1);
-                Commons.setLocalStorageListIds(CATEGORY_IDS, ids_category);
+                Commons.setLocalStorageListIds(PRODUCT_CATEGORY_IDS, ids_category);
             }
             $('.btSelectAll').prop('checked', false);
         }
@@ -158,11 +139,11 @@ let CategoryJs = (function ($) {
         if ($('.btSelectAll').is(':checked')) {
             modules.getAllListCategory();
             $('.btSelectAll').prop('checked', true);
-            Commons.setLocalStorageDeleteAll(CATEGORY_DELETE_ALL, IS_DELETE_ALL);
+            Commons.setLocalStorageDeleteAll(PRODUCT_CATEGORY_DELETE_ALL, IS_DELETE_ALL);
         } else {
-            Commons.setLocalStorageDeleteAll(CATEGORY_DELETE_ALL, NOT_DELETE_ALL);
+            Commons.setLocalStorageDeleteAll(PRODUCT_CATEGORY_DELETE_ALL, NOT_DELETE_ALL);
             $('.btSelectAll').prop('checked', false);
-            Commons.setLocalStorageListIds(CATEGORY_IDS, []);
+            Commons.setLocalStorageListIds(PRODUCT_CATEGORY_IDS, []);
         }
 
         modules.reloadSelectAllCheckBox();
@@ -171,28 +152,28 @@ let CategoryJs = (function ($) {
     modules.getAllListCategory = function () {
         let url = new URL(window.location.href);
         $.ajax({
-            url: "/admin/category/list-category",
+            url: "/admin/product_category/list_product_category",
             dataType : 'JSON',
             type: "GET",
             success : function (data) {
-                Commons.setLocalStorageListIds(CATEGORY_IDS, data);
-                Commons.setLocalStorageDeleteAll(CATEGORY_DELETE_ALL, IS_DELETE_ALL);
+                Commons.setLocalStorageListIds(PRODUCT_CATEGORY_IDS, data);
+                Commons.setLocalStorageDeleteAll(PRODUCT_CATEGORY_DELETE_ALL, IS_DELETE_ALL);
             }
         });
     };
 
     modules.destroyCategory = function () {
         let data = {};
-        data['delete_all'] = Commons.getSingleValueLocalStorage(CATEGORY_DELETE_ALL);
-        data['ids'] = Commons.getArrayValueLocalStorage(CATEGORY_IDS);
+        data['delete_all'] = Commons.getSingleValueLocalStorage(PRODUCT_CATEGORY_DELETE_ALL);
+        data['ids'] = Commons.getArrayValueLocalStorage(PRODUCT_CATEGORY_IDS);
 
         $.ajax({
-            url: "/admin/category/destroy",
+            url: "/admin/product_category/destroy",
             type: "DELETE",
             data: data,
             success : function (data) {
-                Commons.removeLocalStorage(CATEGORY_IDS);
-                Commons.removeLocalStorage(CATEGORY_DELETE_ALL);
+                Commons.removeLocalStorage(PRODUCT_CATEGORY_IDS);
+                Commons.removeLocalStorage(PRODUCT_CATEGORY_DELETE_ALL);
                 location.reload();
             },
             error : function (data) {
@@ -210,45 +191,50 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
-    CategoryJs.reloadSelectAllCheckBox();
+    productCategoryJs.reloadSelectAllCheckBox();
 
-   btnAddCategory.on('click', function () {
-       $(this).button('Loading');
-       let data = $('#createCategory').serialize();
-       CategoryJs.createCategory(data);
-   });
+    btnAddProductCategory.on('click', function () {
+        $(this).button('Loading');
+        let data = $('#createProductCategory').serialize();
+        productCategoryJs.createProductCategory(data);
+    });
 
-   btnUpdateCategory.on('click', function () {
-       $(this).button('Loading');
-       let data = $('#editCategory').serialize();
-       let url = $('#url_edit').val();
+    btnUpdateProductCategory.on('click', function () {
+        $(this).button('Loading');
+        let data = $('#editProductCategory').serialize();
+        let url = $('#url_edit').val();
 
-       CategoryJs.updateCategory(url, data);
-   });
+        productCategoryJs.updateProductCategory(url, data);
+    });
 
-   btnDeleteCategory.on('click', function () {
-       let id = $('#categoryId').val();
-       let url = $('#urlDelete').val();
+    btnDeleteCategory.on('click', function () {
+        $(this).button('Loading');
+        let id = $('#productCategoryId').val();
+        let url = $('#urlDelete').val();
 
-       CategoryJs.deleteCategory(url, id);
-   });
+        if (!id && !url) {
+            productCategoryJs.destroyCategory();
+        } else {
+            productCategoryJs.deleteCategory(url, id);
+        }
+    });
 
     $('.btSelectItem').on('change', function () {
-        CategoryJs.checkboxCategory($(this));
+        productCategoryJs.checkboxCategory($(this));
     });
 
     $('.btSelectAll').change(function () {
-        CategoryJs.checkAllCatrgory();
+        productCategoryJs.checkAllCatrgory();
     });
 
     btnClear.on('click', function () {
-        Commons.removeLocalStorage(CATEGORY_IDS);
-        Commons.removeLocalStorage(CATEGORY_DELETE_ALL);
+        Commons.removeLocalStorage(PRODUCT_CATEGORY_IDS);
+        Commons.removeLocalStorage(PRODUCT_CATEGORY_DELETE_ALL);
     });
 
     btnSearch.on('click', function () {
-        Commons.removeLocalStorage(CATEGORY_IDS);
-        Commons.removeLocalStorage(CATEGORY_DELETE_ALL);
+        Commons.removeLocalStorage(PRODUCT_CATEGORY_IDS);
+        Commons.removeLocalStorage(PRODUCT_CATEGORY_DELETE_ALL);
     });
 });
 

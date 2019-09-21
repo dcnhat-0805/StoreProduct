@@ -210,6 +210,11 @@
 <script src="backend/js/backend/common.js"></script>
 <script src="backend/js/calendar/moment.min.js"></script>
 <script src="{{ App\Helpers\Helper::asset('backend/js/datepicker/jquery-ui.min.js') }}"></script>
+
+<!-- Date picker
+    ============================================ -->
+<script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/daterangepicker.min.js') }}"></script>
+<script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/datepicker_range.js') }}"></script>
 @yield('jsCustom')
 
 @if(Session::has('success'))

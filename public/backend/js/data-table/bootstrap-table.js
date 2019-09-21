@@ -1463,8 +1463,6 @@
                 }
             }
 
-            let currentPage = Commons.getArrayValueLocalStorage(PAGE_IDS);
-            currentPage = parseInt(currentPage, 10);
             for (i = from; i <= to; i++) {
                 html.push('<li class="page page-number' + (i === this.options.pageNumber ? ' active' : '') + '">',
                     '<a>', i, '</a>',
@@ -1871,7 +1869,7 @@
             if (e.type === 'click' && that.options.clickToSelect && column.clickToSelect) {
                 var $selectItem = $tr.find(sprintf('[name="%s"]', that.options.selectItemName));
                 if ($selectItem.length) {
-                    $selectItem[0].click(); // #144: .trigger('click') bug
+                    // $selectItem[0].click(); // #144: .trigger('click') bug
                 }
             }
         });

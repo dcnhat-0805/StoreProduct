@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -33,59 +34,111 @@ class ProductCategory extends Model
         return $this->hasMany('App\Models\Product','product_category_id','id');
     }
 
-    public function getListAllProductCategory()
+    private static function filter($params)
     {
-        return $this->select('category_id', 'product_category_name', 'product_category_status')
-            ->orderBy('id', 'DESC')->get();
-    }
+        $productCategory = new ProductCategory();
 
-    public function getListProductCategory()
-    {
-        return $this->select('category_id', 'product_category_name', 'product_category_status')
-            ->orderBy('id', 'DESC')->paginate(2);
-    }
-
-    public function createProductCategory($request)
-    {
-        if ($request['product_category_name'] != '') {
-            $request['product_category_slug'] = utf8ToUrl($request['product_category_name']);
+        if (isset($params['keyword'])) {
+            $keyword = addslashes($params['keyword']);
+            if ($keyword != 0 || $keyword != null) {
+                $productCategory = $productCategory->where('product_category_name', 'like', "%$keyword%")
+                    ->orWhere('product_category_slug', 'like', "%$keyword%");
+            }
         }
-        return $this->create($request);
-    }
 
-    public function showProductCategory($product_category_id)
-    {
-        return $this->find($product_category_id);
-    }
-
-    public function updateProductCategory($request, $product_category_id)
-    {
-        $productCategory = $this->showProductCategory($product_category_id);
-        if ($request['product_category_name'] != '') {
-            $request['product_category_slug'] = utf8ToUrl($request['product_category_name']);
+        if (isset($params['created_at'])) {
+            $publishDate = $params['created_at'];
+            if ($publishDate != 0) {
+                $publishDate = str_replace('+', ' ', $publishDate);
+                $publishDate = explode(' - ', $publishDate);
+                $productCategory = $productCategory->whereRaw("product_categories.created_at BETWEEN ? AND ?", [$publishDate[0], date('Y/m/d', strtotime("+1 day", strtotime($publishDate[1])))]);
+            }
         }
+
+        if (isset($params['category_id'])) {
+            $category_id = $params['category_id'];
+            if ($category_id != 0) {
+                $productCategory = $productCategory->whereIn('categories.id', explode(',', $category_id));
+            }
+        }
+
+
+        if (isset($params['status'])) {
+            $status = $params['status'];
+
+            $productCategory = $productCategory->where(function ($query) use ($status) {
+                if (in_array(0, $status)) {
+                    $query->orWhereRaw("(product_categories.product_category_status = 0)");
+                }
+                if (in_array(1, $status)) {
+                    $query->orWhereRaw("(product_categories.product_category_status = 1)");
+                }
+            });
+        }
+
+        return $productCategory;
+    }
+
+    public static function getListAllProductCategory($params = null)
+    {
+        $productCategory = self::filter($params);
+        $order = Helper::getSortParam($params);
+        if ($order == '1 = 1') {
+            $order = "product_categories.id DESC ";
+        }
+        $now = date('Y-m-d');
+        $productCategory = $productCategory->whereNull('product_categories.deleted_at')
+            ->whereNull('categories.deleted_at')
+            ->join('categories', 'categories.id', '=', 'product_categories.category_id')
+            ->selectRaw("product_categories.*, categories.category_name")
+            ->with('category')
+            ->groupBy('product_categories.id')
+            ->orderByRaw($order)
+            ->paginate(LIMIT);
+
+        return $productCategory;
+    }
+
+    public static function createProductCategory($request)
+    {
+        $request['product_category_slug'] = utf8ToUrl($request['product_category_name']);
+
+        return self::create($request);
+    }
+
+    public static function showProductCategory($product_category_id)
+    {
+        return self::find($product_category_id);
+    }
+
+    public static function updateProductCategory($request, $product_category_id)
+    {
+        $productCategory = self::showProductCategory($product_category_id);
+        $request['product_category_slug'] = utf8ToUrl($request['product_category_name']);
+
         return $productCategory->update($request);
     }
 
-    public function deleteProductCategory($product_category_id)
+    public static function deleteProductCategory($product_category_id)
     {
-        $productCategory = $this->showProductCategory($product_category_id);
+        $productCategory = self::showProductCategory($product_category_id);
+
         return $productCategory->delete();
     }
 
-    public function searchProductCategory($keyWord, $length)
+    public static function searchProductCategory($keyWord, $length)
     {
         if ($keyWord == '') {
-            $productCategory = $this->getListAllProductCategory();
+            $productCategory = self::getListAllProductCategory();
         } else {
-            $productCategory = $this->select('category_id', 'product_category_name', 'product_category_status')
+            $productCategory = self::select('category_id', 'product_category_name', 'product_category_status')
                 ->where('product_category_name', 'like', '%' . $keyWord . '%')
                 ->orWhere('product_category_slug', 'like', '%' . $keyWord . '%')
                 ->orWhere('id', $keyWord)->get();
         }
 
         if ($length != '') {
-            $productCategory = $this->select('category_id', 'product_category_name', 'product_category_status')
+            $productCategory = self::select('category_id', 'product_category_name', 'product_category_status')
                 ->orderBy('id', 'DESC')
                 ->offset(0)
                 ->limit($length)
@@ -94,17 +147,17 @@ class ProductCategory extends Model
         return $productCategory;
     }
 
-    public function loadProductCategory($category_id)
+    public static function loadProductCategory($category_id)
     {
-        $productCategory = $this->select('category_id', 'product_category_name', 'product_category_status')
+        $productCategory = self::select('category_id', 'product_category_name', 'product_category_status')
             ->orderby('id', 'DESC')
             ->where('id_Category', $category_id)->get();
         return $productCategory;
     }
 
-    public function getProductCategory($product_category_id)
+    public static function getProductCategory($product_category_id)
     {
-        $productCategory = $this->select('category_id', 'product_category_name', 'product_category_status')
+        $productCategory = self::select('category_id', 'product_category_name', 'product_category_status')
             ->where('id', $product_category_id)->get();
         return $productCategory;
     }

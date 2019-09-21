@@ -54,5 +54,14 @@ Route::namespace('Backend')->group(function(){
             Route::get('/list-category', 'CategoryController@getListCategory');
             Route::delete('/destroy', 'CategoryController@destroy');
         });
+
+        Route::group(['prefix' => 'product_category'], function(){
+            Route::get('/', 'ProductCategoryController@index')->name(ADMIN_PRODUCT_CATEGORY_INDEX);
+            Route::post('add', 'ProductCategoryController@store')->name(ADMIN_PRODUCT_CATEGORY_ADD);
+            Route::post('edit/{id}', 'ProductCategoryController@update')->name(ADMIN_PRODUCT_CATEGORY_EDIT);
+            Route::delete('delete/{id}', 'ProductCategoryController@delete')->name(ADMIN_PRODUCT_CATEGORY_DELETE);
+            Route::get('/list_product_category', 'ProductCategoryController@getListProductCategory');
+            Route::delete('/destroy', 'ProductCategoryController@destroy');
+        });
     });
 });
