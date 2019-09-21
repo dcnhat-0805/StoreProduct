@@ -44,7 +44,7 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request)
     {
         $user = Auth::guard('admins')->user();
-        if ($user->can('createCategory', Admin::class)) {
+        if ($user->can('createCategory', Category::class)) {
             if ($request->ajax()) {
                 $input = $request->all();
                 $category = Category::createCategory($input);
@@ -91,7 +91,7 @@ class CategoryController extends Controller
     public function update(CategoryRequest $request, $id)
     {
         $user = Auth::guard('admins')->user();
-        if ($user->can('updateCategory', Admin::class)) {
+        if ($user->can('updateCategory', Category::class)) {
             if ($request->ajax()) {
                 $input = $request->all();
                 $category = Category::updateCategory($id, $input);
@@ -115,7 +115,7 @@ class CategoryController extends Controller
     public function delete($id)
     {
         $user = Auth::guard('admins')->user();
-        if ($user->can('deleteCategory', Admin::class)) {
+        if ($user->can('deleteCategory', Category::class)) {
             $category = Category::deleteCategory($id);
 
             if (isset($category)) {
@@ -146,7 +146,7 @@ class CategoryController extends Controller
     public function destroy(Request $request)
     {
         $user = Auth::guard('admins')->user();
-        if ($user->can('deleteCategory', Admin::class)) {
+        if ($user->can('deleteCategory', Category::class)) {
             try {
                 Category::destroy($request->input('ids'));
                 if ($request->input('ids') != DELETE_ALL) {

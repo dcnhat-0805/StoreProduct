@@ -79,3 +79,11 @@ ul.pagination {
 .jsDatepcker[readonly] {
     background-color: #ffffff;
 }
+
+button.pd-setting-ed[disabled] {
+    cursor: not-allowed;
+    filter: alpha(opacity=65);
+    opacity: .65;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

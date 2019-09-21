@@ -26,7 +26,7 @@
             <div class="datatable-dashv1-list custom-datatable-overright">
                 <div id="toolbar">
                     <!-- Button to Open the Add Modal -->
-                    <button class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#add" type="button"
+                    <button id="addCategory" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#add" type="button"
                             title="Add new category"><i class="fa fa-plus"></i> Register
                     </button>
                     <!-- Button to Open the Delete Modal -->
@@ -59,7 +59,7 @@
                                 <td class="text-center">{{$cate->id}}</td>
                                 <td class="">{{$cate->category_name}}</td>
                                 <td class="text-center">{{$cate->category_order}}</td>
-                                <td class="text-center">{{$cate->created_at}}</td>
+                                <td class="text-center">{{$cate->updated_at}}</td>
                                 <td class="text-center">@if($cate->category_status == 1) Display @else Not display @endif</td>
                                 <td class="datatable-ct text-center">
                                     <button data-toggle="modal" title="Edit {{$cate->category_name}}" class="pd-setting-ed"
@@ -84,7 +84,7 @@
                 <!-- Pagination -->
                 <div class="pagination-wrapper header" style="margin-top: 20px;">
                     <nav class="nav-pagination store-unit clearfix" aria-label="Page navigation">
-                        <span class="info">{{ $category->currentPage() }} / {{ $category->lastPage() }}pages（total of {{ $category->total() }}）</span>
+                        <span class="info">{{ $category->currentPage() }} / {{ $category->lastPage() }} pages（total of {{ $category->total() }}）</span>
                         <ul class="pull-right">
                             <li> {{ $category->appends($_GET)->links('backend.pagination') }}</li>
                         </ul>
