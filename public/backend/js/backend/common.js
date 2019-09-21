@@ -7,6 +7,8 @@ const CATEGORY_IDS = 'category.ids';
 const CATEGORY_DELETE_ALL = 'category.delete.all';
 const PRODUCT_CATEGORY_IDS = 'product.category.ids';
 const PRODUCT_CATEGORY_DELETE_ALL = 'product.category.delete.all';
+const ADMIN_IDS = 'admin.ids';
+const ADMIN_DELETE_ALL = 'admin.delete.all';
 $.urlParam = function(name){
     let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
     if (results==null){

@@ -28,6 +28,7 @@ class AdminRequest extends FormRequest
             'email' => 'required|email|unique:admins,email,'.($this->id ?? " "),
             'password' => ($this->id ? 'nullable' : 'required').'|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
             'confirm_password' => ($this->id ? 'nullable' : 'required').'|same:password',
+            'admin_group_id' => 'required',
         ];
     }
     public function messages()
@@ -41,6 +42,7 @@ class AdminRequest extends FormRequest
             'password.min' => trans("messages.admin.password.min"),
             'password.regex' => trans("messages.admin.password.regex"),
             'same' => trans("messages.admin.confirm_password.same"),
+            'admin_group_id.required' => trans("messages.admin.admin_group_id.required"),
         ];
     }
     public function attributes()

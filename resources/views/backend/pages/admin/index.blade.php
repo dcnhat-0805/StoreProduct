@@ -2,30 +2,35 @@
     use App\Models\Admin;
 
     $user = Auth::guard('admins')->user();
-    $admins = Admin::class;
 ?>
 @extends('backend.layouts.app')
 @section('title', 'List admin')
 @section('titleMenu', 'admin')
+@section('cssCustom')
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/colorpicker.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/datepicker3.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/daterangepicker/daterangepicker.css') }}"/>
+@endsection
 @section('content')
     <div class="sparkline13-list">
-        @if ($user->can('viewAdmin', $admins))
+        @if ($user->can('viewAdmin', Admin::class))
             <div class="sparkline13-hd">
                 <div class="main-sparkline13-hd">
-                    <h1>Danh sách <span class="table-project-n">các</span> quản trị viên</h1>
+                    <h1 style="text-transform: capitalize;">List <span class="table-project-n">Of</span> Admin</h1>
                 </div>
             </div>
             <div class="sparkline13-graph">
             <div class="datatable-dashv1-list custom-datatable-overright">
                 <div id="toolbar">
                     <!-- Button to Open the Add Modal -->
-                    <button class="btn btn-default" data-toggle="modal" data-target="#add" type="button"
-                            title="Add new category"><i class="fa fa-plus"></i></button>
-                    <select class="form-control dt-tb hidden">
-                        <option value="">Export Basic</option>
-                        <option value="all">Export All</option>
-                        <option value="selected">Export Selected</option>
-                    </select>
+                    <button id="addAdmin" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#add" type="button"
+                            title="Add new admin"><i class="fa fa-plus"></i> Register
+                    </button>
+                    <!-- Button to Open the Delete Modal -->
+                    <button id="removeAdmin" class="btn btn-custon-three btn-danger"
+                            data-toggle="modal" data-target="#delete" data-id="all">
+                        <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Delete
+                    </button>
                 </div>
                 <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"
                        data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true"
@@ -39,6 +44,7 @@
                         <th data-field="name" data-editable="true">Name</th>
                         <th data-field="email" data-editable="true">Email</th>
                         <th data-field="permission" data-editable="true">Permission</th>
+                        <th data-field="created_at" data-editable="true">Created at</th>
                         <th data-field="status" data-editable="true">Status</th>
                         <th data-field="action">Action</th>
                     </tr>
@@ -48,12 +54,13 @@
                         @foreach($admin as $ad)
                             <tr id="admin-{{$ad->id}}">
                                 <td></td>
-                                <td> {{ $ad->id }} </td>
-                                <td> {{ $ad->name }} </td>
-                                <td> {{ $ad->email }} </td>
-                                <td> {{ $ad->adminGroup->permission }}</td>
-                                <td>@if($ad->admin_status == 1) Display @else Not display @endif</td>
-                                <td class="datatable-ct">
+                                <td class="text-center">{{ $ad->id }}</td>
+                                <td>{{ $ad->name }}</td>
+                                <td>{{ $ad->email }}</td>
+                                <td>{{ $ad->adminGroup->permission_name }} ({{ $ad->adminGroup->permission }})</td>
+                                <td class="text-center">{{ $ad->created_at }}</td>
+                                <td class="text-center">@if($ad->admin_status == 1) Display @else Not display @endif</td>
+                                <td class="datatable-ct text-center">
                                     <button data-toggle="modal" title="Edit {{ $ad->name }}" class="pd-setting-ed"
                                             data-original-title="Edit" data-target="#edit" data-id="{{ $ad->id }}" data-name="{{ $ad->name }}"
                                             data-email="{{ $ad->email }}" data-permission="{{ $ad->adminGroup->permission }}"
@@ -74,13 +81,80 @@
             @include('backend.permission')
         @endif
     </div>
+    <!-- Search Modal-->
+    <div class="modal fade" id="search" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="min-width: 700px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel" style="text-transform: capitalize;">Search</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="margin: 5px">
+                        <div class="col-lg-12">
+                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_INDEX) }}">
+                                <div class="box-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <label for="name">Keyword</label>
+                                                <input type="text" class="form-control" name="keyword" value="{{ request()->get('keyword') }}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="name">Created at</label>
+                                                <input type="text" readonly class="form-control jsDatepcker" name="created_at" value="{{ request()->get('created_at') }}" >
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="name">Category</label>
+                                                {{
+                                                    Form::select('admin_group_id', $permission, request()->get('admin_group_id'),
+                                                    [
+                                                        'class' => 'form-control'
+                                                    ])
+                                                }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-group">
+                                                <input type="checkbox" class="i-checks" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
+                                                <label for="status" style="margin-right: 20px;">Display</label>
+                                                <input type="checkbox" class="i-checks"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
+                                                <label for="status">Not display</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- /.box-body -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-custon-three btn-success" id="btnSearch"><i
+                                            class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
+                                    </button>
+                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" id="btnClear" onclick="window.location.href = '{{route(ADMIN_INDEX)}}'">
+                                        <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Add Modal-->
     <div class="modal fade" id="add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" style="min-width: 700px;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="text-transform: capitalize;">Add Admin
-                        &raquo; <span class="title"></span></h5>
+                    <h5 class="modal-title" id="exampleModalLabel" style="text-transform: capitalize;">Add Admin</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -124,11 +198,13 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="admin_group_id" class="required after">Permission</label>
-                                            <select name="admin_group_id" id="admin_group_id" class="form-control admin-permission">
-                                                @foreach($permission as $per)
-                                                    <option value="{{ $per->id }}">{{$per->permission_name}}</option>
-                                                @endforeach
-                                            </select>
+                                            {{
+                                                Form::select('admin_group_id', $permission, NULL,
+                                                [
+                                                    'class' => 'form-control admin-permission',
+                                                    'id' => 'admin_group_id'
+                                                ])
+                                            }}
                                             <div class="error error-permission hidden"></div>
                                         </div>
                                     </div>
@@ -199,11 +275,12 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="admin_group_id" class="required after">Permission</label>
-                                            <select name="admin_group_id" class="form-control admin-permission">
-                                                @foreach($permission as $per)
-                                                    <option value="{{ $per->id }}">{{$per->permission_name}}</option>
-                                                @endforeach
-                                            </select>
+                                            {{
+                                                Form::select('admin_group_id', $permission, NULL,
+                                                [
+                                                    'class' => 'form-control admin-permission'
+                                                ])
+                                            }}
                                             <div class="error error-permission hidden"></div>
                                         </div>
                                     </div>
@@ -263,6 +340,9 @@
     <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/disabled_button_submit.js') }}"></script>
 {{--    {!! JsValidator::formRequest('App\Http\Requests\AdminRequest', '#create_admin') !!}--}}
 {{--    {!! JsValidator::formRequest('App\Http\Requests\AdminRequest', '#edit_admin') !!}--}}
+    @if ($user->cannot('updateAdmin', Admin::class))
+        <script src="{{ App\Helpers\Helper::asset('backend/js/backend/disabled_checkbox.js') }}"></script>
+    @endif
 @endsection
 @section('cssCustom')
 @endsection

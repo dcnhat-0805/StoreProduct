@@ -49,6 +49,9 @@ return [
             'required' => ':attribute cannot be left blank.',
             'same' => ':attribute does not match the password entered.',
         ],
+        'admin_group_id' => [
+            'required' => 'Please select an admin permission.',
+        ],
     ],
 
     'category' => [
