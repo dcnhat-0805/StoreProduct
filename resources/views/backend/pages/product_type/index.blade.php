@@ -127,13 +127,8 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="name">Category</label>
-                                                {{
-                                                    Form::select('category_id', $category, request()->get('category_id'),
-                                                    [
-                                                        'class' => 'form-control category-id'
-                                                    ])
-                                                }}
+                                                <label for="name">Created at</label>
+                                                <input type="text" readonly class="form-control jsDatepcker" name="created_at" value="{{ request()->get('created_at') }}" >
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -152,8 +147,13 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="name">Created at</label>
-                                                <input type="text" readonly class="form-control jsDatepcker" name="created_at" value="{{ request()->get('created_at') }}" >
+                                                <label for="name">Category</label>
+                                                {{
+                                                    Form::select('category_id', $category, request()->get('category_id'),
+                                                    [
+                                                        'class' => 'form-control category-id'
+                                                    ])
+                                                }}
                                             </div>
                                         </div>
                                     </div>
