@@ -7,6 +7,8 @@ const CATEGORY_IDS = 'category.ids';
 const CATEGORY_DELETE_ALL = 'category.delete.all';
 const PRODUCT_CATEGORY_IDS = 'product.category.ids';
 const PRODUCT_CATEGORY_DELETE_ALL = 'product.category.delete.all';
+const PRODUCT_TYPE_IDS = 'product.type.ids';
+const PRODUCT_TYPE_DELETE_ALL = 'product.type.delete.all';
 const ADMIN_IDS = 'admin.ids';
 const ADMIN_DELETE_ALL = 'admin.delete.all';
 $.urlParam = function(name){
@@ -80,6 +82,49 @@ let Commons = (function ($) {
         $('form').trigger("reset");
     });
 
+    modules.getOptionProductCategory = function (categoryId) {
+        $.ajax({
+            url : 'admin/ajax/list_product_category',
+            dataType : 'JSON',
+            type : 'GET',
+            data : {
+                category_id : categoryId
+            },
+            success : function (data) {
+                let option = [];
+
+                if (!data.length) {
+                    option += '<option value="">' + 'Please select a product category' + '</option>';
+                    $('select.product-category-id').prop('disabled', true);
+                }
+
+                option += '<option value="">' + 'Please select a product category' + '</option>';
+                $.each(data, function (index, value) {
+                    option += '<option value="' + value['id'] + '">' + value['product_category_name'] + '</option>';
+                });
+
+                $('select.product-category-id, #productCategoryId').html(option);
+            },
+            error : function (data) {
+
+            }
+        });
+    };
+
+    modules.removeErrorValidation = function (formId) {
+        $(formId).each(function (index, value) {
+            for (let i=0; i < value.length; i++) {
+                $(value[i]).bind("keyup change mousewheel onmousewheel", function () {
+                    if ($(this).val()) {
+                        $(this).next().addClass('hidden').text('');
+                    } else {
+                        $(this).next().removeClass('hidden');
+                    }
+                });
+            }
+        });
+    };
+
     return modules;
 
 }(window.jQuery, window, document));
@@ -95,3 +140,23 @@ $.enableButtonSubmitWhenUploadedImage = function () {
     $(".loading-icon").hide();
     $("button.register .icon").show();
 };
+
+$(document).ready(function () {
+    function preventEnter(ev) {
+        if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    let inputArr = [
+        "input[type=text]", "input[type=email]",
+        "input[type=password]", "input[type=url]",
+        "input[type=datetime]", "input[type=date]",
+        "input[type=month]", "input[type=week]",
+        "input[type=time]", "input[datetime-local]",
+        "input[number]", "input[range]", "input[radio]"
+    ];
+    inputArr.forEach(e => $(e).keypress(preventEnter));
+});

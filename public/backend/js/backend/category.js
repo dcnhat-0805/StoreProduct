@@ -27,7 +27,12 @@ let CategoryJs = (function ($) {
         });
     };
 
+    $('#add').on('show.bs.modal', function (e) {
+        Commons.removeErrorValidation('#createCategory');
+    });
+
     $('#edit').on('show.bs.modal', function (e) {
+        Commons.removeErrorValidation('#editCategory');
         let id = $(e.relatedTarget).data('id');
         let name = $(e.relatedTarget).data('name');
         let order = $(e.relatedTarget).data('order');
@@ -135,7 +140,7 @@ let CategoryJs = (function ($) {
         modules.reloadSelectAllCheckBox();
     };
 
-    modules.checkAllCatrgory = function () {
+    modules.checkAllCategory = function () {
         if ($('.btSelectAll').is(':checked')) {
             modules.getAllListCategory();
             $('.btSelectAll').prop('checked', true);
@@ -224,7 +229,7 @@ $(document).ready(function () {
     });
 
     $('.btSelectAll').change(function () {
-        CategoryJs.checkAllCatrgory();
+        CategoryJs.checkAllCategory();
     });
 
     btnClear.on('click', function () {

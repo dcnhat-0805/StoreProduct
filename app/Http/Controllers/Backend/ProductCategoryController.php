@@ -44,15 +44,19 @@ class ProductCategoryController extends Controller
      */
     public function store(ProductCategoryRequest $request)
     {
-        if ($request->ajax()) {
-            $input = $request->all();
-            $productCategory = ProductCategory::createProductCategory($input);
+        $user = Auth::guard('admins')->user();
 
-            if ($productCategory) {
-                Session::flash("success", trans("messages.product_category.create_success"));
-                return response()->json($productCategory, 200);
-            } else {
-                Session::flash("error", trans("messages.product_category.create_failed"));
+        if ($user->can('createProductCategory', ProductCategory::class)) {
+            if ($request->ajax()) {
+                $input = $request->all();
+                $productCategory = ProductCategory::createProductCategory($input);
+
+                if ($productCategory) {
+                    Session::flash("success", trans("messages.product_category.create_success"));
+                    return response()->json($productCategory, 200);
+                } else {
+                    Session::flash("error", trans("messages.product_category.create_failed"));
+                }
             }
         }
     }
@@ -88,15 +92,19 @@ class ProductCategoryController extends Controller
      */
     public function update(ProductCategoryRequest $request, $id)
     {
-        if ($request->ajax()) {
-            $input = $request->all();
-            $productCategory = ProductCategory::updateProductCategory($input, $id);
+        $user = Auth::guard('admins')->user();
 
-            if ($productCategory) {
-                Session::flash("success", trans("messages.product_category.update_success"));
-                return response()->json($productCategory, 200);
-            } else {
-                Session::flash("error", trans("messages.product_category.update_failed"));
+        if ($user->can('updateProductCategory', ProductCategory::class)) {
+            if ($request->ajax()) {
+                $input = $request->all();
+                $productCategory = ProductCategory::updateProductCategory($input, $id);
+
+                if ($productCategory) {
+                    Session::flash("success", trans("messages.product_category.update_success"));
+                    return response()->json($productCategory, 200);
+                } else {
+                    Session::flash("error", trans("messages.product_category.update_failed"));
+                }
             }
         }
     }
@@ -109,14 +117,18 @@ class ProductCategoryController extends Controller
      */
     public function delete($id)
     {
-        $productCategory = ProductCategory::deleteProductCategory($id);
+        $user = Auth::guard('admins')->user();
 
-        if (isset($productCategory)) {
-            Session::flash("success", trans("messages.category.delete_success"));
-            return response()->json();
-        } else {
-            Session::flash("error", trans("messages.category.delete_failed"));
-            return response()->json();
+        if ($user->can('deleteProductCategory', ProductCategory::class)) {
+            $productCategory = ProductCategory::deleteProductCategory($id);
+
+            if (isset($productCategory)) {
+                Session::flash("success", trans("messages.category.delete_success"));
+                return response()->json();
+            } else {
+                Session::flash("error", trans("messages.category.delete_failed"));
+                return response()->json();
+            }
         }
     }
 
@@ -138,13 +150,17 @@ class ProductCategoryController extends Controller
 
     public function destroy(Request $request)
     {
-        try {
-            ProductCategory::destroy($request->input('ids'));
-            if ($request->input('ids') != DELETE_ALL) {
-                Session::flash("success", trans("messages.product_category.delete_success"));
+        $user = Auth::guard('admins')->user();
+
+        if ($user->can('deleteProductCategory', ProductCategory::class)) {
+            try {
+                ProductCategory::destroy($request->input('ids'));
+                if ($request->input('ids') != DELETE_ALL) {
+                    Session::flash("success", trans("messages.product_category.delete_success"));
+                }
+            } catch (\Exception $e) {
+                Session::flash("error", trans("messages.product_category.delete_failed"));
             }
-        } catch (\Exception $e) {
-            Session::flash("error", trans("messages.product_category.delete_failed"));
         }
     }
 }

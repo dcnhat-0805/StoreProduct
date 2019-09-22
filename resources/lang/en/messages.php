@@ -87,8 +87,29 @@ return [
             'max' => ':attribute must be between 3-100 characters.',
             'unique' => ':attribute was used in the database.',
         ],
-        'id' => [
+        'category_id' => [
             'required' => 'Please select a category.',
+        ],
+    ],
+
+    'product_type' => [
+        'create_success' => 'Successfully add new product category.',
+        'create_failed' => 'Unsuccessfully add new  product category.',
+        'update_success' => 'Successfully edit  product category.',
+        'update_failed' => 'Unsuccessfully edit  product category.',
+        'delete_success' => 'Successfully delete  product category.',
+        'delete_failed' => 'Unsuccessfully delete  product category.',
+        'name' => [
+            'required' => ':attribute cannot be left blank.',
+            'min' => ':attribute must be between 3-100 characters.',
+            'max' => ':attribute must be between 3-100 characters.',
+            'unique' => ':attribute was used in the database.',
+        ],
+        'category_id' => [
+            'required' => 'Please select a category.',
+        ],
+        'product_category_id' => [
+            'required' => 'Please select a product category.',
         ],
     ],
 ];

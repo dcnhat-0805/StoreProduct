@@ -36,7 +36,7 @@
 {{--                        </ul>--}}
 {{--                    </li>--}}
                     <?php
-                        $isShowPages = in_array(request()->route()->getPrefix(), ['admin/category', 'admin/product_category']);
+                        $isShowPages = in_array(request()->route()->getPrefix(), ['admin/category', 'admin/product_category', 'admin/product_type']);
                     ?>
                     <li>
                         <a class="has-arrow" href="#" aria-expanded="false">
@@ -53,6 +53,12 @@
                             <li class="{{request()->route()->getPrefix() == 'admin/product_category' ? 'active' : ''}}">
                                 <a title="Category" href="{{route(ADMIN_PRODUCT_CATEGORY_INDEX)}}">
                                     <span class="mini-sub-pro">Product Category</span>
+                                </a>
+                            </li>
+
+                            <li class="{{request()->route()->getPrefix() == 'admin/product_type' ? 'active' : ''}}">
+                                <a title="Category" href="{{route(ADMIN_PRODUCT_TYPE_INDEX)}}">
+                                    <span class="mini-sub-pro">Product Type</span>
                                 </a>
                             </li>
                         </ul>
