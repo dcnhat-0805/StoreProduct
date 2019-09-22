@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProductCategoryRequest extends FormRequest
+class ProductTypeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class ProductCategoryRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_category_name' => 'required|min:3|max:100|unique:product_categories,product_category_name,'.($this->id ?? " "),
+            'product_type_name' => 'required|min:3|max:100|unique:product_types,product_type_name,'.($this->id ?? " "),
             'category_id' => 'required',
+            'product_category_id' => 'required',
         ];
     }
 
@@ -37,11 +38,12 @@ class ProductCategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => trans("messages.product_category.name.required"),
-            'min' => trans("messages.product_category.name.min"),
-            'max' => trans("messages.product_category.name.max"),
-            'unique' => trans("messages.product_category.name.unique"),
-            'category_id.required' => trans("messages.product_category.category_id.required"),
+            'required' => trans("messages.product_type.name.required"),
+            'min' => trans("messages.product_type.name.min"),
+            'max' => trans("messages.product_type.name.max"),
+            'unique' => trans("messages.product_type.name.unique"),
+            'category_id.required' => trans("messages.product_type.category_id.required"),
+            'product_category_id.required' => trans("messages.product_type.product_category_id.required"),
         ];
     }
 
@@ -53,8 +55,7 @@ class ProductCategoryRequest extends FormRequest
     public function attributes()
     {
         return [
-            'category_id' => 'Category Id',
-            'product_category_name' => 'Product category name',
+            'product_type_name' => 'Product type name',
         ];
     }
 }

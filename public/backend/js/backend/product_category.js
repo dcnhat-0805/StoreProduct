@@ -21,13 +21,18 @@ let productCategoryJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_id, '.error-product-category-id');
+                Commons.getErrorMessage(error, error.category_id, '.error-category-id');
                 Commons.getErrorMessage(error, error.product_category_name, '.error-product-category-name');
             }
         });
     };
 
+    $('#add').on('show.bs.modal', function (e) {
+        Commons.removeErrorValidation('#createProductCategory');
+    });
+
     $('#edit').on('show.bs.modal', function (e) {
+        Commons.removeErrorValidation('#editProductCategory');
         let id = $(e.relatedTarget).data('id');
         let name = $(e.relatedTarget).data('name');
         let category_id = $(e.relatedTarget).data('category');
@@ -36,9 +41,9 @@ let productCategoryJs = (function ($) {
         $(e.currentTarget).find('input[name="id"]').val(id);
         $(e.currentTarget).find('.title').text(name);
         $(e.currentTarget).find('input[name="product_category_name"]').val(name);
-        $(e.currentTarget).find('select option[value="'+ category_id +'"]').prop('selected', true);
+        $(e.currentTarget).find('.category-id option[value="'+ category_id +'"]').prop('selected', true);
         $(e.currentTarget).find('#url_edit').val(url);
-        $(e.currentTarget).find('.category-status option[value="'+ status +'"]').prop('selected', true);
+        $(e.currentTarget).find('.product-category-status option[value="'+ status +'"]').prop('selected', true);
     });
 
     modules.updateProductCategory = function (url, data) {
@@ -54,7 +59,7 @@ let productCategoryJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_id, '.error-product-category-id');
+                Commons.getErrorMessage(error, error.category_id, '.error-category-id');
                 Commons.getErrorMessage(error, error.product_category_name, '.error-product-category-name');
             }
         });
@@ -135,7 +140,7 @@ let productCategoryJs = (function ($) {
         modules.reloadSelectAllCheckBox();
     };
 
-    modules.checkAllCatrgory = function () {
+    modules.checkAllProductCategory = function () {
         if ($('.btSelectAll').is(':checked')) {
             modules.getAllListProductCategory();
             $('.btSelectAll').prop('checked', true);
@@ -224,7 +229,7 @@ $(document).ready(function () {
     });
 
     $('.btSelectAll').change(function () {
-        productCategoryJs.checkAllCatrgory();
+        productCategoryJs.checkAllProductCategory();
     });
 
     btnClear.on('click', function () {

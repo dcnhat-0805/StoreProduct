@@ -30,7 +30,12 @@ let AdminJs = (function ($) {
         });
     };
 
+    $('#add').on('show.bs.modal', function (e) {
+        Commons.removeErrorValidation('#createAdmin');
+    });
+
     $('#edit').on('show.bs.modal', function (e) {
+        Commons.removeErrorValidation('#editAdmin');
         let id = $(e.relatedTarget).data('id');
         let name = $(e.relatedTarget).data('name');
         let email = $(e.relatedTarget).data('email');
@@ -200,7 +205,7 @@ $.ajaxSetup({
 $(document).ready(function () {
 
     btnAddAdmin.on('click', function () {
-       let formData = $('#create_admin').serialize();
+       let formData = $('#createAdmin').serialize();
        AdminJs.createNewAdmin(formData);
     });
 
@@ -215,7 +220,7 @@ $(document).ready(function () {
 
     btnEditAdmin.on('click', function () {
         let url = $('#url_edit').val();
-        let formData = $('#edit_admin').serialize();
+        let formData = $('#editAdmin').serialize();
         AdminJs.editAdmin(url, formData);
     });
 

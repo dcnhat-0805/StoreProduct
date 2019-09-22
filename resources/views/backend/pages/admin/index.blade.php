@@ -162,7 +162,7 @@
                 <div class="modal-body">
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
-                            <form role="form" method="post" id="create_admin" action="{{route(ADMIN_ADD)}}">
+                            <form role="form" method="post" id="createAdmin" action="{{route(ADMIN_ADD)}}">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">
@@ -247,7 +247,7 @@
                 <div class="modal-body">
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
-                            <form role="form" method="post" id="edit_admin">
+                            <form role="form" method="post" id="editAdmin">
                                 @csrf
                                 <div class="box-body">
                                     <div class="row">

@@ -142,13 +142,17 @@ class AdminController extends Controller
 
     public function destroy(Request $request)
     {
-        try {
-            Admin::destroy($request->input('ids'));
-            if ($request->input('ids') != DELETE_ALL) {
-                Session::flash("success", trans("messages.admin.delete_success"));
+        $user = Auth::guard('admins')->user();
+
+        if ($user->can('deleteAdmin', Admin::class)) {
+            try {
+                Admin::destroy($request->input('ids'));
+                if ($request->input('ids') != DELETE_ALL) {
+                    Session::flash("success", trans("messages.admin.delete_success"));
+                }
+            } catch (\Exception $e) {
+                Session::flash("error", trans("messages.admin.delete_failed"));
             }
-        } catch (\Exception $e) {
-            Session::flash("error", trans("messages.admin.delete_failed"));
         }
     }
 }

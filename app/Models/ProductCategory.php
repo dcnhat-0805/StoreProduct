@@ -149,16 +149,29 @@ class ProductCategory extends Model
 
     public static function loadProductCategory($category_id)
     {
-        $productCategory = self::select('category_id', 'product_category_name', 'product_category_status')
-            ->orderby('id', 'DESC')
-            ->where('id_Category', $category_id)->get();
+        $productCategory = self::select('id', 'product_category_name')
+            ->orderby('id')
+            ->whereNull('deleted_at')
+            ->where('category_id', $category_id)
+            ->get();
+
         return $productCategory;
     }
 
-    public static function getProductCategory($product_category_id)
+
+    public static function getOptionProductCategory()
     {
-        $productCategory = self::select('category_id', 'product_category_name', 'product_category_status')
-            ->where('id', $product_category_id)->get();
-        return $productCategory;
+        $productCategories = self::select('id', 'product_category_name')
+            ->whereNull('deleted_at')
+            ->get();
+
+        $productCategoryOption = [];
+
+        $productCategoryOption[''] = 'Please select a product category';
+        foreach ($productCategories as $productCategory) {
+            $productCategoryOption[$productCategory['id']] = $productCategory['product_category_name'];
+        }
+
+        return $productCategoryOption;
     }
 }
