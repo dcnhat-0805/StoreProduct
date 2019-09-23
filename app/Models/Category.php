@@ -122,9 +122,15 @@ class Category extends Model
         return $categoryOption;
     }
 
-    public static function getListCategory()
+    public static function getMenuCategory()
     {
-        return Category::select('id', 'category_name', 'category_order', 'category_status')->orderBy('id', 'DESC')->paginate(1);
+        $categories = self::whereNull('categories.deleted_at')
+            ->selectRaw("categories.id, categories.category_name")
+            ->orderByRaw('categories.category_order', 'DESC')
+            ->where('category_status', '=', '1')
+            ->get();
+
+        return $categories;
     }
 
     public static function createCategory($request)

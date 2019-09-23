@@ -179,4 +179,19 @@ class ProductType extends Model
             ->where('id', $product_type_id)->get();
         return $productType;
     }
+
+    public static function getCategoryMenu()
+    {
+        $categories = self::whereNull('product_types.deleted_at')
+            ->whereNull('product_categories.deleted_at')
+            ->whereNull('categories.deleted_at')
+            ->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
+            ->join('categories', 'product_types.category_id', '=', 'categories.id')
+            ->selectRaw("product_types.*, product_categories.*, categories.*")
+            ->groupBy('product_types.id')
+            ->orderByRaw('categories.id', 'DESC')
+            ->get();
+
+        return $categories;
+    }
 }
