@@ -57,3 +57,5 @@ const DELETE_ALL = 1;
 const SORT_PARAMS_ALLOWED = [
     'id' => 'id',
 ];
+
+const FRONT_END_HOME_INDEX = 'front.end.home.index';
