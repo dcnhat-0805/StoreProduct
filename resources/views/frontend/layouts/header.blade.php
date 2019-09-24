@@ -56,12 +56,14 @@
                 <!-- Logo -->
                 <div class="col-lg-2 col-sm-3 col-3 order-1">
                     <div class="logo_container">
-                        <div class="logo"><a href="#">OneTech</a></div>
+                        <div class="logo">
+                            <a href="{{route(FRONT_END_HOME_INDEX)}}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
+                        </div>
                     </div>
                 </div>
 
                 <!-- Search -->
-                <div class="col-sm-6 col-lg-6 col-12 order-lg-2 order-2 text-lg-left text-right">
+                <div class="col-sm-5 col-lg-6 col-12 order-lg-2 order-2 text-lg-left text-right">
                     <div class="header_search">
                         <div class="header_search_content">
                             <div class="header_search_form_container">
@@ -91,7 +93,7 @@
                 </div>
 
                 <!-- Wishlist -->
-                <div class="col-sm-3 col-lg-4 col-9 order-lg-3 order-3 text-lg-left text-right">
+                <div class="col-sm-4 col-lg-4 col-9 order-lg-3 order-3 text-lg-left text-right">
                     <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
                         <div class="wishlist d-flex flex-row align-items-center justify-content-end">
                             <div class="wishlist_icon"><img src="frontend/images/heart.png" alt=""></div>
