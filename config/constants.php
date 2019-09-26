@@ -32,6 +32,11 @@ const ADMIN_PRODUCT_TYPE_ADD = 'admin.product.type.add';
 const ADMIN_PRODUCT_TYPE_EDIT = 'admin.product.type.edit';
 const ADMIN_PRODUCT_TYPE_DELETE = 'admin.product.type.delete';
 
+const ADMIN_PRODUCT_INDEX = 'admin.product.index';
+const ADMIN_PRODUCT_ADD = 'admin.product.add';
+const ADMIN_PRODUCT_EDIT = 'admin.product.edit';
+const ADMIN_PRODUCT_DELETE = 'admin.product.delete';
+
 const ADMIN_INDEX = 'admin.list';
 const ADMIN_INDEX_BLADE = 'backend.pages.admin.index';
 const ADMIN_ADD = 'admin.add';

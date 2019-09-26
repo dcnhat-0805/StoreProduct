@@ -82,7 +82,7 @@ let Commons = (function ($) {
         $('form').trigger("reset");
     });
 
-    modules.getOptionProductCategory = function (categoryId) {
+    modules.getProductCategory = function (categoryId) {
         $.ajax({
             url : 'admin/ajax/list_product_category',
             dataType : 'JSON',
@@ -95,15 +95,44 @@ let Commons = (function ($) {
 
                 if (!data.length) {
                     option += '<option value="">' + 'Please select a product category' + '</option>';
-                    $('select.product-category-id').prop('disabled', true);
+                    // $('select.product-category-id').prop('disabled', true);
+                } else {
+                    option += '<option value="">' + 'Please select a product category' + '</option>';
+                    $.each(data, function (index, value) {
+                        option += '<option value="' + value['id'] + '">' + value['product_category_name'] + '</option>';
+                    });
                 }
 
-                option += '<option value="">' + 'Please select a product category' + '</option>';
-                $.each(data, function (index, value) {
-                    option += '<option value="' + value['id'] + '">' + value['product_category_name'] + '</option>';
-                });
-
                 $('select.product-category-id, #productCategoryId').html(option);
+            },
+            error : function (data) {
+
+            }
+        });
+    };
+
+    modules.getProductType = function (productCategoryId) {
+        $.ajax({
+            url : 'admin/ajax/listProductType',
+            dataType : 'JSON',
+            type : 'GET',
+            data : {
+                product_category_id : productCategoryId
+            },
+            success : function (data) {
+                let option = [];
+
+                if (!data.length) {
+                    option += '<option value="">' + 'Please select a product type' + '</option>';
+                    // $('select.product-type-id').prop('disabled', true);
+                } else {
+                    option += '<option value="">' + 'Please select a product type' + '</option>';
+                    $.each(data, function (index, value) {
+                        option += '<option value="' + value['id'] + '">' + value['product_type_name'] + '</option>';
+                    });
+                }
+
+                $('select.product-type-id, #producTypeId').html(option);
             },
             error : function (data) {
 
@@ -125,6 +154,26 @@ let Commons = (function ($) {
         });
     };
 
+    modules.getOptionProductCategory = function (categoryId) {
+        if (!categoryId) {
+            $('select.product-category-id').prop('disabled', true);
+        } else {
+            $('select.product-category-id').prop('disabled', false);
+
+            modules.getProductCategory(categoryId);
+        }
+    };
+
+    modules.getOptionProductType = function (productCategoryId) {
+        if (!productCategoryId) {
+            $('select.product-type-id').prop('disabled', true);
+        } else {
+            $('select.product-type-id').prop('disabled', false);
+
+            modules.getProductType(productCategoryId);
+        }
+    }
+
     return modules;
 
 }(window.jQuery, window, document));
@@ -142,6 +191,22 @@ $.enableButtonSubmitWhenUploadedImage = function () {
 };
 
 $(document).ready(function () {
+    $('select.product-category-id').prop('disabled', true);
+    $('select.product-type-id').prop('disabled', true);
+
+    $('select.category-id').on('change', function () {
+        let categoryId = $(this).val();
+
+        Commons.getOptionProductCategory(categoryId);
+    });
+
+    $('select.product-category-id').on('change', function () {
+        // $('select.product-category-id').prop('disabled', false);
+        let productCategoryId = $(this).val();
+
+        Commons.getOptionProductType(productCategoryId);
+    });
+
     function preventEnter(ev) {
         if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {
             return false;

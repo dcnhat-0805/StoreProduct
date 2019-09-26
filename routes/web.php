@@ -71,16 +71,27 @@ Route::namespace('Backend')->group(function(){
             Route::post('add', 'ProductTypeController@store')->name(ADMIN_PRODUCT_TYPE_ADD);
             Route::post('edit/{id}', 'ProductTypeController@update')->name(ADMIN_PRODUCT_TYPE_EDIT);
             Route::delete('delete/{id}', 'ProductTypeController@delete')->name(ADMIN_PRODUCT_TYPE_DELETE);
-            Route::get('/list_product_category', 'ProductTypeController@getProductCategory');
             Route::get('/list_product_type', 'ProductTypeController@getListProductType');
             Route::delete('/destroy', 'ProductTypeController@destroy');
         });
 
+        Route::group(['prefix' => 'product'], function(){
+            Route::get('/', 'ProductController@index')->name(ADMIN_PRODUCT_INDEX);
+            Route::post('add', 'ProductController@store')->name(ADMIN_PRODUCT_ADD);
+            Route::post('edit/{id}', 'ProductController@update')->name(ADMIN_PRODUCT_EDIT);
+            Route::delete('delete/{id}', 'ProductController@delete')->name(ADMIN_PRODUCT_DELETE);
+            Route::get('/list_product', 'ProductController@getListProduct');
+            Route::delete('/destroy', 'ProductController@destroy');
+        });
+
         Route::group(['prefix' => 'ajax'], function(){
             Route::get('/list_product_category', 'AjaxController@getProductCategory');
+            Route::get('/listProductType', 'AjaxController@getProductType');
         });
     });
 });
+
+
 Route::namespace('FrontEnd')->group(function(){
     Route::group(['prefix' => 'home'], function(){
         Route::get('/', 'HomeController@index')

@@ -2,9 +2,9 @@
  "use strict";
  // Validation for order form
 		$(".add-professors").validate(
-		{					
+		{
 			rules:
-			{	
+			{
 				firstname:
 				{
 					required: true
@@ -63,7 +63,7 @@
 				}
 			},
 			messages:
-			{	
+			{
 				firstname:
 				{
 					required: 'Please enter first name'
@@ -120,20 +120,20 @@
 				{
 					required: 'Please select date of birth'
 				}
-			},					
-			
+			},
+
 			errorPlacement: function(error, element)
 			{
 				error.insertAfter(element.parent());
 			}
 		});
-		
- 
+
+
  // Validation for order form
 		$("#acount-infor").validate(
-		{					
+		{
 			rules:
-			{	
+			{
 				email:
 				{
 					required: true,
@@ -157,8 +157,8 @@
 				}
 			},
 			messages:
-			{	
-			
+			{
+
 				email:
 				{
 					required: 'Please enter your email address',
@@ -176,20 +176,20 @@
 				{
 					required: 'Please enter your confarm password'
 				}
-				
-			},					
-			
+
+			},
+
 			errorPlacement: function(error, element)
 			{
 				error.insertAfter(element.parent());
 			}
 		});
- 
+
  // Validation for order form
 		$(".addcourse").validate(
-		{					
+		{
 			rules:
-			{	
+			{
 				coursename:
 				{
 					required: true
@@ -249,7 +249,7 @@
 				}
 			},
 			messages:
-			{	
+			{
 				coursename:
 				{
 					required: 'Please enter course name'
@@ -303,24 +303,24 @@
 				{
 					required: 'Please enter your confarm password'
 				}
-				
-			},					
-			
+
+			},
+
 			errorPlacement: function(error, element)
 			{
 				error.insertAfter(element.parent());
 			}
 		});
-		
-		
-		
-		
- 
+
+
+
+
+
 	// Validation for login form
 		$("#comment").validate(
-		{					
+		{
 			rules:
-			{	
+			{
 				name:
 				{
 					required: true
@@ -336,7 +336,7 @@
 				}
 			},
 			messages:
-			{	
+			{
 				name:
 				{
 					required: 'Please enter your name'
@@ -350,20 +350,20 @@
 					required: 'Please enter your email address',
 					email: 'Please enter a VALID email address'
 				}
-			},					
-			
+			},
+
 			errorPlacement: function(error, element)
 			{
 				error.insertAfter(element.parent());
 			}
 		});
-		
-		
+
+
 	// Validation for login form
 		$(".addlibrary").validate(
-		{					
+		{
 			rules:
-			{	
+			{
 				nameasset:
 				{
 					required: true
@@ -403,7 +403,7 @@
 				}
 			},
 			messages:
-			{	
+			{
 				nameasset:
 				{
 					required: 'Please enter your name of assets'
@@ -441,19 +441,19 @@
 					required: 'Please enter your email address',
 					email: 'Please enter a VALID email address'
 				}
-			},					
-			
+			},
+
 			errorPlacement: function(error, element)
 			{
 				error.insertAfter(element.parent());
 			}
 		});
-		
+
 	// Validation for login form
 		$(".add-department").validate(
-		{					
+		{
 			rules:
-			{	
+			{
 				name:
 				{
 					required: true
@@ -480,7 +480,7 @@
 				}
 			},
 			messages:
-			{	
+			{
 				name:
 				{
 					required: 'Please enter your name'
@@ -505,19 +505,19 @@
 				{
 					required: 'Please enter status'
 				}
-			},					
-			
+			},
+
 			errorPlacement: function(error, element)
 			{
 				error.insertAfter(element.parent());
 			}
 		});
-		
+
 	// Validation for login form
 		$("#send-mail").validate(
-		{					
+		{
 			rules:
-			{	
+			{
 				name:
 				{
 					required: true
@@ -545,7 +545,7 @@
 				}
 			},
 			messages:
-			{	
+			{
 				name:
 				{
 					required: 'Please enter your name'
@@ -553,10 +553,6 @@
 				headofdepartment:
 				{
 					required: 'Please enter head of department'
-				},
-				email:
-				{
-					required: 'Please enter email'
 				},
 				email:
 				{
@@ -571,13 +567,13 @@
 				{
 					required: 'Please enter status'
 				}
-			},					
-			
+			},
+
 			errorPlacement: function(error, element)
 			{
 				error.insertAfter(element.parent());
 			}
 		});
-		
- 
-})(jQuery); 
+
+
+})(jQuery);

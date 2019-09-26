@@ -206,7 +206,6 @@
 {{--    <script src="backend/js/tawk-chat.js"></script>--}}
 <!-- Laravel Javascript Validation
     ============================================ -->
-<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 <script src="backend/js/backend/common.js"></script>
 <script src="backend/js/calendar/moment.min.js"></script>
 <script src="{{ App\Helpers\Helper::asset('backend/js/datepicker/jquery-ui.min.js') }}"></script>
@@ -216,6 +215,7 @@
 <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/daterangepicker.min.js') }}"></script>
 <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/datepicker_range.js') }}"></script>
 @yield('jsCustom')
+@yield('jsCustomTwo')
 
 @if(Session::has('success'))
     <script type="text/javascript">

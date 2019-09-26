@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Category;
+use App\Models\ProductCategory;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +17,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $category = Category::getOptionCategory();
+        $productCategories = ProductCategory::getOptionProductCategory();
+        $productTypes = ProductType::getOptionProductType();
+
+        return view('backend.pages.product.index', compact('category', 'productCategories', 'productTypes'));
     }
 
     /**

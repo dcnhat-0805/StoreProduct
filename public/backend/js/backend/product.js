@@ -5,7 +5,7 @@ const btnDelete = $('#removeProductType');
 const btnClear = $('#btnClear');
 const btnSearch = $('#btnSearch');
 
-let productTypeJs = (function ($) {
+let productJs = (function ($) {
     let modules = {};
 
     modules.createProductType = function(data) {
@@ -188,7 +188,7 @@ let productTypeJs = (function ($) {
                 location.reload();
             }
         });
-    };
+    };;
 
     return modules;
 })(window.jQuery, window, document);
@@ -200,12 +200,12 @@ $.ajaxSetup({
 });
 $(document).ready(function () {
 
-    productTypeJs.reloadSelectAllCheckBox();
+    productJs.reloadSelectAllCheckBox();
 
     btnAddProductType.on('click', function () {
         $(this).button('Loading');
         let data = $('#createProductType').serialize();
-        productTypeJs.createProductType(data);
+        productJs.createProductType(data);
     });
 
     btnUpdateProductType.on('click', function () {
@@ -213,7 +213,7 @@ $(document).ready(function () {
         let data = $('#editProductType').serialize();
         let url = $('#url_edit').val();
 
-        productTypeJs.updateProductType(url, data);
+        productJs.updateProductType(url, data);
     });
 
     btnDeleteProductType.on('click', function () {
@@ -222,18 +222,18 @@ $(document).ready(function () {
         let url = $('#urlDelete').val();
 
         if (!id && !url) {
-            productTypeJs.destroyProductType();
+            productJs.destroyProductType();
         } else {
-            productTypeJs.deleteProductType(url, id);
+            productJs.deleteProductType(url, id);
         }
     });
 
     $('.btSelectItem').on('change', function () {
-        productTypeJs.checkboxProductType($(this));
+        productJs.checkboxProductType($(this));
     });
 
     $('.btSelectAll').change(function () {
-        productTypeJs.checkAllProductType();
+        productJs.checkAllProductType();
     });
 
     btnClear.on('click', function () {

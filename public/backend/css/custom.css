@@ -68,8 +68,8 @@ span.info {
 }
 
 .fixed-table-body {
-    overflow-x: visible !important;
-    overflow-y: visible !important;
+    /*overflow-x: visible !important;*/
+    /*overflow-y: visible !important;*/
 }
 
 ul.pagination {
@@ -110,4 +110,16 @@ h3.required.after::after, label.required.after::after, span.required.after::afte
 
 h3.required.after::before, label.required.after::before, span.required.after::before {
     display:none
+}
+
+.modal-dialog {
+    min-width: 70% !important;
+}
+
+.menuSp {
+    right: 0px;
+    left: auto;
+    text-align: center;
+    text-indent: 0px;
+    font-size: 18px;
 }
