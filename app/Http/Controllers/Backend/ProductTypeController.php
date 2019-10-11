@@ -99,9 +99,9 @@ class ProductTypeController extends Controller
         }
     }
 
-    public function getListProductCategory()
+    public function getListProductType()
     {
-        $productTypes = ProductCategory::getListAllProductCategory();
+        $productTypes = ProductType::getListAllProductType();
         $data = [];
 
         if (count($productTypes)) {

@@ -15,8 +15,7 @@ class Product extends Model
         'category_id', 'product_category_id', 'product_type_id',
         'product_name', 'product_slug', 'product_image',
         'product_description', 'product_content', 'product_price',
-        'product_promotional', 'count_buy',
-        'product_view', 'product_status',
+        'product_promotional', 'product_status',
     ];
 
     protected $dates = [
@@ -87,7 +86,7 @@ class Product extends Model
 
     public function deleteImageListProduct($product_id)
     {
-        $file_path = 'assets/upload/image/product/detail/';
+        $file_path = 'assets/uploads/image/product/detail/';
         $product = $this->showProduct($product_id);
         $product_image = $product->productImage->toArray();
         foreach ($product_image as $value) {
@@ -98,7 +97,7 @@ class Product extends Model
 
     public function deleteProduct($product_id)
     {
-        $file_path = 'assets/upload/image/product/';
+        $file_path = 'assets/uploads/image/product/';
         $product = $this->showProduct($product_id);
         if (File::exists($file_path.$product->product_image)) {
             unlink($file_path.$product->product_image);

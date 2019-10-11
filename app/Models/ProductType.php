@@ -175,23 +175,28 @@ class ProductType extends Model
 
     public static function loadProductType($product_type_id)
     {
-        $productType = self::select('category_id', 'product_category_id', 'product_type_name', 'product_type_status')
-            ->where('id', $product_type_id)->get();
+        $productType = self::select('id', 'product_type_name')
+            ->orderby('id')
+            ->whereNull('deleted_at')
+            ->where('product_category_id', $product_type_id)
+            ->get();
+
         return $productType;
     }
 
-    public static function getCategoryMenu()
+    public static function getOptionProductType()
     {
-        $categories = self::whereNull('product_types.deleted_at')
-            ->whereNull('product_categories.deleted_at')
-            ->whereNull('categories.deleted_at')
-            ->join('product_categories', 'product_types.product_category_id', '=', 'product_categories.id')
-            ->join('categories', 'product_types.category_id', '=', 'categories.id')
-            ->selectRaw("product_types.*, product_categories.*, categories.*")
-            ->groupBy('product_types.id')
-            ->orderByRaw('categories.id', 'DESC')
+        $productTypes = self::select('id', 'product_type_name')
+            ->whereNull('deleted_at')
             ->get();
 
-        return $categories;
+        $productTypeOption = [];
+
+        $productTypeOption[''] = 'Please select a product type';
+        foreach ($productTypes as $productType) {
+            $productTypeOption[$productType['id']] = $productType['product_type_name'];
+        }
+
+        return $productTypeOption;
     }
 }

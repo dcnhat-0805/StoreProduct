@@ -2,11 +2,25 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
+use App\Models\Category;
+use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\ProductType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\UploadService;
+use App\Http\Requests\ProductRequest;
 
 class ProductController extends Controller
 {
+    protected $uploadImage;
+
+    public function __construct(UploadService $uploadImage)
+    {
+        $this->uploadImage = $uploadImage;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +28,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $category = Category::getOptionCategory();
+        $productCategories = ProductCategory::getOptionProductCategory();
+        $productTypes = ProductType::getOptionProductType();
+
+        return view('backend.pages.product.index', compact('category', 'productCategories', 'productTypes'));
     }
 
     /**
@@ -24,7 +42,11 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $category = Category::getOptionCategory();
+        $productCategories = ProductCategory::getOptionProductCategory();
+        $productTypes = ProductType::getOptionProductType();
+
+        return view('backend.pages.product.add', compact('category', 'productCategories', 'productTypes'));
     }
 
     /**
@@ -33,9 +55,11 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
-        //
+        $input = $request->all();
+
+        return response()->json($input);
     }
 
     /**
