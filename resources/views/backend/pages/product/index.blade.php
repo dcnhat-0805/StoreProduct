@@ -13,9 +13,13 @@
     <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/colorpicker.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/datepicker3.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/daterangepicker/daterangepicker.css') }}"/>
-    <!-- dropzone CSS
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/form/all-type-forms.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/assets/css/normalize.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/assets/css/demo.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/assets/css/component.css') }}" />
+    <!-- summernote CSS
 		============================================ -->
-    <link rel="stylesheet" href="backend/css/dropzone/dropzone.css">
+    <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/summernote/summernote.css') }}">
 @endsection
 @section('content')
     <div class="sparkline13-list">
@@ -29,8 +33,9 @@
                 <div class="datatable-dashv1-list custom-datatable-overright">
                     <div id="toolbar">
                         <!-- Button to Open the Add Modal -->
-                        <button id="addProductType" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#add" type="button"
-                                title="Add new product type"><i class="fa fa-plus"></i> Register
+                        <button id="addProductType" class="btn btn-custon-three btn-default" type="button"
+                                onclick="window.location.href = '{{ route(ADMIN_PRODUCT_ADD_INDEX) }}'"
+                                title="Add new product"><i class="fa fa-plus"></i> Register
                         </button>
                         <!-- Button to Open the Delete Modal -->
                         <button id="removeProductType" class="btn btn-custon-three btn-danger"
@@ -197,81 +202,169 @@
                         <span aria-hidden="true">×</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <div id="dropzone1" class="pro-ad">
-                                <form action="" class="dropzone dropzone-custom needsclick add-professors" id="demo1-upload">
-                                    <div class="row">
-                                        <div class="col-lg-12 col-xs-12" style="padding: 0 20px;">
-                                            <div class="form-group">
-                                                <label for="category_id" class="required after">Category</label>
-                                                {{
-                                                    Form::select('category_id', $category, NULL,
-                                                    [
-                                                        'class' => 'form-control category-id'
-                                                    ])
-                                                }}
-                                                <div class="error error-category-id hidden"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="product_category_id" class="required after">Product category</label>
-                                                {{
-                                                    Form::select('product_category_id', $productCategories, NULL,
-                                                    [
-                                                        'class' => 'form-control product-category-id'
-                                                    ])
-                                                }}
-                                                <div class="error error-product-category-id hidden"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="product_type_id" class="required after">Product type</label>
-                                                {{
-                                                    Form::select('product_type_id', $productTypes, NULL,
-                                                    [
-                                                        'class' => 'form-control product-type-id'
-                                                    ])
-                                                }}
-                                                <div class="error error-product-type-id hidden"></div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="name" class="required after">Product type name</label>
-                                                <input type="text" class="form-control product-type-name" name="product_type_name"
-                                                       placeholder="Product type Name ....">
-                                                <div class="error error-product-type-name hidden"></div>
-                                            </div>
-                                            <div class="form-group alert-up-pd">
-                                                <label for="status" class="required after">Product image</label>
-                                                <div class="dz-message needsclick download-custom">
-                                                    <i class="fa fa-download edudropnone" aria-hidden="true"></i>
-                                                    <h2 class="edudropnone">Drop image here or click to upload.</h2>
-                                                    <p class="edudropnone"><span class="note needsclick">(This is just a demo dropzone. Selected image is <strong>not</strong> actually uploaded.)</span>
-                                                    </p>
-                                                    <input name="imageico" class="hd-pro-img" type="text" />
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="status" class="required after">Status</label>
-                                                <select class="form-control product-type-status" name="product_type_status">
-                                                    <option value="1" class="display">Display</option>
-                                                    <option value="0" class="not-display">Not Display</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
+                <div class="tinymce-area mg-b-15">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                                <div class="tinymce-single responsive-mg-b-30">
+                                    <div class="alert-title">
+                                        <h2>Basic Summernote WYSIWYG editor</h2>
+                                        <p>The fastest way to get Summernote WYSIWYG editor is powerfull JavaScript plugin. you can easily maintance typography system.</p>
                                     </div>
-                                </form>
+                                    <div id="summernote1">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-custon-three btn-success add-category" id="btnAddProductType"><i
+                <form action="{{ route(ADMIN_PRODUCT_ADD) }}" id="addProduct" enctype="multipart/form-data" method="POST">
+                    <div class="modal-body">
+                        <div class="row" style="margin: 5px">
+                            <div class="col-lg-12">
+                                @csrf
+                                <div class="box-body">
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="category_id" class="required after">Category</label>
+                                                    {{
+                                                        Form::select('category_id', $category, NULL,
+                                                        [
+                                                            'class' => 'form-control category-id'
+                                                        ])
+                                                    }}
+                                                    <div class="error error-category-id hidden"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="product_category_id" class="required after">Product category</label>
+                                                    {{
+                                                        Form::select('product_category_id', $productCategories, NULL,
+                                                        [
+                                                            'class' => 'form-control product-category-id'
+                                                        ])
+                                                    }}
+                                                    <div class="error error-product-category-id hidden"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="product_type_id" class="required after">Product type</label>
+                                                    {{
+                                                        Form::select('product_type_id', $productTypes, NULL,
+                                                        [
+                                                            'class' => 'form-control product-type-id'
+                                                        ])
+                                                    }}
+                                                    <div class="error error-product-type-id hidden"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="name" class="required after">Product name</label>
+                                                    <input type="text" class="form-control product-name" name="product_name"
+                                                           placeholder="Product type Name ....">
+                                                    <div class="error error-product-name hidden"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="product_image" class="required after">Product images</label>
+
+                                                    <div class="box">
+                                                        <input type="file" name="product_image" id="product_image" class="jsUploadFile inputUpload" data-multiple-caption="{count} files selected" />
+                                                        <label for="product_image">
+                                                            <figure>
+                                                                <img src="backend/assets/file_input.svg" alt="">
+                                                            </figure>
+                                                            <span></span>
+                                                        </label>
+                                                        <div class="error error-product-type-name hidden"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label for="product_image" class="">Image attached to the product</label>
+                                                    <div class="box">
+                                                        <input type="file" name="image_list[]" id="image_list" class="jsUploadFileMultiple inputUpload" data-multiple-caption="{count} files selected" multiple />
+                                                        <label for="image_list">
+                                                            <figure>
+                                                                <img src="backend/assets/file_input.svg" alt="">
+                                                            </figure>
+                                                            <span></span>
+                                                        </label>
+                                                        <div class="error error-product-type-name hidden"></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div><div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="name" class="required after">Description product</label>
+                                                <textarea name="product_description" class="product-description" id="descriptionProduct"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="name" class="required after">Contents product</label>
+                                                <textarea name="product_content" class="product-content" id="contentProduct"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="name" class="required after">Price product</label>
+                                                <input type="text" class="form-control" name="product_price" placeholder="Price product ...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="name">Promotional product </label>
+                                                <input type="text" class="form-control" name="product_promotional" placeholder="Promotional product ...">
+                                            </div>
+                                        </div>
+                                    </div>
+                                        <div class="row">
+                                            <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label for="status" class="required after">Status</label>
+                                                    <select class="form-control product-status" name="product_status">
+                                                        <option value="1" class="display">Display</option>
+                                                        <option value="0" class="not-display">Not Display</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div><!-- /.box-body -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="submit" class="btn btn-custon-three btn-success add-category" id="btnAddProduct"><i
                             class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Add
                     </button>
                     <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal"><i
                             class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
                     </button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -384,11 +477,12 @@
     </div>
 @endsection
 @section('jsCustom')
+    <!-- summernote JS
+		============================================ -->
+    <script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote.min.js') }}"></script>
+    <script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote-active.js') }}"></script>
     <script src="{{ App\Helpers\Helper::asset('backend/js/backend/product.js') }}"></script>
     @if ($user->cannot('updateProductType', ProductType::class))
         <script src="{{ App\Helpers\Helper::asset('backend/js/backend/disabled_checkbox.js') }}"></script>
     @endif
-    <!-- dropzone JS
-    ============================================ -->
-    <script src="backend/js/dropzone/dropzone.js"></script>
 @endsection

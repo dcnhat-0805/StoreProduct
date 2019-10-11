@@ -105,19 +105,19 @@
                                 'type' => 'email',
                                 'autofocus' => 'autofocus',
                                 'title' => 'Email',
-                                'placeholder' => 'Vui lòng nhập email...'
+                                'placeholder' => 'Please enter email...'
                             ]) }}
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="password">Password</label>
-                            <input type="password" title="Password" placeholder="Vui lòng nhập password..."
+                            <input type="password" title="Password" placeholder="Please enter password..."
                                    name="password" id="password" class="form-control">
                         </div>
                         <div class="checkbox login-checkbox">
                             <label><input type="checkbox" class="i-checks" name="remember_token" {{ old('remember_token') ? 'checked' : '' }}> Remember me </label>
                         </div>
                         <button class="btn btn-custon-three btn-primary btn-block loginbtn">Login</button>
-                        <a class="forget-password" href="{{ route(ADMIN_FORGET_PASSWORD) }}">Quên mật khẩu ?</a>
+                        <a class="forget-password" href="{{ route(ADMIN_FORGET_PASSWORD) }}">Forgot password ?</a>
                     </form>
                 </div>
             </div>

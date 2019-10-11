@@ -82,6 +82,15 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/responsive.css">
+    <!-- select2 CSS
+		============================================ -->
+    <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/select2/select2.min.css') }}">
+    <!-- chosen CSS
+		============================================ -->
+    <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/chosen/bootstrap-chosen.css') }}">
+    <!-- summernote CSS
+		============================================ -->
+    <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/summernote/summernote.css') }}">
 
     <!-- modernizr JS
 		============================================ -->
@@ -200,7 +209,6 @@
 <!-- icheck JS
     ============================================ -->
 <script src="backend/js/icheck/icheck.min.js"></script>
-<script src="backend/js/icheck/icheck-active.js"></script>
 <!-- tawk chat JS
     ============================================ -->
 {{--    <script src="backend/js/tawk-chat.js"></script>--}}
@@ -214,6 +222,12 @@
     ============================================ -->
 <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/daterangepicker.min.js') }}"></script>
 <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/datepicker_range.js') }}"></script>
+<!-- summernote JS
+    ============================================ -->
+<script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote.min.js') }}"></script>
+<!-- chosen JS
+    ============================================ -->
+<script src="{{ App\Helpers\Helper::asset('backend/js/chosen/chosen.jquery.js') }}"></script>
 @yield('jsCustom')
 @yield('jsCustomTwo')
 

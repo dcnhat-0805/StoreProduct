@@ -80,7 +80,7 @@
                 <!-- Step 1 -->
                 <div class="step step-1 show">
                     <div class="content">
-                        <form method="" class="mb-55" onsubmit="return false;" id="forgetPasswordForm">
+                        <form method="POST" class="mb-55" onsubmit="return false;" id="forgetPasswordForm">
                             <p class="info mb-35">
                                 <font style="vertical-align: inherit;">
                                     <font style="vertical-align: inherit;">Nếu bạn quên mật khẩu cần thiết để truy cập Store
@@ -97,7 +97,7 @@
                                     'type' => 'email',
                                     'autofocus' => 'autofocus',
                                 ]) }}
-                                <div class="error error-email hidden"></div>
+                                <div class="error error_email hidden"></div>
                             </div>
 
                             <div class="submit-group">
@@ -111,14 +111,14 @@
                 <!-- Step 2 -->
                 <div class="step step-2 hidden">
                     <div class="content">
-                        <form method="post" action="#" class="mb-40">
+                        <form method="post" action="#" class="mb-40" id="updatePasswordForm">
                             <p class="info mb-0">Một email có mã xác thực đã được gửi đến địa chỉ email đã đăng ký.</p>
                             <p class="info xsmall mb-30">Nếu không đóng màn hình này, hãy nhập mã xác thực được ghi trong văn bản email, đặt mật khẩu mới và tiếp tục với nút tiếp theo.</p>
 
                             <div class="form-group mb-10">
                                 <label for="auth-key" class="required after">Mã xác thực</label>
                                 <input type="text" id="auth_key" name="auth_key" class="form-control simple" autofocus>
-                                <div class="error error-auth-key hidden"></div>
+                                <div class="error error_auth_key hidden"></div>
                             </div>
 
                             <p class="info warn xsmall mb-25">Nếu bạn không thay đổi mật khẩu mới trong vòng 30 phút sau khi lấy mã xác thực, mã xác thực sẽ không hợp lệ.</p>
@@ -126,12 +126,12 @@
                             <div class="form-group">
                                 <label for="new-password" class="required after">Mật khẩu mới</label>
                                 <input type="password" id="new_password" name="new_password" class="form-control simple">
-                                <div class="error error-new-password hidden"></div>
+                                <div class="error error_new_password hidden"></div>
                             </div>
                             <div class="form-group">
                                 <label for="confirm-password" class="required after">Nhập lại mật khẩu mới</label>
                                 <input type="password" id="confirm_password" name="confirm_password" class="form-control simple">
-                                <div class="error error-confirm-password hidden"></div>
+                                <div class="error error_confirm_password hidden"></div>
                             </div>
 
                             <!-- ボタンエリア -->
@@ -222,10 +222,9 @@
     <!-- tawk chat JS
         ============================================ -->
     {{--    <script src="backend/js/tawk-chat.js"></script>--}}
-    <!-- Laravel Javascript Validation
+    <!-- chosen JS
         ============================================ -->
-    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
-    {!! JsValidator::formRequest('App\Http\Requests\LoginRequest', '#loginForm') !!}
+    <script src="{{ App\Helpers\Helper::asset('backend/js/chosen/chosen.jquery.js') }}"></script>
     <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/common.js') }}"></script>
     <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/forget_password.js') }}"></script>
 </body>

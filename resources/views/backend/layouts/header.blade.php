@@ -853,6 +853,11 @@
                                     </li>
                                 </ul>
                             </div>
+
+                            <?php
+                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create']);
+                            ?>
+                            @if(!$isShowBtnSearch)
                             <div class="col-xs-3 col-sm-3">
                                 <div class="breadcome-heading text-right">
                                     <button type="button" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#search" id="modalSearch">
@@ -860,6 +865,7 @@
                                     </button>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>

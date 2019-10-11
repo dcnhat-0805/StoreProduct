@@ -4,6 +4,10 @@ const btnDeleteProductCategory = $('#btnDeleteProductCategory');
 const btnDelete = $('#removeProductCategory');
 const btnClear = $('#btnClear');
 const btnSearch = $('#btnSearch');
+const urlCreate = '/admin/product_category/add';
+const formCreateId = '#createProductCategory';
+const formEditId = '#editProductCategory';
+const arrayName = ['category_id', 'product_category_name'];
 
 let productCategoryJs = (function ($) {
     let modules = {};
@@ -21,18 +25,18 @@ let productCategoryJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_id, '.error-category-id');
-                Commons.getErrorMessage(error, error.product_category_name, '.error-product-category-name');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
 
     $('#add').on('show.bs.modal', function (e) {
-        Commons.removeErrorValidation('#createProductCategory');
+        // Commons.removeErrorValidation('#createProductCategory');
+        Commons.formValidation(urlCreate, formCreateId, null);
     });
 
     $('#edit').on('show.bs.modal', function (e) {
-        Commons.removeErrorValidation('#editProductCategory');
+        // Commons.removeErrorValidation('#editProductCategory');
         let id = $(e.relatedTarget).data('id');
         let name = $(e.relatedTarget).data('name');
         let category_id = $(e.relatedTarget).data('category');
@@ -41,9 +45,11 @@ let productCategoryJs = (function ($) {
         $(e.currentTarget).find('input[name="id"]').val(id);
         $(e.currentTarget).find('.title').text(name);
         $(e.currentTarget).find('input[name="product_category_name"]').val(name);
-        $(e.currentTarget).find('.category-id option[value="'+ category_id +'"]').prop('selected', true);
+        $(".jsSelectCategory").val(category_id).trigger("chosen:updated");
         $(e.currentTarget).find('#url_edit').val(url);
-        $(e.currentTarget).find('.product-category-status option[value="'+ status +'"]').prop('selected', true);
+        $(e.currentTarget).find('input[name=product_category_status][value='+ status +']').parent().addClass('checked');
+
+        Commons.formValidation(url, formEditId, null);
     });
 
     modules.updateProductCategory = function (url, data) {

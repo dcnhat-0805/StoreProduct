@@ -113,23 +113,32 @@
                                         </div>
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label for="name">Category</label>
-                                                {{
-                                                    Form::select('admin_group_id', $permission, request()->get('admin_group_id'),
-                                                    [
-                                                        'class' => 'form-control'
-                                                    ])
-                                                }}
+                                                <label for="name">Permission</label>
+                                                <div class="permission">
+                                                    {{
+                                                        Form::select('admin_group_id', $permission, request()->get('admin_group_id'),
+                                                        [
+                                                            'class' => 'form-control jsSelectPermission'
+                                                        ])
+                                                    }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="checkbox" class="i-checks" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
-                                                <label for="status" style="margin-right: 20px;">Display</label>
-                                                <input type="checkbox" class="i-checks"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
-                                                <label for="status">Not display</label>
+                                                <label for="status" class="required after">Status</label>
+                                                <div class="status">
+                                                    <div class="jsCheckBox pull-left">
+                                                        <input type="checkbox" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
+                                                        <label><i></i> Display </label>
+                                                    </div>
+                                                    <div class="jsCheckBox pull-left">
+                                                        <input type="checkbox"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
+                                                        <label><i></i> Not display </label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -168,7 +177,7 @@
                                         <div class="form-group">
                                             <label for="name" class="required after">Name</label>
                                             <input type="text" class="form-control admin-name" name="name" placeholder="Name ....">
-                                            <div class="error error-name hidden"></div>
+                                            <div class="error error_name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -176,7 +185,7 @@
                                             <label for="email" class="required after">Email</label>
                                             <input type="email" class="form-control admin-email"
                                                    name="email" placeholder="Email ....">
-                                            <div class="error error-email hidden"></div>
+                                            <div class="error error_email hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -184,7 +193,7 @@
                                             <label for="password" class="required after">Password</label>
                                             <input type="password" class="form-control admin-password"
                                                    name="password" placeholder="Password ....">
-                                            <div class="error error-password hidden"></div>
+                                            <div class="error error_password hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -192,29 +201,37 @@
                                             <label for="confirm password" class="required after">Confirm password</label>
                                             <input type="password" class="form-control confirm-password"
                                                    name="confirm_password" placeholder="Confirm password ....">
-                                            <div class="error error-confirm-password hidden"></div>
+                                            <div class="error error_confirm_password hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="admin_group_id" class="required after">Permission</label>
-                                            {{
-                                                Form::select('admin_group_id', $permission, NULL,
-                                                [
-                                                    'class' => 'form-control admin-permission',
-                                                    'id' => 'admin_group_id'
-                                                ])
-                                            }}
-                                            <div class="error error-permission hidden"></div>
+                                            <div class="permission">
+                                                {{
+                                                    Form::select('admin_group_id', $permission, request()->get('admin_group_id'),
+                                                    [
+                                                        'class' => 'form-control admin-permission jsSelectPermission',
+                                                        'id' => 'admin_group_id'
+                                                    ])
+                                                }}
+                                            </div>
+                                            <div class="error error_admin_group_id hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="status" class="required after">Status</label>
-                                            <select class="form-control admin-status" name="admin_status">
-                                                <option value="1" class="display">Display</option>
-                                                <option value="0" class="not-display">Not Display</option>
-                                            </select>
+                                            <div class="admin-status">
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="1" name="admin_status" checked {{ old('admin_status') ? 'checked' : '' }}>
+                                                    <label><i></i> Display </label>
+                                                </div>
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="0" name="admin_status" {{ old('admin_status') == 0 && old('admin_status') != null ? 'checked' : '' }}>
+                                                    <label><i></i> Not display </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -261,7 +278,7 @@
                                         <div class="form-group">
                                             <label for="name" class="required after">Name</label>
                                             <input type="text" class="form-control admin-name" name="name" placeholder="Name ....">
-                                            <div class="error error-name hidden"></div>
+                                            <div class="error error_name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -269,28 +286,36 @@
                                             <label for="email" class="required after">Email</label>
                                             <input type="email" class="form-control admin-email"
                                                    name="email" placeholder="Email ....">
-                                            <div class="error error-email hidden"></div>
+                                            <div class="error error_email hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="admin_group_id" class="required after">Permission</label>
-                                            {{
-                                                Form::select('admin_group_id', $permission, NULL,
-                                                [
-                                                    'class' => 'form-control admin-permission'
-                                                ])
-                                            }}
-                                            <div class="error error-permission hidden"></div>
+                                            <div class="permission">
+                                                {{
+                                                    Form::select('admin_group_id', $permission, request()->get('admin_group_id'),
+                                                    [
+                                                        'class' => 'form-control admin-permission jsSelectPermission',
+                                                    ])
+                                                }}
+                                            </div>
+                                            <div class="error error_admin_group_id hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="status" class="required after">Status</label>
-                                            <select class="form-control admin-status" name="admin_status">
-                                                <option value="1" class="display">Display</option>
-                                                <option value="0" class="not-display">Not Display</option>
-                                            </select>
+                                            <div class="admin-status">
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="1" name="admin_status" {{ old('admin_status') ? 'checked' : '' }}>
+                                                    <label><i></i> Display </label>
+                                                </div>
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="0" name="admin_status" {{ old('admin_status') == 0 && old('admin_status') != null ? 'checked' : '' }}>
+                                                    <label><i></i> Not display </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- /.box-body -->

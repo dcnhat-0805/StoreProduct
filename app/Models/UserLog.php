@@ -10,6 +10,8 @@ class UserLog extends Model
 
     protected $table = 'user_logs';
 
+    protected $fillable = ['admin_id', 'user_id', 'username', 'message'];
+
     /**
      * Save data
      *
@@ -20,14 +22,13 @@ class UserLog extends Model
      */
     public function saveData($message, $username)
     {
+        $useLog = UserLog::firstOrNew([
+            'admin_id' => (Auth::guard("admins") != null) ? Auth::guard("admins")->id() : null,
+            'user_id' => (Auth::user() != null) ? Auth::user()->id : null,
+            'message' => $message,
+            'username' => $username,
+        ]);
 
-        $this->admin_id = Auth::guard("admins")->id();
-        if (Auth::user() != null) {
-            $this->user_id = Auth::user()->id;
-        }
-        $this->message = $message;
-        $this->username = $username;
-
-        $this->save();
+        $useLog->touch();
     }
 }

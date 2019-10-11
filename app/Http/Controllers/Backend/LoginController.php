@@ -45,7 +45,6 @@ class LoginController extends Controller
             Session::flash("success", trans("messages.admin.login_success"));
             return redirect(route(ADMIN_DASHBOARD));
         } else {
-            $errors = trans("messages.admin.login_failed");
             $count_user = Admin::where("email", $email)->count();
             if ($count_user) {
                 $message = trans("messages.admin.login_failed");

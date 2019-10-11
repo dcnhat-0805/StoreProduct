@@ -131,22 +131,31 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="name">Category</label>
-                                                {{
-                                                    Form::select('category_id', $category, request()->get('category_id'),
-                                                    [
-                                                        'class' => 'form-control category-id'
-                                                    ])
-                                                }}
+                                                <div class="category">
+                                                    {{
+                                                        Form::select('category_id', $category, request()->get('category_id'),
+                                                        [
+                                                            'class' => 'form-control category-id jsSelectCategory'
+                                                        ])
+                                                    }}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="checkbox" class="i-checks" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
-                                                <label for="status" style="margin-right: 20px;">Display</label>
-                                                <input type="checkbox" class="i-checks"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
-                                                <label for="status">Not display</label>
+                                                <label for="status" class="required after">Status</label>
+                                                <div class="status">
+                                                    <div class="jsCheckBox pull-left">
+                                                        <input type="checkbox" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
+                                                        <label><i></i> Display </label>
+                                                    </div>
+                                                    <div class="jsCheckBox pull-left">
+                                                        <input type="checkbox"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
+                                                        <label><i></i> Not display </label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -184,13 +193,15 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="category_id" class="required after">Category</label>
-                                            {{
-                                                Form::select('category_id', $category, NULL,
-                                                [
-                                                    'class' => 'form-control category-id'
-                                                ])
-                                            }}
-                                            <div class="error error-product-category-id hidden"></div>
+                                            <div class="category">
+                                                {{
+                                                    Form::select('category_id', $category, request()->get('category_id'),
+                                                    [
+                                                        'class' => 'form-control category-id jsSelectCategory'
+                                                    ])
+                                                }}
+                                            </div>
+                                            <div class="error error_product_category_id hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -198,16 +209,22 @@
                                             <label for="name" class="required after">Product category name</label>
                                             <input type="text" class="form-control product-category-name" name="product_category_name"
                                                    placeholder="Product category Name ....">
-                                            <div class="error error-product-category-name hidden"></div>
+                                            <div class="error error_product_category_name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="status" class="required after">Status</label>
-                                            <select class="form-control product-category-status" name="product_category_status">
-                                                <option value="1" class="display">Display</option>
-                                                <option value="0" class="not-display">Not Display</option>
-                                            </select>
+                                            <div class="product-category-status">
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="1" name="product_category_status" checked {{ old('product_category_status') ? 'checked' : '' }}>
+                                                    <label><i></i> Display </label>
+                                                </div>
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="0" name="product_category_status" {{ old('product_category_status') == 0 && old('product_category_status') != null ? 'checked' : '' }}>
+                                                    <label><i></i> Not display </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -252,13 +269,15 @@
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="category_id" class="required after">Category</label>
-                                            {{
-                                                Form::select('category_id', $category, NULL,
-                                                [
-                                                    'class' => 'form-control category-id'
-                                                ])
-                                            }}
-                                            <div class="error error-product-category-id hidden"></div>
+                                            <div class="category">
+                                                {{
+                                                    Form::select('category_id', $category, request()->get('category_id'),
+                                                    [
+                                                        'class' => 'form-control category-id jsSelectCategory'
+                                                    ])
+                                                }}
+                                            </div>
+                                            <div class="error error_product_category-id hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -266,16 +285,22 @@
                                             <label for="name" class="required after">Product category name</label>
                                             <input type="text" class="form-control product-category-name" name="product_category_name"
                                                    placeholder="Product category Name ....">
-                                            <div class="error error-product-category-name hidden"></div>
+                                            <div class="error error_product_category_name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="status" class="required after">Status</label>
-                                            <select class="form-control product-category-status" name="product_category_status">
-                                                <option value="1" class="display">Display</option>
-                                                <option value="0" class="not-display">Not Display</option>
-                                            </select>
+                                            <div class="product-category-status">
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="1" name="product_category_status" {{ old('product_category_status') ? 'checked' : '' }}>
+                                                    <label><i></i> Display </label>
+                                                </div>
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="0" name="product_category_status" {{ old('product_category_status') == 0 && old('product_category_status') != null ? 'checked' : '' }}>
+                                                    <label><i></i> Not display </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- /.box-body -->

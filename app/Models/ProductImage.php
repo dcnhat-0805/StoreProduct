@@ -69,7 +69,7 @@ class ProductImage extends Model
     public function deleteProductImage($product_image_id)
     {
         $product_image = $this->showProductImage($product_image_id);
-        $image_path = 'assets/upload/image/product/detail/';
+        $image_path = 'assets/uploads/image/product/detail/';
         if (isset($product_image)) {
             if (File::exists($image_path.$product_image->product_image_name)) {
                 unlink($image_path.$product_image->imageproduct_image_name_Product_Image);

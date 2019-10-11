@@ -1,36 +1,11 @@
-const btnAddProductType = $('#btnAddProductType');
-const btnUpdateProductType = $('#btnUpdateProductType');
-const btnDeleteProductType = $('#btnDeleteProductType');
-const btnDelete = $('#removeProductType');
+const btnUpdateProduct = $('#btnUpdateProduct');
+const btnDeleteProduct = $('#btnDeleteProduct');
+const btnDelete = $('#removeProduct');
 const btnClear = $('#btnClear');
 const btnSearch = $('#btnSearch');
 
 let productJs = (function ($) {
     let modules = {};
-
-    modules.createProductType = function(data) {
-        $.ajax({
-            url : 'admin/product_type/add',
-            dataType : 'JSON',
-            type : 'POST',
-            data: data,
-            success : function (data) {
-                btnAddProductType.prop('disabled', true);
-                location.reload();
-            },
-            error : function (data) {
-                let error = $.parseJSON(data.responseText).errors;
-
-                Commons.getErrorMessage(error, error.category_id, '.error-category-id');
-                Commons.getErrorMessage(error, error.product_category_id, '.error-product-category-id');
-                Commons.getErrorMessage(error, error.product_type_name, '.error-product-type-name');
-            }
-        });
-    };
-
-    $('#add').on('show.bs.modal', function (e) {
-        Commons.removeErrorValidation('#createProductType', 'product_type_name');
-    });
 
     $('#edit').on('show.bs.modal', function (e) {
         let id = $(e.relatedTarget).data('id');
@@ -41,21 +16,21 @@ let productJs = (function ($) {
         let url = $(e.relatedTarget).data('url');
         $(e.currentTarget).find('input[name="id"]').val(id);
         $(e.currentTarget).find('.title').text(name);
-        $(e.currentTarget).find('input[name="product_type_name"]').val(name);
+        $(e.currentTarget).find('input[name="product__name"]').val(name);
         $(e.currentTarget).find('.category-id option[value="'+ category_id +'"]').prop('selected', true);
         $(e.currentTarget).find('.product-category-id').val(product_category_id).prop('disabled', false);
         $(e.currentTarget).find('#url_edit').val(url);
         $(e.currentTarget).find('.product-t-status option[value="'+ status +'"]').prop('selected', true);
     });
 
-    modules.updateProductType = function (url, data) {
+    modules.updateProduct = function (url, data) {
         $.ajax({
             url : url,
             dataType : 'JSON',
             type : 'POST',
             data: data,
             success : function (data) {
-                btnUpdateProductType.prop('disabled', true);
+                btnUpdateProduct.prop('disabled', true);
                 location.reload();
             },
             error : function (data) {
@@ -77,7 +52,7 @@ let productJs = (function ($) {
         $(e.currentTarget).find('#urlDelete').val(url);
     });
 
-    modules.deleteProductType = function (url, id) {
+    modules.deleteProduct = function (url, id) {
         $.ajax({
             url : url,
             dataType : 'JSON',
@@ -86,7 +61,7 @@ let productJs = (function ($) {
                 id : id
             },
             success : function (data) {
-                btnDeleteProductType.prop('disabled', true);
+                btnDeleteProduct.prop('disabled', true);
                 location.reload();
             },
             error : function (data) {
@@ -124,7 +99,7 @@ let productJs = (function ($) {
         }
     };
 
-    modules.checkboxProductType = function (checkbox) {
+    modules.checkboxProduct = function (checkbox) {
         Commons.setLocalStorageDeleteAll(PRODUCT_TYPE_DELETE_ALL, NOT_DELETE_ALL);
         let id = checkbox.data("id");
         let ids_product_type = Commons.getArrayValueLocalStorage(PRODUCT_TYPE_IDS);
@@ -143,9 +118,9 @@ let productJs = (function ($) {
         modules.reloadSelectAllCheckBox();
     };
 
-    modules.checkAllProductType = function () {
+    modules.checkAllProduct = function () {
         if ($('.btSelectAll').is(':checked')) {
-            modules.getAllListProductType();
+            modules.getAllListProduct();
             $('.btSelectAll').prop('checked', true);
             Commons.setLocalStorageDeleteAll(PRODUCT_TYPE_DELETE_ALL, IS_DELETE_ALL);
         } else {
@@ -157,7 +132,7 @@ let productJs = (function ($) {
         modules.reloadSelectAllCheckBox();
     };
 
-    modules.getAllListProductType = function () {
+    modules.getAllListProduct = function () {
         let url = new URL(window.location.href);
         $.ajax({
             url: "/admin/product_type/list_product_type",
@@ -170,7 +145,7 @@ let productJs = (function ($) {
         });
     };
 
-    modules.destroyProductType = function () {
+    modules.destroyProduct = function () {
         let data = {};
         data['delete_all'] = Commons.getSingleValueLocalStorage(PRODUCT_TYPE_DELETE_ALL);
         data['ids'] = Commons.getArrayValueLocalStorage(PRODUCT_TYPE_IDS);
@@ -188,7 +163,7 @@ let productJs = (function ($) {
                 location.reload();
             }
         });
-    };;
+    };
 
     return modules;
 })(window.jQuery, window, document);
@@ -199,41 +174,26 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
-
     productJs.reloadSelectAllCheckBox();
 
-    btnAddProductType.on('click', function () {
-        $(this).button('Loading');
-        let data = $('#createProductType').serialize();
-        productJs.createProductType(data);
-    });
-
-    btnUpdateProductType.on('click', function () {
-        $(this).button('Loading');
-        let data = $('#editProductType').serialize();
-        let url = $('#url_edit').val();
-
-        productJs.updateProductType(url, data);
-    });
-
-    btnDeleteProductType.on('click', function () {
+    btnDeleteProduct.on('click', function () {
         $(this).button('Loading');
         let id = $('#ProductTypeId').val();
         let url = $('#urlDelete').val();
 
         if (!id && !url) {
-            productJs.destroyProductType();
+            productJs.destroyProduct();
         } else {
-            productJs.deleteProductType(url, id);
+            productJs.deleteProduct(url, id);
         }
     });
 
     $('.btSelectItem').on('change', function () {
-        productJs.checkboxProductType($(this));
+        productJs.checkboxProduct($(this));
     });
 
     $('.btSelectAll').change(function () {
-        productJs.checkAllProductType();
+        productJs.checkAllProduct();
     });
 
     btnClear.on('click', function () {

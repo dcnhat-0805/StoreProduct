@@ -13,9 +13,17 @@ class AjaxController extends Controller
     {
         if (request()->ajax()) {
             $categoryId = request()->get('category_id');
-            $productCategory = ProductCategory::loadProductCategory($categoryId);
+            $productCategories = ProductCategory::loadProductCategory($categoryId);
+            $productCategoryOption = [];
 
-            return response()->json($productCategory);
+            $productCategoryOption[''] = 'Please select a product category';
+            foreach ($productCategories as $productCategory) {
+                $productCategoryOption[$productCategory['id']] = $productCategory['product_category_name'];
+            }
+
+            $html = view('backend.pages.ajax._select_product_category', ['productCategory' => $productCategoryOption])->render();
+
+            return response()->json($html);
         }
     }
 
@@ -23,9 +31,17 @@ class AjaxController extends Controller
     {
         if (request()->ajax()) {
             $productCategoryId = request()->get('product_category_id');
-            $productType = ProductType::loadProductType($productCategoryId);
+            $productTypes = ProductType::loadProductType($productCategoryId);
+            $productTypeOption = [];
 
-            return response()->json($productType);
+            $productTypeOption[''] = 'Please select a product type';
+            foreach ($productTypes as $productType) {
+                $productTypeOption[$productType['id']] = $productType['product_type_name'];
+            }
+
+            $html = view('backend.pages.ajax._select_product_type', ['productTypes' => $productTypeOption])->render();
+
+            return response()->json($html);
         }
     }
 }

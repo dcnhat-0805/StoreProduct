@@ -51,7 +51,7 @@ class Slide extends Model
 
     public function deleteSlide($slide_id)
     {
-        $file_path = 'assets/upload/image/product/slide/';
+        $file_path = 'assets/uploads/image/product/slide/';
         $slide = $this->showSlide($slide_id);
         if (File::exists($file_path.$slide->image_Slide)) {
             unlink($file_path.$slide->image_Slide);

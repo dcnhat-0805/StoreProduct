@@ -34,6 +34,7 @@ const ADMIN_PRODUCT_TYPE_DELETE = 'admin.product.type.delete';
 
 const ADMIN_PRODUCT_INDEX = 'admin.product.index';
 const ADMIN_PRODUCT_ADD = 'admin.product.add';
+const ADMIN_PRODUCT_ADD_INDEX = 'admin.product.add.index';
 const ADMIN_PRODUCT_EDIT = 'admin.product.edit';
 const ADMIN_PRODUCT_DELETE = 'admin.product.delete';
 
@@ -62,5 +63,9 @@ const DELETE_ALL = 1;
 const SORT_PARAMS_ALLOWED = [
     'id' => 'id',
 ];
+
+const IMAGE_RESIZE_WIDTH = 320;
+const IMAGE_RESIZE_HEIGHT = 240;
+const IMAGE_RESIZE_PREFIX = 'resize-';
 
 const FRONT_END_HOME_INDEX = 'front.end.home.index';
