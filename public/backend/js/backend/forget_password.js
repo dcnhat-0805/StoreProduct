@@ -9,14 +9,14 @@ const arrayName = ['email', 'auth_key', 'new_password', 'confirm_password'];
 let ForgetPasswordJs = (function ($) {
     let modules = {};
 
-    modules.getLoading = function () {
+    modules.getLoading = function (time) {
         $('.error-pagewrap').addClass('hidden');
         $('#loading').css('display', 'block');
 
         setTimeout(function () {
             $('#loading').css('display', 'none');
             $('.error-pagewrap').removeClass('hidden');
-        },3000);
+        },time);
     };
 
     modules.submitEmailForgetPassword = function (email) {
@@ -28,12 +28,12 @@ let ForgetPasswordJs = (function ($) {
                 email : email,
             },
             success : function (data) {
-                modules.getLoading();
                 $('.error').text('');
                 $('.step-1').addClass('hidden');
                 $('.step-2').removeClass('hidden');
             },
             error : function (data) {
+                ForgetPasswordJs.getLoading(500);
                 btnSubmitEmail.prop('disabled', false);
                 let error = $.parseJSON(data.responseText).errors;
 
@@ -61,13 +61,12 @@ let ForgetPasswordJs = (function ($) {
                 $('.step-3').removeClass('hidden');
             },
             error: function (data) {
+                ForgetPasswordJs.getLoading(500);
                 let error = $.parseJSON(data.responseText).errors;
 
-                if (typeof error != 'undefined') {
-                    btnSubmitPassword.prop('disabled', false);
+                btnSubmitPassword.prop('disabled', false);
 
-                    Commons.loadMessageValidation(error, arrayName);
-                }
+                Commons.loadMessageValidation(error, arrayName);
             },
         });
     };
@@ -90,6 +89,7 @@ $(document).ready(function () {
     }
 
     btnSubmitEmail.on('click', function () {
+        ForgetPasswordJs.getLoading(6000);
         $(this).prop('disabled', true);
         let _this = $(this);
         setTimeout(function () {

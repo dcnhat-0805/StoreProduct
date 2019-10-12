@@ -82,15 +82,12 @@
                     <div class="content">
                         <form method="POST" class="mb-55" onsubmit="return false;" id="forgetPasswordForm">
                             <p class="info mb-35">
-                                <font style="vertical-align: inherit;">
-                                    <font style="vertical-align: inherit;">Nếu bạn quên mật khẩu cần thiết để truy cập Store
-                                        Online®, hãy nhập ID xác thực (địa chỉ email) của bạn và tiếp tục đến ngay Tiếp
-                                        theo.
-                                    </font>
-                                </font></p>
+                                If you forget the password needed to access Store Online®,
+                                Please enter the account you would like to reset your password and continue with the Next button.
+                            </p>
 
                             <div class="form-group mb-55">
-                                <label for="email" class="required after">Địa chỉ email</label>
+                                <label for="email" class="required after">Email address</label>
                                 {{ Form::text('email', null, [
                                     'class' => 'form-control simple',
                                     'id' => 'email',
@@ -101,7 +98,7 @@
                             </div>
 
                             <div class="submit-group">
-                                <button type="button" class="btn btn-custon-three btn-primary next" id="submit-email" style="display: block; margin: 0 auto;">Tiếp theo</button>
+                                <button type="button" class="btn btn-custon-three btn-primary next" id="submit-email" style="display: block; margin: 0 auto;">Next</button>
                             </div>
                         </form>
                     </div>
@@ -112,32 +109,30 @@
                 <div class="step step-2 hidden">
                     <div class="content">
                         <form method="post" action="#" class="mb-40" id="updatePasswordForm">
-                            <p class="info mb-0">Một email có mã xác thực đã được gửi đến địa chỉ email đã đăng ký.</p>
-                            <p class="info xsmall mb-30">Nếu không đóng màn hình này, hãy nhập mã xác thực được ghi trong văn bản email, đặt mật khẩu mới và tiếp tục với nút tiếp theo.</p>
+                            <p class="info mb-0">An email with an authentication code has been sent to the registered email address.</p>
+                            <p class="info xsmall mb-30">If this screen is not closed, enter the verification code written in the email text, set a new password and continue with the Next button.</p>
 
                             <div class="form-group mb-10">
-                                <label for="auth-key" class="required after">Mã xác thực</label>
+                                <label for="auth-key" class="required after">Verification codes</label>
                                 <input type="text" id="auth_key" name="auth_key" class="form-control simple" autofocus>
                                 <div class="error error_auth_key hidden"></div>
                             </div>
 
-                            <p class="info warn xsmall mb-25">Nếu bạn không thay đổi mật khẩu mới trong vòng 30 phút sau khi lấy mã xác thực, mã xác thực sẽ không hợp lệ.</p>
-
                             <div class="form-group">
-                                <label for="new-password" class="required after">Mật khẩu mới</label>
+                                <label for="new-password" class="required after">New password</label>
                                 <input type="password" id="new_password" name="new_password" class="form-control simple">
                                 <div class="error error_new_password hidden"></div>
                             </div>
                             <div class="form-group">
-                                <label for="confirm-password" class="required after">Nhập lại mật khẩu mới</label>
+                                <label for="confirm-password" class="required after">Confirm new password</label>
                                 <input type="password" id="confirm_password" name="confirm_password" class="form-control simple">
                                 <div class="error error_confirm_password hidden"></div>
                             </div>
 
                             <!-- ボタンエリア -->
                             <div class="submit-group">
-                                <button type="button" class="btn btn-custon-three btn-primary next" id="submit-password" style="display: block; margin: 0 auto;">Tiếp theo</button>
-                                <p class="info xsmall mt-25">Nếu không nhận được email,<a href="mailto:store.online.232@gmail.com">ở đây</a>vui lòng liên hê với chúng tôi.</p>
+                                <button type="button" class="btn btn-custon-three btn-primary next" id="submit-password" style="display: block; margin: 0 auto;">Next</button>
+                                <p class="info xsmall mt-25 text-center">Please contact <a href="mailto:store.online.232@gmail.com">us</a>, if you could not receive the email.</p>
                             </div>
                         </form>
                     </div>
@@ -147,12 +142,12 @@
                 <div class="step step-3 hidden">
                     <div class="content">
                         <form method="post" action="#" class="mb-50">
-                            <p class="info">Đặt lại mật khẩu hoàn tất.</p>
-                            <p class="info xsmall mb-40">Vui lòng tiếp tục với "Login".</p>
+                            <p class="info text-center">Password reset is complete.</p>
+                            <p class="info xsmall mb-40 text-center">Please continue with "Login".</p>
 
                             <!-- ボタンエリア -->
                             <div class="submit-group">
-                                <button type="button" class="btn btn-custon-three btn-primary login" onclick="location.href='/admin/login'" style="display: block; margin: 0 auto;">Login</button>
+                                <button type="button" class="btn btn-custon-three btn-primary login" onclick="location.href='{{ route(ADMIN_SHOW_LOGIN) }}'" style="display: block; margin: 0 auto;">Login</button>
                             </div>
                         </form>
                     </div>
@@ -164,8 +159,8 @@
             <p>Copyright © 2019 Store Online. All rights reserved.</p>
             <nav class="nav-footer">
                 <ul>
-                    <li><a href="#">Chính sách bảo mật</a></li>
-                    <li><a href="#">Điều khoản sử dụng</a></li>
+                    <li><a href="#">Privacy policy</a></li>
+                    <li><a href="#">Terms of service</a></li>
                 </ul>
             </nav>
         </div>

@@ -6,10 +6,10 @@
                     <p>Copyright © 2019 Store Online. All rights reserved.</p>
                     <nav class="nav-footer">
                         <ul>
-                            <li><a href="#">Trang chủ</a></li>
-                            <li><a href="#">Chính sách bảo mật</a></li>
-                            <li><a href="#">Điều khoản sử dụng</a></li>
-                            <li><a href="#">Gửi phản hồi</a></li>
+                            <li><a href="{{ route(ADMIN_DASHBOARD) }}">Home</a></li>
+                            <li><a href="#">Privacy policy</a></li>
+                            <li><a href="#">Terms of service</a></li>
+                            <li><a href="#">Send feedback</a></li>
                         </ul>
                     </nav>
                 </div>
