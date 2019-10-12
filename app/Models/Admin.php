@@ -117,7 +117,10 @@ class Admin extends Authenticatable
         if ($request['password'] !== '') {
             $request['password'] = Hash::make($request['password']);
         }
-        return self::create($request);
+
+        if ($request['submit']) {
+            return self::create($request);
+        }
     }
 
     public static function showAdmin($id)
@@ -128,7 +131,10 @@ class Admin extends Authenticatable
     public static function updateAdmin($id, $request)
     {
         $user = self::showAdmin($id);
-        return $user->update($request);
+
+        if ($request['submit']) {
+            return $user->update($request);
+        }
     }
 
     public static function deleteAdmin($id)

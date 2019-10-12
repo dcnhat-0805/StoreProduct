@@ -150,7 +150,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="product_promotional" class="required after">Promotional product </label>
-                            <input type="number" class="form-control" name="product_promotional" placeholder="Promotional product ..." value="{{ old('product_promotional') }}">
+                            <input type="number" class="form-control" name="product_promotional" placeholder="Promotional product ..." value="{{ old('product_promotional') }}" min="0">
                             <div class="error error_product_promotional hidden"></div>
                         </div>
                     </div>

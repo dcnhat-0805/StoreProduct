@@ -103,7 +103,9 @@ class ProductCategory extends Model
     {
         $request['product_category_slug'] = utf8ToUrl($request['product_category_name']);
 
-        return self::create($request);
+        if ($request['submit']) {
+            return self::create($request);
+        }
     }
 
     public static function showProductCategory($product_category_id)
@@ -116,7 +118,9 @@ class ProductCategory extends Model
         $productCategory = self::showProductCategory($product_category_id);
         $request['product_category_slug'] = utf8ToUrl($request['product_category_name']);
 
-        return $productCategory->update($request);
+        if ($request['submit']) {
+            return $productCategory->update($request);
+        }
     }
 
     public static function deleteProductCategory($product_category_id)

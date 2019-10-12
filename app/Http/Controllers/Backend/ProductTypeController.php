@@ -46,7 +46,7 @@ class ProductTypeController extends Controller
                     Session::flash("success", trans("messages.product_type.create_success"));
                     return response()->json($productType, 200);
                 } else {
-                    Session::flash("error", trans("messages.product_type.create_failed"));
+//                    Session::flash("error", trans("messages.product_type.create_failed"));
                 }
             }
         }
@@ -71,7 +71,7 @@ class ProductTypeController extends Controller
                     Session::flash("success", trans("messages.product_type.update_success"));
                     return response()->json($productType, 200);
                 } else {
-                    Session::flash("error", trans("messages.product_type.update_failed"));
+//                    Session::flash("error", trans("messages.product_type.update_failed"));
                 }
             }
         }

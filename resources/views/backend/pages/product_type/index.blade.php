@@ -201,6 +201,7 @@
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
                             <form role="form" method="post" id="createProductType">
+                                <input type="hidden" name="submit">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">
@@ -285,6 +286,7 @@
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
                             <form role="form" method="post" id="editProductType">
+                                <input type="hidden" name="submit">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">

@@ -56,7 +56,7 @@ class AdminController extends Controller
                 Session::flash("success", trans("messages.admin.create_success"));
                 return response()->json();
             } else {
-                Session::flash("error", trans("messages.admin.update_fail"));
+//                Session::flash("error", trans("messages.admin.update_fail"));
             }
         }
     }
@@ -99,7 +99,7 @@ class AdminController extends Controller
                 Session::flash("success", trans("messages.admin.update_success"));
                 return response()->json();
             } else {
-                Session::flash("error", trans("messages.admin.update_success"));
+//                Session::flash("error", trans("messages.admin.update_success"));
             }
         }
     }

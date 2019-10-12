@@ -207,6 +207,7 @@ $(document).ready(function () {
     });
 
     btnAddAdmin.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
        let formData = $('#createAdmin').serialize();
        AdminJs.createNewAdmin(formData);
     });
@@ -221,6 +222,7 @@ $(document).ready(function () {
     });
 
     btnEditAdmin.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         let url = $('#url_edit').val();
         let formData = $('#editAdmin').serialize();
         AdminJs.editAdmin(url, formData);

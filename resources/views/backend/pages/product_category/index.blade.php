@@ -189,6 +189,7 @@
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
                             <form role="form" method="post" id="createProductCategory">
+                                <input type="hidden" name="submit">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">
@@ -201,7 +202,7 @@
                                                     ])
                                                 }}
                                             </div>
-                                            <div class="error error_product_category_id hidden"></div>
+                                            <div class="error error_category_id hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -258,6 +259,7 @@
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
                             <form role="form" method="post" id="editProductCategory">
+                                <input type="hidden" name="submit">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">
@@ -277,7 +279,7 @@
                                                     ])
                                                 }}
                                             </div>
-                                            <div class="error error_product_category-id hidden"></div>
+                                            <div class="error error_category-id hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
