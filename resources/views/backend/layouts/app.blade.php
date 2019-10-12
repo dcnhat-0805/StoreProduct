@@ -9,6 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <base href="{{ asset('') }}">
+    <!-- calendar CSS
+		============================================ -->
+    <link rel="stylesheet" href="backend/css/calendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="backend/css/calendar/fullcalendar.print.min.css">
     <!-- favicon
 		============================================ -->
     <link rel="shortcut icon" type="image/x-icon" href="backend/img/store-online.ico">
@@ -215,7 +219,10 @@
 <!-- Laravel Javascript Validation
     ============================================ -->
 <script src="backend/js/backend/common.js"></script>
+<!-- calendar JS
+    ============================================ -->
 <script src="backend/js/calendar/moment.min.js"></script>
+<script src="backend/js/calendar/fullcalendar.min.js"></script>
 <script src="{{ App\Helpers\Helper::asset('backend/js/datepicker/jquery-ui.min.js') }}"></script>
 
 <!-- Date picker
