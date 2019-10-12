@@ -9,6 +9,7 @@ const formCreateId = '#createProductType';
 const formEditId = '#editProductType';
 const summerNoteId = '#descriptionProduct, #contentProduct';
 const chosenId = '.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType';
+const arrayName = ['category_id', 'product_category_id', 'product_type_name'];
 
 let productTypeJs = (function ($) {
     let modules = {};
@@ -26,9 +27,7 @@ let productTypeJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_id, '.error-category-id');
-                Commons.getErrorMessage(error, error.product_category_id, '.error-product-category-id');
-                Commons.getErrorMessage(error, error.product_type_name, '.error-product-type-name');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
@@ -70,9 +69,7 @@ let productTypeJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_id, '.error-category-id');
-                Commons.getErrorMessage(error, error.product_category_id, '.error-product-category-id');
-                Commons.getErrorMessage(error, error.product_type_name, '.error-product-type-name');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
@@ -212,12 +209,14 @@ $(document).ready(function () {
     productTypeJs.reloadSelectAllCheckBox();
 
     btnAddProductType.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#createProductType').serialize();
         productTypeJs.createProductType(data);
     });
 
     btnUpdateProductType.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#editProductType').serialize();
         let url = $('#url_edit').val();

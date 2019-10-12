@@ -205,12 +205,14 @@ $(document).ready(function () {
     CategoryJs.reloadSelectAllCheckBox();
 
    btnAddCategory.on('click', function () {
+       $('input[name=submit]').val(SUBMIT);
        $(this).button('Loading');
        let data = $('#createCategory').serialize();
        CategoryJs.createCategory(data);
    });
 
    btnUpdateCategory.on('click', function () {
+       $('input[name=submit]').val(SUBMIT);
        $(this).button('Loading');
        let data = $('#editCategory').serialize();
        let url = $('#url_edit').val();

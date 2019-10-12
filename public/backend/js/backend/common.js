@@ -12,6 +12,7 @@ const PRODUCT_TYPE_DELETE_ALL = 'product.type.delete.all';
 const ADMIN_IDS = 'admin.ids';
 const ADMIN_DELETE_ALL = 'admin.delete.all';
 const ARRAY_NAME = ['category_id', 'product_category_id', 'product_type_id', 'admin_group_id'];
+const SUBMIT = 1;
 
 $.urlParam = function(name){
     let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -65,11 +66,9 @@ let Commons = (function ($) {
     modules.getErrorMessage = function (error, errorItem, className) {
         if (typeof error != 'undefined') {
             if(errorItem != null) {
-                $(className).text(errorItem);
-                $(className).removeClass('hidden');
+                $(className).text(errorItem).removeClass('hidden');
             } else {
-                $(className).text('');
-                $(className).addClass('hidden');
+                $(className).text('').addClass('hidden');
             }
         }
     };
@@ -197,9 +196,13 @@ let Commons = (function ($) {
 
             },
             error : function (data) {
-                let error = $.parseJSON(data.responseText).errors;
+                let error = (data.responseText) ? $.parseJSON(data.responseText).errors : null;
 
-                Commons.getErrorMessage(error, error[name], '.' + className);
+                if (error) {
+                    Commons.getErrorMessage(error, error[name], '.' + className);
+                } else {
+                    $('.error_' + className).text('');
+                }
             }
         });
     };
@@ -214,9 +217,7 @@ let Commons = (function ($) {
 
                     modules.getMessageValidation(url, name, className, formId);
 
-                    if (ARRAY_NAME.includes(name) && val!== '0') {
-                        $('.' + className).text('');
-                    }
+                    $('.' + className).text('');
                 });
             }
         });

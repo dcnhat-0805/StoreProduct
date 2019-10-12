@@ -65,8 +65,7 @@ let productCategoryJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_id, '.error-category-id');
-                Commons.getErrorMessage(error, error.product_category_name, '.error-product-category-name');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
@@ -205,12 +204,14 @@ $(document).ready(function () {
     productCategoryJs.reloadSelectAllCheckBox();
 
     btnAddProductCategory.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#createProductCategory').serialize();
         productCategoryJs.createProductCategory(data);
     });
 
     btnUpdateProductCategory.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#editProductCategory').serialize();
         let url = $('#url_edit').val();

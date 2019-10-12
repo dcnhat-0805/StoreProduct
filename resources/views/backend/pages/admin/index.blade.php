@@ -172,6 +172,7 @@
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
                             <form role="form" method="post" id="createAdmin" action="{{route(ADMIN_ADD)}}">
+                                <input type="hidden" name="submit">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">
@@ -265,7 +266,7 @@
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
                             <form role="form" method="post" id="editAdmin">
-                                @csrf
+                                <input type="hidden" name="submit">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">
@@ -339,7 +340,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -347,12 +348,12 @@
                 <div class="modal-body">
                     <form style="min-height: 70px;">
                         <input type="hidden" name="id" id="admin_id">
-                        <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">Bạn có muốn xóa quản trị viên không ?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">Do you want to delete the administrator ?</h5>
                     </form>
                 </div>
                 <div class="modal-footer modal-delete">
-                    <button type="button" class="btn btn-custon-three btn-success btn-delete-admin"><i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Có</button>
-                    <button class="btn btn-custon-three btn-danger" type="button" data-dismiss="modal"><i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Không</button>
+                    <button type="button" class="btn btn-custon-three btn-success btn-delete-admin"><i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Yes</button>
+                    <button class="btn btn-custon-three btn-danger" type="button" data-dismiss="modal"><i class="fa fa-times edu-danger-error" aria-hidden="true"></i> No</button>
                     <div>
                     </div>
                 </div>

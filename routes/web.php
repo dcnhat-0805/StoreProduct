@@ -53,6 +53,7 @@ Route::namespace('Backend')->group(function(){
             Route::delete('delete/{id}', 'CategoryController@delete')->name(ADMIN_CATEGORY_DELETE);
             Route::get('/list-category', 'CategoryController@getListCategory');
             Route::delete('/destroy', 'CategoryController@destroy');
+            Route::post('checkValidate', 'CategoryController@checkValidate');
         });
 
         Route::group(['prefix' => 'product_category'], function(){

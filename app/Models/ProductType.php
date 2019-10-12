@@ -113,7 +113,9 @@ class ProductType extends Model
     {
         $request['product_type_slug'] = utf8ToUrl($request['product_type_name']);
 
-        return self::create($request);
+        if ($request['submit']) {
+            return self::create($request);
+        }
     }
 
     public static function showProductType($product_type_id)
@@ -126,7 +128,9 @@ class ProductType extends Model
         $productType = self::showProductType($product_type_id);
         $request['product_type_slug'] = utf8ToUrl($request['product_type_name']);
 
-        return $productType->update($request);
+        if ($request['submit']) {
+            return $productType->update($request);
+        }
     }
 
     public static function deleteProductType($product_type_id)
