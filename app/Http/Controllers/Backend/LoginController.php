@@ -39,10 +39,13 @@ class LoginController extends Controller
             'password' => $request['password']
         ];
         $remember = $request->get('remember_token');
+        Session::put(SESSION_REMEMBER_TOKEN, $remember);
+
         $userLogModel = new UserLog();
         if (Auth::guard('admins')->attempt($dataLogin, $remember)) {
             $userLogModel->saveData($message, $email);
             Session::flash("success", trans("messages.admin.login_success"));
+
             return redirect(route(ADMIN_DASHBOARD));
         } else {
             $count_user = Admin::where("email", $email)->count();
@@ -51,6 +54,7 @@ class LoginController extends Controller
                 $userLogModel->saveData($message, $email);
             }
             Session::flash("danger", trans("messages.admin.login_failed"));
+
             return redirect()->back();
         }
     }

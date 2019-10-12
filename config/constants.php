@@ -64,8 +64,6 @@ const SORT_PARAMS_ALLOWED = [
     'id' => 'id',
 ];
 
-const IMAGE_RESIZE_WIDTH = 320;
-const IMAGE_RESIZE_HEIGHT = 240;
-const IMAGE_RESIZE_PREFIX = 'resize-';
-
 const FRONT_END_HOME_INDEX = 'front.end.home.index';
+
+const SESSION_REMEMBER_TOKEN = 'ss.remember.token';
