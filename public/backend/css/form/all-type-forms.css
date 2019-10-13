@@ -416,7 +416,7 @@ text-shadow:#ccc 0 1px 0, #c9c9c9 0 2px 0, #bbb 0 3px 0, #b9b9b9 0 4px 0, #aaa 0
 .ts-forms textarea,
 .ts-forms select {
 	background:#fff;
-	border:2px solid rgba(0,0,0,.12);
+	/*border:2px solid rgba(0,0,0,.12);*/
 	-webkit-border-radius:3px;
 	-moz-border-radius:3px;
 	-o-border-radius:3px;

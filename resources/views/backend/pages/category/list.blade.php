@@ -131,10 +131,17 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="checkbox" class="i-checks" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
-                                                <label for="status" style="margin-right: 20px;">Display</label>
-                                                <input type="checkbox" class="i-checks"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
-                                                <label for="status">Not display</label>
+                                                <label for="status" class="required after">Status</label>
+                                                <div class="status">
+                                                    <div class="jsCheckBox pull-left">
+                                                        <input type="checkbox" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
+                                                        <label><i></i> Display </label>
+                                                    </div>
+                                                    <div class="jsCheckBox pull-left">
+                                                        <input type="checkbox"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
+                                                        <label><i></i> Not display </label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -168,13 +175,14 @@
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
                             <form role="form" method="post" id="createCategory">
+                                <input type="hidden" name="submit">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="name" class="required after">Category Name</label>
                                             <input type="text" class="form-control category-name" name="category_name"
                                                    placeholder="Category Name ....">
-                                            <div class="error error-category-name hidden"></div>
+                                            <div class="error error_category_name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -183,16 +191,22 @@
                                             <input type="number" class="form-control category-order"
                                                    name="category_order" min="0"
                                                    placeholder="Category Order ....">
-                                            <div class="error error-category-order hidden"></div>
+                                            <div class="error error_category_order hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="status" class="required after">Status</label>
-                                            <select class="form-control caategory-status" name="category_status">
-                                                <option value="1" class="display">Display</option>
-                                                <option value="0" class="not-display">Not Display</option>
-                                            </select>
+                                            <div class="category-status">
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="1" name="category_status" checked {{ old('category_status') ? 'checked' : '' }}>
+                                                    <label><i></i> Display </label>
+                                                </div>
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="0" name="category_status" {{ old('category_status') == 0 && old('category_status') != null ? 'checked' : '' }}>
+                                                    <label><i></i> Not display </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- /.box-body -->
@@ -226,6 +240,7 @@
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
                             <form role="form" method="post" id="editCategory">
+                                <input type="hidden" name="submit">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="form-group">
@@ -239,7 +254,7 @@
                                             <label for="name" class="required after">Category Name</label>
                                             <input type="text" class="form-control category-name" name="category_name"
                                                    placeholder="Category Name ....">
-                                            <div class="error error-category-name hidden"></div>
+                                            <div class="error error_category_name hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -248,16 +263,22 @@
                                             <input type="number" class="form-control category-order"
                                                    name="category_order"
                                                    placeholder="Category Order ...." min="0" value="0">
-                                            <div class="error error-category-order hidden"></div>
+                                            <div class="error error_category_order hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
                                             <label for="status" class="required after">Status</label>
-                                            <select class="form-control category-status" name="category_status">
-                                                <option value="1" class="display">Display</option>
-                                                <option value="0" class="not-display">Not Display</option>
-                                            </select>
+                                            <div class="category-status">
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="1" name="category_status" {{ old('category_status') ? 'checked' : '' }}>
+                                                    <label><i></i> Display </label>
+                                                </div>
+                                                <div class="jsRadio pull-left">
+                                                    <input type="radio" value="0" name="category_status" {{ old('category_status') == 0 && old('category_status') != null ? 'checked' : '' }}>
+                                                    <label><i></i> Not display </label>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- /.box-body -->

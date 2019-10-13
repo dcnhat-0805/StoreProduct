@@ -1,17 +1,22 @@
 let btnSubmitEmail = $('#submit-email');
 let btnSubmitPassword = $('#submit-password');
+const urlCheckEmail = '/admin/checkEmailAdmin';
+const urlUpdatePassWord = '/admin/updatePassword';
+const formForgotPassWord = '#forgetPasswordForm';
+const formUpdatePassword = '#updatePasswordForm';
+const arrayName = ['email', 'auth_key', 'new_password', 'confirm_password'];
 
 let ForgetPasswordJs = (function ($) {
     let modules = {};
 
-    modules.getLoading = function () {
+    modules.getLoading = function (time) {
         $('.error-pagewrap').addClass('hidden');
         $('#loading').css('display', 'block');
 
         setTimeout(function () {
             $('#loading').css('display', 'none');
             $('.error-pagewrap').removeClass('hidden');
-        },3000);
+        },time);
     };
 
     modules.submitEmailForgetPassword = function (email) {
@@ -23,15 +28,16 @@ let ForgetPasswordJs = (function ($) {
                 email : email,
             },
             success : function (data) {
-                modules.getLoading();
                 $('.error').text('');
                 $('.step-1').addClass('hidden');
                 $('.step-2').removeClass('hidden');
             },
             error : function (data) {
+                ForgetPasswordJs.getLoading(500);
+                btnSubmitEmail.prop('disabled', false);
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.email, '.error-email');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
@@ -55,15 +61,12 @@ let ForgetPasswordJs = (function ($) {
                 $('.step-3').removeClass('hidden');
             },
             error: function (data) {
+                ForgetPasswordJs.getLoading(500);
                 let error = $.parseJSON(data.responseText).errors;
 
-                if (typeof error != 'undefined') {
-                    btnSubmitPassword.prop('disabled', false);
+                btnSubmitPassword.prop('disabled', false);
 
-                    Commons.getErrorMessage(error, error.auth_key, '.error-auth-key');
-                    Commons.getErrorMessage(error, error.new_password, '.error-new-password');
-                    Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
-                }
+                Commons.loadMessageValidation(error, arrayName);
             },
         });
     };
@@ -77,8 +80,16 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
+    if ($('.step-1').hasClass('show') && $('.step-2').hasClass('hidden')) {
+        // Commons.formValidation(urlCheckEmail, formForgotPassWord, null);
+    }
+
+    if ($('.step-2').hasClass('show') && $('.step-1').hasClass('hidden')) {
+        // Commons.formValidation(urlUpdatePassWord, formUpdatePassword, null);
+    }
 
     btnSubmitEmail.on('click', function () {
+        ForgetPasswordJs.getLoading(6000);
         $(this).prop('disabled', true);
         let _this = $(this);
         setTimeout(function () {
@@ -90,12 +101,12 @@ $(document).ready(function () {
         ForgetPasswordJs.submitEmailForgetPassword(email);
     });
 
-    $('#email').on('keyup', function () {
+    $('#email, #auth_key, #new_password, #confirm_password').on('keyup', function () {
        let value = $(this).val();
 
-       if (value.length !== 0 && $('#submit-email').prop('disabled') === true) {
-           $('.error-email').text('');
-           $('#submit-email').prop('disabled', false);
+        if (value.length !== 0) {
+           $(this).next().text('');
+           btnSubmitEmail.prop('disabled', false);
        }
     });
 

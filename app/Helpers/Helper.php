@@ -102,4 +102,62 @@ class Helper
     {
         return isset($_GET[$name]) && (in_array($value, $_GET[$name])) || !isset($_GET[$name]) ? $status : "";
     }
+
+    /**
+     * Convert Unsupported Extension Image
+     *
+     * @param $filePath
+     *
+     * @return string
+     */
+    public static function convertUnsupportedExtension($filePath)
+    {
+        $fileArr = explode('.', $filePath);
+        $fileName = $fileArr[0] ?? '';
+        $fileExtension = $fileArr[1] ?? '';
+
+        if (in_array($fileExtension, ['jfif'])) {
+            return $fileName . '.jpg';
+        }
+
+        return $filePath;
+    }
+
+    /**
+     * @param $file_url
+     * @param bool $formatSize
+     * @return int|string|content-length
+     */
+    public static function getRemoteFilesize($file_url, $formatSize = true)
+    {
+        $head = array_change_key_case(get_headers($file_url, 1));
+        // content-length of download (in bytes), read from Content-Length: field
+
+        $clen = isset($head['content-length']) ? $head['content-length'] : 0;
+
+        // cannot retrieve file size, return "-1"
+        if (!$clen) {
+            return -1;
+        }
+
+        if (!$formatSize) {
+            return $clen;
+            // return size in bytes
+        }
+
+        $size = $clen;
+        switch ($clen) {
+            case $clen < 1024:
+                $size = $clen .' B'; break;
+            case $clen < 1048576:
+                $size = round($clen / 1024, 2) .' KB'; break;
+            case $clen < 1073741824:
+                $size = round($clen / 1048576, 2) . ' MB'; break;
+            case $clen < 1099511627776:
+                $size = round($clen / 1073741824, 2) . ' GB'; break;
+        }
+
+        return $size;
+        // return formatted size
+    }
 }

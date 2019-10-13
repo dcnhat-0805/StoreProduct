@@ -9,6 +9,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <base href="{{ asset('') }}">
+    <!-- calendar CSS
+		============================================ -->
+    <link rel="stylesheet" href="backend/css/calendar/fullcalendar.min.css">
+    <link rel="stylesheet" href="backend/css/calendar/fullcalendar.print.min.css">
     <!-- favicon
 		============================================ -->
     <link rel="shortcut icon" type="image/x-icon" href="backend/img/store-online.ico">
@@ -82,6 +86,15 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/responsive.css">
+    <!-- select2 CSS
+		============================================ -->
+    <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/select2/select2.min.css') }}">
+    <!-- chosen CSS
+		============================================ -->
+    <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/chosen/bootstrap-chosen.css') }}">
+    <!-- summernote CSS
+		============================================ -->
+    <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/summernote/summernote.css') }}">
 
     <!-- modernizr JS
 		============================================ -->
@@ -200,22 +213,30 @@
 <!-- icheck JS
     ============================================ -->
 <script src="backend/js/icheck/icheck.min.js"></script>
-<script src="backend/js/icheck/icheck-active.js"></script>
 <!-- tawk chat JS
     ============================================ -->
 {{--    <script src="backend/js/tawk-chat.js"></script>--}}
 <!-- Laravel Javascript Validation
     ============================================ -->
-<script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 <script src="backend/js/backend/common.js"></script>
+<!-- calendar JS
+    ============================================ -->
 <script src="backend/js/calendar/moment.min.js"></script>
+<script src="backend/js/calendar/fullcalendar.min.js"></script>
 <script src="{{ App\Helpers\Helper::asset('backend/js/datepicker/jquery-ui.min.js') }}"></script>
 
 <!-- Date picker
     ============================================ -->
 <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/daterangepicker.min.js') }}"></script>
 <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/datepicker_range.js') }}"></script>
+<!-- summernote JS
+    ============================================ -->
+<script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote.min.js') }}"></script>
+<!-- chosen JS
+    ============================================ -->
+<script src="{{ App\Helpers\Helper::asset('backend/js/chosen/chosen.jquery.js') }}"></script>
 @yield('jsCustom')
+@yield('jsCustomTwo')
 
 @if(Session::has('success'))
     <script type="text/javascript">

@@ -4,6 +4,10 @@ let btnDeleteAdmin = $('.btn-delete-admin');
 const btnDelete = $('#removeAdmin');
 const btnClear = $('#btnClear');
 const btnSearch = $('#btnSearch');
+const urlCreate = '/admin/add';
+const formCreateId = '#createAdmin';
+const formEditId = '#editAdmin';
+const arrayName = ['name', 'email', 'password', 'confirm_password', 'admin_group_id'];
 
 let AdminJs = (function ($) {
     let modules = {};
@@ -21,21 +25,17 @@ let AdminJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.name, '.error-name');
-                Commons.getErrorMessage(error, error.email, '.error-email');
-                Commons.getErrorMessage(error, error.password, '.error-password');
-                Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
-                Commons.getErrorMessage(error, error.admin_group_id, '.error-permission');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
 
     $('#add').on('show.bs.modal', function (e) {
-        Commons.removeErrorValidation('#createAdmin');
+        Commons.formValidation(urlCreate, formCreateId, null);
     });
 
     $('#edit').on('show.bs.modal', function (e) {
-        Commons.removeErrorValidation('#editAdmin');
+        // Commons.removeErrorValidation('#editAdmin');
         let id = $(e.relatedTarget).data('id');
         let name = $(e.relatedTarget).data('name');
         let email = $(e.relatedTarget).data('email');
@@ -47,8 +47,10 @@ let AdminJs = (function ($) {
         $(e.currentTarget).find('input[name="name"]').val(name);
         $(e.currentTarget).find('input[name="email"]').val(email);
         $(e.currentTarget).find('#url_edit').val(url);
-        $(e.currentTarget).find('.admin-permission option[value="'+ permission +'"]').attr('selected', 'selected');
-        $(e.currentTarget).find('.admin-status option[value="'+ status +'"]').attr('selected', 'selected');
+        $(".jsSelectPermission").val(permission).trigger("chosen:updated");
+        $(e.currentTarget).find('input[name=admin_status][value='+ status +']').parent().addClass('checked');
+
+        Commons.formValidation(url, formEditId, null);
     });
 
     modules.editAdmin = function (url, data) {
@@ -64,11 +66,7 @@ let AdminJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.name, '.error-name');
-                Commons.getErrorMessage(error, error.email, '.error-email');
-                Commons.getErrorMessage(error, error.password, '.error-password');
-                Commons.getErrorMessage(error, error.confirm_password, '.error-confirm-password');
-                Commons.getErrorMessage(error, error.admin_group_id, '.error-permission');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
@@ -204,7 +202,12 @@ $.ajaxSetup({
 });
 $(document).ready(function () {
 
+    $('.jsSelectPermission').chosen({
+        width: "100%"
+    });
+
     btnAddAdmin.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
        let formData = $('#createAdmin').serialize();
        AdminJs.createNewAdmin(formData);
     });
@@ -219,6 +222,7 @@ $(document).ready(function () {
     });
 
     btnEditAdmin.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         let url = $('#url_edit').val();
         let formData = $('#editAdmin').serialize();
         AdminJs.editAdmin(url, formData);

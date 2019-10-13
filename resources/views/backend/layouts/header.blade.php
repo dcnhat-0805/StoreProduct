@@ -787,14 +787,32 @@
                                 </li>
 
                                 <li>
-                                    <a data-toggle="collapse" data-target="#pages" href="#">
+                                    <a data-toggle="collapse" data-target="#pages">
                                         <span class="educate-icon educate-pages icon-wrap"></span>
                                         <span class="mini-click-non">Pages</span>
                                     </a>
+                                    @php
+                                        $isShowPages = in_array(request()->route()->getPrefix(), ['admin/category', 'admin/product_category', 'admin/product_type', 'admin/product']);
+                                    @endphp
                                     <ul id="pages" class="collapse dropdown-header-top">
                                         <li class="{{request()->route()->getPrefix() == 'admin/category' ? 'active' : ''}}">
                                             <a title="Category" href="{{route(ADMIN_CATEGORY_INDEX)}}">
                                                 <span class="mini-sub-pro">Category</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{request()->route()->getPrefix() == 'admin/product_category' ? 'active' : ''}}">
+                                            <a title="Category" href="{{route(ADMIN_PRODUCT_CATEGORY_INDEX)}}">
+                                                <span class="mini-sub-pro">Product category</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{request()->route()->getPrefix() == 'admin/product_type' ? 'active' : ''}}">
+                                            <a title="Category" href="{{route(ADMIN_PRODUCT_TYPE_INDEX)}}">
+                                                <span class="mini-sub-pro">Product type</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{request()->route()->getPrefix() == 'admin/product' ? 'active' : ''}}">
+                                            <a title="Category" href="{{route(ADMIN_PRODUCT_INDEX)}}">
+                                                <span class="mini-sub-pro">Product</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -827,7 +845,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="breadcome-list">
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <div class="col-xs-9 col-sm-9">
                                 <ul class="breadcome-menu">
                                     <li><a href="#">Dashboard</a> <span class="bread-slash">/</span>
                                     </li>
@@ -835,13 +853,19 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+
+                            <?php
+                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create']);
+                            ?>
+                            @if(!$isShowBtnSearch)
+                            <div class="col-xs-3 col-sm-3">
                                 <div class="breadcome-heading text-right">
                                     <button type="button" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#search" id="modalSearch">
                                         <i class="fa fa-tasks" aria-hidden="true"></i>
                                     </button>
                                 </div>
                             </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -849,3 +873,16 @@
         </div>
     </div>
 </div>
+@section('jsCustomTwo')
+    @if($isShowPages)
+    <script>
+        $(document).ready(function () {
+            $('#pages').css('display', 'block');
+            $('.meanmenu-reveal').addClass('meanclose').css({"right": "0px", "left": "auto", "text-align": "center", "text-indent": "0px", "font-size": "18px" }).text('X');
+            $('.mobile-menu-nav').show();
+            $('.mean-expand:first').addClass('mean-clicked').text('-');
+        });
+    </script>
+    @endif
+@endsection
+

@@ -55,7 +55,7 @@ class ProductCategoryController extends Controller
                     Session::flash("success", trans("messages.product_category.create_success"));
                     return response()->json($productCategory, 200);
                 } else {
-                    Session::flash("error", trans("messages.product_category.create_failed"));
+//                    Session::flash("error", trans("messages.product_category.create_failed"));
                 }
             }
         }
@@ -103,7 +103,7 @@ class ProductCategoryController extends Controller
                     Session::flash("success", trans("messages.product_category.update_success"));
                     return response()->json($productCategory, 200);
                 } else {
-                    Session::flash("error", trans("messages.product_category.update_failed"));
+//                    Session::flash("error", trans("messages.product_category.update_failed"));
                 }
             }
         }

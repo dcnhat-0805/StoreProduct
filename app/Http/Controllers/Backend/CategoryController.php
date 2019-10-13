@@ -53,7 +53,7 @@ class CategoryController extends Controller
                     Session::flash("success", trans("messages.category.create_success"));
                     return response()->json($category, 200);
                 } else {
-                    Session::flash("error", trans("messages.category.create_failed"));
+//                    Session::flash("error", trans("messages.category.create_failed"));
                 }
             }
         }
@@ -100,7 +100,7 @@ class CategoryController extends Controller
                     Session::flash("success", trans("messages.category.update_success"));
                     return response()->json($category, 200);
                 } else {
-                    Session::flash("error", trans("messages.category.update_failed"));
+//                    Session::flash("error", trans("messages.category.update_failed"));
                 }
             }
         }

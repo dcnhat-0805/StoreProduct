@@ -32,10 +32,11 @@ class LoginRequest extends FormRequest
     public function messages()
     {
         return [
-            'required' => ':attribute không được để trống.',
-            'email' => ':attribute không đúng định dạng email.',
-            'password.min' => ':attribute phải từ 8 ký tự',
-            'password.regex' => ':attribute phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 chữ số và 1 ký tự đặc biệt.'
+            'required' => trans("messages.login.required"),
+            'email' => trans("messages.login.email"),
+            'password.required' => trans("messages.login.password.required"),
+            'password.min' => trans("messages.login.password.min"),
+            'password.regex' => trans("messages.login.password.regex"),
         ];
     }
 

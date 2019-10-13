@@ -4,6 +4,10 @@ const btnDeleteCategory = $('#btnDeleteCategory');
 const btnDelete = $('#remove');
 const btnClear = $('#btnClear');
 const btnSearch = $('#btnSearch');
+const urlCreate = '/admin/category/add';
+const formCreateId = '#createCategory';
+const formEditId = '#editCategory';
+const arrayName = ['category_name', 'category_order'];
 
 let CategoryJs = (function ($) {
     let modules = {};
@@ -21,18 +25,18 @@ let CategoryJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_name, '.error-category-name');
-                Commons.getErrorMessage(error, error.category_order, '.error-category-order');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
 
     $('#add').on('show.bs.modal', function (e) {
-        Commons.removeErrorValidation('#createCategory');
+        Commons.formValidation(urlCreate, formCreateId, null);
+        // Commons.removeErrorValidation('#createCategory');
     });
 
     $('#edit').on('show.bs.modal', function (e) {
-        Commons.removeErrorValidation('#editCategory');
+        // Commons.removeErrorValidation('#editCategory');
         let id = $(e.relatedTarget).data('id');
         let name = $(e.relatedTarget).data('name');
         let order = $(e.relatedTarget).data('order');
@@ -43,7 +47,9 @@ let CategoryJs = (function ($) {
         $(e.currentTarget).find('input[name="category_name"]').val(name);
         $(e.currentTarget).find('input[name="category_order"]').val(order);
         $(e.currentTarget).find('#url_edit').val(url);
-        $(e.currentTarget).find('.category-status option[value="'+ status +'"]').attr('selected', 'selected');
+        $(e.currentTarget).find('input[name=category_status][value='+ status +']').parent().addClass('checked');
+
+        Commons.formValidation(url, formEditId, null);
     });
 
     modules.updateCategory = function (url, data) {
@@ -59,8 +65,7 @@ let CategoryJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_name, '.error-category-name');
-                Commons.getErrorMessage(error, error.category_order, '.error-category-order');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
@@ -200,12 +205,14 @@ $(document).ready(function () {
     CategoryJs.reloadSelectAllCheckBox();
 
    btnAddCategory.on('click', function () {
+       $('input[name=submit]').val(SUBMIT);
        $(this).button('Loading');
        let data = $('#createCategory').serialize();
        CategoryJs.createCategory(data);
    });
 
    btnUpdateCategory.on('click', function () {
+       $('input[name=submit]').val(SUBMIT);
        $(this).button('Loading');
        let data = $('#editCategory').serialize();
        let url = $('#url_edit').val();

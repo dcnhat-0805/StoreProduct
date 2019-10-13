@@ -4,6 +4,12 @@ const btnDeleteProductType = $('#btnDeleteProductType');
 const btnDelete = $('#removeProductType');
 const btnClear = $('#btnClear');
 const btnSearch = $('#btnSearch');
+const urlCreate = '/admin/product_type/add';
+const formCreateId = '#createProductType';
+const formEditId = '#editProductType';
+const summerNoteId = '#descriptionProduct, #contentProduct';
+const chosenId = '.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType';
+const arrayName = ['category_id', 'product_category_id', 'product_type_name'];
 
 let productTypeJs = (function ($) {
     let modules = {};
@@ -21,15 +27,13 @@ let productTypeJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_id, '.error-category-id');
-                Commons.getErrorMessage(error, error.product_category_id, '.error-product-category-id');
-                Commons.getErrorMessage(error, error.product_type_name, '.error-product-type-name');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
 
     $('#add').on('show.bs.modal', function (e) {
-        Commons.removeErrorValidation('#createProductType', 'product_type_name');
+        Commons.formValidation(urlCreate, formCreateId, null);
     });
 
     $('#edit').on('show.bs.modal', function (e) {
@@ -42,10 +46,14 @@ let productTypeJs = (function ($) {
         $(e.currentTarget).find('input[name="id"]').val(id);
         $(e.currentTarget).find('.title').text(name);
         $(e.currentTarget).find('input[name="product_type_name"]').val(name);
-        $(e.currentTarget).find('.category-id option[value="'+ category_id +'"]').prop('selected', true);
+        $(".jsSelectCategory").val(category_id).trigger("chosen:updated");
+        $(".jsSelectProductCategory").val(product_category_id).prop('disabled', false).trigger("chosen:updated");
+        $(e.currentTarget).find('.category-id').val(category_id);
         $(e.currentTarget).find('.product-category-id').val(product_category_id).prop('disabled', false);
         $(e.currentTarget).find('#url_edit').val(url);
-        $(e.currentTarget).find('.product-t-status option[value="'+ status +'"]').prop('selected', true);
+        $(e.currentTarget).find('input[name=product_type_status][value='+ status +']').parent().addClass('checked');
+
+        Commons.formValidation(url, formEditId, null);
     });
 
     modules.updateProductType = function (url, data) {
@@ -61,9 +69,7 @@ let productTypeJs = (function ($) {
             error : function (data) {
                 let error = $.parseJSON(data.responseText).errors;
 
-                Commons.getErrorMessage(error, error.category_id, '.error-category-id');
-                Commons.getErrorMessage(error, error.product_category_id, '.error-product-category-id');
-                Commons.getErrorMessage(error, error.product_type_name, '.error-product-type-name');
+                Commons.loadMessageValidation(error, arrayName);
             }
         });
     };
@@ -190,16 +196,6 @@ let productTypeJs = (function ($) {
         });
     };
 
-    modules.getOptionProductCategory = function (categoryId) {
-        if (!categoryId) {
-            $('select.product-category-id').prop('disabled', true);
-        } else {
-            $('select.product-category-id').prop('disabled', false);
-
-            Commons.getOptionProductCategory(categoryId);
-        }
-    };
-
     return modules;
 })(window.jQuery, window, document);
 
@@ -209,23 +205,18 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
-    $('select.product-category-id').prop('disabled', true);
-
-    $('select.category-id').on('change', function () {
-        let categoryId = $(this).val();
-
-        productTypeJs.getOptionProductCategory(categoryId);
-    });
 
     productTypeJs.reloadSelectAllCheckBox();
 
     btnAddProductType.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#createProductType').serialize();
         productTypeJs.createProductType(data);
     });
 
     btnUpdateProductType.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#editProductType').serialize();
         let url = $('#url_edit').val();

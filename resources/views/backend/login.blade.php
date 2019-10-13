@@ -77,7 +77,7 @@
         <div class="content-error">
             <div class="hpanel">
                 <div class="panel-body">
-                    <form action="{{route(ADMIN_LOGIN)}}" id="loginForm" method="POST">
+                    <form action="{{ route(ADMIN_LOGIN) }}" id="loginForm" method="POST">
                         @csrf
 
                         <div class="flash-message">
@@ -97,27 +97,33 @@
                             @endforeach
                         </div>
 
+                        @php
+                            $remember = Session::get(SESSION_REMEMBER_TOKEN);
+                        @endphp
+
                         <div class="form-group">
                             <label class="control-label" for="email">Email</label>
-                            {{ Form::text('email', null, [
+                            {{ Form::text('email', old('email'), [
                                 'id' => 'email',
                                 'class' => 'form-control',
                                 'type' => 'email',
                                 'autofocus' => 'autofocus',
                                 'title' => 'Email',
-                                'placeholder' => 'Vui lòng nhập email...'
+                                'placeholder' => 'Please enter email...'
                             ]) }}
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="password">Password</label>
-                            <input type="password" title="Password" placeholder="Vui lòng nhập password..."
-                                   name="password" id="password" class="form-control">
+                            <input type="password" title="Password" placeholder="Please enter password..."
+                                   name="password" id="password" class="form-control" value="{{ old('password') }}">
                         </div>
-                        <div class="checkbox login-checkbox">
-                            <label><input type="checkbox" class="i-checks" name="remember_token" {{ old('remember_token') ? 'checked' : '' }}> Remember me </label>
+                        <div class="checkbox login-checkbox {{ old('remember_token') ? 'checked' : '' }}">
+                            <label>
+                                <input type="checkbox" class="jsCheckBox" name="remember_token" {{ isset($remember) ? 'checked' : '' }}> Remember me
+                            </label>
                         </div>
                         <button class="btn btn-custon-three btn-primary btn-block loginbtn">Login</button>
-                        <a class="forget-password" href="{{ route(ADMIN_FORGET_PASSWORD) }}">Quên mật khẩu ?</a>
+                        <a class="forget-password" href="{{ route(ADMIN_FORGET_PASSWORD) }}">Forgot password ?</a>
                     </form>
                 </div>
             </div>
@@ -127,8 +133,8 @@
         <p>Copyright © 2019 Store Online. All rights reserved.</p>
         <nav class="nav-footer">
             <ul>
-                <li><a href="#">Chính sách bảo mật</a></li>
-                <li><a href="#">Điều khoản sử dụng</a></li>
+                <li><a href="#">Privacy policy</a></li>
+                <li><a href="#">Terms of service</a></li>
             </ul>
         </nav>
     </div>
@@ -171,7 +177,6 @@
 <!-- icheck JS
     ============================================ -->
 <script src="backend/js/icheck/icheck.min.js"></script>
-<script src="backend/js/icheck/icheck-active.js"></script>
 <!-- plugins JS
     ============================================ -->
 <script src="backend/js/plugins.js"></script>
@@ -185,10 +190,14 @@
 <!-- tawk chat JS
     ============================================ -->
 {{--    <script src="backend/js/tawk-chat.js"></script>--}}
+<!-- chosen JS
+    ============================================ -->
+<script src="{{ App\Helpers\Helper::asset('backend/js/chosen/chosen.jquery.js') }}"></script>
 <!-- Laravel Javascript Validation
     ============================================ -->
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 {!! JsValidator::formRequest('App\Http\Requests\LoginRequest', '#loginForm') !!}
+<script src="{{ \App\Helpers\Helper::asset('backend/js/backend/common.js') }}"></script>
 </body>
 
 </html>

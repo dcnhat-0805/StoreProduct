@@ -17,9 +17,8 @@ Route::get('/', function () {
 //    return view('welcome');
 });
 
-Route::group(
-    ['prefix' => 'admin', 'namespace' => 'Backend'],
-    function () {
+Route::namespace('Backend')->group(function(){
+    Route::group(['prefix' => 'admin'], function () {
 //        Route::group(
 //            ['prefix' => 'account'], function () {
 //            Route::get('/edit_mail/confirm','ConfirmEmailController@editEmailStore')
@@ -37,8 +36,7 @@ Route::group(
         Route::post('/checkEmailAdmin', 'PasswordResetController@checkEmailAdmin');
         Route::post('/updatePassword', 'PasswordResetController@updatePasswordAjax');
     }
-);
-Route::namespace('Backend')->group(function(){
+    );
     Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function(){
         Route::get('/', 'HomeController@index')->name(ADMIN_DASHBOARD);
         Route::get('/list', 'AdminController@index')->name(ADMIN_INDEX);
@@ -55,6 +53,7 @@ Route::namespace('Backend')->group(function(){
             Route::delete('delete/{id}', 'CategoryController@delete')->name(ADMIN_CATEGORY_DELETE);
             Route::get('/list-category', 'CategoryController@getListCategory');
             Route::delete('/destroy', 'CategoryController@destroy');
+            Route::post('checkValidate', 'CategoryController@checkValidate');
         });
 
         Route::group(['prefix' => 'product_category'], function(){
@@ -71,16 +70,31 @@ Route::namespace('Backend')->group(function(){
             Route::post('add', 'ProductTypeController@store')->name(ADMIN_PRODUCT_TYPE_ADD);
             Route::post('edit/{id}', 'ProductTypeController@update')->name(ADMIN_PRODUCT_TYPE_EDIT);
             Route::delete('delete/{id}', 'ProductTypeController@delete')->name(ADMIN_PRODUCT_TYPE_DELETE);
-            Route::get('/list_product_category', 'ProductTypeController@getProductCategory');
             Route::get('/list_product_type', 'ProductTypeController@getListProductType');
             Route::delete('/destroy', 'ProductTypeController@destroy');
         });
 
+        Route::group(['prefix' => 'product'], function(){
+            Route::get('/', 'ProductController@index')->name(ADMIN_PRODUCT_INDEX);
+            Route::get('create', 'ProductController@create')->name(ADMIN_PRODUCT_ADD_INDEX);
+            Route::post('add', 'ProductController@store')->name(ADMIN_PRODUCT_ADD);
+            Route::post('edit/{id}', 'ProductController@update')->name(ADMIN_PRODUCT_EDIT);
+            Route::delete('delete/{id}', 'ProductController@delete')->name(ADMIN_PRODUCT_DELETE);
+            Route::get('/list_product', 'ProductController@getListProduct');
+            Route::delete('/destroy', 'ProductController@destroy');
+            Route::post('uploadImages', 'ProductController@uploadImages');
+            Route::get('getImages', 'ProductController@getImages');
+            Route::post('deleteImages', 'ProductController@deleteImages');
+        });
+
         Route::group(['prefix' => 'ajax'], function(){
             Route::get('/list_product_category', 'AjaxController@getProductCategory');
+            Route::get('/listProductType', 'AjaxController@getProductType');
         });
     });
 });
+
+
 Route::namespace('FrontEnd')->group(function(){
     Route::group(['prefix' => 'home'], function(){
         Route::get('/', 'HomeController@index')

@@ -137,7 +137,9 @@ class Category extends Model
     {
         $request['category_slug'] = utf8ToUrl($request['category_name']);
 
-        return Category::create($request);
+        if ($request['submit']) {
+            return Category::create($request);
+        }
     }
 
     public static function showCategoryById($category_id)
@@ -158,7 +160,9 @@ class Category extends Model
         $category = Category::showCategoryById($category_id);
         $request['category_slug'] = utf8ToUrl($request['category_name']);
 
-        return $category->update($request);
+        if ($request['submit']) {
+            return $category->update($request);
+        }
     }
 
     public static function deleteCategory($category_id)
