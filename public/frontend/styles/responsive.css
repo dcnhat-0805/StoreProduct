@@ -470,13 +470,21 @@
 	}
 	.cart_count
 	{
-		width: 21px;
-		height: 21px;
+        width: 15px;
+        height: 15px;
+        bottom: -1px;
+        right: -10px
 	}
 	.cart_count span
 	{
-		line-height: 21px;
+		line-height: 15px;
 	}
+    .cart_icon img {
+        width: 100%;
+    }
+    .wishlist_icon img {
+        width: 100%;
+    }
 	.top_bar_user
 	{
 		margin-left: 0px;
