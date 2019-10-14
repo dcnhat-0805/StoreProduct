@@ -19,6 +19,25 @@ let ForgetPasswordJs = (function ($) {
         },time);
     };
 
+    modules.bindingToken = function () {
+        let url = new URL(window.location.href);
+
+        let email = url.searchParams.getAll("email");
+        if (email.length) {
+            $('#email').val(email);
+        }
+
+        let token = url.searchParams.getAll("token");
+        if (token.length) {
+            $('#auth_key').val(token);
+        }
+
+        if (email.length && token.length) {
+            $('.step-1, .step-3').addClass('hidden');
+            $('.step-2').removeClass('hidden');
+        }
+    };
+
     modules.submitEmailForgetPassword = function (email) {
         $.ajax({
             url : '/admin/checkEmailAdmin',
@@ -80,6 +99,9 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
+
+    ForgetPasswordJs.bindingToken();
+
     if ($('.step-1').hasClass('show') && $('.step-2').hasClass('hidden')) {
         // Commons.formValidation(urlCheckEmail, formForgotPassWord, null);
     }
@@ -94,7 +116,7 @@ $(document).ready(function () {
         let _this = $(this);
         setTimeout(function () {
             _this.prop('disabled', false);
-        },6000);
+        },6500);
 
         let email = $('#email').val();
 

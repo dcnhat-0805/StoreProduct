@@ -37,7 +37,7 @@ class PasswordResetController extends Controller
     {
         $adminPasswordReset = $this->_savePasswordReset($request);
         $this->_sendPasswordResetMail($adminPasswordReset);
-        
+
         return response()->json($adminPasswordReset, 200);
     }
 
@@ -72,7 +72,7 @@ class PasswordResetController extends Controller
     /**
      * Ajax post password reset
      *
-     * @param PasswordResetRequest $request
+     * @param UpdatePasswordRequest $request
      *
      * @return \Illuminate\Contracts\Routing\ResponseFactory|\Illuminate\Http\Response
      */
