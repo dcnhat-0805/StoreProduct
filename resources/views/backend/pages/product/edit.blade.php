@@ -1,11 +1,9 @@
 @php
     use App\Models\ProductType;
-
-    $user = Auth::guard('admins')->user();
 @endphp
 @extends('backend.layouts.app')
-@section('title', 'Create product')
-@section('titleMenu', 'Create product')
+@section('title', 'Edit product')
+@section('titleMenu', 'Edit product')
 @section('headerBlade', 'Create')
 @section('cssCustom')
     <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/colorpicker.css') }}"/>
@@ -19,6 +17,6 @@
 @section('content')
     @include('backend.pages.product._form', [
         'product' => $product,
-        'is_page_register' => TRUE,
+        'is_page_edit' => TRUE,
     ])
 @endsection

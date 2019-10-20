@@ -9,10 +9,15 @@ const PRODUCT_CATEGORY_IDS = 'product.category.ids';
 const PRODUCT_CATEGORY_DELETE_ALL = 'product.category.delete.all';
 const PRODUCT_TYPE_IDS = 'product.type.ids';
 const PRODUCT_TYPE_DELETE_ALL = 'product.type.delete.all';
+const PRODUCT_IDS = 'product.ids';
+const PRODUCT_DELETE_ALL = 'product.delete.all';
 const ADMIN_IDS = 'admin.ids';
 const ADMIN_DELETE_ALL = 'admin.delete.all';
 const ARRAY_NAME = ['category_id', 'product_category_id', 'product_type_id', 'admin_group_id'];
 const SUBMIT = 1;
+const CATEGORY_ID = localStorage.getItem('jsSelectCategory') ? localStorage.getItem('jsSelectCategory') : null;
+const PRODUCT_CATEGORY_ID = localStorage.getItem('jsSelectProductCategory') ? localStorage.getItem('jsSelectProductCategory') : null;
+const PRODUCT_TYPE_ID = localStorage.getItem('jsSelectProductType') ? localStorage.getItem('jsSelectProductType') : null;
 
 $.urlParam = function(name){
     let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
@@ -101,20 +106,20 @@ let Commons = (function ($) {
                 category_id : categoryId
             },
             success : function (data) {
-                $('.productCategory').html(data);
-                // let option = [];
-                //
-                // if (!data.length) {
-                //     option += '<option value="">' + 'Please select a product category' + '</option>';
-                //     // $('select.product-category-id').prop('disabled', true);
-                // } else {
-                //     option += '<option value="">' + 'Please select a product category' + '</option>';
-                //     $.each(data, function (index, value) {
-                //         option += '<option value="' + value['id'] + '">' + value['product_category_name'] + '</option>';
-                //     });
-                // }
-                //
-                // $('select.product-category-id, #productCategoryId').html(option);
+                // $('.productCategory').html(data);
+                let option = [];
+
+                if (!data.length) {
+                    option += '<option value="">' + 'Please select a product category' + '</option>';
+                    // $('select.product-category-id').prop('disabled', true);
+                } else {
+                    option += '<option value="">' + 'Please select a product category' + '</option>';
+                    $.each(data, function (index, value) {
+                        option += '<option value="' + value['id'] + '">' + value['product_category_name'] + '</option>';
+                    });
+                }
+
+                $('.jsSelectProductCategory').html(option).trigger("chosen:updated");
             },
             error : function (data) {
 
@@ -131,19 +136,27 @@ let Commons = (function ($) {
                 product_category_id : productCategoryId
             },
             success : function (data) {
-                // let option = [];
-                //
-                // if (!data.length) {
-                //     option += '<option value="">' + 'Please select a product type' + '</option>';
-                //     // $('select.product-type-id').prop('disabled', true);
-                // } else {
-                //     option += '<option value="">' + 'Please select a product type' + '</option>';
-                //     $.each(data, function (index, value) {
-                //         option += '<option value="' + value['id'] + '">' + value['product_type_name'] + '</option>';
-                //     });
-                // }
+                if (data.length == 0) {
+                    $('.jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
+                    $('.jsSelectProductType').parent().prev().removeClass('required after');
+                } else {
+                    // $('.jsSelectProductType').parent().prev().addClass('required after');
+                }
 
-                $('.productType').html(data);
+                let option = [];
+
+                if (!data.length) {
+                    option += '<option value="">' + 'Please select a product type' + '</option>';
+                    // $('select.product-type-id').prop('disabled', true);
+                } else {
+                    option += '<option value="">' + 'Please select a product type' + '</option>';
+                    $.each(data, function (index, value) {
+                        option += '<option value="' + value['id'] + '">' + value['product_type_name'] + '</option>';
+                    });
+                }
+                $('.jsSelectProductType').html(option).trigger("chosen:updated");
+
+                // $('.productType').html(data);
             },
             error : function (data) {
 
@@ -167,9 +180,13 @@ let Commons = (function ($) {
 
     modules.getOptionProductCategory = function (categoryId) {
         if (!categoryId) {
-            $('select.product-category-id').prop('disabled', true);
+            // $('select.product-category-id').prop('disabled', true);
+            $('.jsSelectProductCategory').prop('disabled', true).trigger("chosen:updated");
+            $('.jsSelectProductCategory, .jsSelectProductType').parent().prev().removeClass('required after');
         } else {
-            $('select.product-category-id').prop('disabled', false);
+            // $('select.product-category-id').prop('disabled', false);
+            $('.jsSelectProductCategory').prop('disabled', false).trigger("chosen:updated");
+            $('.jsSelectProductCategory').parent().prev().addClass('required after');
 
             modules.getProductCategory(categoryId);
         }
@@ -177,26 +194,30 @@ let Commons = (function ($) {
 
     modules.getOptionProductType = function (productCategoryId) {
         if (!productCategoryId) {
-            $('select.product-type-id').prop('disabled', true);
+            // $('select.product-type-id').prop('disabled', true);
+            $('.jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
+            // $('.jsSelectProductType').parent().prev().removeClass('required after');
         } else {
-            $('select.product-type-id').prop('disabled', false);
+            // $('select.product-type-id').prop('disabled', false);
+            $('.jsSelectProductType').prop('disabled', false).trigger("chosen:updated");
+            // $('.jsSelectProductType').parent().prev().addClass('required after');
 
             modules.getProductType(productCategoryId);
         }
     };
 
     modules.getMessageValidation = function(url, name, className, formId) {
-        let data = $(formId).serialize();
+        let formData = $(formId).serialize();
         $.ajax({
             url : url,
             dataType : 'JSON',
             type : 'POST',
-            data: data,
+            data: formData,
             success : function (data) {
 
             },
             error : function (data) {
-                let error = (data.responseText) ? $.parseJSON(data.responseText).errors : null;
+                let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
 
                 if (error) {
                     Commons.getErrorMessage(error, error[name], '.' + className);
@@ -215,7 +236,9 @@ let Commons = (function ($) {
                     let className = (!ARRAY_NAME.includes(name)) ? $(this).next()[0].classList[1] : $(this).parent().next()[0].classList[1];
                     let val = $(this).val();
 
-                    modules.getMessageValidation(url, name, className, formId);
+                    if (!ARRAY_NAME.includes(name)) {
+                        modules.getMessageValidation(url, name, className, formId);
+                    }
 
                     $('.' + className).text('');
                 });
@@ -226,11 +249,15 @@ let Commons = (function ($) {
             let val = $(this).attr('data-option-array-index');
             let name = $(this).parent().parent().parent().prev().attr('name');
             let className = $(this).parent().parent().parent().parent().next();
+            let jsSelect = $(className).prev().children()[0].classList[2];
+            let value = $('.' + jsSelect).val();
 
-            if (val === '0') {
+            if (!value) {
                 $(this).parent().parent().parent().parent().parent().parent().parent().next().children().children().children().children().prop('disabled', true).trigger("chosen:updated");
                 modules.getMessageValidation(url, name, 'error_'+name, formId);
+                // $('.error_' + name).text('').show();
             } else {
+                // localStorage.setItem(''+jsSelect, value);
                 $(this).parent().parent().parent().parent().parent().parent().parent().next().children().children().children().children().prop('disabled', false).trigger("chosen:updated");
                 $('.error_' + name).text('');
             }
@@ -242,12 +269,66 @@ let Commons = (function ($) {
                 let name = $(this).attr('name');
                 let className = $(this).next().next()[0].classList[1];
 
-                if (val === '<p><br></p>' || val.length <= 48) {
+                if (val === '<p><br></p>' || (val.length <= 48 || val.length > 262)) {
                     modules.getMessageValidation(url, name, className, formId);
+                } else {
+                    $('.' + className).text('');
                 }
             });
         }
     };
+
+    modules.getImages = function (className) {
+        let targetId = document.querySelectorAll( className );
+
+        Array.prototype.forEach.call( targetId, function( input )
+        {
+            let label	 = input.nextElementSibling;
+            let labelVal = label.innerHTML;
+
+            input.addEventListener( 'change', function( e )
+            {
+                let fileName = '';
+                if( this.files && this.files.length > 1 ) {
+                    fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+                } else {
+                    fileName = e.target.value.split( '\\' ).pop();
+                }
+
+                if( fileName ) {
+                    label.querySelector( 'span' ).innerHTML = fileName;
+                } else {
+                    label.innerHTML = labelVal;
+                }
+            });
+
+            // Firefox bug fix
+            input.addEventListener( 'focus', function(){ input.classList.add( 'has-focus' ); });
+            input.addEventListener( 'blur', function(){ input.classList.remove( 'has-focus' ); });
+        });
+    };
+
+    modules.adjustWrapper = function() {
+        let sidebar = $('.main-sidebar');
+        let content = $('.content-wrapper');
+        let footer = $('.main-footer');
+
+        if ($(sidebar).length && $(content).length) {
+            if ($(window).outerWidth() > 991) {
+                $(content).removeAttr('style');
+
+                if ($(sidebar).outerHeight(true) >= $(content).outerHeight(true) + $(footer).outerHeight(true)) {
+                    let margin = $(content).outerHeight(true) - $(content).height();
+                    let height = $(sidebar).outerHeight(true) - $(footer).outerHeight(true) - margin;
+                    $(content).css('min-height', height + 'px');
+                }
+
+            } else {
+                $(sidebar).removeAttr('style');
+                $(content).removeAttr('style');
+            }
+        }
+    }
 
     return modules;
 
@@ -279,29 +360,48 @@ $(document).ready(function () {
         radioClass: 'iradio_square-green',
     });
 
-    if ($('.jsSelectCategory').val()) {
-        $('.jsSelectProductCategory').prop('disabled', false).trigger("chosen:updated");
-    } else if ($('.jsSelectCategory').val() && $('.jsSelectProductCategory').val()) {
-        $('.jsSelectProductType').prop('disabled', false).trigger("chosen:updated");
-    } else {
+    if (!$('.jsSelectCategory').val() && !$('.jsSelectProductCategory').val() && !$('.jsSelectProductType').val()) {
+
         $('.jsSelectProductCategory, .jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
+        $('.jsSelectProductCategory, .jsSelectProductType').parent().prev().removeClass('required after');
+    } else if ($('.jsSelectCategory').val() && !$('.jsSelectProductCategory').val() && !$('.jsSelectProductType').val()) {
+        Commons.getOptionProductCategory($('.jsSelectCategory').val());
+        $('.jsSelectProductCategory').prop('disabled', false).trigger("chosen:updated");
+        $('.jsSelectProductCategory').parent().prev().addClass('required after');
+        $('.jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
+        $('.jsSelectProductType').parent().prev().removeClass('required after');
+
+    } else if ($('.jsSelectCategory').val() && $('.jsSelectProductCategory').val() && !$('.jsSelectProductType').val()) {
+
+        Commons.getOptionProductType($('.jsSelectProductCategory').val());
+        $('.jsSelectProductType').prop('disabled', false).trigger("chosen:updated");
+        // $('.jsSelectProductType').parent().prev().addClass('required after');
     }
 
-    $('select.product-category-id').prop('disabled', true);
-    $('select.product-type-id').prop('disabled', true);
-
-    $('select.category-id').on('change', function () {
-        let categoryId = $(this).val();
+    $('.jsSelectCategory').chosen().change(function (event, params) {
+        let categoryId = $(event.target).val();
 
         Commons.getOptionProductCategory(categoryId);
     });
 
-    $(document).on('change', '.jsSelectProductCategory',function () {
-        // $('select.product-category-id').prop('disabled', false);
-        let productCategoryId = $(this).val();
+    $('.jsSelectProductCategory').chosen().change(function (event, params) {
+        let productCategoryId = $(event.target).val();
 
         Commons.getOptionProductType(productCategoryId);
     });
+
+    // $('select.category-id').on('change', function () {
+    //     let categoryId = $(this).val();
+    //
+    //     Commons.getOptionProductCategory(categoryId);
+    // });
+
+    // $(document).on('change', '.jsSelectProductCategory',function () {
+    //     // $('select.product-category-id').prop('disabled', false);
+    //     let productCategoryId = $(this).val();
+    //
+    //     Commons.getOptionProductType(productCategoryId);
+    // });
 
     function preventEnter(ev) {
         if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {

@@ -161,9 +161,16 @@ return [
         'product_type_id' => [
             'required' => 'Please select a product type.',
         ],
+        'product_price' => [
+            'more' => 'Please enter a product price greater than the promotion price.',
+        ],
+        'product_promotional' => [
+            'less' => 'Please enter promotion price less than product price.',
+        ],
         'product_description' => [
-            'min' => ':attribute must be 50 characters.',
+            'min' => ':attribute must be 20 characters.',
             'max' => ':attribute must be at most 255 characters.',
+            'less' => 'Please enter promotion price less than product price.',
         ],
         'product_content' => [
             'min' => ':attribute must be 50 characters.',

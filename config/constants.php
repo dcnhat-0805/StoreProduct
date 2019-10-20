@@ -36,6 +36,7 @@ const ADMIN_PRODUCT_INDEX = 'admin.product.index';
 const ADMIN_PRODUCT_ADD = 'admin.product.add';
 const ADMIN_PRODUCT_ADD_INDEX = 'admin.product.add.index';
 const ADMIN_PRODUCT_EDIT = 'admin.product.edit';
+const ADMIN_PRODUCT_UPDATE = 'admin.product.update';
 const ADMIN_PRODUCT_DELETE = 'admin.product.delete';
 
 const ADMIN_INDEX = 'admin.list';
@@ -67,3 +68,14 @@ const SORT_PARAMS_ALLOWED = [
 const FRONT_END_HOME_INDEX = 'front.end.home.index';
 
 const SESSION_REMEMBER_TOKEN = 'ss.remember.token';
+
+const PREFIX_PRODUCT = 'product';
+const PREFIX_PRODUCT_DETAIL = 'product-detail';
+const FILE_PATH_PRODUCT = 'backend/images/uploads/product/';
+const FILE_PATH_PRODUCT_IMAGE = 'backend/images/uploads/product/detail/';
+
+const SESSION_PRODUCT_IMAGE = 'ss.product.image';
+const SESSION_LIST_PRODUCT_IMAGE = 'ss.list.product.image';
+const IMAGE_RESIZE_WIDTH = 320;
+const IMAGE_RESIZE_HEIGHT = 240;
+const IMAGE_RESIZE_PREFIX = 'resize-';

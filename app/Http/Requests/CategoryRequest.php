@@ -25,7 +25,7 @@ class CategoryRequest extends FormRequest
     {
         return [
             'category_name' => 'required|min:3|max:100|unique:categories,category_name,'.($this->id ?? " "),
-            'category_order' => 'required|min:0|numeric|unique:categories,category_order,'.($this->id ?? " "),
+            'category_order' => 'required|min:0|numeric',
         ];
     }
 

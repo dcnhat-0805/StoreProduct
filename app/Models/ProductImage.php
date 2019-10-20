@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\UploadService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -28,20 +29,23 @@ class ProductImage extends Model
         return $this->belongsTo('App\Models\Product', 'product_id', 'id');
     }
 
-    public function getListAllProductImage()
+    public static function getListAllProductImage()
     {
-        return $this->select(
+        return self::select(
                 'product_image_name',
                 'product_id',
                 'product_image_order',
                 'product_image_status'
             )
-            ->orderBy('id', 'DESC')->get();
+            ->join('products', 'products.id', '=', 'product_images.product_id')
+            ->orderBy('product_images.id', 'DESC')
+            ->whereNull('product_images.deleted_at')
+            ->get();
     }
 
-    public function getListProductImage()
+    public static function getListProductImage()
     {
-        return $this->select(
+        return self::select(
             'product_image_name',
             'product_id',
             'product_image_order',
@@ -50,25 +54,41 @@ class ProductImage extends Model
             ->orderBy('id', 'DESC')->paginate(2);
     }
 
-    public function createProductImage($request)
+    public static function createProductImage($request, $productId)
     {
-        return $this->create($request);
+        $image_array = $request['image_list'] ?? [];
+        $image_thump = self::getDataImageByProductId($productId);
+
+        if (isset($image_array) && count($image_array)) {
+            foreach ($image_array as $image) {
+                if (!in_array($image, $image_thump)) {
+                    $productImages = self::firstOrNew([
+                        'product_id' => $productId,
+                        'product_image_name' => $image,
+                        'product_image_order' => count(self::getListAllProductImage()),
+                    ]);
+
+                    $productImages->save();
+                }
+
+            }
+        }
     }
 
-    public function showProductImage($product_image_id)
+    public static function showProductImage($product_image_id)
     {
-        return $this->find($product_image_id);
+        return self::find($product_image_id);
     }
 
-    public function updateProductImage($request, $product_image_id)
+    public static function updateProductImage($request, $product_image_id)
     {
-        $productImage = $this->showProductImage($product_image_id);
+        $productImage = self::showProductImage($product_image_id);
         return $productImage->update($request);
     }
 
-    public function deleteProductImage($product_image_id)
+    public static function deleteProductImage($product_image_id)
     {
-        $product_image = $this->showProductImage($product_image_id);
+        $product_image = self::showProductImage($product_image_id);
         $image_path = 'assets/uploads/image/product/detail/';
         if (isset($product_image)) {
             if (File::exists($image_path.$product_image->product_image_name)) {
@@ -77,5 +97,43 @@ class ProductImage extends Model
             return $product_image->delete();
         }
 
+    }
+
+    public static function deleteProductImageByProductId($productId)
+    {
+        return self::where('product_id', $productId)
+                    ->delete();
+    }
+
+    public static function deleteProductImageByArrayProductId($arrayProductId)
+    {
+        return self::whereIn('product_id', $arrayProductId)
+                    ->delete();
+    }
+
+    public static function deleteProductImageByName($fileName)
+    {
+        $productImage =  self::where('product_image_name', $fileName)
+                                ->first();
+
+        if ($productImage !== null && count($productImage) !== 0) {
+//            UploadService::deleteFile(FILE_PATH_PRODUCT_IMAGE, $fileName);
+            return $productImage->delete();
+        }
+    }
+
+    public static function getDataImageByProductId($productId)
+    {
+        $productImage =  self::select(
+            'product_image_name'
+        )
+            ->join('products', 'products.id', '=', 'product_images.product_id')
+            ->orderBy('product_images.id', 'DESC')
+            ->whereNull('product_images.deleted_at')
+            ->where('product_id', $productId)
+            ->pluck('product_image_name')
+            ->toArray();
+
+        return $productImage;
     }
 }

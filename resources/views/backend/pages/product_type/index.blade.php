@@ -55,26 +55,26 @@
                     <tbody class="list-category">
                     @if($productTypes)
                         @foreach($productTypes as $productType)
-                            <tr id="category-{{$productType->id}}" data-id="{{ $productType->id }}">
+                            <tr id="category-{{ $productType->id }}" data-id="{{ $productType->id }}">
                                 <td></td>
-                                <td class="text-center">{{$productType->id}}</td>
-                                <td class="">{{$productType->category->category_name}}</td>
-                                <td class="">{{$productType->productcategory->product_category_name}}</td>
-                                <td class="">{{$productType->product_type_name}}</td>
-                                <td class="text-center">{{$productType->created_at}}</td>
+                                <td class="text-center">{{ $productType->id }}</td>
+                                <td class="">{{ $productType->category->category_name }}</td>
+                                <td class="">{{ $productType->productCategory->product_category_name }}</td>
+                                <td class="">{{ $productType->product_type_name }}</td>
+                                <td class="text-center">{{ $productType->created_at }}</td>
                                 <td class="text-center">@if($productType->product_type_status == 1) Display @else Not display @endif</td>
                                 <td class="datatable-ct text-center">
-                                    <button data-toggle="modal" title="Edit {{$productType->product_type_name}}" class="pd-setting-ed"
+                                    <button data-toggle="modal" title="Edit {{ $productType->product_type_name }}" class="pd-setting-ed"
                                             data-original-title="Edit" data-target="#edit"
-                                            data-id="{{$productType->id}}" data-name="{{$productType->product_type_name}}"
-                                            data-status="{{$productType->product_type_status}}"
-                                            data-category="{{$productType->category->id}}"
-                                            data-product_category="{{$productType->productCategory->id}}"
-                                            data-url="{{route(ADMIN_PRODUCT_TYPE_EDIT, ['id' => $productType->id])}}" type="button">
+                                            data-id="{{ $productType->id }}" data-name="{{ $productType->product_type_name }}"
+                                            data-status="{{ $productType->product_type_status }}"
+                                            data-category="{{ $productType->category->id }}"
+                                            data-product_category="{{ $productType->productCategory->id }}"
+                                            data-url="{{ route(ADMIN_PRODUCT_TYPE_EDIT, ['id' => $productType->id]) }}" type="button">
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                     </button>
-                                    <button data-toggle="modal" title="Delete {{$productType->product_type_name}}" class="pd-setting-ed"
-                                            data-id="{{$productType->id}}" data-url="{{route(ADMIN_PRODUCT_TYPE_DELETE, ['id' => $productType->id])}}"
+                                    <button data-toggle="modal" title="Delete {{ $productType->product_type_name }}" class="pd-setting-ed"
+                                            data-id="{{$productType->id}}" data-url="{{ route(ADMIN_PRODUCT_TYPE_DELETE, ['id' => $productType->id]) }}"
                                             data-original-title="Trash" data-target="#delete" type="button">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                     </button>
@@ -375,7 +375,7 @@
                 </div>
                 <div class="modal-body">
                     <form style="min-height: 70px;">
-                        <input type="hidden" name="id" id="productCategoryId">
+                        <input type="hidden" name="id" id="productTypeId">
                         <input type="hidden" id="urlDelete">
                         <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">Do you want to delete product type?</h5>
                     </form>

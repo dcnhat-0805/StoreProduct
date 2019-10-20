@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Admin\CheckPriceProduct;
+use App\Rules\Admin\CheckPromotionalProduct;
+use App\Rules\Admin\MaxLengthTextArea;
+use App\Rules\Admin\MinLengthTextArea;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProductRequest extends FormRequest
@@ -24,15 +28,19 @@ class ProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'product_name' => 'required|min:5|max:255|unique:products,product_name,'.($this->id ?? " "),
+            'product_name' => 'required|min:5|max:255|unique:products,product_name,'.($this->id ?? ""),
             'category_id' => 'required',
             'product_category_id' => 'required',
-            'product_type_id' => 'required',
-            'product_description' => 'required|min:50|max:255|unique:products,product_description,'.($this->id ?? " "),
-            'product_content' => 'required|min:50|unique:products,product_content,'.($this->id ?? " "),
-            'product_price' => 'required|integer',
-            'product_promotional' => 'required|integer',
-            'product_image' => 'required|image',
+            'product_description' => ['required', new MinLengthTextArea(20, trans("messages.product.product_description.min")),
+                                        'unique:products,product_description,' . ($this->id ?? ""),
+                                        new MaxLengthTextArea(255, trans("messages.product.product_description.max")),
+                                    ],
+            'product_content' => ['required', new MinLengthTextArea(50, trans("messages.product.product_content.min")),
+                                    'unique:products,product_content,' . ($this->id ?? ""),
+                                ],
+            'product_price' => ['required', 'integer', new CheckPriceProduct(request()->product_price, request()->product_promotional)],
+            'product_promotional' => ['required', 'integer', new CheckPromotionalProduct(request()->product_price, request()->product_promotional)],
+            'product_image' => ($this->id ? 'nullable' : 'required'),
         ];
     }
 
