@@ -48,7 +48,7 @@ const ADMIN_DELETE = 'admin.delete';
 const EMAIL_FORM = 'store.online.232@gmail.com';
 const EMAIL_NAME = 'StoreOnline';
 const EMAIL_SUBJECT_PREFIX = '';
-const EMAIL_SUBJECT = 'Thông báo về khóa xác thực đặt lại mật khẩu';
+const EMAIL_SUBJECT = '[StoreOnline] Please reset your password !';
 
 const LIMIT = 5;
 

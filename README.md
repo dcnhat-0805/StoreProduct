@@ -32,7 +32,7 @@
 
 9. (sudo) docker ps
 
-10. (sudo) docker-composer exec workspace bash
+10. (sudo) docker-compose exec workspace bash
 
 11. composer update
 

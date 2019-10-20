@@ -1,14 +1,12 @@
 <br>
-<strong>Mã xác thực：{{ $adminPasswordReset->token }}</strong><br>
+<strong>Verification codes：{{ $adminPasswordReset->token }}</strong><br>
 <br>
-Vui lòng nhập key xác thực với màn hình. <br>
-Nếu đầu vào không được hoàn thành trong vòng 30 phút, khóa xác thực sẽ không hợp lệ. <br>
+※We heard that you lost your StoreOnline password. Sorry about that! <br>
+But don’t worry! You can use the following link to reset your password:
 <br>
-※Nếu 30 phút trôi qua hoặc màn hình đặt lại mật khẩu đã bị đóng, <br>
-vui lòng thử lại từ sau. <br>
-{{--[ đặt lại mật khẩu<a href="{{ route(ADMIN_FORGET_PASSWORD, ['email' => $adminPasswordReset->email, 'token' => $adminPasswordReset->token]) }}">URL</a>]--}}
+[<a href="{{ route(ADMIN_FORGET_PASSWORD, ['email' => $adminPasswordReset->email, 'token' => $adminPasswordReset->token]) }}">Reset Password</a>]
 <br>
 <br>
 ────────────────────<br>
-※Email này được gửi dưới dạng trả lời tự động . <br>
-Cảm ơn bạn !<br>
+※Thank you !<br>
+The StoreOnline Team<br>
