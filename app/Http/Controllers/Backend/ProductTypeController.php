@@ -120,12 +120,10 @@ class ProductTypeController extends Controller
         $user = Auth::guard('admins')->user();
         if ($user->can('deleteProductType', ProductType::class)) {
             try {
-                ProductType::destroy($request->input('ids'));
-                if ($request->input('ids') != DELETE_ALL) {
-                    Session::flash("success", trans("messages.product_category.delete_success"));
-                }
+                ProductType::destroy($request->get('ids'));
+                Session::flash("success", trans("messages.product_type.delete_success"));
             } catch (\Exception $e) {
-                Session::flash("error", trans("messages.product_category.delete_failed"));
+                Session::flash("error", trans("messages.product_type.delete_failed"));
             }
         }
     }

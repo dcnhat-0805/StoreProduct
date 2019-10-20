@@ -155,9 +155,7 @@ class ProductCategoryController extends Controller
         if ($user->can('deleteProductCategory', ProductCategory::class)) {
             try {
                 ProductCategory::destroy($request->input('ids'));
-                if ($request->input('ids') != DELETE_ALL) {
-                    Session::flash("success", trans("messages.product_category.delete_success"));
-                }
+                Session::flash("success", trans("messages.product_category.delete_success"));
             } catch (\Exception $e) {
                 Session::flash("error", trans("messages.product_category.delete_failed"));
             }

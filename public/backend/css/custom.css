@@ -123,3 +123,30 @@ h3.required.after::before, label.required.after::before, span.required.after::be
     text-indent: 0px;
     font-size: 18px;
 }
+
+.product-image {
+    width: 20%;
+    object-fit: contain;
+    border-radius: 4px;
+    margin-right: 10px;
+    -webkit-box-shadow: 0px 5px 5px 0px #ccc;
+    -moz-box-shadow:    0px 5px 5px 0px #ccc;
+    box-shadow:         0px 5px 5px 0px #ccc;
+}
+
+.list-image {
+    margin-top: 15px;
+}
+
+.product-image-thump,
+.image-list img{
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    object-fit: cover;
+    border-radius: 4px;
+    -webkit-box-shadow: 0px 5px 5px 0px #ccc;
+    -moz-box-shadow:    0px 5px 5px 0px #ccc;
+    box-shadow:         0px 5px 5px 0px #ccc;
+    margin-right: 10px;
+}

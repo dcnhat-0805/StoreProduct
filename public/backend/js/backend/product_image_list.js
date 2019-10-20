@@ -1,84 +1,3 @@
-const btnAddProduct = $('#btnAddProduct, #btnUpdateProduct');
-// const btnUpdateProduct = $('#btnUpdateProduct');
-const formId = '#createProduct';
-const url = $(formId).attr('action');
-const summerNoteId = '#descriptionProduct, #contentProduct';
-const chosenId = '.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType';
-const arrayName = ['category_id', 'product_category_id', 'product_type_id', 'product_name', 'product_image', 'product_description', 'product_content', 'product_price', 'product_promotional'];
-
-let productRegisterJs = (function ($) {
-    let modules = {};
-
-    modules.createProduct = function(data) {
-        $.ajax({
-            url : 'admin/product/add',
-            dataType : 'JSON',
-            type : 'POST',
-            data: data,
-            success : function (data) {
-                btnAddProduct.prop('disabled', true);
-                // location.reload();
-            },
-            error : function (data) {
-                let error = $.parseJSON(data.responseText).errors;
-
-                Commons.loadMessageValidation(error, arrayName);
-            }
-        });
-    };
-
-    modules.textareaDisplay = function () {
-        $('#descriptionProduct').summernote({
-            height: 200,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['fontname', ['fontname']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                // ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']],
-                ['height', ['height']]
-            ],
-        });
-        $('#contentProduct').summernote({
-            height: 200,
-            toolbar: [
-                ['style', ['style']],
-                ['font', ['bold', 'underline', 'clear']],
-                ['fontname', ['fontname']],
-                ['font', ['strikethrough', 'superscript', 'subscript']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['table', ['table']],
-                ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']],
-                ['height', ['height']]
-            ],
-        });
-
-        $('.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType').chosen({
-            width: "100%"
-        });
-
-        $('.jsRadio').iCheck({
-            radioClass: 'iradio_square-green',
-        });
-    };
-
-
-    return modules;
-})(window.jQuery, window, document);
-
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
 $(document).ready(function () {
 
     Dropzone.autoDiscover = false;
@@ -87,7 +6,7 @@ $(document).ready(function () {
         let images = [];
 
         for (let i = 1; i <= 2; i++) {
-            let dzName = 'jsProductImage';
+            let dzName = 'jsImageList';
             configUPloadImage(dzName, i);
         }
 
@@ -97,40 +16,39 @@ $(document).ready(function () {
             let targetId = '#' + target + num.toString().padStart(2, '0');
             let previewsId = '#' + target + 'Previews' + num.toString().padStart(2, '0');
             let imageType = num.toString().padStart(1, '0');
-
             $(targetId).dropzone({
-                url: '/admin/product/uploadImages',
+                url: '/admin/product/product_image/uploadImageList',
+                paramName: 'file',
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
                 params: {
                     type: imageType
                 },
-                paramName: 'file',
                 acceptedFiles: 'image/*',
+                autoProcessQueue: true,
                 maxFilesize: 25, // MB
-                maxFiles: 1,
+                parallelUploads: 1,
                 addRemoveLinks: true,
                 previewsContainer: previewsId,
                 thumbnailWidth: 120,
                 thumbnailHeight: 120,
-                // dictCancelUpload: 'Cancel',
-                // dictCancelUploadConfirmation: 'Cancel upload. Is it OK?',
-                // dictRemoveFileConfirmation: 'Delete the file. Is it OK?',
+                dictCancelUpload: 'キャンセル',
+                dictCancelUploadConfirmation: 'アップロードをキャンセルします。よろしいですか？',
+                // dictRemoveFileConfirmation: 'ファイルを削除します。よろしいですか？',
+
                 init: function() {
                     let dropzone = this;
                     if (dropzone.element.classList.contains('dropzone-disabled')) {
                         dropzone.removeEventListeners();
                     }
                     // $.ajax({
-                    //     url: '/admin/product/getImages',
+                    //     url: '/admin/product/product_image/getImageList',
                     //     data: {
                     //         type: imageType,
                     //     },
                     //     success: function (res) {
-                    //         if (res.images.length) {
-                    //             $('.input').val(1);
-                    //         }
+                    //
                     //         res.images.forEach(function (image) {
                     //             let mockFile = {name: image.name, size: image.size, dataURL: image.url};
                     //             images.push(mockFile);
@@ -140,20 +58,14 @@ $(document).ready(function () {
                     //             mockFile.previewElement.classList.add('dz-complete');
                     //             mockFile.previewElement.querySelector("[data-dz-size]").innerHTML = image.size;
                     //             $(mockFile.previewElement).find('img').attr('data-image', image.name    );
-                    //             $(mockFile.previewElement).append('<input type="hidden" name="product_image" value="' + image.name + '" class="dropzone-input-hidden" id="input">');
-                    //
-                    //             let file = new File([''], mockFile.name);
-                    //             file.accepted = true;
-                    //             file.previewElement = mockFile.previewElement;
-                    //             file.previewTemplate = mockFile.previewElement;
-                    //             dropzone.files.push(file);
+                    //             $(mockFile.previewElement).append('<input type="hidden" name="image_list' + '[]" value="' + image.name + '" class="dropzone-input-hidden">');
                     //             Commons.adjustWrapper();
                     //         });
                     //     }
                     // });
 
-                    if ($('#dataImage01').val()) {
-                        let dataImage = JSON.parse($('#dataImage01').val());
+                    if ($('#dataImage02').val()) {
+                        let dataImage = JSON.parse($('#dataImage02').val());
 
                         dataImage.images.forEach(function (image) {
                             let mockFile = {name: image.name, size: image.size, dataURL: image.url};
@@ -164,7 +76,7 @@ $(document).ready(function () {
                             mockFile.previewElement.classList.add('dz-complete');
                             mockFile.previewElement.querySelector("[data-dz-size]").innerHTML = image.size;
                             $(mockFile.previewElement).find('img').attr('data-image', image.name    );
-                            $(mockFile.previewElement).append('<input type="hidden" name="product_image" value="' + image.name + '" class="dropzone-input-hidden" id="input1">');
+                            $(mockFile.previewElement).append('<input type="hidden" name="image_list' + '[]" value="' + image.name + '" class="dropzone-input-hidden" id="input2">');
 
                             let file = new File([''], mockFile.name);
                             file.accepted = true;
@@ -175,27 +87,22 @@ $(document).ready(function () {
                         });
                     }
 
-                    this.on('addedfile', function(file) {
-                        if (this.files.length > 1) {
-                            this.removeFile(this.files[0]);
-                        }
-                    });
-
                     this.on("thumbnail", function (file) {
-                        $('.error_product_image').addClass('hidden').text('');
+                        $('.error_product_image_list').addClass('hidden').text('');
+
                         if (file.status == 'added') {
                             if (file.size < maxSizeFileImage) {
                                 file.acceptDimensions();
                             }
-
-                            this.on("error", function (file) {
-                                if (!file.accepted) {
-                                    this.removeFile(file);
-                                }
-                            });
                         }else if(file.status == 'error'){
-                            $('.error_product_image').removeClass('hidden').text('');
+                            $('.error_product_image_list').removeClass('hidden').text('');
                         }
+
+                        this.on("error", function (file) {
+                            if (!file.accepted)  {
+                                this.removeFile(file);
+                            }
+                        });
                     })
                 },
                 accept: function(file, done) {
@@ -204,26 +111,18 @@ $(document).ready(function () {
                     };
                     file.acceptDimensions = done;
                 },
-
-                addedfile: function (file) {
-                    // call super (prototype)
-                    let _addedfile = Dropzone.prototype.defaultOptions.addedfile;
-                    _addedfile.call(this, file);
-                    images.push(file);
-                },
                 uploadprogress: function (file, progress, size) {
                     file.previewElement.querySelector('[data-dz-uploadprogress]').style.width = '' + progress + '%';
                     Commons.adjustWrapper();
-                    // images.push(file);
                 },
                 success: function (file, rt, xml) {
-                    $('.error_product_image').addClass('hidden').text('');
+                    $('.error_product_image_list').addClass('hidden').text('');
                     file.previewElement.querySelector("[data-dz-name]").innerHTML = rt.name;
                     file.previewElement.querySelector("[data-dz-size]").innerHTML = rt.size;
                     let mockFile = {name: rt.name, size: rt.size, dataURL: rt.url};
                     images.push(mockFile);
                     $(file.previewElement).find('img').attr('data-image', rt.name);
-                    $(file.previewElement).append('<input type="hidden" name="product_image" value="' + rt.name + '" class="dropzone-input-hidden" id="input">');
+                    $(file.previewElement).append('<input type="hidden" name="image_list' + '[]" value="' + rt.name + '" class="dropzone-input-hidden">');
                     file.previewElement.classList.add('dz-success');
                     $(file.previewElement).find('.dz-success-mark').show();
                     $.enableButtonSubmitWhenUploadedImage();
@@ -248,39 +147,28 @@ $(document).ready(function () {
                     let ref;
                     (ref = file.previewElement) !== null ? ref.parentNode.removeChild(file.previewElement) : void 0;
 
-                    $('.error_product_image').removeClass('hidden').text('Please select a photo less than 25 MB.');
+                    $('.error_product_image_list').removeClass('hidden').text('Please select a photo less than 25 MB.');
                 },
-                removedfile: function (file) {
+                removedfile: function(file, e) {
                     let fileName = $(file.previewElement).find('img').attr("data-image");
-                    if (fileName)  {
-                        $.ajax({
-                            url: "/admin/product/deleteImages",
-                            type: "post",
-                            data: {
-                                fileName: fileName,
-                                type: num.toString().padStart(1, '0'),
-                            },
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            },
-                            success: function (data) {
-                                let isMessengerError =  $("#uploadProductImage").find("div.error_product_image").hasClass('hidden');
-                                console.log(isMessengerError);
-                                if (isMessengerError) {
-                                    $('.error_product_image').removeClass('hidden').text('Product image cannot be left blank.');
-                                }
-                            }
-                        });
-                    }
-                    file.previewElement.remove();
+                    $.ajax({
+                        url: '/admin/product/product_image/deleteImageList',
+                        type: "post",
+                        data: {
+                            fileName: fileName,
+                            type: imageType,
+                        },
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        success: function (data) {}
+                    });
+
+                    $(document).find(file.previewElement).remove();
                     Commons.adjustWrapper();
                 },
                 canceled: function () {
-                    $.enableButtonSubmitWhenUploadedImage();
-                },
-                maxfilesexceeded: function(file) {
-                    this.removeAllFiles();
-                    this.addFile(file);
+                    // 必要なら処理を記述
                 }
             });
 
@@ -381,17 +269,4 @@ $(document).ready(function () {
             });
         }
     });
-
-    Commons.formValidation(url, formId, summerNoteId);
-
-    productRegisterJs.textareaDisplay();
-    // Commons.getImages('.jsUploadFile');
-    // Commons.getImages('.jsUploadFileMultiple');
-
-    btnAddProduct.on('click', function () {
-        $(this).button('Loading');
-
-        $('input[name=submit]').val(SUBMIT);
-    });
 });
-

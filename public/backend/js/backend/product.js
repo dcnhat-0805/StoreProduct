@@ -71,10 +71,10 @@ let productJs = (function ($) {
     };
 
     modules.reloadSelectAllCheckBox = function () {
-        let isCheckAll = Commons.getSingleValueLocalStorage(PRODUCT_TYPE_DELETE_ALL);
+        let isCheckAll = Commons.getSingleValueLocalStorage(PRODUCT_DELETE_ALL);
 
         if (isCheckAll == NOT_DELETE_ALL) {
-            let ids_product_type = Commons.getArrayValueLocalStorage(PRODUCT_TYPE_IDS);
+            let ids_product_type = Commons.getArrayValueLocalStorage(PRODUCT_IDS);
 
             if (ids_product_type.length) {
                 btnDelete.attr('disabled', false);
@@ -100,18 +100,18 @@ let productJs = (function ($) {
     };
 
     modules.checkboxProduct = function (checkbox) {
-        Commons.setLocalStorageDeleteAll(PRODUCT_TYPE_DELETE_ALL, NOT_DELETE_ALL);
+        Commons.setLocalStorageDeleteAll(PRODUCT_DELETE_ALL, NOT_DELETE_ALL);
         let id = checkbox.data("id");
-        let ids_product_type = Commons.getArrayValueLocalStorage(PRODUCT_TYPE_IDS);
+        let ids_product_type = Commons.getArrayValueLocalStorage(PRODUCT_IDS);
 
         if (checkbox.is(':checked')) {
             ids_product_type.push(id);
-            Commons.setLocalStorageListIds(PRODUCT_TYPE_IDS, ids_product_type);
+            Commons.setLocalStorageListIds(PRODUCT_IDS, ids_product_type);
         } else {
             let idRemove = ids_product_type.indexOf(id);
             if (idRemove != -1) {
                 ids_product_type.splice(idRemove, 1);
-                Commons.setLocalStorageListIds(PRODUCT_TYPE_IDS, ids_product_type);
+                Commons.setLocalStorageListIds(PRODUCT_IDS, ids_product_type);
             }
             $('.btSelectAll').prop('checked', false);
         }
@@ -122,11 +122,11 @@ let productJs = (function ($) {
         if ($('.btSelectAll').is(':checked')) {
             modules.getAllListProduct();
             $('.btSelectAll').prop('checked', true);
-            Commons.setLocalStorageDeleteAll(PRODUCT_TYPE_DELETE_ALL, IS_DELETE_ALL);
+            Commons.setLocalStorageDeleteAll(PRODUCT_DELETE_ALL, IS_DELETE_ALL);
         } else {
-            Commons.setLocalStorageDeleteAll(PRODUCT_TYPE_DELETE_ALL, NOT_DELETE_ALL);
+            Commons.setLocalStorageDeleteAll(PRODUCT_DELETE_ALL, NOT_DELETE_ALL);
             $('.btSelectAll').prop('checked', false);
-            Commons.setLocalStorageListIds(PRODUCT_TYPE_IDS, []);
+            Commons.setLocalStorageListIds(PRODUCT_IDS, []);
         }
 
         modules.reloadSelectAllCheckBox();
@@ -135,28 +135,28 @@ let productJs = (function ($) {
     modules.getAllListProduct = function () {
         let url = new URL(window.location.href);
         $.ajax({
-            url: "/admin/product_type/list_product_type",
+            url: "/admin/product/list_product",
             dataType : 'JSON',
             type: "GET",
             success : function (data) {
-                Commons.setLocalStorageListIds(PRODUCT_TYPE_IDS, data);
-                Commons.setLocalStorageDeleteAll(PRODUCT_TYPE_DELETE_ALL, IS_DELETE_ALL);
+                Commons.setLocalStorageListIds(PRODUCT_IDS, data);
+                Commons.setLocalStorageDeleteAll(PRODUCT_DELETE_ALL, IS_DELETE_ALL);
             }
         });
     };
 
     modules.destroyProduct = function () {
         let data = {};
-        data['delete_all'] = Commons.getSingleValueLocalStorage(PRODUCT_TYPE_DELETE_ALL);
-        data['ids'] = Commons.getArrayValueLocalStorage(PRODUCT_TYPE_IDS);
+        data['delete_all'] = Commons.getSingleValueLocalStorage(PRODUCT_DELETE_ALL);
+        data['ids'] = Commons.getArrayValueLocalStorage(PRODUCT_IDS);
 
         $.ajax({
-            url: "/admin/product_type/destroy",
+            url: "/admin/product/destroy",
             type: "DELETE",
             data: data,
             success : function (data) {
-                Commons.removeLocalStorage(PRODUCT_TYPE_IDS);
-                Commons.removeLocalStorage(PRODUCT_TYPE_DELETE_ALL);
+                Commons.removeLocalStorage(PRODUCT_IDS);
+                Commons.removeLocalStorage(PRODUCT_DELETE_ALL);
                 location.reload();
             },
             error : function (data) {
@@ -178,7 +178,7 @@ $(document).ready(function () {
 
     btnDeleteProduct.on('click', function () {
         $(this).button('Loading');
-        let id = $('#ProductTypeId').val();
+        let id = $('#productId').val();
         let url = $('#urlDelete').val();
 
         if (!id && !url) {
@@ -197,13 +197,13 @@ $(document).ready(function () {
     });
 
     btnClear.on('click', function () {
-        Commons.removeLocalStorage(PRODUCT_TYPE_IDS);
-        Commons.removeLocalStorage(PRODUCT_TYPE_DELETE_ALL);
+        Commons.removeLocalStorage(PRODUCT_IDS);
+        Commons.removeLocalStorage(PRODUCT_DELETE_ALL);
     });
 
     btnSearch.on('click', function () {
-        Commons.removeLocalStorage(PRODUCT_TYPE_IDS);
-        Commons.removeLocalStorage(PRODUCT_TYPE_DELETE_ALL);
+        Commons.removeLocalStorage(PRODUCT_IDS);
+        Commons.removeLocalStorage(PRODUCT_DELETE_ALL);
     });
 });
 

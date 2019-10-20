@@ -156,11 +156,19 @@ a:focus {
 	color: #4b0f31;
 }
 
-.box {
+.box-image {
     width: 50%;
 }
 
-.box + .box {
+.box-image + .box-image {
+	margin-top: 2.5rem;
+}
+
+.box-image-list {
+    width: 100%;
+}
+
+.box-image-list + .box-image-list {
 	margin-top: 2.5rem;
 }
 

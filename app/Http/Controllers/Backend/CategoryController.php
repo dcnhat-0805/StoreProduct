@@ -150,9 +150,7 @@ class CategoryController extends Controller
         if ($user->can('deleteCategory', Category::class)) {
             try {
                 Category::destroy($request->input('ids'));
-                if ($request->input('ids') != DELETE_ALL) {
-                    Session::flash("success", trans("messages.category.delete_success"));
-                }
+                Session::flash("success", trans("messages.category.delete_success"));
             } catch (\Exception $e) {
                 Session::flash("error", trans("messages.category.delete_failed"));
             }

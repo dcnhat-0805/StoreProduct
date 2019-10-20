@@ -133,6 +133,13 @@
 	#myTab3.tab-review-design li a, #myTabedu1.tab-review-design li a {
 		padding-right: 35px;
 	}
+    .product-image {
+        width: 100%;
+        border-radius: 0px;
+    }
+    .list-image {
+        display: none;
+    }
 }
 
 
@@ -316,6 +323,13 @@
 	#myTab3.tab-review-design li a, #myTabedu1.tab-review-design li a{
 		padding-right: 30px;
 	}
+    .product-image {
+        width: 100%;
+        border-radius: 0px;
+    }
+    .list-image {
+        display: none;
+    }
 }
 
 
@@ -708,6 +722,13 @@
 	.comon-method{
 		margin-top:15px;
 	}
+    .product-image {
+        width: 100%;
+        border-radius: 0px;
+    }
+    .list-image {
+        display: none;
+    }
 }
 
 /* Large Mobile :480px. */
@@ -754,5 +775,12 @@
 	.profile-img {
 		text-align: center;
 	}
+    .product-image {
+        width: 100%;
+        border-radius: 0px;
+    }
+    .list-image {
+        display: none;
+    }
 }
 

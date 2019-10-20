@@ -187,7 +187,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="order" class="required after">Order</label>
+                                            <label for="order" class="">Order</label>
                                             <input type="number" class="form-control category-order"
                                                    name="category_order" min="0"
                                                    placeholder="Category Order ....">
@@ -259,7 +259,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="order" class="required after">Order</label>
+                                            <label for="order" class="">Order</label>
                                             <input type="number" class="form-control category-order"
                                                    name="category_order"
                                                    placeholder="Category Order ...." min="0" value="0">

@@ -1,5 +1,5 @@
 {{
-    Form::select('product_category_id', $productCategory, NULL,
+    Form::select('product_category_id', $productCategory, old('product_category_id'),
     [
         'class' => 'form-control product-category-id jsSelectProductCategory'
     ])

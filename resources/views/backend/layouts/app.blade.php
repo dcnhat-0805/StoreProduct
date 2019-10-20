@@ -73,6 +73,9 @@
 		============================================ -->
     <link rel="stylesheet" href="backend/css/notifications/Lobibox.min.css">
     <link rel="stylesheet" href="backend/css/notifications/notifications.css">
+    <!-- dropzone CSS
+		============================================ -->
+    <link rel="stylesheet" href="backend/css/dropzone/dropzone.css">
     <!-- style CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/custom.css">
@@ -197,6 +200,9 @@
     ============================================ -->
 <script src="backend/js/chart/jquery.peity.min.js"></script>
 <script src="backend/js/peity/peity-active.js"></script>
+<!-- dropzone JS
+    ============================================ -->
+<script src="backend/js/dropzone/dropzone.js"></script>
 <!-- tab JS
     ============================================ -->
 <script src="backend/js/tab.js"></script>
@@ -235,6 +241,7 @@
 <!-- chosen JS
     ============================================ -->
 <script src="{{ App\Helpers\Helper::asset('backend/js/chosen/chosen.jquery.js') }}"></script>
+{{--<script src="{{ App\Helpers\Helper::asset('backend/assets/dropzone/common.js') }}"></script>--}}
 @yield('jsCustom')
 @yield('jsCustomTwo')
 

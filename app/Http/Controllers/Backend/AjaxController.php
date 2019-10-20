@@ -23,7 +23,7 @@ class AjaxController extends Controller
 
             $html = view('backend.pages.ajax._select_product_category', ['productCategory' => $productCategoryOption])->render();
 
-            return response()->json($html);
+            return response()->json($productCategories);
         }
     }
 
@@ -41,7 +41,7 @@ class AjaxController extends Controller
 
             $html = view('backend.pages.ajax._select_product_type', ['productTypes' => $productTypeOption])->render();
 
-            return response()->json($html);
+            return response()->json($productTypes);
         }
     }
 }

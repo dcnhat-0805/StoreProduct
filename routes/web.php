@@ -77,14 +77,20 @@ Route::namespace('Backend')->group(function(){
         Route::group(['prefix' => 'product'], function(){
             Route::get('/', 'ProductController@index')->name(ADMIN_PRODUCT_INDEX);
             Route::get('create', 'ProductController@create')->name(ADMIN_PRODUCT_ADD_INDEX);
-            Route::post('add', 'ProductController@store')->name(ADMIN_PRODUCT_ADD);
-            Route::post('edit/{id}', 'ProductController@update')->name(ADMIN_PRODUCT_EDIT);
+            Route::post('create', 'ProductController@store')->name(ADMIN_PRODUCT_ADD);
+            Route::get('edit/{id}', 'ProductController@edit')->name(ADMIN_PRODUCT_EDIT);
+            Route::post('update/{id}', 'ProductController@update')->name(ADMIN_PRODUCT_UPDATE);
             Route::delete('delete/{id}', 'ProductController@delete')->name(ADMIN_PRODUCT_DELETE);
             Route::get('/list_product', 'ProductController@getListProduct');
             Route::delete('/destroy', 'ProductController@destroy');
             Route::post('uploadImages', 'ProductController@uploadImages');
             Route::get('getImages', 'ProductController@getImages');
             Route::post('deleteImages', 'ProductController@deleteImages');
+            Route::group(['prefix' => 'product_image'], function(){
+                Route::post('uploadImageList', 'ProductImageController@uploadImageList');
+                Route::get('getImageList', 'ProductImageController@getImageList');
+                Route::post('deleteImageList', 'ProductImageController@deleteImageList');
+            });
         });
 
         Route::group(['prefix' => 'ajax'], function(){

@@ -2,8 +2,12 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
+use App\Services\UploadService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use File;
+use Illuminate\Support\Facades\Session;
 
 class Product extends Model
 {
@@ -16,6 +20,10 @@ class Product extends Model
         'product_name', 'product_slug', 'product_image',
         'product_description', 'product_content', 'product_price',
         'product_promotional', 'product_status',
+    ];
+
+    public $guarded = [
+        'count_buy',
     ];
 
     protected $dates = [
@@ -40,21 +48,147 @@ class Product extends Model
         return $this->belongsTo('App\Models\ProductType', 'product_type_id', 'id');
     }
 
-    public function getListAllProduct()
+    /**
+     * Begin transaction
+     *
+     * @return void
+     */
+    public static function beginTransaction()
     {
-        return $this->select(
-            'category_id', 'product_category_id', 'product_type_id',
-            'product_name', 'product_image',
-            'product_description', 'product_content', 'product_price',
-            'product_promotional', 'count_buy',
-            'product_view', 'product_status')
-            ->orderBy('id', 'DESC')->get();
+        self::getConnectionResolver()->connection()->beginTransaction();
     }
 
-    public function getListProduct()
+    /**
+     * Commit transaction
+     *
+     * @return void
+     */
+    public static function commit()
     {
-        return $this->select(
-            'category_id', 'product_category_id', 'product_type_id',
+        self::getConnectionResolver()->connection()->commit();
+    }
+
+    /**
+     * RollBack transaction
+     *
+     * @return void
+     */
+    public static function rollBack()
+    {
+        self::getConnectionResolver()->connection()->rollBack();
+    }
+    private static function filter($params)
+    {
+        $products = new Product();
+
+        if (isset($params['keyword'])) {
+            $keyword = addslashes($params['keyword']);
+            if ($keyword != 0 || $keyword != null) {
+                $products = $products->where('product_name', 'like', "%$keyword%")
+                    ->orWhere('product_slug', 'like', "%$keyword%");
+            }
+        }
+
+        if (isset($params['created_at'])) {
+            $publishDate = $params['created_at'];
+            if ($publishDate != 0) {
+                $publishDate = str_replace('+', ' ', $publishDate);
+                $publishDate = explode(' - ', $publishDate);
+                $products = $products->whereRaw("products.created_at BETWEEN ? AND ?", [$publishDate[0], date('Y/m/d', strtotime("+1 day", strtotime($publishDate[1])))]);
+            }
+        }
+
+        if (isset($params['category_id'])) {
+            $category_id = $params['category_id'];
+            if ($category_id != 0) {
+                $products = $products->whereIn('categories.id', explode(',', $category_id));
+            }
+        }
+
+        if (isset($params['product_category_id'])) {
+            $product_category_id = $params['product_category_id'];
+            if ($product_category_id != 0) {
+                $products = $products->whereIn('product_categories.id', explode(',', $product_category_id));
+            }
+        }
+
+        if (isset($params['product_type_id'])) {
+            $product_type_id = $params['product_type_id'];
+            if ($product_type_id != 0) {
+                $products = $products->whereIn('product_types.id', explode(',', $product_type_id));
+            }
+        }
+
+
+        if (isset($params['status'])) {
+            $status = $params['status'];
+
+            $products = $products->where(function ($query) use ($status) {
+                if (in_array(0, $status)) {
+                    $query->orWhereRaw("(products.product_status = 0)");
+                }
+                if (in_array(1, $status)) {
+                    $query->orWhereRaw("(products.product_status = 1)");
+                }
+            });
+        }
+
+        return $products;
+    }
+
+    public static function getListAllProduct($params = null)
+    {
+        $products = self::filter($params);
+        $order = Helper::getSortParam($params);
+        if ($order == '1 = 1') {
+            $order = "products.id DESC ";
+        }
+
+        $products = $products->whereNull('products.deleted_at')
+//            ->whereNull('product_types.deleted_at')
+            ->whereNull('product_categories.deleted_at')
+            ->whereNull('categories.deleted_at')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+//            ->join('product_types', 'product_types.id', '=', 'products.product_type_id')
+//            ->join('product_images', 'products.id', '=', 'product_images.product_id')
+            ->selectRaw("products.*")
+            ->with([
+                'category' => function ($category) {
+                    $category->whereNull('categories.deleted_at');
+                },
+                'productCategory' => function ($productCategory) {
+                    $productCategory->whereNull('product_categories.deleted_at');
+                },
+                'productType' => function ($productType) {
+                    $productType->whereNull('product_types.deleted_at');
+                },
+                'productImage' => function ($productImage) {
+                    $productImage->whereNull('product_images.deleted_at');
+                },
+            ])
+            ->groupBy('products.id')
+            ->orderByRaw($order)
+            ->paginate(LIMIT);
+
+        return $products;
+    }
+
+//    public static function getListAllProduct()
+//    {
+//        return self::select(
+//            'category_id', 'product_category_id', 'product_id',
+//            'product_name', 'product_image',
+//            'product_description', 'product_content', 'product_price',
+//            'product_promotional', 'count_buy',
+//            'product_view', 'product_status')
+//            ->orderBy('id', 'DESC')->get();
+//    }
+
+    public static function getListProduct()
+    {
+        return self::select(
+            'category_id', 'product_category_id', 'product_id',
             'product_name', 'product_image',
             'product_description', 'product_content', 'product_price',
             'product_promotional', 'count_buy',
@@ -62,32 +196,72 @@ class Product extends Model
             ->orderBy('id', 'DESC')->paginate(2);
     }
 
-    public function createProduct($request)
+    public static function createProduct($request)
     {
-        if ($request['product_name'] != '') {
-            $request['product_slug'] = utf8ToUrl($request['product_name']);
+//        $productImages = Session::get(SESSION_PRODUCT_IMAGE) ?? [];
+//        foreach ($productImages as $productImage) {
+//            $request['product_image'] = $productImage['name'];
+//        }
+        $request['product_slug'] = utf8ToUrl($request['product_name']);
+
+        if ($request['submit']) {
+            return self::create($request);
         }
-        return $this->create($request);
     }
 
-    public function showProduct($id_product)
+    public static function showProduct($id_product)
     {
-        return $this->find($id_product);
+        return self::whereNull('products.deleted_at')
+//            ->whereNull('product_types.deleted_at')
+            ->whereNull('product_categories.deleted_at')
+            ->whereNull('categories.deleted_at')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+//            ->join('product_types', 'product_types.id', '=', 'products.product_type_id')
+//            ->join('product_images', 'products.id', '=', 'product_images.product_id')
+            ->selectRaw("products.*")
+            ->with([
+                'category' => function ($category) {
+                    $category->whereNull('categories.deleted_at');
+                },
+                'productCategory' => function ($productCategory) {
+                    $productCategory->whereNull('product_categories.deleted_at');
+                },
+                'productType' => function ($productType) {
+                    $productType->whereNull('product_types.deleted_at');
+                },
+                'productImage' => function ($productImage) {
+                    $productImage->whereNull('product_images.deleted_at');
+                },
+            ])
+            ->groupBy('products.id')
+            ->where('products.id', $id_product)
+            ->first();
     }
 
-    public function updateProduct($request, $product_id)
+    public static function updateProduct($request, $product_id)
     {
-        $product = $this->showProduct($product_id);
-        if ($request['product_name'] != '') {
-            $request['product_slug'] = utf8ToUrl($request['product_name']);
+        $product = self::showProduct($product_id);
+        $request['product_slug'] = utf8ToUrl($request['product_name']);
+//
+//        if ($request['submit']) {
+//            return self::create($request);
+//        }
+//        if (isset($request['product_image']) && $request['product_image']) {
+//            UploadService::deleteFile(FILE_PATH_PRODUCT, $product->product_image);
+//        }
+//        $productImage = (isset($request['product_image']) && $request['product_image']) ? UploadService::moveImage(FILE_PATH_PRODUCT, $request['product_image'], PREFIX_PRODUCT) : $product->product_image;
+//        $request['product_image'] = $productImage;
+//        $request['product_slug'] = utf8ToUrl($request['product_name']);
+
+        if ($request['submit']) {
+            return $product->update($request);
         }
-        return $product->update($request);
     }
 
-    public function deleteImageListProduct($product_id)
+    public static function deleteImageListProduct($file_path, $product_id)
     {
-        $file_path = 'assets/uploads/image/product/detail/';
-        $product = $this->showProduct($product_id);
+        $product = self::showProduct($product_id);
         $product_image = $product->productImage->toArray();
         foreach ($product_image as $value) {
             File::delete($file_path.$value['product_image']);
@@ -95,30 +269,27 @@ class Product extends Model
         return 1;
     }
 
-    public function deleteProduct($product_id)
+    public static function deleteProduct($product_id)
     {
-        $file_path = 'assets/uploads/image/product/';
-        $product = $this->showProduct($product_id);
-        if (File::exists($file_path.$product->product_image)) {
-            unlink($file_path.$product->product_image);
-        }
+        $product = self::showProduct($product_id);
+
         return $product->delete();
     }
 
-    public function searchProduct($keyWord, $length)
+    public static function searchProduct($keyWord, $length)
     {
         if ($keyWord == '') {
-            $product = $this->orderBy('id', 'DESC')
+            $product = self::orderBy('id', 'DESC')
                 ->offset(0)->limit(2)
                 ->get();
         } else {
-            $product = $this->where('product_name', 'like', '%' . $keyWord . '%')
+            $product = self::where('product_name', 'like', '%' . $keyWord . '%')
                 ->orWhere('product_slug', 'like', '%' . $keyWord . '%')
                 ->orWhere('id', $keyWord)->get();
         }
 
         if ($length != '') {
-            $product = $this->orderBy('id', 'DESC')
+            $product = self::orderBy('id', 'DESC')
                 ->offset(0)
                 ->limit($length)
                 ->get();
@@ -126,9 +297,9 @@ class Product extends Model
         return $product;
     }
 
-    public function loadProductOfIdProductType($product_type_id)
+    public static function loadProductOfIdProductType($product_type_id)
     {
-        $product = $this->select(
+        $product = self::select(
             'category_id', 'product_category_id', 'product_type_id',
             'product_name', 'product_image',
             'product_description', 'product_content', 'product_price',

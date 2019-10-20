@@ -104,6 +104,24 @@ class Helper
     }
 
     /**
+     * Create Resize Image
+     *
+     * @param string  $imagePath image path
+     * @param integer $width     width
+     * @param integer $height    height
+     */
+    public static function createResizeImage($imagePath, $width, $height)
+    {
+        $imageResize = ImageResize::make($imagePath);
+        $imageResize->resize($width, $height);
+
+        $fileName = Helper::convertUnsupportedExtension($imageResize->basename);
+        $pathUpload = $imageResize->dirname . "/". IMAGE_RESIZE_PREFIX . $fileName;
+        $imageResize->save($pathUpload);
+//        \Storage::disk('s3')->put(IMAGE_RESIZE_PREFIX.$fileName, file_get_contents($pathUpload), 'public');
+    }
+
+    /**
      * Convert Unsupported Extension Image
      *
      * @param $filePath
@@ -128,36 +146,51 @@ class Helper
      * @param bool $formatSize
      * @return int|string|content-length
      */
-    public static function getRemoteFilesize($file_url, $formatSize = true)
+    public static function getRemoteFileSize($file_size)
     {
-        $head = array_change_key_case(get_headers($file_url, 1));
-        // content-length of download (in bytes), read from Content-Length: field
-
-        $clen = isset($head['content-length']) ? $head['content-length'] : 0;
-
-        // cannot retrieve file size, return "-1"
-        if (!$clen) {
-            return -1;
-        }
-
-        if (!$formatSize) {
-            return $clen;
-            // return size in bytes
-        }
-
-        $size = $clen;
-        switch ($clen) {
-            case $clen < 1024:
-                $size = $clen .' B'; break;
-            case $clen < 1048576:
-                $size = round($clen / 1024, 2) .' KB'; break;
-            case $clen < 1073741824:
-                $size = round($clen / 1048576, 2) . ' MB'; break;
-            case $clen < 1099511627776:
-                $size = round($clen / 1073741824, 2) . ' GB'; break;
+        $size = $file_size;
+        switch ($file_size) {
+            case $file_size < 1024:
+                $size = $file_size .' B'; break;
+            case $file_size < 1048576:
+                $size = round($file_size / 1024, 2) .' KB'; break;
+            case $file_size < 1073741824:
+                $size = round($file_size / 1048576, 2) . ' MB'; break;
+            case $file_size < 1099511627776:
+                $size = round($file_size / 1073741824, 2) . ' GB'; break;
         }
 
         return $size;
-        // return formatted size
     }
+
+    public static function getDataImage($filePath, $images)
+    {
+        $response['images'] = [];
+        if (isset($images)) {
+                $dataImage = [];
+                $dataImage['name'] = $images;
+                $dataImage['url'] = $filePath . $images;
+                $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
+                $response['images'][] = $dataImage;
+        }
+
+        return json_encode($response);
+    }
+
+    public static function getDataImageList($filePath, $images)
+    {
+        $response['images'] = [];
+        if (isset($images) && count($images)) {
+            foreach ($images as $image) {
+                $dataImage = [];
+                $dataImage['name'] = $image;
+                $dataImage['url'] = $filePath . $image;
+                $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
+                $response['images'][] = $dataImage;
+            }
+        }
+
+        return json_encode($response);
+    }
+
 }
