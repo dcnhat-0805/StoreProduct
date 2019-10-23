@@ -15,23 +15,37 @@
                             <div class="cat_menu_text">categories</div>
                         </div>
 
-                        <ul class="cat_menu">
+                        <ul class="cat_menu" data-smp="cate">
                             @if(isset($categories))
-                                @foreach($categories as $category)
-                                    <li class="{{ count($category->productCategory) ? 'hassubs' : '' }}">
-                                        <a>{{ $category->category_name }}<i class="fas fa-chevron-right"></i></a>
-                                        <ul>
-                                            @foreach($category->productCategory as $productCategory)
-                                            <li class="{{ count($productCategory->productType) ? 'hassubs' : '' }}">
-                                                <a href="#">{{ $productCategory->product_category_name }}<i class="fas fa-chevron-right"></i></a>
-                                                <ul>
-                                                    @foreach($productCategory->productType as $productType)
-                                                        <li><a href="#">{{ $productType->product_type_name }}<i class="fas fa-chevron-right"></i></a></li>
-                                                    @endforeach
-                                                </ul>
-                                            </li>
-                                            @endforeach
-                                        </ul>
+                                @foreach($categories as $key => $category)
+                                    <li class="{{ count($category->productCategory) ? 'hassubs' : '' }}" id="category_Lever_No{{ $key+1 }}">
+                                        <a data-id="{{ $category->id }}" data-slug="{{ $category->category_slug }}">{{ $category->category_name }}<i class="fas fa-chevron-right"></i></a>
+                                        @if(isset($category->productCategory) && count($category->productCategory))
+                                            <ul data-smp="cate_{{ $key+1 }}">
+
+                                                @foreach($category->productCategory as $index => $productCategory)
+                                                <li class="{{ count($productCategory->productType) ? 'hassubs' : '' }}" data-cate="cate_{{ $key+1 }}_{{ $index+1 }}">
+                                                    <a data-id="{{ $productCategory->id }}" data-slug="{{ $productCategory->product_category_slug }}"
+                                                       href="{{ route(FRONT_PRODUCT_CATEGORY_LIST, ['slug' => $productCategory->product_category_slug]) }}">
+                                                        {{ $productCategory->product_category_name }}
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </a>
+                                                    @if(isset($productCategory->productType) && count($productCategory->productType))
+                                                        <ul data-smp="cate_{{ $key+2 }}">
+
+                                                            @foreach($productCategory->productType as $type => $productType)
+                                                                <li data-cate="cate_{{ $key+1 }}_{{ $index+1 }}.{{ $type+1 }}">
+                                                                    <a data-id="{{ $productType->id }}" data-slug="{{ $productType->product_type_slug }}" href="{{ route(FRONT_PRODUCT_CATEGORY_LIST, ['slug' => $productType->product_type_slug]) }}">
+                                                                        {{ $productType->product_type_name }}<i class="fas fa-chevron-right"></i>
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </li>
+                                                @endforeach
+                                            </ul>
+                                        @endif
                                     </li>
                                 @endforeach
                             @endif

@@ -80,6 +80,9 @@
 	{
 		padding-left: 25px;
 	}
+    .cate-item {
+        padding: 0;
+    }
 	.deals_timer_box
 	{
 		width: 150px;
@@ -130,6 +133,9 @@
 
 @media only screen and (max-width: 991px)
 {
+    .main-container {
+        margin-top: 214px;
+    }
 	.top_bar
 	{
 		/*display: none;*/
@@ -217,6 +223,9 @@
 	{
 		padding-left: 36px;
 	}
+    .cate-item {
+        padding: 0;
+    }
 	.deals
 	{
 		width: 100%;
@@ -283,7 +292,9 @@
 
 @media only screen and (max-width: 959px)
 {
-
+    .main-container {
+        margin-top: 210px;
+    }
 }
 
 /************
@@ -352,6 +363,12 @@
 	{
 		padding-left: 36px;
 	}
+    .cate-item {
+        width: 50px;
+        height: 50px;
+        margin: 0 auto;
+        padding: 0;
+    }
 	.banner_2_item
 	{
 		height: auto;
@@ -828,7 +845,9 @@
 
 @media only screen and (max-width: 479px)
 {
-
+    .main-container {
+        margin-top: 180px;
+    }
 }
 
 /************
@@ -837,5 +856,7 @@
 
 @media only screen and (max-width: 400px)
 {
-
+    .main-container {
+        margin-top: 180px;
+    }
 }

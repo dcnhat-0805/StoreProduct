@@ -125,7 +125,7 @@ class Category extends Model
     public static function getMenuCategory()
     {
         $categories = self::whereNull('categories.deleted_at')
-            ->selectRaw("categories.id, categories.category_name")
+            ->selectRaw("categories.id, categories.category_name, categories.category_slug")
             ->orderByRaw('categories.category_order', 'DESC')
             ->where('category_status', '=', '1')
             ->get();
@@ -169,6 +169,15 @@ class Category extends Model
     {
         $category = Category::showCategoryById($category_id);
         return $category->delete();
+    }
+
+    public static function getCategoryNameBySlug($slug)
+    {
+        return self::select('category_name')
+                ->whereNull('deleted_at')
+                ->where('category_slug', $slug)
+                ->pluck('category_name')
+                ->first();
     }
 
     public function searchCategory($keyWord, $length)

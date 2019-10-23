@@ -171,6 +171,7 @@ section
 .clearfix
 {
 	zoom: 1;
+    position: static;
 }
 .float_left
 {
@@ -798,7 +799,7 @@ select option
 {
 	display: block;
 	line-height: 15px;
-	font-size: 12px;
+	font-size: 9px;
 	color: #FFFFFF;
 	-webkit-transform: translateY(1px);
 	-moz-transform: translateY(1px);
@@ -925,7 +926,7 @@ select option
 }
 .cat_menu_container > ul
 {
-	padding: 5px 0;
+	padding-top: 5px;
     visibility: hidden;
     opacity: 0;
 }
@@ -1197,17 +1198,58 @@ select option
 	transform: translateY(-2px);
 }
 
+.header-top {
+    border-bottom: 1px solid #EFF0F5;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 20px;
+}
+
+#hearderTop {
+    background-color: transparent;
+    margin: 0;
+    padding: .75rem 0;
+}
+
+#hearderTop .breadcrumb_item a  {
+    margin-right: 5px;
+    color: #0e8ce4;
+}
+
+#hearderTop .breadcrumb_item i  {
+    margin-right: 5px;
+    color: #0e8ce4;
+    font-size: 12px;
+}
+
 /*********************************
 4. Banner
 *********************************/
-
+.box-logo {
+    width: 90%;
+    height: 90%;
+    margin: 0 auto;
+    overflow: hidden;
+    object-fit: cover;
+}
+.logo-image {
+    width: 100%;
+    height: 100%;
+    /*box-shadow: 0px 1px 5px rgba(0,0,0,0.1);*/
+    /*border-radius: 5px;*/
+    overflow: hidden;
+    object-fit: contain;
+}
+.main-container {
+    margin-top: 175px;
+}
 .banner
 {
 	width: 100%;
 	/*padding-top: 68px;*/
 	/*padding-bottom: 83px;*/
 	overflow: hidden;
-    margin-top: 260px;
+    /*margin-top: 260px;*/
 }
 .banner_background
 {
@@ -1232,10 +1274,6 @@ select option
 	color: #7599b2;
 	text-transform: uppercase;
 	letter-spacing: 0.038em;
-}
-.banner_price
-{
-
 }
 .banner_price
 {
@@ -1286,8 +1324,8 @@ select option
 
 .characteristics
 {
-	padding-top: 70px;
-	padding-bottom: 70px;
+	padding-top: 30px;
+	padding-bottom: 30px;
 }
 .char_item
 {
@@ -1296,6 +1334,12 @@ select option
 	box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
 	border: solid 1px #e8e8e8;
 	padding-left: 36px;
+}
+.cate-item {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+    padding: 0;
 }
 .char_icon
 {
@@ -2100,11 +2144,11 @@ select option
 }
 .banner_2_item
 {
-	height: 400px;
+	height: 200px;
 }
 .banner_2_content
 {
-	padding-top: 60px;
+	/*padding-top: 60px;*/
 }
 .banner_2_image_container
 {
@@ -2138,7 +2182,7 @@ select option
 	font-size: 30px;
 	font-weight: 500;
 	color: #000000;
-	margin-top: 11px;
+	/*margin-top: 11px;*/
 }
 .banner_2_text
 {
@@ -2146,11 +2190,11 @@ select option
 	font-weight: 300;
 	color: #828282;
 	line-height: 1.5;
-	margin-top: 9px;
+	/*margin-top: 9px;*/
 }
 .banner_2_rating
 {
-	margin-top: 18px;
+	/*margin-top: 18px;*/
 }
 .rating_r i::before
 {
@@ -2178,7 +2222,8 @@ select option
 .rating_r_5 i:nth-child(5)::before{content: "\f005";}
 .banner_2_button
 {
-	/*margin-top: 125px;*/
+    margin-top: -20px;
+    margin-left: 130px;
 }
 .banner_2_dots
 {

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 use App\Services\UploadService;
 use function foo\func;
@@ -15,7 +16,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        //Category
+        view()->composer('frontend.layouts.menu', function ($view) {
+            $categories = Category::getMenuCategory();
+
+            $view->with(['categories' => $categories]);
+        });
     }
 
     /**
