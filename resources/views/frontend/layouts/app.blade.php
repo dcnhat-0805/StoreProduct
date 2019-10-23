@@ -17,7 +17,20 @@
     <link rel="stylesheet" type="text/css" href="frontend/styles/main_styles.css">
     <link rel="stylesheet" type="text/css" href="frontend/styles/responsive.css">
     <link rel="stylesheet" type="text/css" href="frontend/styles/custom.css">
-
+    <!--//tags -->
+    <link href="frontend/assets/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="frontend/assets/css/font-awesome.css" rel="stylesheet">
+    <!--pop-up-box-->
+    <link href="frontend/assets/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+    <!--//pop-up-box-->
+    <!-- price range -->
+    <link rel="stylesheet" type="text/css" href="frontend/assets/css/jquery-ui1.css">
+    <link href="frontend/assets/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- buttons CSS
+		============================================ -->
+    <link rel="stylesheet" href="backend/css/buttons.css">
+    <link rel="stylesheet" href="backend/style.css">
+    @yield('cssCustom')
 </head>
 
 <body>
@@ -26,7 +39,9 @@
 
     @include('frontend.layouts.header')
 
-    @yield('content')
+    <div class="container main-container">
+        @yield('content')
+    </div>
 
     @include('frontend.layouts.footer')
 </div>
@@ -46,6 +61,25 @@
 <!-- tawk chat JS
     ============================================ -->
     <script src="backend/js/tawk-chat.js"></script>
+<!-- start-smooth-scrolling -->
+<script src="frontend/assets/js/move-top.js"></script>
+<script src="frontend/assets/js/easing.js"></script>
+<!-- smoothscroll -->
+<script src="frontend/assets/js/SmoothScroll.min.js"></script>
+<!-- //smoothscroll -->
+<!-- flexisel (for special offers) -->
+<script src="frontend/assets/js/jquery.flexisel.js"></script>
+<!-- price range (top products) -->
+<script src="frontend/assets/js/jquery-ui.js"></script>
+<!-- cart-js -->
+<script src="frontend/assets/js/minicart.js"></script>
+<!-- popup modal (for signin & signup)-->
+<script src="frontend/assets/js/jquery.magnific-popup.js"></script>
+<script src="frontend/assets/js/product.js"></script>
+<!-- icheck JS
+    ============================================ -->
+<script src="backend/js/icheck/icheck.min.js"></script>
+@yield('jsCustom')
 </body>
 
 </html>

@@ -130,6 +130,30 @@ class ProductCategory extends Model
         return $productCategory->delete();
     }
 
+    public static function getProductCategoryNameBySlug($slug)
+    {
+        return self::select('product_category_name')
+            ->whereNull('deleted_at')
+            ->where('product_category_slug', $slug)
+            ->pluck('product_category_name')
+            ->first();
+    }
+
+    public static function getNameAndSlugBySlug($slug)
+    {
+        $products = self::join('categories', 'categories.id', '=', 'product_categories.category_id')
+            ->leftjoin('product_types', 'product_categories.id', '=', 'product_types.product_category_id')
+            ->selectRaw("categories.category_name, product_categories.product_category_name, product_types.product_type_name,
+                        categories.category_slug, product_categories.product_category_slug, product_types.product_type_slug"
+            )
+            ->where('categories.category_slug', $slug)
+            ->orWhere('product_categories.product_category_slug', $slug)
+            ->orWhere('product_types.product_type_slug', $slug)
+            ->first();
+
+        return $products;
+    }
+
     public static function searchProductCategory($keyWord, $length)
     {
         if ($keyWord == '') {

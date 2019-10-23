@@ -9,10 +9,9 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
+
     public function index()
     {
-        $categories = Category::getMenuCategory();
-
-        return view('frontend.pages.index', compact('categories'));
+        return view('frontend.pages.index');
     }
 }

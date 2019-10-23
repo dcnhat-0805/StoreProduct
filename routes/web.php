@@ -102,8 +102,8 @@ Route::namespace('Backend')->group(function(){
 
 
 Route::namespace('FrontEnd')->group(function(){
-    Route::group(['prefix' => 'home'], function(){
-        Route::get('/', 'HomeController@index')
-            ->name(FRONT_END_HOME_INDEX);
-    });
+    Route::get('/', 'HomeController@index')
+        ->name(FRONT_END_HOME_INDEX);
+    Route::get('/{slug}', 'ProductCategoryController@index')
+        ->name(FRONT_PRODUCT_CATEGORY_LIST);
 });
