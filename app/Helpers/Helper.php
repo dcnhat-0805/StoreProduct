@@ -193,4 +193,56 @@ class Helper
         return json_encode($response);
     }
 
+    public static function getTitleName($titleName)
+    {
+        return (isset($titleName['product_category_name']) && !isset($titleName['product_type_name'])) ? $titleName['product_category_name']: $titleName['product_type_name'];
+    }/**
+ * Is Has Data By Pages
+ *
+ * @param $data
+ *
+ * @param $routeName
+ *
+ * @return string
+ */
+    public static function isHasDataByPages($data)
+    {
+        if (!count($data)) {
+            $lastPages = $data->lastPage();
+            $url = url()->full();
+
+            if ($lastPages > 1) {
+                return self::changeUrlNotData($url, 'page', $lastPages);
+            } else {
+                return self::changeUrlNotData($url, 'page', null);
+            }
+        }
+    }
+
+    /**
+     * Change Url Not Data
+     *
+     * @param $url
+     *
+     * @param $key
+     *
+     * @param null $value
+     *
+     * @return string
+     */
+    public static function changeUrlNotData($url, $key, $value = null)
+    {
+        list($urlPart, $currentParam) = array_pad(explode('?', $url), 2, '');
+        parse_str($currentParam, $params);
+        unset($params[$key]);
+        $newParam = http_build_query($params);
+        $url = $newParam ? ($urlPart . '?' . $newParam) : $urlPart;
+
+        if (strpos($url, '?') === false) {
+            return $value ? ($url .'?'. $key .'='. $value) : $url;
+        } else {
+            return $value ? ($url .'&'. $key .'='. $value) : $url;
+        }
+    }
+
 }

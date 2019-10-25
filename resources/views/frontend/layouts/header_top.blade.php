@@ -15,7 +15,7 @@
 
         @if(isset($titleName) && $titleName['product_category_name'] !== '' && isset($titleName['product_type_name']) && $titleName['product_type_name'] !== '')
             <li class="breadcrumb_item">
-                <a title="{{ isset($titleName['product_category_name']) ? $titleName['product_category_name'] : '' }}" href="{{ route(FRONT_PRODUCT_CATEGORY_LIST, ['slug' => $titleName['product_category_slug']]) }}" class="breadcrumb_item_anchor">
+                <a title="{{ isset($titleName['product_category_name']) ? $titleName['product_category_name'] : '' }}" href="{{ route(FRONT_PRODUCT_LIST, ['slug' => $titleName['product_category_slug']]) }}" class="breadcrumb_item_anchor">
                     {{ isset($titleName['product_category_name']) ? $titleName['product_category_name'] : '' }}
                 </a>
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>

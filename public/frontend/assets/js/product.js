@@ -46,7 +46,7 @@ $(document).ready(function () {
         visibleItems: 3,
         animationSpeed: 1000,
         autoPlay: true,
-        autoPlaySpeed: 3000000,
+        autoPlaySpeed: 3000,
         pauseOnHover: true,
         enableResponsiveBreakpoints: true,
         responsiveBreakpoints: {

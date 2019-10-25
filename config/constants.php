@@ -51,6 +51,7 @@ const EMAIL_SUBJECT_PREFIX = '';
 const EMAIL_SUBJECT = '[StoreOnline] Please reset your password !';
 
 const LIMIT = 5;
+const FRONT_LIMIT = 1;
 
 const ADMIN = 1;
 const CATEGORY = 2;
@@ -66,7 +67,7 @@ const SORT_PARAMS_ALLOWED = [
 ];
 
 const FRONT_END_HOME_INDEX = 'front.end.home.index';
-const FRONT_PRODUCT_CATEGORY_LIST = 'front.end.product.category.index';
+const FRONT_PRODUCT_LIST = 'front.end.product.category.index';
 
 const SESSION_REMEMBER_TOKEN = 'ss.remember.token';
 
