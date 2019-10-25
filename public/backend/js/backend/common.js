@@ -219,7 +219,7 @@ let Commons = (function ($) {
             error : function (data) {
                 let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
 
-                if (error) {
+                if (error.length) {
                     Commons.getErrorMessage(error, error[name], '.' + className);
                 } else {
                     $('.error_' + className).text('');

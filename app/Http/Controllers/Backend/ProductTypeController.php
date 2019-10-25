@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
 use App\Http\Requests\ProductTypeRequest;
 use App\Models\Category;
 use App\Models\ProductCategory;
@@ -24,6 +25,12 @@ class ProductTypeController extends Controller
         $category = Category::getOptionCategory();
         $productCategories = ProductCategory::getOptionProductCategory();
         $productTypes = ProductType::getListAllProductType($params);
+
+        if (!count($productTypes) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($productTypes);
+
+            return redirect($route);
+        }
 
         return view('backend.pages.product_type.index', compact('category', 'productTypes', 'productCategories'));
     }

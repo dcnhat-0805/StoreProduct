@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,6 +22,12 @@ class CategoryController extends Controller
     {
         $params = request()->all();
         $category = Category::getListAllCategory($params);
+
+        if (!count($category) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($category);
+
+            return redirect($route);
+        }
 
         return view('backend.pages.category.list', compact('category'));
     }

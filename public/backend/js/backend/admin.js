@@ -23,7 +23,10 @@ let AdminJs = (function ($) {
                 location.reload();
             },
             error : function (data) {
-                let error = $.parseJSON(data.responseText).errors;
+                let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
+                if (!error.length) {
+                    $('input[name=submit]').val(SUBMIT);
+                }
 
                 Commons.loadMessageValidation(error, arrayName);
             }
@@ -64,7 +67,10 @@ let AdminJs = (function ($) {
                 location.reload();
             },
             error : function (data) {
-                let error = $.parseJSON(data.responseText).errors;
+                let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
+                if (!error.length) {
+                    $('input[name=submit]').val(SUBMIT);
+                }
 
                 Commons.loadMessageValidation(error, arrayName);
             }
@@ -207,7 +213,6 @@ $(document).ready(function () {
     });
 
     btnAddAdmin.on('click', function () {
-        $('input[name=submit]').val(SUBMIT);
        let formData = $('#createAdmin').serialize();
        AdminJs.createNewAdmin(formData);
     });
@@ -222,7 +227,6 @@ $(document).ready(function () {
     });
 
     btnEditAdmin.on('click', function () {
-        $('input[name=submit]').val(SUBMIT);
         let url = $('#url_edit').val();
         let formData = $('#editAdmin').serialize();
         AdminJs.editAdmin(url, formData);

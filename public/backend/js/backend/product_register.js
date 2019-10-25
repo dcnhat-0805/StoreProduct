@@ -20,7 +20,10 @@ let productRegisterJs = (function ($) {
                 // location.reload();
             },
             error : function (data) {
-                let error = $.parseJSON(data.responseText).errors;
+                let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
+                if (!error.length) {
+                    $('input[name=submit]').val(SUBMIT);
+                }
 
                 Commons.loadMessageValidation(error, arrayName);
             }
