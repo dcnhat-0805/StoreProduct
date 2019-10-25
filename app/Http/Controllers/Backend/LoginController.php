@@ -21,6 +21,10 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
+        if (Auth::guard('admins')->check()) {
+            return redirect(route(ADMIN_DASHBOARD));
+        }
+
         return view('backend.login');
     }
 
@@ -45,6 +49,7 @@ class LoginController extends Controller
         if (Auth::guard('admins')->attempt($dataLogin, $remember)) {
             $userLogModel->saveData($message, $email);
             Session::flash("success", trans("messages.admin.login_success"));
+            Session::forget(SESSION_REMEMBER_TOKEN);
 
             return redirect(route(ADMIN_DASHBOARD));
         } else {

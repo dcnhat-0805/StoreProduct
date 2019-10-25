@@ -188,7 +188,7 @@ class Product extends Model
             ->whereNull('categories.deleted_at')
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
-//            ->join('product_types', 'product_types.id', '=', 'products.product_type_id')
+            ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
 //            ->join('product_images', 'products.id', '=', 'product_images.product_id')
             ->selectRaw("products.*")
             ->with([
@@ -205,10 +205,12 @@ class Product extends Model
                     $productImage->whereNull('product_images.deleted_at');
                 },
             ])
-            ->where('product_categories.product_category_slug', $slug)
+            ->where('categories.category_slug', $slug)
+            ->orWhere('product_categories.product_category_slug', $slug)
+            ->orWhere('product_types.product_type_slug', $slug)
             ->groupBy('products.id')
             ->orderByRaw($order)
-            ->paginate(LIMIT);
+            ->paginate(FRONT_LIMIT);
 
         return $products;
     }

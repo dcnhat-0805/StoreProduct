@@ -1,9 +1,9 @@
 <!-- Main Navigation -->
 
 <nav class="main_nav">
-    <div class="container">
+    <div class="container" style="padding: 0 4px;">
         <div class="row">
-            <div class="col">
+            <div class="col" style="padding: 0">
 
                 <div class="main_nav_content d-flex flex-row">
 
@@ -26,7 +26,7 @@
                                                 @foreach($category->productCategory as $index => $productCategory)
                                                 <li class="{{ count($productCategory->productType) ? 'hassubs' : '' }}" data-cate="cate_{{ $key+1 }}_{{ $index+1 }}">
                                                     <a data-id="{{ $productCategory->id }}" data-slug="{{ $productCategory->product_category_slug }}"
-                                                       href="{{ route(FRONT_PRODUCT_CATEGORY_LIST, ['slug' => $productCategory->product_category_slug]) }}">
+                                                       href="{{ route(FRONT_PRODUCT_LIST, ['slug' => $productCategory->product_category_slug]) }}">
                                                         {{ $productCategory->product_category_name }}
                                                         <i class="fas fa-chevron-right"></i>
                                                     </a>
@@ -35,7 +35,7 @@
 
                                                             @foreach($productCategory->productType as $type => $productType)
                                                                 <li data-cate="cate_{{ $key+1 }}_{{ $index+1 }}.{{ $type+1 }}">
-                                                                    <a data-id="{{ $productType->id }}" data-slug="{{ $productType->product_type_slug }}" href="{{ route(FRONT_PRODUCT_CATEGORY_LIST, ['slug' => $productType->product_type_slug]) }}">
+                                                                    <a data-id="{{ $productType->id }}" data-slug="{{ $productType->product_type_slug }}" href="{{ route(FRONT_PRODUCT_LIST, ['slug' => $productType->product_type_slug]) }}">
                                                                         {{ $productType->product_type_name }}<i class="fas fa-chevron-right"></i>
                                                                     </a>
                                                                 </li>
@@ -54,7 +54,7 @@
 
                     <!-- Main Nav Menu -->
 
-                    <div class="main_nav_menu ml-auto">
+                    <div class="main_nav_menu ml-auto" style="padding-right: 25px">
                         <ul class="standard_dropdown main_nav_dropdown">
                             <li><a href="#">Home<i class="fas fa-chevron-down"></i></a></li>
 {{--                            <li class="hassubs">--}}

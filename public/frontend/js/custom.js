@@ -866,22 +866,23 @@ $(document).ready(function()
 		if($('.viewed_slider').length)
 		{
 			var viewedSlider = $('.viewed_slider');
+			let item = $('.viewed_slider .owl-item').length;
 
-			viewedSlider.owlCarousel(
+            viewedSlider.owlCarousel(
 			{
 				loop:true,
 				margin:30,
 				autoplay:true,
-				autoplayTimeout:6000,
+				autoplayTimeout:600000000000000,
 				nav:false,
 				dots:false,
 				responsive:
 				{
-					0:{items:1},
-					575:{items:2},
-					768:{items:3},
-					991:{items:4},
-					1199:{items:6}
+					0:{items: 6},
+					575:{items: 6},
+					768:{items: 6},
+					991:{items: 6},
+					1199:{items: 6}
 				}
 			});
 
