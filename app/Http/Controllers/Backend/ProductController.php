@@ -30,6 +30,13 @@ class ProductController extends Controller
         $productTypes = ProductType::getOptionProductType();
         $products = Product::getListAllProduct();
 
+        $params = request()->all();
+        if (!count($products) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($products);
+
+            return redirect($route);
+        }
+
         return view('backend.pages.product.index', compact('category', 'productCategories', 'productTypes', 'products'));
     }
 
@@ -80,7 +87,6 @@ class ProductController extends Controller
         if ($request->ajax()) {
             $type = $request->get('type');
             $image = Session::get(SESSION_PRODUCT_IMAGE);
-//            dd($image);
             $response = [];
 
             $response['images'] = [];

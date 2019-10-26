@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
 use App\Http\Requests\ProductCategoryRequest;
 use App\Models\Category;
 use App\Models\ProductCategory;
@@ -22,6 +23,12 @@ class ProductCategoryController extends Controller
         $params = request()->all();
         $category = Category::getOptionCategory();
         $productCategories = ProductCategory::getListAllProductCategory($params);
+
+        if (!count($productCategories) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($productCategories);
+
+            return redirect($route);
+        }
 
         return view('backend.pages.product_category.index', compact('productCategories', 'category'));
     }

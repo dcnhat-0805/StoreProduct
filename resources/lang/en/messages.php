@@ -164,7 +164,7 @@ return [
         'product_price' => [
             'more' => 'Please enter a product price greater than the promotion price.',
         ],
-        'product_promotional' => [
+        'product_promotion' => [
             'less' => 'Please enter promotion price less than product price.',
         ],
         'product_description' => [

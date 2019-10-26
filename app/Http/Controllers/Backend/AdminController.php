@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
 use App\Http\Requests\LoginRequest;
 use App\Models\AdminGroup;
 use App\Models\UserLog;
@@ -24,6 +25,12 @@ class AdminController extends Controller
         $params = request()->all();
         $permission = AdminGroup::getOptionPermission();
         $admin = Admin::getListAllAdmin($params);
+
+        if (!count($admin) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($admin);
+
+            return redirect($route);
+        }
 
         return view(ADMIN_INDEX_BLADE, compact('admin', 'permission'));
     }

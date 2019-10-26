@@ -50,7 +50,7 @@ const EMAIL_NAME = 'StoreOnline';
 const EMAIL_SUBJECT_PREFIX = '';
 const EMAIL_SUBJECT = '[StoreOnline] Please reset your password !';
 
-const LIMIT = 5;
+const LIMIT = 1;
 const FRONT_LIMIT = 1;
 
 const ADMIN = 1;

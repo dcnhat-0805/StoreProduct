@@ -19,11 +19,14 @@ class Product extends Model
         'category_id', 'product_category_id', 'product_type_id',
         'product_name', 'product_slug', 'product_image',
         'product_description', 'product_content', 'product_price',
-        'product_promotional', 'product_status',
+        'product_meta_title', 'product_meta_description', 'product_weight',
+        'product_is_shipping', 'product_option',
+        'product_promotion', 'product_status',
     ];
 
     public $guarded = [
         'count_buy',
+        'product_view',
     ];
 
     protected $dates = [
@@ -221,7 +224,7 @@ class Product extends Model
 //            'category_id', 'product_category_id', 'product_id',
 //            'product_name', 'product_image',
 //            'product_description', 'product_content', 'product_price',
-//            'product_promotional', 'count_buy',
+//            'product_promotion', 'count_buy',
 //            'product_view', 'product_status')
 //            ->orderBy('id', 'DESC')->get();
 //    }
@@ -232,7 +235,7 @@ class Product extends Model
             'category_id', 'product_category_id', 'product_id',
             'product_name', 'product_image',
             'product_description', 'product_content', 'product_price',
-            'product_promotional', 'count_buy',
+            'product_promotion', 'count_buy',
             'product_view', 'product_status')
             ->orderBy('id', 'DESC')->paginate(2);
     }
@@ -344,7 +347,7 @@ class Product extends Model
             'category_id', 'product_category_id', 'product_type_id',
             'product_name', 'product_image',
             'product_description', 'product_content', 'product_price',
-            'product_promotional', 'count_buy',
+            'product_promotion', 'count_buy',
             'product_view', 'product_status')
             ->orderby('id', 'DESC')->where('product_type_id', $product_type_id)->get();
         return $product;

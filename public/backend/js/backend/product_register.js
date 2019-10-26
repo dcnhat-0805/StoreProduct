@@ -1,10 +1,12 @@
 const btnAddProduct = $('#btnAddProduct, #btnUpdateProduct');
+const btnAaddProductAttribute = $('#addProductAttribute');
 // const btnUpdateProduct = $('#btnUpdateProduct');
 const formId = '#createProduct';
 const url = $(formId).attr('action');
 const summerNoteId = '#descriptionProduct, #contentProduct';
 const chosenId = '.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType';
-const arrayName = ['category_id', 'product_category_id', 'product_type_id', 'product_name', 'product_image', 'product_description', 'product_content', 'product_price', 'product_promotional'];
+const arrayName = ['category_id', 'product_category_id', 'product_type_id', 'product_name', 'product_image', 'product_description', 'product_content', 'product_price', 'product_promotion'];
+const MAX_ATTRIBUTE = 3;
 
 let productRegisterJs = (function ($) {
     let modules = {};
@@ -20,7 +22,10 @@ let productRegisterJs = (function ($) {
                 // location.reload();
             },
             error : function (data) {
-                let error = $.parseJSON(data.responseText).errors;
+                let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
+                if (!error.length) {
+                    $('input[name=submit]').val(SUBMIT);
+                }
 
                 Commons.loadMessageValidation(error, arrayName);
             }
@@ -70,6 +75,36 @@ let productRegisterJs = (function ($) {
         });
     };
 
+    modules.addProductAttribute = function () {
+        $('.addProductAttribute').on('click', function () {
+            let parent = $(this).parent().next();
+            let next = $(this).next();
+
+            $(parent).removeClass('hide');
+            $(next).removeClass('hide');
+
+            $(this).addClass('hide');
+        });
+
+        $('.removeProductAttribute').on('click', function () {
+            let parent = $('.jsProductAttribute.hide:first').prev();
+            let parent_thump = $('.jsProductAttribute:last');
+            let next = $(this).prev();
+
+            $(parent).addClass('hide');
+            $(parent).prev().children().next().removeClass('hide');
+            $(parent).prev().children().next().next().addClass('hide');
+
+            if (!parent.length) {
+                $(parent_thump).addClass('hide');
+                $(parent_thump).prev().children().next().removeClass('hide');
+                $(parent_thump).prev().children().next().next().addClass('hide');
+            }
+
+            $(this).addClass('hide');
+            $(next).removeClass('hide');
+        });
+    };
 
     return modules;
 })(window.jQuery, window, document);
@@ -393,5 +428,7 @@ $(document).ready(function () {
 
         $('input[name=submit]').val(SUBMIT);
     });
+
+    productRegisterJs.addProductAttribute();
 });
 
