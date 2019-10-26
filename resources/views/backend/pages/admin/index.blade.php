@@ -75,6 +75,17 @@
                     @endif
                     </tbody>
                 </table>
+
+                <!-- Pagination -->
+                <div class="pagination-wrapper header" style="margin-top: 20px;">
+                    <nav class="nav-pagination store-unit clearfix" aria-label="Page navigation">
+                        <span class="info">{{ $admin->currentPage() }} / {{ $admin->lastPage() }} pages（total of {{ $admin->total() }}）</span>
+                        <ul class="pull-right">
+                            <li> {{ $admin->appends($_GET)->links('backend.pagination') }}</li>
+                        </ul>
+                    </nav>
+                </div>
+                <!--/ Pagination -->
             </div>
         </div>
         @else

@@ -13,7 +13,7 @@ const PRODUCT_IDS = 'product.ids';
 const PRODUCT_DELETE_ALL = 'product.delete.all';
 const ADMIN_IDS = 'admin.ids';
 const ADMIN_DELETE_ALL = 'admin.delete.all';
-const ARRAY_NAME = ['category_id', 'product_category_id', 'product_type_id', 'admin_group_id'];
+const ARRAY_NAME = ['category_id', 'product_category_id', 'product_type_id', 'admin_group_id', 'product_weight'];
 const SUBMIT = 1;
 const CATEGORY_ID = localStorage.getItem('jsSelectCategory') ? localStorage.getItem('jsSelectCategory') : null;
 const PRODUCT_CATEGORY_ID = localStorage.getItem('jsSelectProductCategory') ? localStorage.getItem('jsSelectProductCategory') : null;
@@ -219,7 +219,7 @@ let Commons = (function ($) {
             error : function (data) {
                 let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
 
-                if (error.length) {
+                if (error) {
                     Commons.getErrorMessage(error, error[name], '.' + className);
                 } else {
                     $('.error_' + className).text('');
@@ -237,6 +237,7 @@ let Commons = (function ($) {
                     let val = $(this).val();
 
                     if (!ARRAY_NAME.includes(name)) {
+                        console.log(className);
                         modules.getMessageValidation(url, name, className, formId);
                     }
 

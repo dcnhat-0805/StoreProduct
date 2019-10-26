@@ -4770,3 +4770,14 @@ em.invalid {
 	color:#fff;
 	text-decoration:none;
 }
+
+button.addProductAttribute,
+button.removeProductAttribute {
+    position: absolute;
+    right: 1%;
+    border-radius: 35px;
+}
+button.addProductAttribute:focus,
+button.removeProductAttribute:focus {
+    outline: none;
+}

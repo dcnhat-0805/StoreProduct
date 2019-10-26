@@ -33,7 +33,12 @@ class CreateProductsTable extends Migration
             $table->text('product_description')->nullable();
             $table->text('product_content')->nullable();
             $table->float('product_price', 20, 0)->nullable();
-            $table->float('product_promotional', 20, 0)->nullable();
+            $table->float('product_promotion', 20, 0)->nullable();
+            $table->string('product_meta_title')->nullable();
+            $table->string('product_meta_description')->nullable();
+            $table->integer('product_weight')->nullable();
+            $table->integer('product_is_shipping')->nullable()->default(0);
+            $table->string('product_option')->nullable()->comment('0: best; 1: new; 2: hot; 1: promotion');
             $table->integer('count_buy')->nullable();
             $table->integer('product_view')->nullable();
             $table->integer('product_status')->default(1);

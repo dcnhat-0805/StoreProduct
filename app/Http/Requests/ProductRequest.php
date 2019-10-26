@@ -38,8 +38,8 @@ class ProductRequest extends FormRequest
             'product_content' => ['required', new MinLengthTextArea(50, trans("messages.product.product_content.min")),
                                     'unique:products,product_content,' . ($this->id ?? ""),
                                 ],
-            'product_price' => ['required', 'integer', new CheckPriceProduct(request()->product_price, request()->product_promotional)],
-            'product_promotional' => ['required', 'integer', new CheckPromotionalProduct(request()->product_price, request()->product_promotional)],
+            'product_price' => ['required', 'integer', new CheckPriceProduct(request()->product_price, request()->product_promotion)],
+            'product_promotion' => ['required', 'integer', new CheckPromotionalProduct(request()->product_price, request()->product_promotion)],
             'product_image' => ($this->id ? 'nullable' : 'required'),
         ];
     }
@@ -79,7 +79,7 @@ class ProductRequest extends FormRequest
             'product_description' => 'Product description',
             'product_content' => 'Product content',
             'product_price' => 'Product price',
-            'product_promotional' => 'Product promotional',
+            'product_promotion' => 'Product promotional',
             'product_image' => 'Product image',
         ];
     }

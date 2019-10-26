@@ -52,7 +52,7 @@ class CheckPromotionalProduct implements Rule
     public function message()
     {
         if ($this->price < $this->promotional) {
-            return trans("messages.product.product_promotional.less");
+            return trans("messages.product.product_promotion.less");
         }
     }
 }
