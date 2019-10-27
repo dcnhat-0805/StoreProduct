@@ -18,7 +18,7 @@ class CategoryPolicy
      */
     public function viewCategory(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
             return true;
         }
 
@@ -33,7 +33,7 @@ class CategoryPolicy
      */
     public function createCategory(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY])) {
             return true;
         }
 
@@ -49,7 +49,7 @@ class CategoryPolicy
      */
     public function updateCategory(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY])) {
             return true;
         }
 
@@ -65,7 +65,7 @@ class CategoryPolicy
      */
     public function deleteCategory(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY])) {
             return true;
         }
 
@@ -81,7 +81,7 @@ class CategoryPolicy
      */
     public function restoreCategory(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY])) {
             return true;
         }
 
@@ -96,7 +96,7 @@ class CategoryPolicy
      */
     public function forceDeleteCategory(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY])) {
             return true;
         }
 

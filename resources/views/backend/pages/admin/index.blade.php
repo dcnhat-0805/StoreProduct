@@ -50,20 +50,20 @@
                     </tr>
                     </thead>
                     <tbody class="list-category">
-                    @if($admin)
-                        @foreach($admin as $ad)
+                    @if($admins)
+                        @foreach($admins as $ad)
                             <tr id="admin-{{$ad->id}}">
                                 <td></td>
                                 <td class="text-center">{{ $ad->id }}</td>
                                 <td>{{ $ad->name }}</td>
                                 <td>{{ $ad->email }}</td>
-                                <td>{{ $ad->adminGroup->permission_name }} ({{ $ad->adminGroup->permission }})</td>
+                                <td>{{ PERMISSION[$ad->role] }} ({{ $ad->role }})</td>
                                 <td class="text-center">{{ $ad->created_at }}</td>
                                 <td class="text-center">@if($ad->admin_status == 1) Display @else Not display @endif</td>
                                 <td class="datatable-ct text-center">
                                     <button data-toggle="modal" title="Edit {{ $ad->name }}" class="pd-setting-ed"
                                             data-original-title="Edit" data-target="#edit" data-id="{{ $ad->id }}" data-name="{{ $ad->name }}"
-                                            data-email="{{ $ad->email }}" data-permission="{{ $ad->adminGroup->permission }}"
+                                            data-email="{{ $ad->email }}" data-permission="{{ $ad->role }}"
                                             data-url="{{route(ADMIN_EDIT, ['id' => $ad->id])}}" data-status="{{ $ad->admin_status }}" type="button">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                                     <button data-toggle="modal" title="Delete {{ $ad->name }}" class="pd-setting-ed"
@@ -79,9 +79,9 @@
                 <!-- Pagination -->
                 <div class="pagination-wrapper header" style="margin-top: 20px;">
                     <nav class="nav-pagination store-unit clearfix" aria-label="Page navigation">
-                        <span class="info">{{ $admin->currentPage() }} / {{ $admin->lastPage() }} pages（total of {{ $admin->total() }}）</span>
+                        <span class="info">{{ $admins->currentPage() }} / {{ $admins->lastPage() }} pages（total of {{ $admins->total() }}）</span>
                         <ul class="pull-right">
-                            <li> {{ $admin->appends($_GET)->links('backend.pagination') }}</li>
+                            <li> {{ $admins->appends($_GET)->links('backend.pagination') }}</li>
                         </ul>
                     </nav>
                 </div>
@@ -127,7 +127,7 @@
                                                 <label for="name">Permission</label>
                                                 <div class="permission">
                                                     {{
-                                                        Form::select('admin_group_id', $permission, request()->get('admin_group_id'),
+                                                        Form::select('role', PERMISSION, request()->get('role'),
                                                         [
                                                             'class' => 'form-control jsSelectPermission'
                                                         ])
@@ -218,17 +218,17 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="admin_group_id" class="required after">Permission</label>
+                                            <label for="role" class="required after">Permission</label>
                                             <div class="permission">
                                                 {{
-                                                    Form::select('admin_group_id', $permission, request()->get('admin_group_id'),
+                                                    Form::select('role', PERMISSION, request()->get('role'),
                                                     [
                                                         'class' => 'form-control admin-permission jsSelectPermission',
-                                                        'id' => 'admin_group_id'
+                                                        'id' => 'role'
                                                     ])
                                                 }}
                                             </div>
-                                            <div class="error error_admin_group_id hidden"></div>
+                                            <div class="error error_role hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -303,16 +303,16 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group">
-                                            <label for="admin_group_id" class="required after">Permission</label>
+                                            <label for="role" class="required after">Permission</label>
                                             <div class="permission">
                                                 {{
-                                                    Form::select('admin_group_id', $permission, request()->get('admin_group_id'),
+                                                    Form::select('role', PERMISSION, request()->get('role'),
                                                     [
                                                         'class' => 'form-control admin-permission jsSelectPermission',
                                                     ])
                                                 }}
                                             </div>
-                                            <div class="error error_admin_group_id hidden"></div>
+                                            <div class="error error_role hidden"></div>
                                         </div>
                                     </div>
                                     <div class="row">

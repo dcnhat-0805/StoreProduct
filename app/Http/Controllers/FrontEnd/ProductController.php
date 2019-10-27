@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use Cart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -25,7 +26,6 @@ class ProductController extends Controller
 
             return redirect($route);
         }
-
 
         return view('frontend.pages.product.index', compact('titleName', 'products'));
     }

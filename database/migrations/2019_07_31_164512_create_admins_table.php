@@ -18,10 +18,7 @@ class CreateAdminsTable extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->integer('admin_group_id')->unsigned();
-            $table->foreign('admin_group_id')
-                ->references('id')->on('admin_groups')
-                ->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('role')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->tinyInteger('admin_status');
             $table->rememberToken();

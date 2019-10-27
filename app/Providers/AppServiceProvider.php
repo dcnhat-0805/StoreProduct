@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 use App\Services\UploadService;
+use Cart;
 use function foo\func;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,8 +20,20 @@ class AppServiceProvider extends ServiceProvider
         //Category
         view()->composer('frontend.layouts.menu', function ($view) {
             $categories = Category::getMenuCategory();
+            $countCart = count(cart::content());
 
-            $view->with(['categories' => $categories]);
+            $view->with([
+                'categories' => $categories,
+                ]);
+        });
+
+        //Cart
+        view()->composer('frontend.layouts.header', function ($view) {
+            $countCart = Cart::count() ? Cart::count() : 0;
+
+            $view->with([
+                'countCart' => $countCart
+                ]);
         });
     }
 

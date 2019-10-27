@@ -22,7 +22,7 @@ class Admin extends Authenticatable
      */
     protected $fillable = [
         'name', 'email', 'password',
-        'admin_group_id', 'admin_status'
+        'role', 'admin_status'
     ];
 
     /**
@@ -41,11 +41,6 @@ class Admin extends Authenticatable
         'updated_at',
         'deleted_at'
     ];
-
-    public function adminGroup()
-    {
-        return $this->belongsTo('App\Models\AdminGroup', 'admin_group_id', 'id');
-    }
 
     private static function filter($params)
     {
@@ -68,10 +63,10 @@ class Admin extends Authenticatable
             }
         }
 
-        if (isset($params['admin_group_id'])) {
-            $admin_gropu_id = $params['admin_group_id'];
-            if ($admin_gropu_id != 0) {
-                $admin = $admin->whereIn('admin_groups.id', explode(',', $admin_gropu_id));
+        if (isset($params['role'])) {
+            $role = $params['role'];
+            if ($role != 0) {
+                $admin = $admin->whereIn('admins.role', explode(',', $role));
             }
         }
 
@@ -101,10 +96,7 @@ class Admin extends Authenticatable
         }
         $now = date('Y-m-d');
         $admin = $admin->whereNull('admins.deleted_at')
-            ->whereNull('admin_groups.deleted_at')
-            ->join('admin_groups', 'admins.admin_group_id', 'admin_groups.id')
             ->selectRaw("admins.*")
-            ->with('adminGroup')
             ->groupBy('admins.id')
             ->orderByRaw($order)
             ->paginate(LIMIT);

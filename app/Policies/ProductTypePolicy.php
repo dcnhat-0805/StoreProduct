@@ -18,7 +18,7 @@ class ProductTypePolicy
      */
     public function viewProductType(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
             return true;
         }
 
@@ -33,7 +33,7 @@ class ProductTypePolicy
      */
     public function createProductType(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
             return true;
         }
 
@@ -48,7 +48,7 @@ class ProductTypePolicy
      */
     public function updateProductType(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
             return true;
         }
 
@@ -63,7 +63,7 @@ class ProductTypePolicy
      */
     public function deleteProductType(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
             return true;
         }
 
@@ -78,7 +78,7 @@ class ProductTypePolicy
      */
     public function restoreProductType(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
             return true;
         }
 
@@ -93,7 +93,7 @@ class ProductTypePolicy
      */
     public function forceDeleteProductType(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
+        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE])) {
             return true;
         }
 

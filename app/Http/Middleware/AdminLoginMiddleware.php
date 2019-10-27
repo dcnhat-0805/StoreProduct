@@ -18,9 +18,8 @@ class AdminLoginMiddleware
     {
         if (Auth::guard("admins")->check()) {
             $admin = Auth::guard("admins")->user();
-            $permission = Auth::guard("admins")->user()->adminGroup;
 
-            if ($admin->admin_status == 1 && $permission->permission > 0) {
+            if ($admin->admin_status == 1 && $admin->role > 0) {
                 return $next($request);
             } else {
                 return redirect(route(ADMIN_SHOW_LOGIN))->with('danger', trans("messages.admin.login_failed"));

@@ -30,6 +30,10 @@
 		============================================ -->
     <link rel="stylesheet" href="backend/css/buttons.css">
     <link rel="stylesheet" href="backend/style.css">
+    <!-- notifications CSS
+		============================================ -->
+    <link rel="stylesheet" href="backend/css/notifications/Lobibox.min.css">
+    <link rel="stylesheet" href="backend/css/notifications/notifications.css">
     @yield('cssCustom')
 </head>
 
@@ -79,6 +83,22 @@
 <!-- icheck JS
     ============================================ -->
 <script src="backend/js/icheck/icheck.min.js"></script>
+<!-- notification JS
+    ============================================ -->
+<script src="backend/js/notifications/Lobibox.js"></script>
+<script src="backend/js/notifications/notification-active.js"></script>
+
+@if(Session::has('success'))
+    <script type="text/javascript">
+        jQuery.getMessageSuccess("{{Session::get('success')}}")
+    </script>
+@endif
+
+@if(Session::has('error'))
+    <script type="text/javascript">
+        jQuery.getMessageError("{{Session::get('error')}}")
+    </script>
+@endif
 @yield('jsCustom')
 </body>
 

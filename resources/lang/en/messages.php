@@ -73,7 +73,7 @@ return [
             'required' => ':attribute cannot be left blank.',
             'same' => ':attribute does not match the password entered.',
         ],
-        'admin_group_id' => [
+        'role' => [
             'required' => 'Please select an admin permission.',
         ],
     ],
@@ -176,4 +176,10 @@ return [
             'min' => ':attribute must be 50 characters.',
         ],
     ],
+
+    'front_end' => [
+        'cart' => [
+            'add_cart_success' => 'Add cart successfully.'
+        ]
+    ]
 ];

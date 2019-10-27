@@ -42,6 +42,7 @@ use App\Models\Special;
 use App\Models\TopArea;
 use App\Models\TransportRoute;
 use App\Models\CustomizeContent;
+use Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\ImageManagerStatic as ImageResize;
@@ -243,6 +244,32 @@ class Helper
         } else {
             return $value ? ($url .'&'. $key .'='. $value) : $url;
         }
+    }
+
+    public static function addToCart($product, $request)
+    {
+        $quantity = 1;
+        $price = $product->product_price;
+
+        if (isset($request->quantity) && $request->quantity) {
+            $quantity = $request->quantity;
+        }
+
+        if($product->promotion > 0){
+            $price = $product->product_promotion;
+        }
+
+        $cart = [
+            'id' => $product->id,
+            'name' => $product->product_name,
+            'qty' => $quantity,
+            'price' => $price,
+            'options' => [
+                'img' => $product->product_image
+            ]
+        ];
+
+        return $cart;
     }
 
 }

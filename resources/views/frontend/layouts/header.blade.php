@@ -99,7 +99,7 @@
                             <div class="wishlist_icon"><img src="frontend/images/heart.png" alt=""></div>
                             <div class="wishlist_content">
                                 <div class="wishlist_text"><a href="#">Wishlist</a></div>
-                                <div class="wishlist_count">115</div>
+{{--                                <div class="wishlist_count">115</div>--}}
                             </div>
                         </div>
 
@@ -107,12 +107,14 @@
                         <div class="cart">
                             <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                 <div class="cart_icon">
-                                    <img src="frontend/images/cart.png" alt="">
-                                    <div class="cart_count"><span>10</span></div>
+                                    <button class="list-cart" onclick="window.location.href = '{{ route(FRONT_CART_INDEX) }}'">
+                                        <img src="frontend/images/cart.png" alt="">
+                                        <div class="cart_count"><span>{{ $countCart }}</span></div>
+                                    </button>
                                 </div>
                                 <div class="cart_content">
-                                    <div class="cart_text"><a href="#">Cart</a></div>
-                                    <div class="cart_price">$85</div>
+                                    <div class="cart_text"><a href="{{ route(FRONT_CART_INDEX) }}">Cart</a></div>
+{{--                                    <div class="cart_price">$85</div>--}}
                                 </div>
                             </div>
                         </div>
