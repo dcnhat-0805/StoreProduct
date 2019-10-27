@@ -106,4 +106,12 @@ Route::namespace('FrontEnd')->group(function(){
         ->name(FRONT_END_HOME_INDEX);
     Route::get('/{slug}', 'ProductController@index')
         ->name(FRONT_PRODUCT_LIST);
+
+    Route::group(['prefix' => 'cart'], function(){
+        Route::get('/list', 'CartController@index')
+            ->name(FRONT_CART_INDEX);
+        Route::get('addCart/{id}', 'CartController@addCart')
+            ->name(FRONT_ADD_CART);
+    });
+
 });

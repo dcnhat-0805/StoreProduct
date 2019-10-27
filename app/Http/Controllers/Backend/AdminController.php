@@ -23,16 +23,15 @@ class AdminController extends Controller
     public function index()
     {
         $params = request()->all();
-        $permission = AdminGroup::getOptionPermission();
-        $admin = Admin::getListAllAdmin($params);
+        $admins = Admin::getListAllAdmin($params);
 
-        if (!count($admin) && isset($params['page']) && $params['page']) {
-            $route = Helper::isHasDataByPages($admin);
+        if (!count($admins) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($admins);
 
             return redirect($route);
         }
 
-        return view(ADMIN_INDEX_BLADE, compact('admin', 'permission'));
+        return view(ADMIN_INDEX_BLADE, compact('admins'));
     }
 
     /**

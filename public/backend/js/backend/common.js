@@ -207,6 +207,7 @@ let Commons = (function ($) {
     };
 
     modules.getMessageValidation = function(url, name, className, formId) {
+        $('input[name=submit]').val('');
         let formData = $(formId).serialize();
         $.ajax({
             url : url,

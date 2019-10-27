@@ -26,9 +26,6 @@ let productTypeJs = (function ($) {
             },
             error : function (data) {
                 let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
-                if (!error.length) {
-                    $('input[name=submit]').val(SUBMIT);
-                }
 
                 Commons.loadMessageValidation(error, arrayName);
             }
@@ -71,9 +68,6 @@ let productTypeJs = (function ($) {
             },
             error : function (data) {
                 let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
-                if (!error.length) {
-                    $('input[name=submit]').val(SUBMIT);
-                }
 
                 Commons.loadMessageValidation(error, arrayName);
             }
@@ -215,12 +209,14 @@ $(document).ready(function () {
     productTypeJs.reloadSelectAllCheckBox();
 
     btnAddProductType.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#createProductType').serialize();
         productTypeJs.createProductType(data);
     });
 
     btnUpdateProductType.on('click', function () {
+        $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#editProductType').serialize();
         let url = $('#url_edit').val();

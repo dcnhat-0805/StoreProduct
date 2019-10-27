@@ -18,7 +18,7 @@ class AdminPolicy
      */
     public function viewAdmin(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -33,7 +33,7 @@ class AdminPolicy
      */
     public function createAdmin(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -48,7 +48,7 @@ class AdminPolicy
      */
     public function updateAdmin(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -63,7 +63,7 @@ class AdminPolicy
      */
     public function deleteAdmin(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -78,7 +78,7 @@ class AdminPolicy
      */
     public function restoreAdmin(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -93,7 +93,7 @@ class AdminPolicy
      */
     public function forceDeleteAdmin(Admin $admin)
     {
-        if (in_array($admin->adminGroup->permission, [ADMIN])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 

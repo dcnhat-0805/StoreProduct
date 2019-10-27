@@ -24,9 +24,6 @@ let CategoryJs = (function ($) {
             },
             error : function (data) {
                 let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
-                if (!error.length) {
-                    $('input[name=submit]').val(SUBMIT);
-                }
 
                 Commons.loadMessageValidation(error, arrayName);
             }
@@ -67,9 +64,6 @@ let CategoryJs = (function ($) {
             },
             error : function (data) {
                 let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
-                if (!error.length) {
-                    // $('input[name=submit]').val(SUBMIT);
-                }
 
                 Commons.loadMessageValidation(error, arrayName);
             }
@@ -211,12 +205,14 @@ $(document).ready(function () {
     CategoryJs.reloadSelectAllCheckBox();
 
    btnAddCategory.on('click', function () {
+       $('input[name=submit]').val(SUBMIT);
        $(this).button('Loading');
        let data = $('#createCategory').serialize();
        CategoryJs.createCategory(data);
    });
 
    btnUpdateCategory.on('click', function () {
+       $('input[name=submit]').val(SUBMIT);
        $(this).button('Loading');
        let data = $('#editCategory').serialize();
        let url = $('#url_edit').val();

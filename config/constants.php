@@ -50,8 +50,8 @@ const EMAIL_NAME = 'StoreOnline';
 const EMAIL_SUBJECT_PREFIX = '';
 const EMAIL_SUBJECT = '[StoreOnline] Please reset your password !';
 
-const LIMIT = 1;
-const FRONT_LIMIT = 1;
+const LIMIT = 2;
+const FRONT_LIMIT = 3;
 
 const ADMIN = 1;
 const CATEGORY = 2;
@@ -62,12 +62,23 @@ const ADMIN_PERMISSION = [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODU
 
 const DELETE_ALL = 1;
 
+const PERMISSION = [
+    '' => 'Please select an admin permission',
+    1 => 'System Management',
+    2 => 'Category',
+    3 => 'Product Category',
+    4 => 'Product Type',
+    5 => 'Product',
+];
+
 const SORT_PARAMS_ALLOWED = [
     'id' => 'id',
 ];
 
 const FRONT_END_HOME_INDEX = 'front.end.home.index';
 const FRONT_PRODUCT_LIST = 'front.end.product.category.index';
+const FRONT_CART_INDEX = 'front.end.cart.index';
+const FRONT_ADD_CART = 'front.end.add.cart';
 
 const SESSION_REMEMBER_TOKEN = 'ss.remember.token';
 
