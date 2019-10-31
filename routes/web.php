@@ -112,6 +112,12 @@ Route::namespace('FrontEnd')->group(function(){
             ->name(FRONT_CART_INDEX);
         Route::get('addCart/{id}', 'CartController@addCart')
             ->name(FRONT_ADD_CART);
+        Route::post('updateCart/{rowId}', 'CartController@updateCart')
+            ->name(FRONT_UPDATE_CART);
+        Route::get('/listALLCart', 'CartController@listALLCart');
+        Route::get('/getTotalCart', 'CartController@getTotalCart');
+        Route::delete('/destroy', 'CartController@destroy');
+        Route::delete('/delete/{rowId}', 'CartController@delete');
     });
 
 });

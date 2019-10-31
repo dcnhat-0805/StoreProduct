@@ -17,39 +17,16 @@
 
 namespace App\Helpers;
 
-use App\Models\Area1Display;
-use App\Models\Area2Search;
-use App\Models\BlackList;
-use App\Models\RatePlan;
 use DateTime;
 use DatePeriod;
 use DateInterval;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Frontend\HomeController;
-use App\Http\Controllers\Frontend\TopHTMLController;
-use App\Models\ApplicantMessage;
-use App\Models\Bar;
-use App\Models\BlogPost;
 use App\Models\Category;
-use App\Models\City;
-use App\Models\HotSearch;
-use App\Models\ListRecruitHtml;
-use App\Models\News;
-use App\Models\PostView;
-use App\Models\Recruit;
-use App\Models\RequestApply;
-use App\Models\Special;
-use App\Models\TopArea;
-use App\Models\TransportRoute;
-use App\Models\CustomizeContent;
 use Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\ImageManagerStatic as ImageResize;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use App\Models\TransportStation;
-use App\Models\AreaNearly;
-use App\Models\RatePlanItem;
 
 /**
  * Class Helper
@@ -194,7 +171,7 @@ class Helper
         return json_encode($response);
     }
 
-    public static function getTitleName($titleName)
+    public static function getTitleName($titleName = null)
     {
         return (isset($titleName['product_category_name']) && !isset($titleName['product_type_name'])) ? $titleName['product_category_name']: $titleName['product_type_name'];
     }/**
@@ -255,7 +232,7 @@ class Helper
             $quantity = $request->quantity;
         }
 
-        if($product->promotion > 0){
+        if($product->product_promotion > 0){
             $price = $product->product_promotion;
         }
 
@@ -265,11 +242,27 @@ class Helper
             'qty' => $quantity,
             'price' => $price,
             'options' => [
-                'img' => $product->product_image
+                'image' => $product->product_image,
+                'promotion' => $product->product_promotion > 0 ? $product->product_price : null,
+                'description' => $product->product_description,
             ]
         ];
 
         return $cart;
+    }
+
+    public static function updateCart($request, $rowId)
+    {
+        $quantity = $request['quantity'];
+
+        if ($quantity == 0) return;
+
+        return Cart::update($rowId, $quantity);
+    }
+
+    public static function loadMoney($price)
+    {
+        return number_format($price,0,",",".") . ' ₫';
     }
 
 }

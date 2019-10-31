@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="OneTech shop project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <base href="{{ asset('') }}">
     <link rel="stylesheet" type="text/css" href="frontend/styles/bootstrap4/bootstrap.min.css">
     <link href="frontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
@@ -34,6 +35,9 @@
 		============================================ -->
     <link rel="stylesheet" href="backend/css/notifications/Lobibox.min.css">
     <link rel="stylesheet" href="backend/css/notifications/notifications.css">
+    <!-- touchspin CSS
+		============================================ -->
+    <link rel="stylesheet" href="backend/css/touchspin/jquery.bootstrap-touchspin.min.css">
     @yield('cssCustom')
 </head>
 
@@ -87,6 +91,10 @@
     ============================================ -->
 <script src="backend/js/notifications/Lobibox.js"></script>
 <script src="backend/js/notifications/notification-active.js"></script>
+<!-- touchspin JS
+    ============================================ -->
+<script src="backend/js/touchspin/jquery.bootstrap-touchspin.min.js"></script>
+<script src="frontend/assets/js/common.js"></script>
 
 @if(Session::has('success'))
     <script type="text/javascript">
