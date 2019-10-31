@@ -15,9 +15,9 @@
                             <div class="cat_menu_text">categories</div>
                         </div>
 
+                        @if(count($categories))
                         <ul class="cat_menu" data-smp="cate">
-                            @if(isset($categories))
-                                @foreach($categories as $key => $category)
+                            @foreach($categories as $key => $category)
                                     <li class="{{ count($category->productCategory) ? 'hassubs' : '' }}" id="category_Lever_No{{ $key+1 }}">
                                         <a data-id="{{ $category->id }}" data-slug="{{ $category->category_slug }}">{{ $category->category_name }}<i class="fas fa-chevron-right"></i></a>
                                         @if(isset($category->productCategory) && count($category->productCategory))
@@ -48,8 +48,8 @@
                                         @endif
                                     </li>
                                 @endforeach
-                            @endif
                         </ul>
+                        @endif
                     </div>
 
                     <!-- Main Nav Menu -->

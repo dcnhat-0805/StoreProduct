@@ -182,7 +182,6 @@ let CategoryJs = (function ($) {
             type: "DELETE",
             data: data,
             success : function (data) {
-                console.log(data);
                 Commons.removeLocalStorage(CATEGORY_IDS);
                 Commons.removeLocalStorage(CATEGORY_DELETE_ALL);
                 location.reload();

@@ -367,6 +367,7 @@
             jQuery.getMessageSuccess = function(message) {
                 Lobibox.notify('success', {
                     size: 'mini',
+                    position: 'bottom left',
                     delay: 5000,
                     msg: 'Notification !   '+ message
                 });
@@ -375,6 +376,7 @@
             jQuery.getMessageError = function(error) {
                 Lobibox.notify('error', {
                     size: 'mini',
+                    position: 'bottom left',
                     delay: 5000,
                     msg: 'Notification !   '+ error
                 });

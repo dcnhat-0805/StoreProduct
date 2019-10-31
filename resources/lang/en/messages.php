@@ -179,7 +179,12 @@ return [
 
     'front_end' => [
         'cart' => [
-            'add_cart_success' => 'Add cart successfully.'
+            'add_cart_success' => 'Successfully add new cart.',
+            'add_cart_failed' => 'Unsuccessfully add new cart.',
+            'update_cart_success' => 'Successfully update cart.',
+            'update_cart_failed' => 'Unsuccessfully update cart.',
+            'delete_cart_success' => 'Successfully delete cart.',
+            'delete_cart_failed' => 'Unsuccessfully delete cart.',
         ]
     ]
 ];

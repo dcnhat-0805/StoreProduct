@@ -1,7 +1,7 @@
 (function ($) {
  "use strict";
- 
-	 $(".touchspin1").TouchSpin({
+
+	 $(".jsTouchSpin").TouchSpin({
 		buttondown_class: 'btn btn-white',
 		buttonup_class: 'btn btn-white'
 	});
@@ -23,5 +23,5 @@
 		buttondown_class: 'btn btn-white',
 		buttonup_class: 'btn btn-white'
 	});
- 
-})(jQuery); 
+
+})(jQuery);

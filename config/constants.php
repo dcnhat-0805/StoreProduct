@@ -76,9 +76,10 @@ const SORT_PARAMS_ALLOWED = [
 ];
 
 const FRONT_END_HOME_INDEX = 'front.end.home.index';
-const FRONT_PRODUCT_LIST = 'front.end.product.category.index';
+const FRONT_PRODUCT_LIST = 'front.end.product.index';
 const FRONT_CART_INDEX = 'front.end.cart.index';
 const FRONT_ADD_CART = 'front.end.add.cart';
+const FRONT_UPDATE_CART = 'front.end.update.cart';
 
 const SESSION_REMEMBER_TOKEN = 'ss.remember.token';
 
