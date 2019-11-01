@@ -1250,7 +1250,7 @@ h3.w3l-nut-middle {
     -webkit-transform: rotate(-64deg);
 }
 /*-- //nuts --*/
-footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .banner-bootom-w3-agileits, .privacy {
+footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .privacy {
     padding: 5em 0;
 }
 /*-- tittle heading --*/
@@ -2522,7 +2522,7 @@ img.zoom-img:hover{
     margin-bottom: 12px;
 }
 .product-single-w3l {
-    border-top: 1px solid #1accfd;
+    /*border-top: 1px solid #1accfd;*/
 }
 .product-single-w3l p i {
     color: #1accfd;
@@ -2533,6 +2533,7 @@ img.zoom-img:hover{
     color: #000;
     margin: 15px 0;
     letter-spacing: 0.5px;
+    width: 38%;
 }
 .product-single-w3l ul li {
     list-style: inside;
@@ -3041,7 +3042,7 @@ input[type="radio"], input[type="checkbox"] {
         min-height: 500px;
         padding-top: 5.5em;
     }
-    footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .banner-bootom-w3-agileits, .privacy {
+    footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .privacy {
         padding: 4em 0;
     }
     h3.tittle-w3l {
@@ -3310,7 +3311,7 @@ input[type="radio"], input[type="checkbox"] {
         min-height: 400px;
         padding-top: 4.5em;
     }
-    footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .banner-bootom-w3-agileits, .privacy {
+    footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .privacy {
         padding: 3em 0;
     }
     .side-bar {
@@ -4209,7 +4210,7 @@ input[type="radio"], input[type="checkbox"] {
     h3.tittle-w3l {
         font-size: 2em;
     }
-    footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .banner-bootom-w3-agileits, .privacy {
+    footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .privacy {
         padding: 2.5em 0;
     }
     .img-deals {
@@ -4465,7 +4466,7 @@ input[type="radio"], input[type="checkbox"] {
     .carousel-indicators {
         bottom: 2%;
     }
-    footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .banner-bootom-w3-agileits, .privacy {
+    footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .privacy {
         padding: 2em 0;
     }
     h3.tittle-w3l:after {
@@ -4827,7 +4828,7 @@ input[type="radio"], input[type="checkbox"] {
         width: 10px;
         height: 10px;
     }
-    .ads-grid, footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .banner-bootom-w3-agileits, .privacy {
+    .ads-grid, footer, .contact-w3l, .w3_wthree_agileits_icons, .typo, .faqs-w3l, .terms-of-use, .welcome, .about, .privacy {
         padding: 1.5em 0;
     }
     h3.tittle-w3l {

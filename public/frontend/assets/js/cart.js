@@ -57,7 +57,7 @@ let CartJs = (function ($) {
                 }
             });
 
-            if (ids_cart.length === sumCart) {
+            if (sumCart && ids_cart.length === sumCart) {
                 $('.cartSelectAll').prop('checked', true);
             }
         } else {
@@ -147,13 +147,12 @@ let CartJs = (function ($) {
                 rowId : rowId
             },
             success : function (data) {
-                console.log(data);
-                // Commons.removeLocalStorage(CART_IDS);
-                // Commons.removeLocalStorage(CART_CHECK_ALL);
-                // location.reload();
+                Commons.removeLocalStorage(CART_IDS);
+                Commons.removeLocalStorage(CART_CHECK_ALL);
+                location.reload();
             },
             error : function (data) {
-                // location.reload();
+                location.reload();
             }
         });
     };

@@ -94,6 +94,19 @@
                                 @endif
                                 </tbody>
                             </table>
+
+                            @if (!Cart::count())
+                                <div class="not-cart" style="margin-top: 10%">
+                                    <div class="text-not-cart text-center pb-2">There are no items in this cart</div>
+                                    <div class="button-back-home text-center">
+                                        <button class="btn btn-custon-three btn-primary btn-block"
+                                                onclick="window.location.href = '{{ route(FRONT_END_HOME_INDEX) }}'"
+                                                style="width: 30%; text-transform: uppercase;">
+                                            continue shopping
+                                        </button>
+                                    </div>
+                                </div>
+                            @endif
                         </form>
                     </div>
                 </div>

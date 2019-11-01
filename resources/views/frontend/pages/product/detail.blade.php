@@ -1,5 +1,7 @@
 @extends('frontend.layouts.app')
 @section('cssCustom')
+    <link href="frontend/assets/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" href="frontend/assets/css/flexslider.css" type="text/css" media="screen" />
 @endsection
 @section('content')
     @include('frontend.layouts.header_top', [
@@ -12,105 +14,103 @@
 
     @include('frontend.layouts.logo')
 
-    <!-- top Products -->
-    <div class="ads-grid">
+    <!-- Detail Products -->
+    <div class="banner-bootom-w3-agileits">
         <div class="container">
             <!-- tittle heading -->
-            <h3 class="tittle-w3l">{{ App\Helpers\Helper::getTitleName($titleName ?? null) }}
-
-                <span class="heading-style">
-					<i></i>
-					<i></i>
-					<i></i>
-				</span>
-            </h3>
-            <div class="row">
-                <div class="col-sm-3">
-                    @include('frontend.layouts.side_bar.side_bar_left')
-                </div>
-                <div class="col-sm-9">
-                        <div class="col-sm-12">
-                            <div class="product-header-left col-sm-6">
-                                <span class="float-left col-sm-12">{{ count($products) }} items found for "{{ App\Helpers\Helper::getTitleName($titleName ?? null) }}"</span>
-                            </div>
-                            <div class="product-header-left col-sm-6">
-                                <div class="col-sm-6">
-                                    <span style="position:absolute; right: 0;">Sort By:</span>
+{{--            <h3 class="tittle-w3l">Single Page--}}
+{{--                <span class="heading-style">--}}
+{{--					<i></i>--}}
+{{--					<i></i>--}}
+{{--					<i></i>--}}
+{{--				</span>--}}
+{{--            </h3>--}}
+            <!-- //tittle heading -->
+            <div class="col-md-5 single-right-left ">
+                <div class="grid images_3_of_2">
+                    <div class="jsFlexSlider">
+                        <ul class="slides">
+                            <li data-thumb="{{ FILE_PATH_PRODUCT . $product->product_image }}">
+                                <div class="thumb-image">
+                                    <img src="{{ FILE_PATH_PRODUCT . $product->product_image }}" data-imagezoom="true" class="img-responsive" alt="">
                                 </div>
-                                <div class="float-right col-sm-6">
-                                    <select name="" class="form-control form-group">
-                                        <option value="">Popularity</option>
-                                        <option value="">Price low to high</option>
-                                        <option value="">Price high to low</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <hr class="hr-border">
-                    @if(count($products))
-                        <!-- product right -->
-                        <div class="agileinfo-ads-display col-sm-12 w3l-rightpro">
-                            <div class="wrapper">
-                                <!-- first section -->
-                                <div class="product-sec1">
-                                    @foreach($products as $product)
-                                        <div class="col-xs-4 product-men">
-                                            <div class="men-pro-item simpleCart_shelfItem">
-                                                <div class="men-thumb-item">
-                                                    <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="">
-                                                    <div class="men-cart-pro">
-                                                        <div class="inner-men-cart-pro">
-                                                            <a href="{{ route(FRONT_PRODUCT_DETAIL, ['slug' => $slug, 'id' => $product->id]) }}" class="link-product-add-cart">Quick View</a>
-                                                        </div>
-                                                    </div>
-                                                    <span class="product-new-top">New</span>
-                                                </div>
-                                                <div class="item-info-product ">
-                                                    <h4>
-                                                        <a href="{{ route(FRONT_PRODUCT_DETAIL, ['slug' => $slug, 'id' => $product->id]) }}">{!!  $product->product_description !!}</a>
-                                                    </h4>
-                                                    <div class="info-product-price">
-                                                        <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion) }}</span>
-                                                        <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
-                                                    </div>
-                                                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                                        <button type="button" class="button btn btn-custon-three btn-primary add-to-cart" data-id="{{ $product->id }}"
-{{--                                                                onclick="window.location.href = '{{ route(FRONT_ADD_CART, ['id' => $product->id]) }}'"--}}
-                                                                style="width: 100%; font-size: 20px">
-                                                            Add to cart
-                                                        </button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                    <div class="clearfix"></div>
-                                </div>
-                            </div>
-                        </div>
-                    @else
-                        <div class="not-data text-center">
-                            <span>Search No Result</span>
-                            <br>
-                            <span>We're sorry. We cannot find any matches for your search term.</span>
-                        </div>
-                    @endif
-
-                    @if(count($products))
-                        <!-- Pagination -->
-                        <div class="pagination-wrapper clearfix" style="margin-top: 20px;">
-                            <nav class="nav-pagination store-unit clearfix" aria-label="Page navigation">
-                                <span class="info">{{ $products->currentPage() }} / {{ $products->lastPage() }} pages</span>
-                                <ul class="pull-right">
-                                    <li> {{ $products->appends($_GET)->links('backend.pagination') }}</li>
-                                </ul>
-                            </nav>
-                        </div>
-                        <!--/ Pagination -->
-                    @endif
+                            </li>
+                            @foreach($product->productImage as $productImage)
+                                <li data-thumb="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}">
+                                    <div class="thumb-image">
+                                        <img src="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}" data-imagezoom="true" class="img-responsive" alt="">
+                                    </div>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
+            <div class="col-md-7 single-right-left simpleCart_shelfItem">
+                <h3>{{ $product->product_name }}</h3>
+                <div class="rating1">
+					<span class="starRating">
+						<input id="rating5" type="radio" name="rating" value="5">
+						<label for="rating5">5</label>
+						<input id="rating4" type="radio" name="rating" value="4">
+						<label for="rating4">4</label>
+						<input id="rating3" type="radio" name="rating" value="3" checked="">
+						<label for="rating3">3</label>
+						<input id="rating2" type="radio" name="rating" value="2">
+						<label for="rating2">2</label>
+						<input id="rating1" type="radio" name="rating" value="1">
+						<label for="rating1">1</label>
+					</span>
+                </div>
+                <p>
+                    <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion) }}</span>
+                    <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
+                </p>
+{{--                <div class="single-infoagile">--}}
+{{--                    <ul>--}}
+{{--                        <li>--}}
+{{--                            Cash on Delivery Eligible.--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            Shipping Speed to Delivery.--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            Sold and fulfilled by Supple Tek (3.6 out of 5 | 8 ratings).--}}
+{{--                        </li>--}}
+{{--                        <li>--}}
+{{--                            1 offer from--}}
+{{--                            <span class="item_price">$950.00</span>--}}
+{{--                        </li>--}}
+{{--                    </ul>--}}
+{{--                </div>--}}
+                <div class="product-single-w3l">
+                    <p>
+                        <input class="jsQuantity quantity" type="text" name="quantity">
+                    </p>
+                </div>
+                <div class="occasion-cart">
+                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                        <form action="#" method="post">
+                            <fieldset>
+                                <input type="hidden" name="cmd" value="_cart" />
+                                <input type="hidden" name="add" value="1" />
+                                <input type="hidden" name="business" value=" " />
+                                <input type="hidden" name="item_name" value="Zeeba Premium Basmati Rice - 5 KG" />
+                                <input type="hidden" name="amount" value="950.00" />
+                                <input type="hidden" name="discount_amount" value="1.00" />
+                                <input type="hidden" name="currency_code" value="USD" />
+                                <input type="hidden" name="return" value=" " />
+                                <input type="hidden" name="cancel_return" value=" " />
+                                <input type="submit" name="submit" value="Add to cart" class="button" />
+                            </fieldset>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="clearfix"> </div>
         </div>
     </div>
     <!-- //top products -->
@@ -408,5 +408,8 @@
 @endsection
 
 @section('jsCustom')
-    <script src="frontend/assets/js/cart.js"></script>
+    <script src="frontend/assets/js/cart.js"></script><!-- js-files -->
+
+    <!-- imagezoom -->
+    <script src="frontend/assets/js/imagezoom.js"></script>
 @endsection

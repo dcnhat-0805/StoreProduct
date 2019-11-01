@@ -27,6 +27,15 @@ class ProductController extends Controller
             return redirect($route);
         }
 
-        return view('frontend.pages.product.index', compact('titleName', 'products'));
+        return view('frontend.pages.product.index', compact('titleName', 'products', 'slug'));
+    }
+
+    public function detail($slug, $id)
+    {
+        $titleName = ProductCategory::getNameAndSlugBySlug($slug);
+        $product = Product::getProductBySlugAndId($id, $slug);
+        $titleName['product_name'] = $product->product_name;
+
+        return view('frontend.pages.product.detail', compact('titleName', 'product'));
     }
 }

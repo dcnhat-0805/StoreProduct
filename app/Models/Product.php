@@ -218,6 +218,48 @@ class Product extends Model
         return $products;
     }
 
+    public static function getProductBySlugAndId($id, $slug = null, $params = null)
+    {
+        $products = self::filter($params);
+        $order = Helper::getSortParam($params);
+        if ($order == '1 = 1') {
+            $order = "products.id DESC ";
+        }
+
+        $products = $products->whereNull('products.deleted_at')
+//            ->whereNull('product_types.deleted_at')
+            ->whereNull('product_categories.deleted_at')
+            ->whereNull('categories.deleted_at')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+            ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
+            ->join('product_images', 'products.id', '=', 'product_images.product_id')
+            ->selectRaw("products.*")
+            ->with([
+                'category' => function ($category) {
+                    $category->whereNull('categories.deleted_at');
+                },
+                'productCategory' => function ($productCategory) {
+                    $productCategory->whereNull('product_categories.deleted_at');
+                },
+                'productType' => function ($productType) {
+                    $productType->whereNull('product_types.deleted_at');
+                },
+                'productImage' => function ($productImage) {
+                    $productImage->whereNull('product_images.deleted_at');
+                },
+            ])
+            ->where('products.id', $id)
+//            ->orWhere('categories.category_slug', $slug)
+//            ->orWhere('product_categories.product_category_slug', $slug)
+//            ->orWhere('product_types.product_type_slug', $slug)
+            ->orderBy('products.created_at', 'desc')
+            ->groupBy('products.id')
+            ->first();
+
+        return $products;
+    }
+
 //    public static function getListAllProduct()
 //    {
 //        return self::select(
