@@ -84,6 +84,21 @@ $(document).ready(function () {
     $('.jsCheckBox').iCheck({
         checkboxClass: 'icheckbox_square-green',
     });
+
+
+    $('.jsFlexSlider').flexslider({
+        animation: "slide",
+        controlNav: "thumbnails",
+        animationLoop: false,
+        slideshow: false,
+    });
+
+    $('.jsQuantity').TouchSpin({
+        buttondown_class: 'btn btn-white',
+        buttonup_class: 'btn btn-white',
+        initval: 1,
+        min: 1
+    });
 });
 
 jQuery(document).ready(function ($) {

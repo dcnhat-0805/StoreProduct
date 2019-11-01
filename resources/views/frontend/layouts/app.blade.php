@@ -54,7 +54,8 @@
     @include('frontend.layouts.footer')
 </div>
 
-<script src="frontend/js/jquery-3.3.1.min.js"></script>
+<script src="frontend/assets/js/jquery-2.1.4.min.js"></script>
+{{--<script src="frontend/js/jquery-3.3.1.min.js"></script>--}}
 <script src="frontend/styles/bootstrap4/popper.js"></script>
 <script src="frontend/styles/bootstrap4/bootstrap.min.js"></script>
 <script src="frontend/plugins/greensock/TweenMax.min.js"></script>
@@ -95,6 +96,7 @@
     ============================================ -->
 <script src="backend/js/touchspin/jquery.bootstrap-touchspin.min.js"></script>
 <script src="frontend/assets/js/common.js"></script>
+<script src="frontend/assets/js/jquery.flexslider.js"></script>
 
 @if(Session::has('success'))
     <script type="text/javascript">

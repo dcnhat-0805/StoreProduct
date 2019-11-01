@@ -15,8 +15,8 @@
 
         @if(count($titleName) && $titleName['product_category_name'] !== '' && count($titleName['product_type_name']) && $titleName['product_type_name'] !== '')
             <li class="breadcrumb_item">
-                <a title="{{ count($titleName['product_category_name']) ? $titleName['product_category_name'] : '' }}" href="{{ route(FRONT_PRODUCT_LIST, ['slug' => $titleName['product_category_slug']]) }}" class="breadcrumb_item_anchor">
-                    {{ count($titleName['product_category_name']) ? $titleName['product_category_name'] : '' }}
+                <a title="{{ $titleName['product_category_name'] }}" href="{{ route(FRONT_PRODUCT_LIST, ['slug' => $titleName['product_category_slug']]) }}" class="breadcrumb_item_anchor">
+                    {{ $titleName['product_category_name'] }}
                 </a>
                 <i class="fa fa-chevron-right" aria-hidden="true"></i>
             </li>
@@ -28,10 +28,25 @@
             </li>
         @endif
 
-        @if(count($titleName) && $titleName['product_type_name'] !== '')
+        @if(count($titleName) && $titleName['product_type_name'] !== '' && !$titleName['product_name'])
             <li class="breadcrumb_item">
-                <span title="{{ count($titleName['product_type_name']) ? $titleName['product_type_name'] : '' }}" class="breadcrumb_item_anchor">
-                    {{ count($titleName['product_type_name']) ? $titleName['product_type_name'] : '' }}
+                <span title="{{ $titleName['product_type_name'] }}" class="breadcrumb_item_anchor">
+                    {{ $titleName['product_type_name'] }}
+                </span>
+            </li>
+        @elseif(count($titleName) && $titleName['product_type_name'] !== '' && $titleName['product_name'])
+            <li class="breadcrumb_item">
+                <a title="{{ $titleName['product_type_name'] }}" href="{{ route(FRONT_PRODUCT_LIST, ['slug' => $titleName['product_type_slug']]) }}" class="breadcrumb_item_anchor">
+                    {{ $titleName['product_type_name'] }}
+                </a>
+                <i class="fa fa-chevron-right" aria-hidden="true"></i>
+            </li>
+        @endif
+
+        @if(count($titleName) && $titleName['product_name'] !== '')
+            <li class="breadcrumb_item">
+                <span title="{{ $titleName['product_name'] }}" class="breadcrumb_item_anchor">
+                    {{ $titleName['product_name'] }}
                 </span>
             </li>
         @endif
