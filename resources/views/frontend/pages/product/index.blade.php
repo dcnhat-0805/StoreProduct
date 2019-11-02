@@ -67,7 +67,9 @@
                                                 </div>
                                                 <div class="item-info-product ">
                                                     <h4>
-                                                        <a href="{{ route(FRONT_PRODUCT_DETAIL, ['slug' => $slug, 'id' => $product->id]) }}">{!!  $product->product_description !!}</a>
+                                                        <a href="{{ route(FRONT_PRODUCT_DETAIL, ['slug' => $slug, 'id' => $product->id]) }}">
+                                                            <p>{!!  $product->product_description !!}</p>
+                                                        </a>
                                                     </h4>
                                                     <div class="info-product-price">
                                                         <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion) }}</span>

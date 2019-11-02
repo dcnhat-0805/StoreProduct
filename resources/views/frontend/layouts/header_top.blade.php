@@ -13,7 +13,7 @@
             </li>
         @endif
 
-        @if(count($titleName) && $titleName['product_category_name'] !== '' && count($titleName['product_type_name']) && $titleName['product_type_name'] !== '')
+        @if(count($titleName) && $titleName['product_category_name'] !== '' && ((count($titleName['product_type_name']) && $titleName['product_type_name'] !== '') || (count($titleName['product_name']) && $titleName['product_name    '] !== '')))
             <li class="breadcrumb_item">
                 <a title="{{ $titleName['product_category_name'] }}" href="{{ route(FRONT_PRODUCT_LIST, ['slug' => $titleName['product_category_slug']]) }}" class="breadcrumb_item_anchor">
                     {{ $titleName['product_category_name'] }}
@@ -28,13 +28,13 @@
             </li>
         @endif
 
-        @if(count($titleName) && $titleName['product_type_name'] !== '' && !$titleName['product_name'])
+        @if(count($titleName) && count($titleName['product_type_name']) && $titleName['product_type_name'] !== '' && !$titleName['product_name'])
             <li class="breadcrumb_item">
                 <span title="{{ $titleName['product_type_name'] }}" class="breadcrumb_item_anchor">
                     {{ $titleName['product_type_name'] }}
                 </span>
             </li>
-        @elseif(count($titleName) && $titleName['product_type_name'] !== '' && $titleName['product_name'])
+        @elseif(count($titleName) && count($titleName['product_type_name']) && $titleName['product_type_name'] !== '' && $titleName['product_name'])
             <li class="breadcrumb_item">
                 <a title="{{ $titleName['product_type_name'] }}" href="{{ route(FRONT_PRODUCT_LIST, ['slug' => $titleName['product_type_slug']]) }}" class="breadcrumb_item_anchor">
                     {{ $titleName['product_type_name'] }}

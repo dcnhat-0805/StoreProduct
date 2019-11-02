@@ -132,7 +132,7 @@
                 <div class="modal-body">
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
-                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_PRODUCT_TYPE_INDEX) }}">
+                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_PRODUCT_INDEX) }}">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -155,7 +155,7 @@
                                                 {{
                                                     Form::select('category_id', $category, request()->get('category_id'),
                                                     [
-                                                        'class' => 'form-control category-id'
+                                                        'class' => 'form-control category-id jsSelectCategory'
                                                     ])
                                                 }}
                                             </div>
@@ -168,8 +168,18 @@
                                                 {{
                                                     Form::select('product_category_id', $productCategories, request()->get('product_category_id'),
                                                     [
-                                                        'class' => 'form-control',
-                                                        'id' => 'productCategoryId'
+                                                        'class' => 'form-control product-category-id jsSelectProductCategory',
+                                                    ])
+                                                }}
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="name">Product type</label>
+                                                {{
+                                                    Form::select('product_type_id', $productTypes, request()->get('product_type_id'),
+                                                    [
+                                                        'class' => 'form-control product-type-id jsSelectProductType',
                                                     ])
                                                 }}
                                             </div>
@@ -190,7 +200,7 @@
                                     <button type="submit" class="btn btn-custon-three btn-success" id="btnSearch"><i
                                             class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
                                     </button>
-                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" id="btnClear" onclick="window.location.href = '{{route(ADMIN_PRODUCT_TYPE_INDEX)}}'">
+                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" id="btnClear" onclick="window.location.href = '{{route(ADMIN_PRODUCT_INDEX)}}'">
                                         <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
                                     </button>
                                 </div>
@@ -215,7 +225,7 @@
                     <form style="min-height: 70px;">
                         <input type="hidden" name="id" id="productId">
                         <input type="hidden" id="urlDelete">
-                        <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">Do you want to delete product type?</h5>
+                        <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">Do you want to delete product ?</h5>
                     </form>
                 </div>
                 <div class="modal-footer modal-delete">

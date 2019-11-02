@@ -147,10 +147,8 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="product_description" class="required after">Description product</label>
-                        <textarea name="product_description" class="product-description"
-                                  id="descriptionProduct">{!! isset($product) && $product->product_description ? $product->product_description : old('product_description') !!}</textarea>
-                        <div
-                            class="error error_product_description {{ !$errors->has('product_description') ? 'hidden' : '' }}">{{ $errors->has('product_description') ? $errors->first('product_description') : '' }}</div>
+                        <textarea name="product_description" class="product-description" id="">{!! isset($product) && $product->product_description ? $product->product_description : old('product_description') !!}</textarea>
+                        <div class="error error_product_description {{ !$errors->has('product_description') ? 'hidden' : '' }}">{{ $errors->has('product_description') ? $errors->first('product_description') : '' }}</div>
                     </div>
                 </div>
             </div>
@@ -211,7 +209,7 @@
                         <input type="number" class="form-control" name="product_weight"
                                placeholder="Product weight ..." value="{{ isset($product) && $product->product_weight ? $product->product_weight : old('product_weight') }}">
                         <div class="jsCheckBox pull-left" style="margin: 10px 0">
-                            <input type="checkbox" name="product_is_shipping[]" value="1">
+                            <input type="checkbox" name="product_is_shipping" value="1" {{ (isset($product) && $product->product_is_shipping === 1 || old('product_is_shipping')) ? 'checked' : '' }}>
                             <label><i></i> Is shipping </label>
                         </div>
                         <div class="error error_product_weight {{ !$errors->has('product_weight') ? 'hidden' : '' }}">{{ $errors->has('product_weight') ? $errors->first('product_weight') : '' }}</div>

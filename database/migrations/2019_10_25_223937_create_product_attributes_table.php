@@ -21,8 +21,9 @@ class CreateProductAttributesTable extends Migration
 //            $table->foreign('product_id')
 //                ->references('id')->on('products')
 //                ->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('attribute_name')->nullable();
-            $table->integer('attribute_price')->nullable();
+            $table->string('attribute_name')->nullable();
+            $table->string('attribute_item_name')->nullable();
+            $table->string('attribute_price')->nullable();
             $table->integer('is_filterable')->nullable();
             $table->timestamps();
             $table->softDeletes();

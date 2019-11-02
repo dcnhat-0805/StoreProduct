@@ -232,13 +232,12 @@ let Commons = (function ($) {
     modules.formValidation = function (url, formId, summerNoteId = null) {
         $(formId).each(function (index, value) {
             for (let i=0; i < value.length; i++) {
-                $(value[i]).bind("keyup change mousewheel onmousewheel", function () {
+                $(value[i]).bind("keyup change", function () {
                     let name = $(this).attr('name');
                     let className = (!ARRAY_NAME.includes(name)) ? $(this).next()[0].classList[1] : $(this).parent().next()[0].classList[1];
                     let val = $(this).val();
 
                     if (!ARRAY_NAME.includes(name)) {
-                        console.log(className);
                         modules.getMessageValidation(url, name, className, formId);
                     }
 

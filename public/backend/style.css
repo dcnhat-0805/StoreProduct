@@ -4777,7 +4777,17 @@ button.removeProductAttribute {
     right: 1%;
     border-radius: 35px;
 }
+button.addProductAttribute {
+    margin-right: 4%;
+}
 button.addProductAttribute:focus,
 button.removeProductAttribute:focus {
     outline: none;
+}
+.jsProductAttribute {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.jsProductAttribute .jsCheckBox.pull-left {
+    line-height: 40px;
 }

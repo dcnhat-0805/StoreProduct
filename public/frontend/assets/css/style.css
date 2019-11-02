@@ -1188,6 +1188,17 @@ h3.heading-tittle {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-size: 20px;
+    color: #000;
+    text-transform: capitalize;
+}
+.item-info-product h4 p span {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    font-size: 20px !important;
+    color: #000;
+    text-transform: capitalize;
 }
 .item-info-product h4 a {
     color: #000;
