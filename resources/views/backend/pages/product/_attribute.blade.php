@@ -14,22 +14,33 @@
                         <div class="row jsProductAttribute ">
                             <div class="productAttribute">
                                 <div class="col-sm-3">
-                                    <input type="hidden" class="form-control" name="attributes[{{ $key }}][attribute_code]"
-                                           placeholder="Example: Size or Color ..." value="{{ $attributes->attribute_code }}">
-                                    <input type="text" class="form-control" name="attributes[{{ $key }}][attribute_name]"
-                                           placeholder="Example: Size or Color ..." value="{{ $attributes->attribute_name }}">
+                                    <input type="hidden" class="form-control"
+                                           name="attributes[{{ $key }}][attribute_code]"
+                                           placeholder="Example: Size or Color ..."
+                                           value="{{ $attributes->attribute_code }}">
+                                    {{
+                                        Form::select('attributes[' . $key . '][attribute_name]', PRODUCT_ATTRIBUTE, $attributes->attribute_name,
+                                        [
+                                            'class' => 'form-control product-attribute'
+                                        ])
+                                    }}
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="text" class="form-control" name="attributes[{{ $key }}][attribute_item_name]"
-                                           placeholder="Example: M or L or XL ..." value="{{ $attributes->attribute_item_name }}">
+                                    <input type="text" class="form-control"
+                                           name="attributes[{{ $key }}][attribute_item_name]"
+                                           placeholder="Example: M or L or XL ..."
+                                           value="{{ $attributes->attribute_item_name }}">
                                 </div>
                                 <div class="col-sm-3">
-                                    <input type="number" class="form-control" name="attributes[{{ $key }}][attribute_price]"
-                                           placeholder="Product attribute price ..." value="{{ $attributes->attribute_price }}">
+                                    <input type="number" class="form-control"
+                                           name="attributes[{{ $key }}][attribute_price]"
+                                           placeholder="Product attribute price ..."
+                                           value="{{ $attributes->attribute_price }}">
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="jsCheckBox pull-left">
-                                        <input type="checkbox" name="attributes[{{ $key }}][is_filterable]" value="1" {{ $attributes->is_filterable === 1 ? 'checked' : '' }}>
+                                        <input type="checkbox" name="attributes[{{ $key }}][is_filterable]"
+                                               value="1" {{ $attributes->is_filterable === 1 ? 'checked' : '' }}>
                                         <label><i></i> </label>
                                     </div>
                                 </div>
@@ -45,8 +56,12 @@
                     <div class="row jsProductAttribute ">
                         <div class="productAttribute">
                             <div class="col-sm-3">
-                                <input type="text" class="form-control" name="attributes[0][attribute_name]"
-                                       placeholder="Example: Size or Color ..." value="">
+                                {{
+                                    Form::select('attributes[0][attribute_name]', PRODUCT_ATTRIBUTE, null,
+                                    [
+                                        'class' => 'form-control product-attribute'
+                                    ])
+                                }}
                             </div>
                             <div class="col-sm-3">
                                 <input type="text" class="form-control" name="attributes[0][attribute_item_name]"

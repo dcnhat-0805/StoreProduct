@@ -4215,6 +4215,10 @@ div#sparklinehome canvas {
     margin-right: 20px;
 }
 
+.product-options .jsRadio {
+    margin: 10px 20px 10px 0;
+}
+
 .form_footer {
     padding: 15px 15px 0 15px !important;
     margin-top: 15px !important;

@@ -94,3 +94,12 @@ const SESSION_LIST_PRODUCT_IMAGE = 'ss.list.product.image';
 const IMAGE_RESIZE_WIDTH = 320;
 const IMAGE_RESIZE_HEIGHT = 240;
 const IMAGE_RESIZE_PREFIX = 'resize-';
+
+const PRODUCT_ATTRIBUTE = [
+    '' => 'Please select a product attribute',
+    '1' => 'Color',
+    '2' => 'Ram',
+    '3' => 'Storage',
+    '4' => 'Size',
+    '5' => 'Materials',
+];

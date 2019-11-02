@@ -163,6 +163,35 @@
                 </div>
             </div>
             <div class="row">
+                <div class="col-sm-12">
+                    <div class="form-group">
+                        <label for="product_option" class="required after">Product options</label>
+                        <div class="product-options">
+                            <div class="jsRadio pull-left">
+                                <input type="radio" value="1" name="product_option"
+                                        {{ (isset($product) && $product->product_option == 1) || (old('product_option') == 1) ? 'checked' : '' }}>
+                                <label><i></i> Best </label>
+                            </div>
+                            <div class="jsRadio pull-left">
+                                <input type="radio" value="2" name="product_option"
+                                        {{ (isset($product) && $product->product_option == 2) || (old('product_option') == 2) ? 'checked' : '' }}>
+                                <label><i></i> New </label>
+                            </div>
+                            <div class="jsRadio pull-left">
+                                <input type="radio" value="3" name="product_option"
+                                        {{ (isset($product) && $product->product_option == 3) || (old('product_option') == 3) ? 'checked' : '' }}>
+                                <label><i></i> Hot </label>
+                            </div>
+                            <div class="jsRadio pull-left">
+                                <input type="radio" value="4" name="product_option"
+                                        {{ (isset($product) && $product->product_option == 4) || (old('product_option') == 4) ? 'checked' : '' }}>
+                                <label><i></i> Promotion </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="product_price" class="required after">Price product</label>
@@ -209,7 +238,7 @@
                         <input type="number" class="form-control" name="product_weight"
                                placeholder="Product weight ..." value="{{ isset($product) && $product->product_weight ? $product->product_weight : old('product_weight') }}">
                         <div class="jsCheckBox pull-left" style="margin: 10px 0">
-                            <input type="checkbox" name="product_is_shipping" value="1" {{ (isset($product) && $product->product_is_shipping === 1 || old('product_is_shipping')) ? 'checked' : '' }}>
+                            <input type="checkbox" name="product_is_shipping" value="1" checked {{ (isset($product) && $product->product_is_shipping === 1 || old('product_is_shipping')) ? 'checked' : '' }}>
                             <label><i></i> Is shipping </label>
                         </div>
                         <div class="error error_product_weight {{ !$errors->has('product_weight') ? 'hidden' : '' }}">{{ $errors->has('product_weight') ? $errors->first('product_weight') : '' }}</div>
