@@ -93,8 +93,14 @@ let productRegisterJs = (function ($) {
             formHtml    += '<div class="row jsProductAttribute">'
                             + '<div class="productAttribute">'
                                 + '<div class="col-sm-3">'
-                                    + '<input type="text" class="form-control" name="attributes['+ count +'][attribute_name]"\n' +
-                '                                   placeholder="Example: Size or Color ..." value="">'
+                                    + '<select class="form-control product-attribute" name="attributes['+ count +'][attribute_name]">\n' +
+    '                                        <option value="" selected="selected">Please select a product attribute</option>\n' +
+    '                                        <option value="1">Color</option>\n' +
+    '                                        <option value="2">Ram</option>\n' +
+    '                                        <option value="3">Storage</option>\n' +
+    '                                        <option value="4">Size</option>\n' +
+    '                                        <option value="5">Materials</option>\n' +
+    '                                    </select>'
                                 + '</div>'
                                 + '<div class="col-sm-3">'
                                     + '<input type="text" class="form-control" name="attributes['+ count +'][attribute_item_name]"\n' +
