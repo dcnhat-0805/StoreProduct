@@ -38,9 +38,6 @@
                                 <button class="btn btn-custon-three btn-default addProductAttribute" type="button"
                                         title="Add new product attribute"><i class="fa fa-plus"></i>
                                 </button>
-                                <button class="btn btn-custon-three btn-default removeProductAttribute hide" type="button"
-                                        title="Add new product attribute"><i class="fa fa-minus" aria-hidden="true"></i></i>
-                                </button>
                             @endif
                         </div>
                     @endforeach
@@ -68,6 +65,9 @@
                         </div>
                         <button class="btn btn-custon-three btn-default addProductAttribute" type="button"
                                 title="Add new product attribute"><i class="fa fa-plus"></i>
+                        </button>
+                        <button class="btn btn-custon-three btn-default removeProductAttribute" type="button"
+                                title="Add new product attribute"><i class="fa fa-minus" aria-hidden="true"></i></i>
                         </button>
                     </div>
                 @endif
