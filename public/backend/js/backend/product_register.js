@@ -75,34 +75,64 @@ let productRegisterJs = (function ($) {
         });
     };
 
+    modules.reloadJsProductAttribute = function () {
+        let count = $('.jsProductAttribute').length;
+
+        $('.removeProductAttribute').first().show();
+
+        if (count === 1) {
+            $('.removeProductAttribute').first().hide();
+        }
+    };
+
     modules.addProductAttribute = function () {
-        $('.addProductAttribute').on('click', function () {
-            let parent = $(this).parent().next();
-            let next = $(this).next();
+        $(document).on('click', '.addProductAttribute', function () {
+            let count = $('.jsProductAttribute').length;
+            $('.addProductAttribute').hide();
+            let formHtml = '';
+            formHtml    += '<div class="row jsProductAttribute">'
+                            + '<div class="productAttribute">'
+                                + '<div class="col-sm-3">'
+                                    + '<input type="text" class="form-control" name="attributes['+ count +'][attribute_name]"\n' +
+                '                                   placeholder="Example: Size or Color ..." value="">'
+                                + '</div>'
+                                + '<div class="col-sm-3">'
+                                    + '<input type="text" class="form-control" name="attributes['+ count +'][attribute_item_name]"\n' +
+                '                                   placeholder="Example: M or L or XL ..." value="">'
+                                + '</div>'
+                                + '<div class="col-sm-3">'
+                                    + '<input type="number" class="form-control" name="attributes['+ count +'][attribute_price]"\n' +
+                '                                   placeholder="Product attribute price ..." value="">'
+                                + '</div>'
+                                + '<div class="col-sm-3">'
+                                    + '<div class="jsCheckBox pull-left">'
+                                        + '<input type="checkbox" name="attributes['+ count +'][is_filterable]" value="1">\n' +
+                '                                <label><i></i> </label>'
+                                    + '</div>'
+                                + '</div>'
+                            + '</div>'
+                            + '<button class="btn btn-custon-three btn-default addProductAttribute" type="button"\n' +
+                '                            title="Add new product attribute"><i class="fa fa-plus"></i>\n' +
+                '                    </button>'
+                            + '<button class="btn btn-custon-three btn-default removeProductAttribute" type="button"\n' +
+                '                            title="Add new product attribute"><i class="fa fa-minus" aria-hidden="true"></i></i>\n' +
+                '                    </button>'
+                        + '</div>';
 
-            $(parent).removeClass('hide');
-            $(next).removeClass('hide');
+            $('.formAddProductAttribute').append(formHtml);
 
-            $(this).addClass('hide');
+            $('.formAddProductAttribute').find('.jsCheckBox').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+            });
+
+            modules.reloadJsProductAttribute();
         });
 
-        $('.removeProductAttribute').on('click', function () {
-            let parent = $('.jsProductAttribute.hide:first').prev();
-            let parent_thump = $('.jsProductAttribute:last');
-            let next = $(this).prev();
+        $(document).on('click', '.removeProductAttribute', function () {
+            $(this).parent().remove();
 
-            $(parent).addClass('hide');
-            $(parent).prev().children().next().removeClass('hide');
-            $(parent).prev().children().next().next().addClass('hide');
-
-            if (!parent.length) {
-                $(parent_thump).addClass('hide');
-                $(parent_thump).prev().children().next().removeClass('hide');
-                $(parent_thump).prev().children().next().next().addClass('hide');
-            }
-
-            $(this).addClass('hide');
-            $(next).removeClass('hide');
+            $(".addProductAttribute").last().show();
+            modules.reloadJsProductAttribute();
         });
     };
 
@@ -115,6 +145,8 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
+
+    productRegisterJs.reloadJsProductAttribute();
 
     Dropzone.autoDiscover = false;
 

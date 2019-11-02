@@ -53,7 +53,7 @@ display:none;
     /*height: 200px;*/
 }
 .flex-active-slide > .thumb-image > img {
-    width: 90%;
+    width: 100%;
     border: 1px solid #D1CFCF;
     box-shadow: 0px 1px 5px rgba(0,0,0,0.1);
 }
@@ -206,16 +206,18 @@ html[xmlns] .flexslider .slides {
 	margin:0;
 }
 .flex-control-thumbs img {
-  width: 100%;
-  height: auto;
-  display: block;
-  opacity: .7;
-  cursor: pointer;
-  -webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -ms-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  transition: all 1s ease;
+    width: 100%;
+    height: 60px;
+    overflow: hidden;
+    object-fit: cover;
+    display: block;
+    opacity: .7;
+    cursor: pointer;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -ms-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
     border: 1px solid #D1CFCF;
 }
 .flex-control-thumbs img:hover {

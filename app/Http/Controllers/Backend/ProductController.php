@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Helpers\Helper;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\ProductCategory;
 use App\Models\ProductImage;
 use App\Models\ProductType;
@@ -25,12 +26,12 @@ class ProductController extends Controller
      */
     public function index()
     {
+        $params = request()->all();
         $category = Category::getOptionCategory();
         $productCategories = ProductCategory::getOptionProductCategory();
         $productTypes = ProductType::getOptionProductType();
-        $products = Product::getListAllProduct();
+        $products = Product::getListAllProduct($params);
 
-        $params = request()->all();
         if (!count($products) && isset($params['page']) && $params['page']) {
             $route = Helper::isHasDataByPages($products);
 
@@ -114,6 +115,10 @@ class ProductController extends Controller
             if (isset($input['image_list']) && $input['image_list']) {
                 ProductImage::createProductImage($input, $product->id);
             }
+
+            if (isset($input['attributes']) && $input['attributes']) {
+                ProductAttribute::createProductAttribute($input, $product->id);
+            }
             Product::commit();
             Session::flash("success", trans("messages.product.create_success"));
         } else {
@@ -149,6 +154,7 @@ class ProductController extends Controller
         $product = Product::showProduct($id);
         $product->product_image = Helper::getDataImage(FILE_PATH_PRODUCT, $product->product_image);
         $product->product_image_list = Helper::getDataImageList(FILE_PATH_PRODUCT_IMAGE, ProductImage::getDataImageByProductId($id));
+        $product->product_attribute = ProductAttribute::getProductAttributeByProductId($id);
 
         return view('backend.pages.product.edit', compact('category', 'productCategories', 'productTypes', 'product'));
     }
@@ -169,6 +175,10 @@ class ProductController extends Controller
         if ($product) {
             if (isset($input['image_list']) && $input['image_list']) {
                 ProductImage::createProductImage($input, $id);
+            }
+
+            if (isset($input['attributes']) && $input['attributes']) {
+                ProductAttribute::createProductAttribute($input, $id);
             }
             Product::commit();
             Session::flash("success", trans("messages.product.create_success"));
@@ -211,6 +221,7 @@ class ProductController extends Controller
             Product::beginTransaction();
             if ($product->delete()) {
                 ProductImage::deleteProductImageByProductId($id);
+                ProductAttribute::deleteProductAttributeByProductId($id);
                 Product::commit();
                 Session::flash("success", trans("messages.product.delete_success"));
 
@@ -231,8 +242,9 @@ class ProductController extends Controller
             Product::beginTransaction();
             try {
                 Product::destroy($request->get('ids'));
-                Product::commit();
                 ProductImage::deleteProductImageByArrayProductId($request->get('ids'));
+                ProductAttribute::deleteProductAttributeByArrayProductId($request->get('ids'));
+                Product::commit();
                 Session::flash("success", trans("messages.product.delete_success"));
             } catch (\Exception $e) {
                 Product::rollBack();
