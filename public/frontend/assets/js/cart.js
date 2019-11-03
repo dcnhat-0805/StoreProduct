@@ -13,13 +13,18 @@ $.ajaxSetup({
 let CartJs = (function ($) {
     let modules = {};
 
-    modules.addToCart = function (productId) {
+    modules.addToCart = function (productId, quantity, color = null, size = null, storage = null, material = null) {
         $.ajax({
             url : '/cart/addCart/' + productId,
             dataType : 'JSON',
             type : 'GET',
             data : {
-                id : productId
+                id : productId,
+                quantity : quantity,
+                color : color,
+                size : size,
+                storage : storage,
+                material : material,
             },
             success : function (data) {
                 let countCart = data['countCart'];
@@ -198,8 +203,13 @@ $(document).ready(function () {
 
     btnAddToCart.on('click', function () {
        let productId = $(this).data('id');
+        let quantity = $('input[name=quantity]').val();
+        let color = $('.color-item.active').data('color');
+        let size = $('.size-item.active').data('size');
+        let storage = $('.storage-item.active').data('storage');
+        let material = $('.material-item.active').data('material');
 
-       CartJs.addToCart(productId);
+        CartJs.addToCart(productId, quantity, color, size, storage, material);
     });
 
     CartJs.reloadSelectAllCheckBox();

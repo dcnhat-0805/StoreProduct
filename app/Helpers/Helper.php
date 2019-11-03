@@ -228,8 +228,8 @@ class Helper
         $quantity = 1;
         $price = $product->product_price;
 
-        if (isset($request->quantity) && $request->quantity) {
-            $quantity = $request->quantity;
+        if (isset($request['quantity']) && $request['quantity']) {
+            $quantity = $request['quantity'];
         }
 
         if($product->product_promotion > 0){
@@ -245,6 +245,10 @@ class Helper
                 'image' => $product->product_image,
                 'promotion' => $product->product_promotion > 0 ? $product->product_price : null,
                 'description' => $product->product_description,
+                'color' => $request['color'],
+                'storage' => $request['storage'],
+                'size' => $request['size'],
+                'material' => $request['material'],
             ]
         ];
 

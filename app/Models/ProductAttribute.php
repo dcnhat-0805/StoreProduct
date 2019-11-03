@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ProductAttribute extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
     protected $table = 'product_attributes';
 
@@ -16,14 +16,13 @@ class ProductAttribute extends Model
         'attribute_code',
         'attribute_name',
         'attribute_item_name',
-        'attribute_price',
         'is_filterable',
     ];
 
     protected $dates = [
         'created_at',
         'updated_at',
-        'deleted_at'
+//        'deleted_at'
     ];
 
     public function product() {
@@ -32,28 +31,31 @@ class ProductAttribute extends Model
 
     public static function createProductAttribute($requests, $product_id)
     {
+        $attributesThump = self::getProductAttributeByProductId($product_id);
+        if (count($attributesThump)) {
+            self::deleteProductAttributeByProductId($product_id);
+        }
+
         foreach ($requests['attributes'] as $key => $request) {
             $attributes = self::firstOrNew([
                 'product_id' => $product_id,
                 'attribute_code' => isset($request['attribute_code']) && $request['attribute_code'] ? $request['attribute_code'] : 'SOP-'. uniqid() . '-' . time(),
                 'attribute_name' => $request['attribute_name'],
                 'attribute_item_name' => $request['attribute_item_name'],
-                'attribute_price' => $request['attribute_price'],
                 'is_filterable' => isset($request['is_filterable']) ? $request['is_filterable'] : 0,
             ]);
 
-            $attributes->save();
+            $attributes->touch();
         }
     }
 
     public static function getProductAttributeByProductId($productId)
     {
         $attributes = self::where('product_id', $productId)
-                        ->whereNull('product_attributes.deleted_at')
+//                        ->whereNull('product_attributes.deleted_at')
                         ->select('product_attributes.attribute_code',
                          'product_attributes.attribute_name',
                          'product_attributes.attribute_item_name',
-                         'product_attributes.attribute_price',
                          'product_attributes.is_filterable')
                         ->join('products', 'products.id', '=', 'product_attributes.product_id')
                         ->orderBy('product_attributes.id')

@@ -62,6 +62,28 @@
                                                 <div class="cart-product-name col-sm-10 text-left">
                                                     <a href="">{{ $cart->name }}</a>
                                                 </div>
+                                                <div class="col-sm-10">
+                                                    @if($cart->options->color)
+                                                        <div data-color="{{ $cart->options->color }}"
+                                                             style="background-color: {{ $cart->options->color }};"
+                                                             class="attribute-item size-item size"></div>
+                                                    @endif
+                                                    @if($cart->options->size)
+                                                        <div data-size="{{ $cart->options->size }}"
+                                                             style="background-color: #fff;"
+                                                             class="attribute-item size-item size">{{ $cart->options->size }}</div>
+                                                    @endif
+                                                    @if($cart->options->storage)
+                                                        <div data-storage="{{ $cart->options->storage }}"
+                                                             style="background-color: #fff;"
+                                                             class="attribute-item size-item size">{{ $cart->options->storage }}</div>
+                                                    @endif
+                                                    @if($cart->options->material)
+                                                        <div data-material="{{ $cart->options->material }}"
+                                                             style="background-color: #fff;"
+                                                             class="attribute-item size-item size">{{ $cart->options->material }}</div>
+                                                    @endif
+                                                </div>
                                             </td>
                                             <td class="text-center">
                                                 <div class="cart-price">

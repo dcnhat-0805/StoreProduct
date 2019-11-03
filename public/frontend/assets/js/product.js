@@ -7,7 +7,7 @@ $(document).ready(function () {
     function scrollToTop() {
         $([document.documentElement, document.body]).animate({
             scrollTop: $("html body").offset().top
-        }, 1000);
+        }, 100);
     }
 
     $("#slider-range").slider({
@@ -85,6 +85,10 @@ $(document).ready(function () {
         checkboxClass: 'icheckbox_square-green',
     });
 
+    $('.jsRadio').iCheck({
+        radioClass: 'iradio_square-green',
+    });
+
 
     $('.jsFlexSlider').flexslider({
         animation: "slide",
@@ -102,11 +106,11 @@ $(document).ready(function () {
 });
 
 jQuery(document).ready(function ($) {
-    $(".scroll").on('click', function (event) {
-        event.preventDefault();
-
-        $('html,body').animate({
-            scrollTop: $(this.hash).offset().top
-        }, 1000);
-    });
+    // $(".scroll").on('click', function (event) {
+    //     event.preventDefault();
+    //
+    //     $('html,body').animate({
+    //         scrollTop: $(this.hash).offset().top
+    //     }, 1000);
+    // });
 });

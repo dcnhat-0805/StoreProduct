@@ -98,8 +98,12 @@ const IMAGE_RESIZE_PREFIX = 'resize-';
 const PRODUCT_ATTRIBUTE = [
     '' => 'Please select a product attribute',
     '1' => 'Color',
-    '2' => 'Ram',
-    '3' => 'Storage',
-    '4' => 'Size',
-    '5' => 'Materials',
+    '2' => 'Storage',
+    '3' => 'Size',
+    '4' => 'Materials',
 ];
+
+const COLOR = 1;
+const STORAGE = 2;
+const SIZE = 3;
+const MATERIALS = 4;
