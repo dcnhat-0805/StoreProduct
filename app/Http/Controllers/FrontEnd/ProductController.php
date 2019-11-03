@@ -5,6 +5,7 @@ namespace App\Http\Controllers\FrontEnd;
 use App\Helpers\Helper;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductAttribute;
 use App\Models\ProductCategory;
 use Cart;
 use Illuminate\Http\Request;
@@ -34,6 +35,8 @@ class ProductController extends Controller
     {
         $titleName = ProductCategory::getNameAndSlugBySlug($slug);
         $product = Product::getProductBySlugAndId($id, $slug);
+        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
+//        dd($product->attribute);
         $titleName['product_name'] = $product->product_name;
 
         return view('frontend.pages.product.detail', compact('titleName', 'product'));

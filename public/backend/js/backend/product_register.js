@@ -92,27 +92,22 @@ let productRegisterJs = (function ($) {
             let formHtml = '';
             formHtml    += '<div class="row jsProductAttribute">'
                             + '<div class="productAttribute">'
-                                + '<div class="col-sm-3">'
+                                + '<div class="col-sm-5">'
                                     + '<select class="form-control product-attribute" name="attributes['+ count +'][attribute_name]">\n' +
     '                                        <option value="" selected="selected">Please select a product attribute</option>\n' +
     '                                        <option value="1">Color</option>\n' +
-    '                                        <option value="2">Ram</option>\n' +
-    '                                        <option value="3">Storage</option>\n' +
-    '                                        <option value="4">Size</option>\n' +
-    '                                        <option value="5">Materials</option>\n' +
+    '                                        <option value="2">Storage</option>\n' +
+    '                                        <option value="3">Size</option>\n' +
+    '                                        <option value="4">Materials</option>\n' +
     '                                    </select>'
                                 + '</div>'
-                                + '<div class="col-sm-3">'
+                                + '<div class="col-sm-5">'
                                     + '<input type="text" class="form-control" name="attributes['+ count +'][attribute_item_name]"\n' +
                 '                                   placeholder="Example: M or L or XL ..." value="">'
                                 + '</div>'
-                                + '<div class="col-sm-3">'
-                                    + '<input type="number" class="form-control" name="attributes['+ count +'][attribute_price]"\n' +
-                '                                   placeholder="Product attribute price ..." value="">'
-                                + '</div>'
-                                + '<div class="col-sm-3">'
+                                + '<div class="col-sm-2">'
                                     + '<div class="jsCheckBox pull-left">'
-                                        + '<input type="checkbox" name="attributes['+ count +'][is_filterable]" value="1">\n' +
+                                        + '<input type="checkbox" name="attributes['+ count +'][is_filterable]" checked value="1">\n' +
                 '                                <label><i></i> </label>'
                                     + '</div>'
                                 + '</div>'

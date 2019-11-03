@@ -23,10 +23,10 @@ class CreateProductAttributesTable extends Migration
 //                ->onDelete('cascade')->onUpdate('cascade');
             $table->string('attribute_name')->nullable();
             $table->string('attribute_item_name')->nullable();
-            $table->string('attribute_price')->nullable();
+//            $table->string('attribute_price')->nullable();
             $table->integer('is_filterable')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+//            $table->softDeletes();
         });
     }
 

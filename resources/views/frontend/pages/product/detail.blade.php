@@ -62,52 +62,83 @@
 						<input id="rating1" type="radio" name="rating" value="1">
 						<label for="rating1">1</label>
 					</span>
-                </div>
-                <p>
-                    <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion) }}</span>
-                    <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
-                </p>
-{{--                <div class="single-infoagile">--}}
-{{--                    <ul>--}}
-{{--                        <li>--}}
-{{--                            Cash on Delivery Eligible.--}}
-{{--                        </li>--}}
-{{--                        <li>--}}
-{{--                            Shipping Speed to Delivery.--}}
-{{--                        </li>--}}
-{{--                        <li>--}}
-{{--                            Sold and fulfilled by Supple Tek (3.6 out of 5 | 8 ratings).--}}
-{{--                        </li>--}}
-{{--                        <li>--}}
-{{--                            1 offer from--}}
-{{--                            <span class="item_price">$950.00</span>--}}
-{{--                        </li>--}}
-{{--                    </ul>--}}
-{{--                </div>--}}
-                <div class="product-single-w3l">
-                    <p>
-                        <input class="jsQuantity quantity" type="text" name="quantity">
-                    </p>
-                </div>
-                <div class="occasion-cart">
-                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                        <form action="#" method="post">
-                            <fieldset>
-                                <input type="hidden" name="cmd" value="_cart" />
-                                <input type="hidden" name="add" value="1" />
-                                <input type="hidden" name="business" value=" " />
-                                <input type="hidden" name="item_name" value="Zeeba Premium Basmati Rice - 5 KG" />
-                                <input type="hidden" name="amount" value="950.00" />
-                                <input type="hidden" name="discount_amount" value="1.00" />
-                                <input type="hidden" name="currency_code" value="USD" />
-                                <input type="hidden" name="return" value=" " />
-                                <input type="hidden" name="cancel_return" value=" " />
-                                <input type="submit" name="submit" value="Add to cart" class="button" />
-                            </fieldset>
-                        </form>
                     </div>
+                    <p>
+                        <span class="item_price product-price-item">{{ App\Helpers\Helper::loadMoney($product->product_promotion) }}</span>
+                        <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
+                    </p>
 
-                </div>
+                    @if(count($product->attribute))
+                        <?php
+                            $colors = $product->attribute->where('attribute_name', COLOR);
+                            $storages = $product->attribute->where('attribute_name', STORAGE);
+                            $sizes = $product->attribute->where('attribute_name', SIZE);
+                            $materials = $product->attribute->where('attribute_name', MATERIALS);
+                        ?>
+                        @if(count($colors))
+                            <div class="attribute-list">
+                                <p>
+                                <div class="label-attribute">Color Family</div>
+                                @foreach($colors as $key => $color)
+                                    <div data-color="{{ $color->attribute_item_name }}"
+                                         style="background-color: {{ $color->attribute_item_name }};"
+                                         class="attribute-item color-item color"></div>
+                                    @endforeach
+                                </p>
+                            </div>
+                        @endif
+                        @if(count($sizes))
+                            <div class="attribute-list">
+                                <p>
+                                <div class="label-attribute">Size</div>
+                                @foreach($sizes as $key => $size)
+                                    <div data-size="{{ $size->attribute_item_name }}"
+                                         style="background-color: #fff;"
+                                         class="attribute-item size-item size">{{ $size->attribute_item_name }}</div>
+                                    @endforeach
+                                </p>
+                            </div>
+                        @endif
+                        @if(count($storages))
+                            <div class="attribute-list">
+                                <p>
+                                <div class="label-attribute">Storage Capacity</div>
+                                @foreach($storages as $key => $storage)
+                                    <div data-storage="{{ $storage->attribute_item_name }}"
+                                         style="background-color: #fff;"
+                                         class="attribute-item storage-item storage">{{ $storage->attribute_item_name }}</div>
+                                    @endforeach
+                                </p>
+                            </div>
+                        @endif
+                        @if(count($materials))
+                            <div class="attribute-list">
+                                <p>
+                                <div class="label-attribute">Storage Capacity</div>
+                                @foreach($materials as $key => $material)
+                                    <div data-material="{{ $material->attribute_item_name }}"
+                                         style="background-color: #fff;"
+                                         class="attribute-item material-item material">{{ $material->attribute_item_name }}</div>
+                                    @endforeach
+                                </p>
+                            </div>
+                        @endif
+                    @endif
+
+                    <div class="product-single-w3l">
+                        <p>
+                            <input class="jsQuantity quantity" type="text" name="quantity">
+                        </p>
+                    </div>
+                    <div class="occasion-cart">
+                        <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                            <button type="button" class="button btn btn-custon-three btn-primary add-to-cart" data-id="{{ $product->id }}"
+                                    style="width: 100%; font-size: 20px">
+                                Add to cart
+                            </button>
+                        </div>
+
+                    </div>
 
             </div>
             <div class="clearfix"> </div>
@@ -412,4 +443,5 @@
 
     <!-- imagezoom -->
     <script src="frontend/assets/js/imagezoom.js"></script>
+    <script src="frontend/assets/js/detail.js"></script>
 @endsection
