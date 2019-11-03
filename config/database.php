@@ -2,7 +2,6 @@
 
 return [
 
-    $DATABASE_URL=parse_url('postgres://hyuqkdcvnnmyic:45b954fb4dc178b21765cc1e59300981bdec8b6ad5588b8706e653bd5f3e966e@ec2-54-243-44-102.compute-1.amazonaws.com:5432/d1i2df1116bljg'),
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name
@@ -42,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
+            'host' => env('DB_HOST', 'db4free.net'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'forge'),
-            'username' => env('DB_USERNAME', 'forge'),
-            'password' => env('DB_PASSWORD', ''),
+            'database' => env('DB_DATABASE', 'store_online'),
+            'username' => env('DB_USERNAME', 'store_online'),
+            'password' => env('DB_PASSWORD', 'Hanhnhat97'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
