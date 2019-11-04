@@ -242,6 +242,7 @@ let Commons = (function ($) {
                     }
 
                     $('.' + className).text('');
+                    $("button.btn-success").prop('disabled', true);
                 });
             }
         });
