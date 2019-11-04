@@ -6,6 +6,7 @@ use App\Models\Category;
 use Illuminate\Support\ServiceProvider;
 use App\Services\UploadService;
 use Cart;
+use URL;
 use function foo\func;
 
 class AppServiceProvider extends ServiceProvider
@@ -17,6 +18,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        URL::forceScheme('https');
+
         //Category
         view()->composer('frontend.layouts.menu', function ($view) {
             $categories = Category::getMenuCategory();
