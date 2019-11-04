@@ -137,9 +137,11 @@ class AdminController extends Controller
 
         if (count($admin)) {
             foreach ($admin as $ad) {
-                $data[] = [
-                    'id' => $ad->id
-                ];
+                if ($ad->id !== ADMIN) {
+                    $data[] = [
+                        'id' => $ad->id
+                    ];
+                }
             }
         }
 
@@ -152,8 +154,10 @@ class AdminController extends Controller
 
         if ($user->can('deleteAdmin', Admin::class)) {
             try {
-                Admin::destroy($request->input('ids'));
-                Session::flash("success", trans("messages.admin.delete_success"));
+                if ($request->input('ids') != ADMIN) {
+                    Admin::destroy($request->input('ids'));
+                    Session::flash("success", trans("messages.admin.delete_success"));
+                }
             } catch (\Exception $e) {
                 Session::flash("error", trans("messages.admin.delete_failed"));
             }
