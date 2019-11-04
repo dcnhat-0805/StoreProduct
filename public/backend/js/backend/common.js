@@ -230,7 +230,7 @@ let Commons = (function ($) {
     };
 
     $("button.btn-success").on('click', function () {
-        $("button.btn-success").prop('disabled', true);
+        $(this).prop('disabled', true);
     });
 
     modules.formValidation = function (url, formId, summerNoteId = null) {
@@ -246,6 +246,7 @@ let Commons = (function ($) {
                     }
 
                     $('.' + className).text('');
+                    $('.error').text('');
                     $("button.btn-success").prop('disabled', false);
                 });
             }
