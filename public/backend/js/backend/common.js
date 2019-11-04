@@ -229,6 +229,10 @@ let Commons = (function ($) {
         });
     };
 
+    $("button.btn-success").on('click', function () {
+        $("button.btn-success").prop('disabled', true);
+    });
+
     modules.formValidation = function (url, formId, summerNoteId = null) {
         $(formId).each(function (index, value) {
             for (let i=0; i < value.length; i++) {
@@ -242,7 +246,7 @@ let Commons = (function ($) {
                     }
 
                     $('.' + className).text('');
-                    $("button.btn-success").prop('disabled', true);
+                    $("button.btn-success").prop('disabled', false);
                 });
             }
         });
