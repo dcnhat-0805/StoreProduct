@@ -20,7 +20,7 @@ let productCategoryJs = (function ($) {
             data: data,
             success : function (data) {
                 btnAddProductCategory.prop('disabled', true);
-                location.reload();
+                window.window.location.reload();
             },
             error : function (data) {
                 let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
@@ -60,7 +60,7 @@ let productCategoryJs = (function ($) {
             data: data,
             success : function (data) {
                 btnUpdateProductCategory.prop('disabled', true);
-                location.reload();
+                window.location.reload();
             },
             error : function (data) {
                 let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
@@ -89,10 +89,10 @@ let productCategoryJs = (function ($) {
             },
             success : function (data) {
                 btnDeleteProductCategory.prop('disabled', true);
-                location.reload();
+                window.location.reload();
             },
             error : function (data) {
-                location.reload();
+                window.location.reload();
             }
         });
     };
@@ -184,10 +184,10 @@ let productCategoryJs = (function ($) {
             success : function (data) {
                 Commons.removeLocalStorage(PRODUCT_CATEGORY_IDS);
                 Commons.removeLocalStorage(PRODUCT_CATEGORY_DELETE_ALL);
-                location.reload();
+                window.location.reload();
             },
             error : function (data) {
-                location.reload();
+                window.location.reload();
             }
         });
     };
