@@ -201,6 +201,8 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
+    $("button.btn-success").prop('disabled', true);
+
     productCategoryJs.reloadSelectAllCheckBox();
 
     btnAddProductCategory.on('click', function () {
