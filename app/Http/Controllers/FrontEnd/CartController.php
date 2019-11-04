@@ -102,7 +102,7 @@ class CartController extends Controller
     {
         $carts = [];
 
-        if (count($arrRowId)) {
+        if (isset($arrRowId) && $arrRowId) {
             foreach ($arrRowId as $rowId) {
                 array_push($carts, Cart::get($rowId));
             }

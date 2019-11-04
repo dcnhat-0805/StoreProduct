@@ -72,8 +72,10 @@
                                                         </a>
                                                     </h4>
                                                     <div class="info-product-price">
-                                                        <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion) }}</span>
-                                                        <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
+                                                        <span class="item_price">{{ App\Helpers\Helper::loadMoney(isset($product->product_promotion) && $product->product_promotion ? $product->product_promotion : $product->product_price) }}</span>
+                                                        @if(isset($product->product_promotion) && $product->product_promotion)
+                                                            <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
+                                                        @endif
                                                     </div>
                                                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                                                         <button type="button" class="button btn btn-custon-three btn-primary add-to-cart" data-id="{{ $product->id }}"
