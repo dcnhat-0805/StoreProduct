@@ -27,6 +27,7 @@ let CartJs = (function ($) {
                 material : material,
             },
             success : function (data) {
+                btnAddToCart.prop('disabled', false);
                 let countCart = data['countCart'];
                 $('.cart_count > span').text(countCart);
 
@@ -202,6 +203,7 @@ let CartJs = (function ($) {
 $(document).ready(function () {
 
     btnAddToCart.on('click', function () {
+        $(this).prop('disabled', true);
        let productId = $(this).data('id');
         let quantity = $('input[name=quantity]').val();
         let color = $('.color-item.active').data('color');

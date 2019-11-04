@@ -290,4 +290,5 @@
     @if ($user->cannot('updateProductType', App\Models\ProductType::class))
         <script src="{{ App\Helpers\Helper::asset('backend/js/backend/disabled_checkbox.js') }}"></script>
     @endif
+    <script src="{{ App\Helpers\Helper::asset('backend/js/backend/disabled_button_submit.js') }}"></script>
 @endsection
