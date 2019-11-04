@@ -41,11 +41,11 @@ return [
 
         'mysql' => [
             'driver' => 'mysql',
-            'host' => env('DB_HOST', 'db4free.net'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'store_online'),
-            'username' => env('DB_USERNAME', 'store_online'),
-            'password' => env('DB_PASSWORD', 'Hanhnhat97'),
+            'host' => env('DB_HOST', 'ec2-23-21-87-183.compute-1.amazonaws.com'),
+            'port' => env('DB_PORT', '5432'),
+            'database' => env('DB_DATABASE', 'd4tuamcm2s7gc1'),
+            'username' => env('DB_USERNAME', 'kryvolwpgmwswb'),
+            'password' => env('DB_PASSWORD', '2f15b42b3eeab082bfa09a4315dd14a434c5154693d4014fdacd8e152fdc61ac'),
             'unix_socket' => env('DB_SOCKET', ''),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
