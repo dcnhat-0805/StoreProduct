@@ -201,11 +201,11 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
-    $("button.btn-success").prop('disabled', true);
 
     productCategoryJs.reloadSelectAllCheckBox();
 
     btnAddProductCategory.on('click', function () {
+        $(this).prop('disabled', true);
         $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#createProductCategory').serialize();
@@ -213,6 +213,7 @@ $(document).ready(function () {
     });
 
     btnUpdateProductCategory.on('click', function () {
+        $(this).prop('disabled', true);
         $('input[name=submit]').val(SUBMIT);
         $(this).button('Loading');
         let data = $('#editProductCategory').serialize();
@@ -222,6 +223,7 @@ $(document).ready(function () {
     });
 
     btnDeleteProductCategory.on('click', function () {
+        $(this).prop('disabled', true);
         $(this).button('Loading');
         let id = $('#productCategoryId').val();
         let url = $('#urlDelete').val();
@@ -242,11 +244,13 @@ $(document).ready(function () {
     });
 
     btnClear.on('click', function () {
+        $(this).prop('disabled', true);
         Commons.removeLocalStorage(PRODUCT_CATEGORY_IDS);
         Commons.removeLocalStorage(PRODUCT_CATEGORY_DELETE_ALL);
     });
 
     btnSearch.on('click', function () {
+        $(this).prop('disabled', true);
         Commons.removeLocalStorage(PRODUCT_CATEGORY_IDS);
         Commons.removeLocalStorage(PRODUCT_CATEGORY_DELETE_ALL);
     });
