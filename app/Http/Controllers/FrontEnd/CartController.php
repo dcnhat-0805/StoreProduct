@@ -34,7 +34,7 @@ class CartController extends Controller
             DB::beginTransaction();
             if (Cart::add($cart)) {
 
-                Cart::store($cart['id']);
+                Cart::store($id);
                 DB::commit();
 //                Session::flash("success", trans("messages.front_end.cart.add_cart_success"));
                 return response()->json(['countCart' => Cart::count(), 'success' => trans("messages.front_end.cart.add_cart_success")], 200);

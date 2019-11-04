@@ -27,6 +27,7 @@ let CartJs = (function ($) {
                 material : material,
             },
             success : function (data) {
+                console.log(data);
                 btnAddToCart.prop('disabled', false);
                 let countCart = data['countCart'];
                 $('.cart_count > span').text(countCart);
