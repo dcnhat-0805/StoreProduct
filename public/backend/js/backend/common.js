@@ -268,6 +268,7 @@ let Commons = (function ($) {
                 $(this).parent().parent().parent().parent().parent().parent().parent().next().children().children().children().children().prop('disabled', false).trigger("chosen:updated");
                 $('.error_' + name).text('');
             }
+            $("button.btn-success").prop('disabled', false);
         });
 
         if (summerNoteId) {
@@ -281,6 +282,7 @@ let Commons = (function ($) {
                 } else {
                     $('.' + className).text('');
                 }
+                $("button.btn-success").prop('disabled', false);
             });
         }
     };

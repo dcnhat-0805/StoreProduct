@@ -11,15 +11,16 @@ const MAX_ATTRIBUTE = 3;
 let productRegisterJs = (function ($) {
     let modules = {};
 
-    modules.createProduct = function(data) {
+    modules.createProduct = function(url, data) {
         $.ajax({
-            url : 'admin/product/add',
+            url : url,
             dataType : 'JSON',
             type : 'POST',
             data: data,
             success : function (data) {
                 btnAddProduct.prop('disabled', true);
                 // location.reload();
+                window.location.href = '/admin/product/';
             },
             error : function (data) {
                 let error = (typeof data['responseJSON'] !== 'undefined') ? data['responseJSON'].errors : [];
@@ -460,6 +461,10 @@ $(document).ready(function () {
         $(this).button('Loading');
 
         $('input[name=submit]').val(SUBMIT);
+        let formData = $('#createProduct').serialize();
+        let url = $('#createProduct').attr('action');
+        console.log(formData, url);
+        productRegisterJs.createProduct(url, formData);
     });
 
     productRegisterJs.addProductAttribute();

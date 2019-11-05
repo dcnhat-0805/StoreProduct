@@ -18,7 +18,6 @@
 {{--        @include('backend.layouts.error')--}}
 
         {{ Form::model($product, ['route' => $route, 'role' => 'form', 'enctype' => 'multipart/form-data', 'id' => 'createProduct']) }}
-
             @if(isset($is_page_edit))
                 <div class="row">
                     <div class="col-sm-12">
