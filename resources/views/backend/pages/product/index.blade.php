@@ -71,7 +71,7 @@
                                     <td class="">{{ $product->category->category_name }}</td>
                                     <td class="">{{ $product->productCategory->product_category_name }}</td>
                                     <td class="">{{ $product->product_type_id ? $product->productType->product_type_name : '' }}</td>
-                                    <td class="">{{ $product->product_name }}</td>
+                                    <td class="">{{ nl2br(e($product->product_name)) }}</td>
                                     <td class="">
                                         <img class="product-image text-center" src="{{ FILE_PATH_PRODUCT .  $product->product_image }}" alt="">
                                         <div class="list-image">

@@ -463,8 +463,8 @@ $(document).ready(function () {
         $('input[name=submit]').val(SUBMIT);
         let formData = $('#createProduct').serialize();
         let url = $('#createProduct').attr('action');
-        console.log(formData, url);
-        productRegisterJs.createProduct(url, formData);
+        // console.log(formData, url);
+        // productRegisterJs.createProduct(url, formData);
     });
 
     productRegisterJs.addProductAttribute();

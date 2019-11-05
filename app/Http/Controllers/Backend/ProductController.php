@@ -126,8 +126,8 @@ class ProductController extends Controller
 //                    Session::flash("error", trans("messages.product.create_failed"));
         }
 
-        return response()->json(true);
-//        return redirect()->route(ADMIN_PRODUCT_INDEX);
+//        return response()->json(true);
+        return redirect()->route(ADMIN_PRODUCT_INDEX);
     }
 
     /**
