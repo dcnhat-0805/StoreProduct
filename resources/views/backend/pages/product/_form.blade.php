@@ -271,11 +271,11 @@
             <div class="modal-footer form_footer">
                 <input type="hidden" name="submit">
                 @if(isset($is_page_register))
-                <button type="submit" class="btn btn-custon-three btn-success add-category" id="btnAddProduct"><i
+                <button type="submit" class="btn btn-custon-three btn-success add-category product" id="btnAddProduct"><i
                         class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Add
                 </button>
                 @else
-                    <button type="submit" class="btn btn-custon-three btn-success" id="btnUpdateProduct"><i
+                    <button type="submit" class="btn btn-custon-three btn-success product" id="btnUpdateProduct"><i
                             class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Update
                     </button>
                 @endif
