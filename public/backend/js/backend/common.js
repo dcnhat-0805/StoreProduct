@@ -229,10 +229,6 @@ let Commons = (function ($) {
         });
     };
 
-    $("button.btn-success").on('click', function () {
-        $(this).prop('disabled', true);
-    });
-
     modules.formValidation = function (url, formId, summerNoteId = null) {
         $(formId).each(function (index, value) {
             for (let i=0; i < value.length; i++) {
@@ -246,8 +242,6 @@ let Commons = (function ($) {
                     }
 
                     $('.' + className).text('');
-                    $('.error').text('');
-                    $("button.btn-success").prop('disabled', false);
                 });
             }
         });
@@ -268,7 +262,6 @@ let Commons = (function ($) {
                 $(this).parent().parent().parent().parent().parent().parent().parent().next().children().children().children().children().prop('disabled', false).trigger("chosen:updated");
                 $('.error_' + name).text('');
             }
-            $("button.btn-success").prop('disabled', false);
         });
 
         if (summerNoteId) {
@@ -282,7 +275,6 @@ let Commons = (function ($) {
                 } else {
                     $('.' + className).text('');
                 }
-                $("button.btn-success").prop('disabled', false);
             });
         }
     };
