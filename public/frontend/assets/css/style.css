@@ -2871,11 +2871,15 @@ img.pp-img {
     font-weight: 400;
     margin: 10px 0;
 }
-a.btn.btn-primary {
+a.btn.btn-primary:not(.cart-list) {
     background-color: #3a5795;
     font-family: 'Open Sans', sans-serif;
     color: #fff;
     border: none;
+}
+
+a.btn.btn-primary.cart-list {
+    color: #fff !important;
 }
 
 .vertical_post h5 {
