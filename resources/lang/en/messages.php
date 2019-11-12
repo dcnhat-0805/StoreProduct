@@ -15,6 +15,7 @@ return [
     'login' => [
         'login_success' => 'Login successfully.',
         'login_failed' => 'Login failed. Please re-enter your account.',
+        'login_social_failed' => 'Login failed.',
         'login_admin' => 'Please enter your account.',
         'logout_success' => 'Log out successfully.',
         'required' => ':attribute cannot be left blank.',
@@ -68,6 +69,61 @@ return [
             'required' => ':attribute cannot be left blank.',
             'min' => ':attribute must be at least 8 characters.',
             'regex' => ' must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.'
+        ],
+        'confirm_password' => [
+            'required' => ':attribute cannot be left blank.',
+            'same' => ':attribute does not match the password entered.',
+        ],
+        'role' => [
+            'required' => 'Please select an admin permission.',
+        ],
+    ],
+
+    'users' => [
+        'create_success' => 'Account registration successful! A confirmation email has been sent to the email you registered. Please activate your account.',
+        'create_failed' => 'Unsuccessfully add new user.',
+        'accept_success' => 'Account verification successful.',
+        'accept_failed' => 'Account verification unsuccessful.',
+        'not_accept' => 'Your account has not been activated. Please check your email and activate your account.',
+        'update_success' => 'Successfully edit user.',
+        'update_failed' => 'Unsuccessfully edit user.',
+        'delete_success' => 'Successfully delete user.',
+        'delete_failed' => 'Unsuccessfully delete user.',
+        'login_success' => 'Login successfully.',
+        'login_failed' => 'Login failed. Please re-enter your account.',
+        'login_user' => 'Please enter your account.',
+        'logout_success' => 'Log out successfully.',
+        'password_reset' => [
+            'email' => [
+                'required' => 'Email cannot be left blank.',
+                'not_exists' => 'Email not exists.'
+            ],
+            'required' => ':attribute cannot be left blank.',
+            'password' => [
+                'required' => ':attribute cannot be left blank.',
+                'min' => ':attribute must be 8 characters.',
+                'regex' => ':attribute must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.'
+            ],
+            'confirm_password' => [
+                'required_with' => 'Please enter confirm the new password.',
+                'same' => 'Retype password does not match new password entered.'
+            ],
+        ],
+        'name' => [
+            'required' => ':attribute cannot be left blank.',
+            'min' => ':attribute must be between 5-50 characters.',
+            'max' => ':attribute must be between 5-50 characters.',
+            'unique' => ':attribute was used in the database.',
+        ],
+        'email' => [
+            'required' => ':attribute cannot be left blank.',
+            'unique' => ':attribute was used in the database.',
+            'email_format' => 'The format of the email address is incorrect.',
+        ],
+        'password' => [
+            'required' => ':attribute cannot be left blank.',
+            'min' => ':attribute must be at least 8 characters.',
+            'regex' => ':attribute must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.'
         ],
         'confirm_password' => [
             'required' => ':attribute cannot be left blank.',

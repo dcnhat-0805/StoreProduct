@@ -45,9 +45,8 @@ class LoginController extends Controller
         $remember = $request->get('remember_token');
         Session::put(SESSION_REMEMBER_TOKEN, $remember);
 
-        $userLogModel = new UserLog();
         if (Auth::guard('admins')->attempt($dataLogin, $remember)) {
-            $userLogModel->saveData($message, $email);
+            UserLog::saveAdminLog($message, $email);
             Session::flash("success", trans("messages.admin.login_success"));
             Session::forget(SESSION_REMEMBER_TOKEN);
 
@@ -56,7 +55,7 @@ class LoginController extends Controller
             $count_user = Admin::where("email", $email)->count();
             if ($count_user) {
                 $message = trans("messages.admin.login_failed");
-                $userLogModel->saveData($message, $email);
+                UserLog::saveAdminLog($message, $email);
             }
             Session::flash("danger", trans("messages.admin.login_failed"));
 

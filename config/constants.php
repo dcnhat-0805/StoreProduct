@@ -48,10 +48,15 @@ const ADMIN_DELETE = 'admin.delete';
 const EMAIL_FORM = 'store.online.232@gmail.com';
 const EMAIL_NAME = 'StoreOnline';
 const EMAIL_SUBJECT_PREFIX = '';
+const EMAIL_SUBJECT_PREFIX_USER = '';
 const EMAIL_SUBJECT = '[StoreOnline] Please reset your password !';
+const EMAIL_SUBJECT_USER = '[StoreOnline] Confirm your account on StoreOnline !';
 
 const LIMIT = 10;
 const FRONT_LIMIT = 3;
+
+const ACCEPT = 1;
+const NOT_ACCEPT = 0;
 
 const ADMIN = 1;
 const CATEGORY = 2;
@@ -82,6 +87,15 @@ const FRONT_CART_INDEX = 'front.end.cart.index';
 const FRONT_ADD_CART = 'front.end.add.cart';
 const FRONT_UPDATE_CART = 'front.end.update.cart';
 
+const FRONT_LOGIN = 'front.end.show.form.login';
+const FRONT_END_LOGIN = 'front.end.login';
+const FRONT_LOGOUT = 'front.end.logout';
+const FRONT_REGISTER = 'front.end.register';
+const FRONT_STORE = 'front.end.store';
+const FRONT_ACCEPT = 'front.end.accept';
+const FRONT_LOGIN_SOCIALITE = 'front.end.login.facebook';
+const FRONT_FORGET_PASSWORD = 'front.end.forget.password';
+
 const SESSION_REMEMBER_TOKEN = 'ss.remember.token';
 
 const PREFIX_PRODUCT = 'product';
@@ -101,6 +115,57 @@ const PRODUCT_ATTRIBUTE = [
     '2' => 'Storage',
     '3' => 'Size',
     '4' => 'Materials',
+];
+
+const MONTH = [
+    '' => 'Month',
+    'January' => 'January',
+    'February' => 'February',
+    'March' => 'March',
+    'April' => 'April',
+    'May' => 'May',
+    'June' => 'June',
+    'July' => 'July',
+    'August' => 'August',
+    'September' => 'September',
+    'October' => 'October',
+    'November' => 'November',
+    'December' => 'December',
+];
+
+const DAY = [
+    '' => 'Day',
+    1 => 1,
+    2 => 2,
+    3 => 3,
+    4 => 4,
+    5 => 5,
+    6 => 6,
+    7 => 7,
+    8 => 8,
+    9 => 9,
+    10 => 10,
+    11 => 11,
+    12 => 12,
+    13 => 13,
+    14 => 14,
+    15 => 15,
+    16 => 16,
+    17 => 17,
+    18 => 18,
+    19 => 19,
+    20 => 20,
+    21 => 21,
+    22 => 22,
+    23 => 23,
+    24 => 24,
+    25 => 25,
+    26 => 26,
+    27 => 27,
+    28 => 28,
+    29 => 29,
+    30 => 30,
+    31 => 31,
 ];
 
 const COLOR = 1;

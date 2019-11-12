@@ -455,6 +455,19 @@ section
 {
 	display: inline-block;
 }
+.top_bar_user div.dropdown-menu
+{
+	display: none;
+}
+div.dropdown-menu .dropdown-item
+{
+	line-height: 20px;
+}
+div.dropdown-menu .dropdown-item.active,
+div.dropdown-menu .dropdown-item:active
+{
+    background-color: #8a8a8a;
+}
 .top_bar_user div:nth-child(2)
 {
 	margin-right: 21px;
@@ -3597,8 +3610,8 @@ select option
 .footer .logo_container
 {
 	height: auto;
-	margin-bottom: 18px;
-	margin-top: -10px;
+	margin-bottom: 45px;
+	/*margin-top: -10px;*/
 }
 .footer .logo
 {

@@ -5,11 +5,12 @@
         <div class="row">
 
             <div class="col-lg-3 footer_col">
-                <div class="footer_column footer_contact">
-                    <div class="logo_container">
-                        <div class="logo"><a href="#">OneTech</a></div>
+                <div class="logo_container">
+                    <div class="logo">
+                        <a href="{{route(FRONT_END_HOME_INDEX)}}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
                     </div>
-                    <div class="footer_title">Got Question? Call Us 24/7</div>
+                </div>
+                <div class="footer_column footer_contact">
                     <div class="footer_phone">+38 068 005 3570</div>
                     <div class="footer_contact_text">
                         <p>17 Princess Road, London</p>

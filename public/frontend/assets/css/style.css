@@ -230,7 +230,37 @@ ul.pagination {
     line-height: 14px;
     margin-left: 12px;
 }
-
+.btn-login {
+    color: #fff !important;
+}
+.btn-login:first-child {
+    margin: 10% 0 5% 0;
+}
+.btn-login + div {
+    margin: 5% 0 5% 0;
+    font-size: 12px;
+}
+.btn-login + div a {
+    color: #23527c;
+}
+.btn-login + div a:hover {
+    color: #ec4445;
+}
+.btn-login + .btn-login {
+    margin: 1% 0 4% 0;
+}
+.form-address {
+    z-index: 1000;
+}
+.nav-user > a {
+    line-height: 11px !important;
+}
+.dropdown-item-icon {
+    margin-right: 5px;
+}
+.error {
+    color: red !important;
+}
 .nav-pagination.store-unit {
     padding: 0 15px;
 }

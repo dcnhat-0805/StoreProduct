@@ -6,6 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Hash;
 
 class User extends Authenticatable
 {
@@ -21,7 +22,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
         'phone', 'address', 'social_id',
-        'avatar', 'status'
+        'avatar', 'code', 'status'
     ];
 
     /**
@@ -41,9 +42,9 @@ class User extends Authenticatable
         'deleted_at'
     ];
 
-    public function getListAllUser()
+    public static function getListAllUser()
     {
-        return $this->select(
+        return self::select(
                 'name', 'email', 'password',
                 'phone', 'address', 'social_id',
                 'avatar', 'status'
@@ -51,9 +52,9 @@ class User extends Authenticatable
             ->orderBy('id', 'DESC')->get();
     }
 
-    public function getListUser()
+    public static function getListUser()
     {
-        return $this->select(
+        return self::select(
             'name', 'email', 'password',
             'phone', 'address', 'social_id',
             'avatar', 'status'
@@ -61,32 +62,56 @@ class User extends Authenticatable
             ->orderBy('id', 'DESC')->paginate(5);
     }
 
-    public function createUser($request)
+    public static function createUser($request)
     {
         if ($request['password'] !== '') {
             $request['password'] = Hash::make($request['password']);
         }
-        return $this->create($request);
+        if (isset($request['wards']) && $request['wards']) {
+            $request['address'] = $request['wards'];
+        }
+        $request['code'] = md5(uniqid(rand(), true));
+
+        return self::create($request);
     }
 
-    public function showUser($id)
+    public static function showUser($id)
     {
-        return $this->find($id);
+        return self::find($id);
     }
 
-    public function updateUser($id, $request)
+    public static function updateUser($id, $request)
     {
-        $user = $this->showUser($id);
+        $user = self::showUser($id);
         return $user->update($request);
     }
 
-    public function deleteUser($id)
+    public static function acceptUser($code)
     {
-        $user = $this->showUser($id);
+        $user = self::where('code', '=', $code)->first();
+
+        return $user->update([
+            'status' => 1,
+        ]);
+    }
+
+    public static function deleteUser($id)
+    {
+        $user = self::showUser($id);
         return $user->delete();
     }
 
-    public function searchUser($keyWord, $length)
+    public static function checkExistsUser($email)
+    {
+        return self::where('email', $email)->exists();
+    }
+
+    public static function checkAcceptUser($email)
+    {
+        return self::where('email', $email)->where('status', '=', NOT_ACCEPT)->exists();
+    }
+
+    public static function searchUser($keyWord, $length)
     {
         if ($keyWord == '') {
             $user = User::orderBy('id', 'DESC')

@@ -36,11 +36,27 @@
 {{--                                </li>--}}
 {{--                            </ul>--}}
 {{--                        </div>--}}
+                        @if(Auth::check())
                         <div class="top_bar_user">
-                            <div class="user_icon"><img src="frontend/images/user.svg" alt=""></div>
-                            <div><a href="#">Register</a></div>
-                            <div><a href="#">Sign in</a></div>
+{{--                            <div class="user_icon"><img src="frontend/images/user.svg" alt=""></div>--}}
+                            <div class="nav-user">
+                                <a class="nav-link dropdown-toggle" href="#" id="navBarDropdownAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                                    {{ Auth::user()->name }}'s account
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navBarDropdownAccount">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="{{ route(FRONT_LOGOUT) }}"><i class="fa fa-sign-out dropdown-item-icon" aria-hidden="true"></i>Logout</a>
+                                </div>
+                            </div>
                         </div>
+                        @else
+                            <div class="top_bar_user">
+                                <div class="user_icon"><i class="fa fa-user-o" aria-hidden="true"></i></div>
+                                <div><a href="{{ route(FRONT_REGISTER) }}" style="text-transform: capitalize">sign up</a></div>
+                                <div><a href="{{ route(FRONT_LOGIN) }}" style="text-transform: capitalize">login</a></div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

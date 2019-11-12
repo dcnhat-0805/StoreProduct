@@ -13,9 +13,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-//    return view('welcome');
-});
+//Route::get('/', function () {
+////    return view('welcome');
+//});
 
 Route::namespace('Backend')->group(function(){
     Route::group(['prefix' => 'admin'], function () {
@@ -100,7 +100,6 @@ Route::namespace('Backend')->group(function(){
     });
 });
 
-
 Route::namespace('FrontEnd')->group(function(){
     Route::get('/', 'HomeController@index')
         ->name(FRONT_END_HOME_INDEX);
@@ -120,6 +119,34 @@ Route::namespace('FrontEnd')->group(function(){
         Route::get('/getTotalCart', 'CartController@getTotalCart');
         Route::delete('/destroy', 'CartController@destroy');
         Route::delete('/delete/{rowId}', 'CartController@delete');
+    });
+
+    Route::group(['prefix' => 'account'], function () {
+        Route::get('/register', 'UserController@showRegisterForm')
+            ->name(FRONT_REGISTER);
+        Route::post('/store', 'UserController@store')
+            ->name(FRONT_STORE);
+        Route::get('/accept/{code}', 'UserController@accept')
+            ->name(FRONT_ACCEPT);
+        Route::get('/ajaxGetDistricts', 'UserController@getDistrictByCityId');
+        Route::get('/ajaxGetWards', 'UserController@getWardsByDistrictId');
+        Route::post('/login', 'LoginController@login')
+            ->name(FRONT_END_LOGIN);
+        Route::get('/login', 'LoginController@showLoginForm')
+            ->name(FRONT_LOGIN);
+        Route::get('/logout', 'LoginController@logout')
+            ->name(FRONT_LOGOUT);
+        Route::get('/forget-password', 'UserController@showFormForgetPassword')
+            ->name(FRONT_FORGET_PASSWORD);
+        Route::post('/checkEmailUser', 'UserController@checkEmailUser');
+        Route::post('/updatePassword', 'UserController@updatePassword');
+    });
+
+    Route::group(['prefix' => 'socialite'], function () {
+        Route::get('/login/{social}', 'LoginController@loginSocial')
+            ->name(FRONT_LOGIN_SOCIALITE);
+        Route::get('/callback/{social}', 'LoginController@callbackSocial')
+            ->name(FRONT_LOGIN_SOCIALITE);
     });
 
 });

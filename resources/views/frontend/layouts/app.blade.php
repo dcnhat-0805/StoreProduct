@@ -69,7 +69,7 @@
 <script src="frontend/js/custom.js"></script>
 <!-- tawk chat JS
     ============================================ -->
-    <script src="backend/js/tawk-chat.js"></script>
+{{--    <script src="backend/js/tawk-chat.js"></script>--}}
 <!-- start-smooth-scrolling -->
 <script src="frontend/assets/js/move-top.js"></script>
 <script src="frontend/assets/js/easing.js"></script>
@@ -107,6 +107,12 @@
 @if(Session::has('error'))
     <script type="text/javascript">
         jQuery.getMessageError("{{Session::get('error')}}")
+    </script>
+@endif
+
+@if(Session::has('danger'))
+    <script type="text/javascript">
+        jQuery.getMessageError("{{Session::get('danger')}}")
     </script>
 @endif
 @yield('jsCustom')
