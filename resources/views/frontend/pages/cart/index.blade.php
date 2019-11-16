@@ -43,7 +43,7 @@
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody class="list-cart">
+                                <tbody class="list-cart mod-list-cart">
                                 @if(isset($carts))
                                     @foreach($carts as $cart)
                                         <tr id="cart-{{ $cart->id }}">

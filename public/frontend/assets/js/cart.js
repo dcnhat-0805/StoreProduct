@@ -27,7 +27,6 @@ let CartJs = (function ($) {
                 material : material,
             },
             success : function (data) {
-                console.log(data);
                 btnAddToCart.prop('disabled', false);
                 let countCart = data['countCart'];
                 $('.cart_count > span').text(countCart);
@@ -202,6 +201,12 @@ let CartJs = (function ($) {
 })(window.jQuery, window, document);
 
 $(document).ready(function () {
+
+    let totalCart = $('.mod-list-cart').find('tr').length;
+    if (totalCart < 1) {
+        Commons.removeLocalStorage(CART_IDS);
+        Commons.removeLocalStorage(CART_CHECK_ALL);
+    }
 
     btnAddToCart.on('click', function () {
         $(this).prop('disabled', true);
