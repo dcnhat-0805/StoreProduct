@@ -144,6 +144,29 @@
             <div class="clearfix"> </div>
         </div>
     </div>
+
+    <div class="featured-section expand-product-content" id="expand-product-content">
+        <div class="container">
+            <h4 class="label-product-content">Product details of {{ $product->product_description }}</h4>
+            <div class="body-product-content">
+                {!! $product->product_content !!}
+            </div>
+
+            <div class="expand-button-show">
+                <button class="button btn btn-custon-three btn-primary btn-view-more">View More</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="featured-section expand-product-question" id="expand-product-question">
+        <div class="container">
+            <h4 class="label-product-question">Question of {{ $product->product_description }}</h4>
+            <div class="body-product-question">
+                <div class="mod-title">Questions about this product (9)</div>
+{{--                {!! $product->product_content !!}--}}
+            </div>
+        </div>
+    </div>
     <!-- //top products -->
     <!-- special offers -->
     <div class="featured-section" id="projects">

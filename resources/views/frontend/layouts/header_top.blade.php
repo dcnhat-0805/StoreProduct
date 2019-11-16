@@ -44,7 +44,7 @@
         @endif
 
         @if(isset($titleName) && $titleName['product_name'] !== '')
-            <li class="breadcrumb_item">
+            <li class="breadcrumb_item" style="width: 40%; font-size: 14px;">
                 <span title="{{ $titleName['product_name'] }}" class="breadcrumb_item_anchor">
                     {{ $titleName['product_name'] }}
                 </span>

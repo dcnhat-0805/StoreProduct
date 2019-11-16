@@ -89,14 +89,6 @@ $(document).ready(function () {
         radioClass: 'iradio_square-green',
     });
 
-
-    $('.jsFlexSlider').flexslider({
-        animation: "slide",
-        controlNav: "thumbnails",
-        animationLoop: false,
-        slideshow: false,
-    });
-
     $('.jsQuantity').TouchSpin({
         buttondown_class: 'btn btn-white',
         buttonup_class: 'btn btn-white',
