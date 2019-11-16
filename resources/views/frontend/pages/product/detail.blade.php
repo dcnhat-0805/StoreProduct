@@ -68,12 +68,12 @@
                         <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
                     </p>
 
-                    @if(count($product->attribute))
+                    @if(isset($product->productAttribute))
                         <?php
-                            $colors = $product->attribute->where('attribute_name', COLOR);
-                            $storages = $product->attribute->where('attribute_name', STORAGE);
-                            $sizes = $product->attribute->where('attribute_name', SIZE);
-                            $materials = $product->attribute->where('attribute_name', MATERIALS);
+                            $colors = $product->productAttribute->where('attribute_name', COLOR);
+                            $storages = $product->productAttribute->where('attribute_name', STORAGE);
+                            $sizes = $product->productAttribute->where('attribute_name', SIZE);
+                            $materials = $product->productAttribute->where('attribute_name', MATERIALS);
                         ?>
                         @if(count($colors))
                             <div class="attribute-list">

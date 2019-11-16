@@ -51,6 +51,10 @@ class Product extends Model
         return $this->belongsTo('App\Models\ProductType', 'product_type_id', 'id');
     }
 
+    public function productAttribute() {
+        return $this->hasMany('App\Models\ProductAttribute', 'product_id', 'id');
+    }
+
     /**
      * Begin transaction
      *
@@ -233,7 +237,7 @@ class Product extends Model
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
             ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
-            ->join('product_images', 'products.id', '=', 'product_images.product_id')
+//            ->join('product_images', 'products.id', '=', 'product_images.product_id')
             ->selectRaw("products.*")
             ->with([
                 'category' => function ($category) {
@@ -247,6 +251,9 @@ class Product extends Model
                 },
                 'productImage' => function ($productImage) {
                     $productImage->whereNull('product_images.deleted_at');
+                },
+                'productAttribute' => function ($productAttribute) {
+
                 },
             ])
             ->where('products.id', $id)

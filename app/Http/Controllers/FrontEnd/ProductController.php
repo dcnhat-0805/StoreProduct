@@ -35,7 +35,8 @@ class ProductController extends Controller
     {
         $titleName = ProductCategory::getNameAndSlugBySlug($slug);
         $product = Product::getProductBySlugAndId($id, $slug);
-        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
+//        dd($product->productAttribute);
+//        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
         $titleName['product_name'] = $product->product_description;
 
         return view('frontend.pages.product.detail', compact('titleName', 'product'));
