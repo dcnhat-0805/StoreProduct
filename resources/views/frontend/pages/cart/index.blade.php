@@ -55,34 +55,36 @@
                                                 </div>
                                             </td>
                                             <td class="text-center col-sm-4">
-                                                <a href="" class="col-sm-2" style="padding: 0;">
-                                                    <img src="{{ FILE_PATH_PRODUCT . $cart->options->image }}" alt=""
-                                                         width="100%">
-                                                </a>
                                                 <div class="cart-product-name col-sm-10 text-left">
-                                                    <a href="">{{ $cart->name }}</a>
+                                                    <a href="">{{ $cart->options->description }}</a>
                                                 </div>
                                                 <div class="col-sm-10">
-                                                    @if($cart->options->color)
-                                                        <div data-color="{{ $cart->options->color }}"
-                                                             style="background-color: {{ $cart->options->color }};"
-                                                             class="attribute-item size-item size"></div>
-                                                    @endif
-                                                    @if($cart->options->size)
-                                                        <div data-size="{{ $cart->options->size }}"
-                                                             style="background-color: #fff;"
-                                                             class="attribute-item size-item size">{{ $cart->options->size }}</div>
-                                                    @endif
-                                                    @if($cart->options->storage)
-                                                        <div data-storage="{{ $cart->options->storage }}"
-                                                             style="background-color: #fff;"
-                                                             class="attribute-item size-item size">{{ $cart->options->storage }}</div>
-                                                    @endif
-                                                    @if($cart->options->material)
-                                                        <div data-material="{{ $cart->options->material }}"
-                                                             style="background-color: #fff;"
-                                                             class="attribute-item size-item size">{{ $cart->options->material }}</div>
-                                                    @endif
+                                                    <a href="" class="col-sm-2" style="padding: 0;">
+                                                        <img src="{{ FILE_PATH_PRODUCT . $cart->options->image }}" alt=""
+                                                             width="100%">
+                                                    </a>
+                                                    <div class="col-sm-10">
+                                                        @if($cart->options->color)
+                                                            <div data-color="{{ $cart->options->color }}"
+                                                                 style="background-color: {{ $cart->options->color }};"
+                                                                 class="attribute-item size-item size"></div>
+                                                        @endif
+                                                        @if($cart->options->size)
+                                                            <div data-size="{{ $cart->options->size }}"
+                                                                 style="background-color: #fff;"
+                                                                 class="attribute-item size-item size">{{ $cart->options->size }}</div>
+                                                        @endif
+                                                        @if($cart->options->storage)
+                                                            <div data-storage="{{ $cart->options->storage }}"
+                                                                 style="background-color: #fff;"
+                                                                 class="attribute-item size-item size">{{ $cart->options->storage }}</div>
+                                                        @endif
+                                                        @if($cart->options->material)
+                                                            <div data-material="{{ $cart->options->material }}"
+                                                                 style="background-color: #fff;"
+                                                                 class="attribute-item size-item size">{{ $cart->options->material }}</div>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td class="text-center">

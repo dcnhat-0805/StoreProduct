@@ -60,11 +60,14 @@ a:hover{
     vertical-align: bottom;
     border-bottom: 1px solid #ddd;
 }
-.cart-product-name {
-    overflow: hidden;
+.cart-price {
     white-space: nowrap;
-    text-overflow: ellipsis;
 }
+/*.cart-product-name {*/
+/*    overflow: hidden;*/
+/*    white-space: nowrap;*/
+/*    text-overflow: ellipsis;*/
+/*}*/
 .list-cart > tr {
     border-bottom: 1px solid #ccc;
 }
