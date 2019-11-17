@@ -248,6 +248,7 @@ let Commons = (function ($) {
 
                     $('.' + className).text('');
                     $('.error').text('');
+                    $('input[name=submit]').val('');
                 });
             }
         });
@@ -269,6 +270,7 @@ let Commons = (function ($) {
                 $('.error_' + name).text('');
             }
             $("button.btn-success").prop('disabled', false);
+            $('input[name=submit]').val('');
         });
 
         if (summerNoteId) {
@@ -282,7 +284,8 @@ let Commons = (function ($) {
                 } else {
                     $('.' + className).text('');
                 }
-                $("button.btn-success:not('.product')").prop('disabled', false);
+                $("button.btn-success").prop('disabled', false);
+                $('input[name=submit]').val('');
             });
         }
     };
