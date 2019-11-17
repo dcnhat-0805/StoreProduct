@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Store Online</title>
+    <title>Store Online - @yield('title')</title>
     <link rel="shortcut icon" type="image/x-icon" href="backend/img/store-online.ico">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="OneTech shop project">
+    @yield('metaTile')
+    @yield('metaDescription')
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <base href="{{ asset('') }}">

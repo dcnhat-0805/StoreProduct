@@ -914,6 +914,8 @@ button.w3view-cart {
 }
 .men-pro-item {
     position: relative;
+    border: 1px dashed #ccc;
+    padding: 10px;
 }
 .men-thumb-item {
     position: relative;
@@ -2608,7 +2610,7 @@ img.zoom-img:hover{
 /*-- //about page --*/
 /*-- product page --*/
 .w3l-rightpro .product-men {
-    margin: 0;
+    margin-bottom: 20px;
 }
 /*-- //product page --*/
 /*-- single-page --*/

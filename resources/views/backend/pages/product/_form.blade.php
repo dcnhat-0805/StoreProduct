@@ -204,7 +204,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="product_promotion" class="required after">Promotion product </label>
+                        <label for="product_promotion" class="">Promotion product </label>
                         <input type="number" class="form-control" name="product_promotion"
                                placeholder="Promotional product ..." value="{{ isset($product) && $product->product_promotion ? $product->product_promotion : old('product_promotion') }}" min="0">
                         <div class="error error_product_promotion {{ !$errors->has('product_promotion') ? 'hidden' : '' }}">{{ $errors->has('product_promotion') ? $errors->first('product_promotion') : '' }}</div>

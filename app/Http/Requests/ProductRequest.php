@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Rules\Admin\CheckPriceProduct;
+use App\Rules\Admin\CheckProductTypeRule;
 use App\Rules\Admin\CheckPromotionalProduct;
 use App\Rules\Admin\MaxLengthTextArea;
 use App\Rules\Admin\MinLengthTextArea;
@@ -31,6 +32,7 @@ class ProductRequest extends FormRequest
             'product_name' => 'required|min:5|max:255|unique:products,product_name,'.($this->id ?? ""),
             'category_id' => 'required',
             'product_category_id' => 'required',
+            'product_type_id' => new CheckProductTypeRule($this->request->get('product_category_id')),
             'product_description' => ['required', new MinLengthTextArea(20, trans("messages.product.product_description.min")),
                                         'unique:products,product_description,' . ($this->id ?? ""),
                                         new MaxLengthTextArea(255, trans("messages.product.product_description.max")),
@@ -38,8 +40,8 @@ class ProductRequest extends FormRequest
             'product_content' => ['required', new MinLengthTextArea(50, trans("messages.product.product_content.min")),
                                     'unique:products,product_content,' . ($this->id ?? ""),
                                 ],
-            'product_price' => ['required', 'integer', new CheckPriceProduct(request()->product_price, request()->product_promotion)],
-            'product_promotion' => ['required', 'integer', new CheckPromotionalProduct(request()->product_price, request()->product_promotion)],
+            'product_price' => ['required', 'integer', 'min:1', new CheckPriceProduct(request()->product_price, request()->product_promotion)],
+            'product_promotion' => ['nullable', 'integer', 'min:1', new CheckPromotionalProduct(request()->product_price, request()->product_promotion)],
             'product_image' => ($this->id ? 'nullable' : 'required'),
         ];
     }
@@ -64,6 +66,8 @@ class ProductRequest extends FormRequest
             'product_description.max' => trans("messages.product.product_description.max"),
             'numeric' => trans("messages.product.numeric"),
             'image' => trans("messages.product.image"),
+            'product_price.min' => trans("messages.product.product_price.min"),
+            'product_promotion.min' => trans("messages.product.product_promotion.min"),
         ];
     }
 

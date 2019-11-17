@@ -1,4 +1,7 @@
 @extends('frontend.layouts.app')
+@section('title')
+    {{ $slug }}
+@endsection
 @section('cssCustom')
 @endsection
 @section('content')
@@ -63,7 +66,9 @@
                                                             <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}" class="link-product-add-cart">Quick View</a>
                                                         </div>
                                                     </div>
-                                                    <span class="product-new-top">New</span>
+                                                    @if($product->product_option == NEWS)
+                                                        <span class="product-new-top">New</span>
+                                                    @endif
                                                 </div>
                                                 <div class="item-info-product ">
                                                     <h4>
@@ -72,8 +77,10 @@
                                                         </a>
                                                     </h4>
                                                     <div class="info-product-price">
-                                                        <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion) }}</span>
-                                                        <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
+                                                        <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}</span>
+                                                        @if($product->product_promotion || $product->product_promotion == 0)
+                                                            <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
+                                                        @endif
                                                     </div>
                                                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                                                         <button type="button" class="button btn btn-custon-three btn-primary add-to-cart" data-id="{{ $product->id }}"

@@ -140,7 +140,7 @@ let Commons = (function ($) {
                     $('.jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
                     $('.jsSelectProductType').parent().prev().removeClass('required after');
                 } else {
-                    // $('.jsSelectProductType').parent().prev().addClass('required after');
+                    $('.jsSelectProductType').parent().prev().addClass('required after');
                 }
 
                 let option = [];

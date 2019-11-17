@@ -1,4 +1,10 @@
 @extends('frontend.layouts.app')
+@section('metaDescription')
+    <meta name="description" content="{{ $product->product_meta_description }}">
+@endsection
+@section('metaTitle')
+    <meta name="title" content="{{ $product->product_meta_title }}">
+@endsection
 @section('cssCustom')
     <link href="frontend/assets/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="frontend/assets/css/flexslider.css" type="text/css" media="screen" />
@@ -64,8 +70,10 @@
 					</span>
                     </div>
                     <p>
-                        <span class="item_price product-price-item">{{ App\Helpers\Helper::loadMoney($product->product_promotion) }}</span>
-                        <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
+                        <span class="item_price product-price-item">{{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}</span>
+                        @if($product->product_promotion || $product->product_promotion == 0)
+                            <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
+                        @endif
                     </p>
 
                     @if(isset($product->productAttribute))

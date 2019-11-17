@@ -281,9 +281,11 @@ return [
         ],
         'product_price' => [
             'more' => 'Please enter a product price greater than the promotion price.',
+            'min' => 'Product price must be a positive integer.',
         ],
         'product_promotion' => [
             'less' => 'Please enter promotion price less than product price.',
+            'min' => 'Product promotion must be a positive integer.',
         ],
         'product_description' => [
             'min' => ':attribute must be 20 characters.',
