@@ -3,12 +3,19 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Helpers\Helper;
+use App\Http\Requests\CheckCountRequest;
+use App\Models\City;
+use App\Models\District;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\Wards;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
 use Cart;
 use DB;
+use Auth;
 use Closure;
 
 class CartController extends Controller
@@ -66,6 +73,72 @@ class CartController extends Controller
         }
     }
 
+    public function checkCount(Request $request)
+    {
+        $cities = City::getOptionCity();
+        $districts = District::getOptionDistrict();
+        $wards = Wards::getOptionWards();
+        $rowIds = explode(',', $request->get('row_id_checkout'));
+        $total = 0;
+        $quantity = 0;
+
+        if ($rowIds) {
+            $carts = $this->getCart($rowIds);
+
+            if (count($carts)) {
+                foreach ($carts as $cart) {
+                    $quantity += $cart->qty;
+                    $total += $cart->qty * $cart->price;
+                }
+            }
+
+            return view('frontend.pages.cart.checkout', compact('carts', 'cities', 'districts', 'wards', 'total', 'quantity'));
+        }
+
+        abort(400, 'Page not found!');
+    }
+
+    public function purchase(CheckCountRequest $request)
+    {
+        $data = $request->all();
+        $rowIds = explode(',', $request->get('row_id_checkout'));
+        $data['order_code'] = 'SOP_' . uniqid() . '_' . time();
+        $data['user_id'] = Auth::user() ? Auth::user()->id : null;
+        $data['order_name'] = $request->get('name');
+        $data['order_email'] = $request->get('email');
+        $data['order_phone'] = $request->get('phone');
+        $data['order_address'] = $request->get('wards');
+        $data['order_monney'] = $request->get('total_price');
+        $data['cart_row_id'] = serialize($rowIds);
+        $data['status'] = 0;
+        $order = Order::create($data);
+
+        $orderDetail = [];
+        $orderDetails = [];
+
+        DB::beginTransaction();
+        if ($order) {
+            $idOrder = $order->id;
+            $carts = $this->getCart($rowIds);
+
+            foreach( $carts as $key => $cart ){
+                $orderDetail['order_id'] = $idOrder;
+                $orderDetail['product_id'] = $cart->id;
+                $orderDetail['quantity'] = $cart->qty;
+                $orderDetail['amount'] = $cart->price;
+                $orderDetails[$key] = OrderDetail::create($orderDetail);
+                Cart::remove($cart->rowId);
+            }
+
+//            Mail::to($order->email)->send(new ShoppingMail($order,$orderdetails));
+            DB::commit();
+
+            return redirect()->route(FRONT_END_HOME_INDEX);
+        } else {
+            DB::rollBack();
+        }
+    }
+
     public function listALLCart()
     {
 
@@ -104,7 +177,12 @@ class CartController extends Controller
 
         if (isset($arrRowId) && $arrRowId) {
             foreach ($arrRowId as $rowId) {
-                array_push($carts, Cart::get($rowId));
+                $content = Cart::content();
+
+                if ( $content->has($rowId)) {
+                    $cartItem = Cart::get($rowId);
+                    array_push($carts, $cartItem);
+                }
             }
         }
 

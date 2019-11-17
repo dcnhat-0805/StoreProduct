@@ -38,6 +38,7 @@
     <!-- touchspin CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/touchspin/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" href="backend/css/loading.css">
     @yield('cssCustom')
 </head>
 
@@ -46,6 +47,7 @@
 <div class="super_container">
 
     @include('frontend.layouts.header')
+    @include('backend.loading')
 
     <div class="container main-container">
         @yield('content')

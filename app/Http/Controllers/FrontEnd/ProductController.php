@@ -31,11 +31,10 @@ class ProductController extends Controller
         return view('frontend.pages.product.index', compact('titleName', 'products', 'slug'));
     }
 
-    public function detail($slug, $id)
+    public function detail($description)
     {
-        $titleName = ProductCategory::getNameAndSlugBySlug($slug);
-        $product = Product::getProductBySlugAndId($id, $slug);
-//        dd($product->productAttribute);
+        $titleName = Product::getNameAndSlugBySlug($description);
+        $product = Product::getProductBySlugAndId($description);
 //        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
         $titleName['product_name'] = $product->product_description;
 

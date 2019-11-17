@@ -18,7 +18,7 @@ class Product extends Model
     protected $fillable = [
         'category_id', 'product_category_id', 'product_type_id',
         'product_name', 'product_slug', 'product_image',
-        'product_description', 'product_content', 'product_price',
+        'product_description','product_description_slug', 'product_content', 'product_price',
         'product_meta_title', 'product_meta_description', 'product_weight',
         'product_is_shipping', 'product_option',
         'product_promotion', 'product_status',
@@ -222,7 +222,7 @@ class Product extends Model
         return $products;
     }
 
-    public static function getProductBySlugAndId($id, $slug = null, $params = null)
+    public static function getProductBySlugAndId($description, $params = null)
     {
         $products = self::filter($params);
         $order = Helper::getSortParam($params);
@@ -256,12 +256,26 @@ class Product extends Model
 
                 },
             ])
-            ->where('products.id', $id)
+            ->where('products.product_description_slug' , $description)
 //            ->orWhere('categories.category_slug', $slug)
 //            ->orWhere('product_categories.product_category_slug', $slug)
 //            ->orWhere('product_types.product_type_slug', $slug)
             ->orderBy('products.created_at', 'desc')
             ->groupBy('products.id')
+            ->first();
+
+        return $products;
+    }
+
+    public static function getNameAndSlugBySlug($description)
+    {
+        $products = self::join('categories', 'categories.id', '=', 'products.category_id')
+            ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
+            ->leftjoin('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+            ->selectRaw("categories.category_name, product_categories.product_category_name, product_types.product_type_name,
+                        categories.category_slug, product_categories.product_category_slug, product_types.product_type_slug"
+            )
+            ->where('products.product_description_slug', $description)
             ->first();
 
         return $products;
@@ -296,6 +310,7 @@ class Product extends Model
 //            $request['product_image'] = $productImage['name'];
 //        }
         $request['product_slug'] = utf8ToUrl($request['product_name']);
+        $request['product_description_slug'] = convertStringToUrl($request['product_description']);
 
         if ($request['submit']) {
             return self::create($request);
@@ -336,6 +351,7 @@ class Product extends Model
     {
         $product = self::showProduct($product_id);
         $request['product_slug'] = utf8ToUrl($request['product_name']);
+        $request['product_description_slug'] = convertStringToUrl($request['product_description']);
 //
 //        if ($request['submit']) {
 //            return self::create($request);

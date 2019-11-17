@@ -139,16 +139,18 @@ class ProductCategory extends Model
             ->first();
     }
 
-    public static function getNameAndSlugBySlug($slug)
+    public static function getNameAndSlugBySlug($description)
     {
         $products = self::join('categories', 'categories.id', '=', 'product_categories.category_id')
             ->leftjoin('product_types', 'product_categories.id', '=', 'product_types.product_category_id')
+            ->leftjoin('products', 'product_categories.id', '=', 'products.product_category_id')
             ->selectRaw("categories.category_name, product_categories.product_category_name, product_types.product_type_name,
                         categories.category_slug, product_categories.product_category_slug, product_types.product_type_slug"
             )
-            ->where('categories.category_slug', $slug)
-            ->orWhere('product_categories.product_category_slug', $slug)
-            ->orWhere('product_types.product_type_slug', $slug)
+            ->where('products.product_slug', utf8convert($description))
+//            ->orWhere('product_categories.product_category_slug', $description)
+//            ->orWhere('product_types.product_type_slug', $description)
+//            ->orWhere('products.product_slug', $description)
             ->first();
 
         return $products;

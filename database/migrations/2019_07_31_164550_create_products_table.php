@@ -31,6 +31,7 @@ class CreateProductsTable extends Migration
             $table->string('product_slug')->nullable();
             $table->string('product_image')->nullable();
             $table->text('product_description')->nullable();
+            $table->text('product_description_slug')->nullable();
             $table->text('product_content')->nullable();
             $table->float('product_price', 20, 0)->nullable();
             $table->float('product_promotion', 20, 0)->nullable();

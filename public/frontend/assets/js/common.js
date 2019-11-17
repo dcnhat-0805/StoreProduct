@@ -23,6 +23,23 @@ let Commons = (function ($) {
 
     let modules = {};
 
+
+    modules.showLoading = function (time) {
+        $('#loading').show();
+
+        setTimeout(function () {
+            $('#loading').hide();
+        },time);
+    };
+
+    modules.hideLoading = function() {
+        $('#loading').hide();
+    };
+
+    $('a, button').on('click', function () {
+       modules.showLoading(3000);
+    });
+
     modules.setLocalStorageListIds = function ($key, $value) {
         localStorage.setItem($key, JSON.stringify($value));
     };
@@ -151,6 +168,52 @@ let Commons = (function ($) {
                 $("button.btn-success:not('.product')").prop('disabled', false);
             });
         }
+    };
+
+    $('.modal').on('hide.bs.modal', function () {
+        $("button.btn-success:not('.product')").prop('disabled', false);
+    });
+
+    modules.loadAddressSelectBox = function () {
+        modules.loadDistrictByCityId = function(cityId) {
+            $.ajax({
+                url : '/account/ajaxGetDistricts',
+                dataType : 'JSON',
+                type : 'GET',
+                data : {
+                    city_id : cityId
+                },
+                success : function (data) {
+                    $('.district').html(data)
+                }
+            });
+        }
+
+        modules.loadWardsByDistrictId = function (districtId) {
+            $.ajax({
+                url : '/account/ajaxGetWards',
+                dataType : 'JSON',
+                type : 'GET',
+                data : {
+                    district_id : districtId
+                },
+                success : function (data) {
+                    $('.wards').html(data)
+                }
+            });
+        }
+
+        $('.jsSelectCity').on('change', function () {
+            let cityId = $(this).val();
+
+            modules.loadDistrictByCityId(cityId);
+        });
+
+        $(document).on('change', '.jsSelectDistrict', function () {
+            let districtId = $(this).val();
+
+            modules.loadWardsByDistrictId(districtId);
+        });
     };
 
     return modules;

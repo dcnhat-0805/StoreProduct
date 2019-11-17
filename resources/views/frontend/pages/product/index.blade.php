@@ -60,14 +60,14 @@
                                                     <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="">
                                                     <div class="men-cart-pro">
                                                         <div class="inner-men-cart-pro">
-                                                            <a href="{{ route(FRONT_PRODUCT_DETAIL, ['slug' => $slug, 'id' => $product->id]) }}" class="link-product-add-cart">Quick View</a>
+                                                            <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}" class="link-product-add-cart">Quick View</a>
                                                         </div>
                                                     </div>
                                                     <span class="product-new-top">New</span>
                                                 </div>
                                                 <div class="item-info-product ">
                                                     <h4>
-                                                        <a href="{{ route(FRONT_PRODUCT_DETAIL, ['slug' => $slug, 'id' => $product->id]) }}">
+                                                        <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
                                                             <p>{!!  $product->product_description !!}</p>
                                                         </a>
                                                     </h4>

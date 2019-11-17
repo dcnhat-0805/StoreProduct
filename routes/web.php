@@ -105,7 +105,7 @@ Route::namespace('FrontEnd')->group(function(){
         ->name(FRONT_END_HOME_INDEX);
     Route::get('/{slug}', 'ProductController@index')
         ->name(FRONT_PRODUCT_LIST);
-    Route::get('/{slug}/detail/{id}', 'ProductController@detail')
+    Route::get('/detail/{description}', 'ProductController@detail')
         ->name(FRONT_PRODUCT_DETAIL);
 
     Route::group(['prefix' => 'cart'], function(){
@@ -115,6 +115,10 @@ Route::namespace('FrontEnd')->group(function(){
             ->name(FRONT_ADD_CART);
         Route::post('updateCart/{rowId}', 'CartController@updateCart')
             ->name(FRONT_UPDATE_CART);
+        Route::post('checkCount', 'CartController@checkCount')
+            ->name(FRONT_CHECK_COUNT_CART);
+        Route::post('purchase', 'CartController@purchase')
+            ->name(FRONT_PURCHASE);
         Route::get('/listALLCart', 'CartController@listALLCart');
         Route::get('/getTotalCart', 'CartController@getTotalCart');
         Route::delete('/destroy', 'CartController@destroy');

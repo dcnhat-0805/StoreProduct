@@ -86,6 +86,8 @@ const FRONT_PRODUCT_DETAIL = 'front.end.product.detail';
 const FRONT_CART_INDEX = 'front.end.cart.index';
 const FRONT_ADD_CART = 'front.end.add.cart';
 const FRONT_UPDATE_CART = 'front.end.update.cart';
+const FRONT_CHECK_COUNT_CART = 'front.end.check.count.cart';
+const FRONT_PURCHASE = 'front.end.purchase';
 
 const FRONT_LOGIN = 'front.end.show.form.login';
 const FRONT_END_LOGIN = 'front.end.login';

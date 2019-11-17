@@ -1,8 +1,9 @@
-#loading {
-    position: relative;
+#loading {position: fixed;
     width: 100%;
     height: 100%;
     display: none;
+    z-index: 1030;
+    background: #fff;
 }
 
 #circularG{

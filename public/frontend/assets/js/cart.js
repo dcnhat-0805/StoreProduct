@@ -27,6 +27,7 @@ let CartJs = (function ($) {
                 material : material,
             },
             success : function (data) {
+                Commons.hideLoading();
                 btnAddToCart.prop('disabled', false);
                 let countCart = data['countCart'];
                 $('.cart_count > span').text(countCart);
@@ -74,6 +75,7 @@ let CartJs = (function ($) {
             });
         }
 
+        modules.confirmCart();
         modules.getAllCart();
     };
 
@@ -120,6 +122,7 @@ let CartJs = (function ($) {
             success : function (data) {
                 Commons.setLocalStorageListIds(CART_IDS, data);
                 Commons.setLocalStorageDeleteAll(CART_CHECK_ALL, IS_DELETE_ALL);
+                modules.confirmCart();
             }
         });
     };
@@ -161,6 +164,20 @@ let CartJs = (function ($) {
                 location.reload();
             }
         });
+    };
+
+    modules.confirmCart = function() {
+        let data = {};
+        data['select_all'] = Commons.getSingleValueLocalStorage(CART_CHECK_ALL);
+        data['ids'] = Commons.getArrayValueLocalStorage(CART_IDS);
+
+        $('.voucher-input').hide();
+        $('.checkout-order-total-button').prop('disabled', false);
+        if (!data['ids'].length) {
+            $('.checkout-order-total-button').prop('disabled', true);
+        }
+
+        $('.row_id_checkout').val(data['ids']);
     };
 
     $('#deleteCart').on('show.bs.modal', function (e) {
@@ -267,6 +284,12 @@ $(document).ready(function () {
         }
     });
 
+    Commons.loadAddressSelectBox();
+
+    $('#purchase_form').on('submit', function () {
+        Commons.removeLocalStorage(CART_IDS);
+        Commons.removeLocalStorage(CART_CHECK_ALL);
+    });
 });
 
 function number_format (number, decimals = 0, decPoint = ',', thousandsSep = '.', unit = '₫') {
@@ -313,6 +336,10 @@ $(document).on('click', '.btn-edit-quantity', function () {
         $('.btn-down').prop('disabled', true);
     }
 
+    updateCart(rowId, quantity, cartId);
+});
+
+function updateCart(rowId, quantity) {
     $.ajax({
         url : '/cart/updateCart/' + rowId,
         dataType : 'JSON',
@@ -327,8 +354,8 @@ $(document).on('click', '.btn-edit-quantity', function () {
             let subTotal = number_format(quantity * price);
 
             $('.cart_count > span').text(countCart);
-            $('.quantity-' + cartId).val(quantity);
-            $('.subtotal-' + cartId).text(subTotal);
+            $('.quantity-' + rowId).val(quantity);
+            $('.subtotal-' + rowId).text(subTotal);
 
             jQuery.getMessageSuccess(data['success']);
         },
@@ -336,4 +363,4 @@ $(document).on('click', '.btn-edit-quantity', function () {
             jQuery.getMessageSuccess(data['error']);
         }
     });
-});
+}

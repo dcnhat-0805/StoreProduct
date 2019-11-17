@@ -161,7 +161,7 @@ $(document).ready(function () {
 
         function configUPloadImage(target, num) {
 
-            let maxSizeFileImage = 1024 * 25;
+            let maxSizeFileImage = 1024 * 100;
             let targetId = '#' + target + num.toString().padStart(2, '0');
             let previewsId = '#' + target + 'Previews' + num.toString().padStart(2, '0');
             let imageType = num.toString().padStart(1, '0');

@@ -46,7 +46,7 @@
                                 <tbody class="list-cart mod-list-cart">
                                 @if(isset($carts))
                                     @foreach($carts as $cart)
-                                        <tr id="cart-{{ $cart->id }}">
+                                        <tr id="cart-{{ $cart->rowId }}">
                                             <td>
                                                 <div class="selectItem">
                                                     <input type="checkbox" name="cartSelectItem"
@@ -56,14 +56,13 @@
                                             </td>
                                             <td class="text-center col-sm-4">
                                                 <div class="cart-product-name col-sm-10 text-left">
-                                                    <a href="">{{ $cart->options->description }}</a>
+                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($cart->options->description)]) }}">{{ $cart->options->description }}</a>
                                                 </div>
                                                 <div class="col-sm-10">
-                                                    <a href="" class="col-sm-2" style="padding: 0;">
-                                                        <img src="{{ FILE_PATH_PRODUCT . $cart->options->image }}" alt=""
-                                                             width="100%">
+                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($cart->options->description)]) }}" class="" style="padding: 0; float: left">
+                                                        <img src="{{ FILE_PATH_PRODUCT . $cart->options->image }}" alt="" style="width: 50px; height: 30px; object-fit: scale-down;">
                                                     </a>
-                                                    <div class="col-sm-10">
+                                                    <div class="col">
                                                         @if($cart->options->color)
                                                             <div data-color="{{ $cart->options->color }}"
                                                                  style="background-color: {{ $cart->options->color }};"
@@ -95,15 +94,14 @@
                                                 </div>
                                             </td>
                                             <td class="text-center">
-                                                <input class="jsTouchSpin quantity-{{ $cart->id }}" type="text"
-                                                       value="{{ $cart->qty }}"
-                                                       name="quantity" data-row_id="{{ $cart->rowId }}"
-                                                       data-id="{{ $cart->id }}">
+                                                <input class="jsTouchSpin quantity-{{ $cart->rowId }}" type="text"
+                                                       value="{{ $cart->qty }}" readonly
+                                                       name="quantity" data-row_id="{{ $cart->rowId }}">
                                             </td>
                                             <td class="text-center"
                                                 style="padding-left: 0 !important; padding-right: 0 !important;">
                                                 <span
-                                                    class="cart-total-price item_price subtotal-{{ $cart->id }}">{{ App\Helpers\Helper::loadMoney($cart->price * $cart->qty) }}</span>
+                                                    class="cart-total-price item_price subtotal-{{ $cart->rowId }}">{{ App\Helpers\Helper::loadMoney($cart->price * $cart->qty) }}</span>
                                                 {{--                                        <span class="cart-total-price item_price">{{ App\Helpers\Helper::loadMoney(Cart::subtotal(2,'.','')) }}</span>--}}
                                             </td>
                                             <td class="datatable-ct text-center">
@@ -136,7 +134,8 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="col-sm-12 cart-sidebar-right">
-                        <form action="">
+                        <form action="{{ route(FRONT_CHECK_COUNT_CART) }}" method="POST">
+                            @csrf
                             <div class="row col-sm-12 location-box">
                                 <div class="col-sm-12">
                                     <div class="location-label">Location</div>
@@ -149,8 +148,7 @@
                                 </div>
                             </div>
                             <div class="summary-section">
-                                <div class="summary-section-heading">Order Summary
-                                </div>
+                                <div class="summary-section-heading">Order Summary</div>
                                 <div class="summary-section-content">
                                     <div class="  checkout-summary">
                                         <div class="checkout-summary-rows">
@@ -193,7 +191,8 @@
                                                         applicable</small>
                                                 </div>
                                             </div>
-                                            <button type="button" class="next-btn checkout-order-total-button automation-checkout-order-total-button-button btn btn-custon-three btn-warning">
+                                            <input type="hidden" name="row_id_checkout" class="row_id_checkout">
+                                            <button type="submit" class="next-btn checkout-order-total-button automation-checkout-order-total-button-button btn btn-custon-three btn-warning">
                                                 CONFIRM CART
                                             </button>
                                         </div>

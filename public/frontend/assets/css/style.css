@@ -63,11 +63,12 @@ a:hover{
 .cart-price {
     white-space: nowrap;
 }
-/*.cart-product-name {*/
-/*    overflow: hidden;*/
-/*    white-space: nowrap;*/
-/*    text-overflow: ellipsis;*/
-/*}*/
+.cart-product-name {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 320px;
+}
 .list-cart > tr {
     border-bottom: 1px solid #ccc;
 }
@@ -162,6 +163,31 @@ a:hover{
     border-radius: 4px;
     padding: 10px;
     border: 1px solid #1ab394;
+}
+.address-user-checkout {
+    width: 100%;
+    border-radius: 4px;
+    padding: 4px 10px;
+    border: 1px solid #1ab394 !important;
+}
+.form-address-check-count-lable {
+    white-space: pre;
+    float: right;
+    line-height: 32px;;
+    font-size: 24px;
+    color: #1ab394;
+}
+.invalid-feedback {
+    display: inline-block;
+}
+span#wards-error {
+    position: absolute;
+    right: 76px;
+    white-space: nowrap;
+}
+.form-address-check-count {
+    margin-bottom: 10px;
+    z-index: 1024;
 }
 .voucher-input {
     margin-bottom: 8px;
