@@ -237,7 +237,7 @@ let Commons = (function ($) {
         $(formId).each(function (index, value) {
             for (let i=0; i < value.length; i++) {
                 $(value[i]).bind("keyup change", function () {
-                    $("button.btn-success:not('.product')").prop('disabled', false);
+                    $("button.btn-success").prop('disabled', false);
                     let name = $(this).attr('name');
                     let className = (!ARRAY_NAME.includes(name)) ? $(this).next()[0].classList[1] : $(this).parent().next()[0].classList[1];
                     let val = $(this).val();
@@ -268,7 +268,7 @@ let Commons = (function ($) {
                 $(this).parent().parent().parent().parent().parent().parent().parent().next().children().children().children().children().prop('disabled', false).trigger("chosen:updated");
                 $('.error_' + name).text('');
             }
-            $("button.btn-success:not('.product')").prop('disabled', false);
+            $("button.btn-success").prop('disabled', false);
         });
 
         if (summerNoteId) {
