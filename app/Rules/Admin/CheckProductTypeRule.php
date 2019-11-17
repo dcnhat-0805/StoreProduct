@@ -8,15 +8,17 @@ use Illuminate\Contracts\Validation\Rule;
 class CheckProductTypeRule implements Rule
 {
     protected $productCategoryId;
+    protected $productTypeId;
 
     /**
      * Create a new rule instance.
      *
      * @return void
      */
-    public function __construct($productCategoryId)
+    public function __construct($productCategoryId, $productTypeId)
     {
         $this->productCategoryId = $productCategoryId;
+        $this->productTypeId = $productTypeId;
     }
 
     /**
@@ -30,9 +32,10 @@ class CheckProductTypeRule implements Rule
     {
         $productType = ProductType::where('product_category_id', '=', $this->productCategoryId)->get();
 
-        if ($productType) {
+        if ($productType && empty($this->productTypeId)) {
             return false;
         }
+
         return true;
     }
 

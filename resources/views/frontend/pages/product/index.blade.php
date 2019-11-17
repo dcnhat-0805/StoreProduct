@@ -78,7 +78,7 @@
                                                     </h4>
                                                     <div class="info-product-price">
                                                         <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}</span>
-                                                        @if($product->product_promotion || $product->product_promotion == 0)
+                                                        @if(!empty($product->product_promotion) || $product->product_promotion > 0)
                                                             <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
                                                         @endif
                                                     </div>

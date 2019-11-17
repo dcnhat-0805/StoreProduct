@@ -144,7 +144,7 @@ class Helper
     public static function getDataImage($filePath, $images)
     {
         $response['images'] = [];
-        if (isset($images)) {
+        if (isset($images) && $images !== '0') {
                 $dataImage = [];
                 $dataImage['name'] = $images;
                 $dataImage['url'] = $filePath . $images;
@@ -160,11 +160,13 @@ class Helper
         $response['images'] = [];
         if (isset($images) && count($images)) {
             foreach ($images as $image) {
-                $dataImage = [];
-                $dataImage['name'] = $image;
-                $dataImage['url'] = $filePath . $image;
-                $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
-                $response['images'][] = $dataImage;
+                if ($image !== '0') {
+                    $dataImage = [];
+                    $dataImage['name'] = $image;
+                    $dataImage['url'] = $filePath . $image;
+                    $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
+                    $response['images'][] = $dataImage;
+                }
             }
         }
 

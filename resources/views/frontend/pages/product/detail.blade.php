@@ -5,6 +5,9 @@
 @section('metaTitle')
     <meta name="title" content="{{ $product->product_meta_title }}">
 @endsection
+@section('title')
+    {{ $product->product_description }}
+@endsection
 @section('cssCustom')
     <link href="frontend/assets/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
     <link rel="stylesheet" href="frontend/assets/css/flexslider.css" type="text/css" media="screen" />
@@ -71,7 +74,7 @@
                     </div>
                     <p>
                         <span class="item_price product-price-item">{{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}</span>
-                        @if($product->product_promotion || $product->product_promotion == 0)
+                        @if(!empty($product->product_promotion) || $product->product_promotion > 0)
                             <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
                         @endif
                     </p>

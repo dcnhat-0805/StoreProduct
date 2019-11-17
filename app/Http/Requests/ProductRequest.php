@@ -32,7 +32,7 @@ class ProductRequest extends FormRequest
             'product_name' => 'required|min:5|max:255|unique:products,product_name,'.($this->id ?? ""),
             'category_id' => 'required',
             'product_category_id' => 'required',
-            'product_type_id' => new CheckProductTypeRule($this->request->get('product_category_id')),
+            'product_type_id' => new CheckProductTypeRule($this->request->get('product_category_id'), $this->request->get('product_type_id')),
             'product_description' => ['required', new MinLengthTextArea(20, trans("messages.product.product_description.min")),
                                         'unique:products,product_description,' . ($this->id ?? ""),
                                         new MaxLengthTextArea(255, trans("messages.product.product_description.max")),
