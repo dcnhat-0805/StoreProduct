@@ -97,6 +97,10 @@ let Commons = (function ($) {
         $(e.currentTarget).find('input[type=radio]').parent().removeClass('checked');
     });
 
+    $('.modal').on('hide.bs.modal, show.bs.modal', function () {
+        $("button.btn-success").prop('disabled', false);
+    });
+
     modules.getProductCategory = function (categoryId) {
         $.ajax({
             url : 'admin/ajax/list_product_category',

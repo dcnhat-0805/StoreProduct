@@ -44,11 +44,11 @@
 </head>
 
 <body>
+@include('backend.loading')
 
 <div class="super_container">
 
     @include('frontend.layouts.header')
-    @include('backend.loading')
 
     <div class="container main-container">
         @yield('content')

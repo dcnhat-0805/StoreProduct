@@ -33,7 +33,7 @@ let Commons = (function ($) {
     };
 
     modules.hideLoading = function() {
-        $('#loading').hide();
+        // $('#loading').hide();
     };
 
     $('a, button').on('click', function () {
@@ -170,8 +170,8 @@ let Commons = (function ($) {
         }
     };
 
-    $('.modal').on('hide.bs.modal', function () {
-        $("button.btn-success:not('.product')").prop('disabled', false);
+    $('.modal').on('hide.bs.modal, show.bs.modal', function () {
+        $("button.btn-success").prop('disabled', false);
     });
 
     modules.loadAddressSelectBox = function () {
