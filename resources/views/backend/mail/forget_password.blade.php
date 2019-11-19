@@ -214,6 +214,7 @@
         ============================================ -->
     <script src="backend/js/notifications/Lobibox.js"></script>
     <script src="backend/js/notifications/notification-active.js"></script>
+    <script src="frontend/assets/js/loading.js"></script>
     <!-- tawk chat JS
         ============================================ -->
     {{--    <script src="backend/js/tawk-chat.js"></script>--}}

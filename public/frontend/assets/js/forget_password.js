@@ -46,6 +46,9 @@ let ForgetPasswordJs = (function ($) {
             data : {
                 email : email,
             },
+            beforeSend : function (data) {
+                $('#loading').show();
+            },
             success : function (data) {
                 $('.error').text('');
                 $('.step-1').addClass('hidden');
@@ -71,6 +74,9 @@ let ForgetPasswordJs = (function ($) {
                 auth_key : auth_key,
                 new_password : new_password,
                 confirm_password : confirm_password,
+            },
+            beforeSend : function (data) {
+                $('#loading').show();
             },
             success: function () {
                 // modules.getLoading();

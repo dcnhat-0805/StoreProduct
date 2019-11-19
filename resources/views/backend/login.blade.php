@@ -66,9 +66,11 @@
     <!-- buttons CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/buttons.css">
+    <link rel="stylesheet" href="backend/css/loading.css">
 </head>
 
 <body>
+@include('backend.loading')
 <div class="error-pagewrap">
     <div class="error-page-int">
         <div class="text-center m-b-md custom-login">
@@ -187,6 +189,7 @@
     ============================================ -->
 <script src="backend/js/notifications/Lobibox.js"></script>
 <script src="backend/js/notifications/notification-active.js"></script>
+<script src="frontend/assets/js/loading.js"></script>
 <!-- tawk chat JS
     ============================================ -->
 {{--    <script src="backend/js/tawk-chat.js"></script>--}}
