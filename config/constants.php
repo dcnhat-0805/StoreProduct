@@ -109,7 +109,7 @@ const SESSION_PRODUCT_IMAGE = 'ss.product.image';
 const SESSION_LIST_PRODUCT_IMAGE = 'ss.list.product.image';
 const IMAGE_RESIZE_WIDTH = 320;
 const IMAGE_RESIZE_HEIGHT = 240;
-const IMAGE_RESIZE_PREFIX = 'resize-';
+const IMAGE_RESIZE_PREFIX = 'product-';
 
 const PRODUCT_ATTRIBUTE = [
     '' => 'Please select a product attribute',

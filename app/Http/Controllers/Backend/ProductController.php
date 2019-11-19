@@ -60,6 +60,20 @@ class ProductController extends Controller
     {
         if ($request->ajax()) {
             if ($request->hasFile('file')) {
+//                $type = $request->get('type');
+//                $fileExtExplode = explode('.', $_FILES['file']['name']);
+//                $file_ext = end($fileExtExplode);
+//                $helper_text = uniqid() . "-" . time();
+//                $fileName = 'product-' . $helper_text . ".$file_ext";
+//                $path_upload = FILE_PATH_PRODUCT . $fileName;
+//                move_uploaded_file($_FILES["file"]["tmp_name"], $path_upload);
+//
+//                ImageOptimizer::optimize($path_upload);
+//                Helper::createResizeImage($path_upload, IMAGE_RESIZE_WIDTH, IMAGE_RESIZE_HEIGHT);
+//
+//                // upload to s3
+//                \Storage::disk('local')->put($fileName, file_get_contents($path_upload), 'public');
+
                 $fileName = UploadService::moveImage(FILE_PATH_PRODUCT, $request->file('file'), PREFIX_PRODUCT);
                 $type = $request->get('type');
                 $size = UploadService::getFileSize($request->file('file'));
@@ -67,8 +81,9 @@ class ProductController extends Controller
 
                 $data = [
                     'name' => $fileName,
-                    'url' => asset(FILE_PATH_PRODUCT . $fileName),
-                    'size' => $size
+                    'url' => FILE_PATH_PRODUCT . $fileName,
+//                    'url' => \Storage::url($fileName),
+                    'size' => $size,
                 ];
 
                 Session::push(SESSION_PRODUCT_IMAGE, $data);
@@ -152,7 +167,7 @@ class ProductController extends Controller
         $productCategories = ProductCategory::getOptionProductCategory();
         $productTypes = ProductType::getOptionProductType();
         $product = Product::showProduct($id);
-        $product->product_image = Helper::getDataImage(FILE_PATH_PRODUCT, $product->product_image);
+        $product->product_image = (isset($product->product_image) && $product->product_image !== '0') ? Helper::getDataImage(FILE_PATH_PRODUCT, $product->product_image) : null;
         $product->product_image_list = Helper::getDataImageList(FILE_PATH_PRODUCT_IMAGE, ProductImage::getDataImageByProductId($id));
         $product->product_attribute = ProductAttribute::getProductAttributeByProductId($id);
 

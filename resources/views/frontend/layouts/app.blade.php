@@ -99,6 +99,7 @@
     ============================================ -->
 <script src="backend/js/touchspin/jquery.bootstrap-touchspin.min.js"></script>
 <script src="frontend/assets/js/common.js"></script>
+<script src="frontend/assets/js/loading.js"></script>
 <script src="frontend/assets/js/jquery.flexslider.js"></script>
 
 @if(Session::has('success'))

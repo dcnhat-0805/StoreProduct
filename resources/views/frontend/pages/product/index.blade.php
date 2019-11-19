@@ -124,6 +124,11 @@
     </div>
     <!-- //top products -->
     <!-- special offers -->
+{{--    @php--}}
+{{--        use Illuminate\Support\Arr;--}}
+{{--            $arrayKey = $products->pluck('id')->toArray();--}}
+{{--            dd(Arr::random($arrayKey, 4));--}}
+{{--    @endphp--}}
     <div class="featured-section" id="projects">
         <div class="container">
             <!-- tittle heading -->

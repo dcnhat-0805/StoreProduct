@@ -96,7 +96,7 @@ class Helper
         $fileName = Helper::convertUnsupportedExtension($imageResize->basename);
         $pathUpload = $imageResize->dirname . "/". IMAGE_RESIZE_PREFIX . $fileName;
         $imageResize->save($pathUpload);
-//        \Storage::disk('s3')->put(IMAGE_RESIZE_PREFIX.$fileName, file_get_contents($pathUpload), 'public');
+        \Storage::disk('local')->put(IMAGE_RESIZE_PREFIX.$fileName, file_get_contents($pathUpload), 'public');
     }
 
     /**
@@ -149,6 +149,8 @@ class Helper
                 $dataImage['name'] = $images;
                 $dataImage['url'] = $filePath . $images;
                 $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
+//            $dataImage['url'] = asset(\Storage::url('app/' . $images));
+//            $dataImage['size'] = Helper::getRemoteFileSize(\Storage::size($images));
                 $response['images'][] = $dataImage;
         }
 
@@ -164,6 +166,7 @@ class Helper
                     $dataImage = [];
                     $dataImage['name'] = $image;
                     $dataImage['url'] = $filePath . $image;
+//                    $dataImage['url'] = \Storage::url($image);
                     $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
                     $response['images'][] = $dataImage;
                 }

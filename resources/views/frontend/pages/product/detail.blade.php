@@ -39,17 +39,21 @@
                 <div class="grid images_3_of_2">
                     <div class="jsFlexSlider">
                         <ul class="slides">
-                            <li data-thumb="{{ FILE_PATH_PRODUCT . $product->product_image }}">
-                                <div class="thumb-image">
-                                    <img src="{{ FILE_PATH_PRODUCT . $product->product_image }}" data-imagezoom="true" class="img-responsive" alt="">
-                                </div>
-                            </li>
-                            @foreach($product->productImage as $productImage)
-                                <li data-thumb="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}">
+                            @if(isset($product->product_image) && $product->product_image !== '0')
+                                <li data-thumb="{{ FILE_PATH_PRODUCT . $product->product_image }}">
                                     <div class="thumb-image">
-                                        <img src="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}" data-imagezoom="true" class="img-responsive" alt="">
+                                        <img src="{{ FILE_PATH_PRODUCT . $product->product_image }}" data-imagezoom="true" class="img-responsive" alt="">
                                     </div>
                                 </li>
+                            @endif
+                            @foreach($product->productImage as $productImage)
+                                @if(isset($productImage->product_image_name) && $productImage->product_image_name !== '0')
+                                    <li data-thumb="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}">
+                                        <div class="thumb-image">
+                                            <img src="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}" data-imagezoom="true" class="img-responsive" alt="">
+                                        </div>
+                                    </li>
+                                @endif
                             @endforeach
                         </ul>
                         <div class="clearfix"></div>

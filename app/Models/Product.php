@@ -171,7 +171,8 @@ class Product extends Model
                     $productType->whereNull('product_types.deleted_at');
                 },
                 'productImage' => function ($productImage) {
-                    $productImage->whereNull('product_images.deleted_at');
+                    $productImage->whereNull('product_images.deleted_at')
+                                ->where('product_images.product_image_name', '<>', '0');
                 },
             ])
             ->groupBy('products.id')

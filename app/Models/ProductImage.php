@@ -116,7 +116,7 @@ class ProductImage extends Model
         $productImage =  self::where('product_image_name', $fileName)
                                 ->first();
 
-        if ($productImage !== null && count($productImage) !== 0) {
+        if (isset($productImage) && $productImage) {
 //            UploadService::deleteFile(FILE_PATH_PRODUCT_IMAGE, $fileName);
             return $productImage->delete();
         }
@@ -131,6 +131,7 @@ class ProductImage extends Model
             ->orderBy('product_images.id', 'DESC')
             ->whereNull('product_images.deleted_at')
             ->where('product_id', $productId)
+            ->where('product_image_name', '<>', '0')
             ->pluck('product_image_name')
             ->toArray();
 
