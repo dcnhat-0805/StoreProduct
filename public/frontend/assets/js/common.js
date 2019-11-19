@@ -25,11 +25,11 @@ let Commons = (function ($) {
 
 
     modules.showLoading = function (time) {
-        $('#loading').show();
-
-        setTimeout(function () {
-            $('#loading').hide();
-        },time);
+        // $('#loading').show();
+        //
+        // setTimeout(function () {
+        //     $('#loading').hide();
+        // },time);
     };
 
     modules.hideLoading = function() {

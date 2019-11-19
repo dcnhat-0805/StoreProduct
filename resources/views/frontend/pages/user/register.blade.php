@@ -101,8 +101,8 @@
                                 <div class="form-group">
                                     <label class="control-label required after" for="password" style="margin-top: 10px">Password</label>
                                     <input type="password" title="Password" placeholder="Please enter password..."
-                                           name="password" id="password" class="form-control" value="{{ old('password') }}">
-                                    @include('frontend.layouts.message_error', ['name' => 'password'])
+                                           name="password_user" id="password_user" class="form-control" value="{{ old('password_user') }}">
+                                    @include('frontend.layouts.message_error', ['name' => 'password_user'])
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label required after" for="confirm_password">Confirm Password</label>

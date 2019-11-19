@@ -59,6 +59,7 @@ class UserController extends Controller
     public function store(RegisterUserRequest $request)
     {
         $input = $request->all();
+        $input['password'] = $request->get('password_user');
 
         DB::beginTransaction();
         $user = User::createUser($input);

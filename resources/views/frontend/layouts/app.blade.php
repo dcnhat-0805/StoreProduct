@@ -101,6 +101,7 @@
 <script src="frontend/assets/js/common.js"></script>
 <script src="frontend/assets/js/loading.js"></script>
 <script src="frontend/assets/js/jquery.flexslider.js"></script>
+<script src="frontend/assets/js/disabled_button_submit.js"></script>
 
 @if(Session::has('success'))
     <script type="text/javascript">

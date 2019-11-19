@@ -27,7 +27,7 @@ class RegisterUserRequest extends FormRequest
             'name' => "required|min:5|max:50|unique:users,name," . ($this->id ?? ""),
             'email' => 'required|email|unique:users,email,' . ($this->id ?? ""),
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10,' . ($this->id ?? ""),
-            'password' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+            'password_user' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
             'confirm_password' => $this->request->get('password') ? ["required", "same:password"] : 'nullable',
         ];
     }
@@ -39,8 +39,8 @@ class RegisterUserRequest extends FormRequest
             'min' => trans("messages.users.name.min"),
             'max' => trans("messages.users.name.max"),
             'unique' => trans("messages.users.name.unique"),
-            'password.min' => trans("messages.users.password.min"),
-            'password.regex' => trans("messages.users.password.regex"),
+            'password_user.min' => trans("messages.users.password.min"),
+            'password_user.regex' => trans("messages.users.password.regex"),
             'same' => trans("messages.users.confirm_password.same"),
             'phone.regex' => trans("messages.users.confirm_password.same"),
         ];
@@ -50,7 +50,7 @@ class RegisterUserRequest extends FormRequest
         return [
             'name' => 'Name',
             'email' => 'Email',
-            'password' => 'Password',
+            'password_user' => 'Password',
             'confirm_password' => 'Confirm Password',
             'phone' => 'Phone number',
         ];
