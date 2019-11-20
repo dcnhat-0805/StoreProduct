@@ -215,6 +215,14 @@ let Commons = (function ($) {
             modules.loadWardsByDistrictId(districtId);
         });
     };
+    $('form').each(function (index, value) {
+        for (let i=0; i < value.length; i++) {
+            $(value[i]).bind("keyup change", function () {
+                $("button.btn-success, .btn-login").prop('disabled', false);
+                $(this).parent().find('.error').text('');
+            });
+        }
+    });
 
     return modules;
 

@@ -132,6 +132,10 @@ return [
         'role' => [
             'required' => 'Please select an admin permission.',
         ],
+        'phone' => [
+            'regex' => 'Enter the phone number using a combination of numbers.',
+            'max' => 'Enter the phone number using up to 10 characters.',
+        ],
     ],
 
     'check_count' => [

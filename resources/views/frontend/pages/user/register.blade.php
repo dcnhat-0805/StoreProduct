@@ -16,7 +16,7 @@
             <div class="login-form">
                 <div class="hpanel">
                     <div class="panel-body">
-                        <form action="{{ route(FRONT_STORE) }}" id="loginForm" method="POST">
+                        <form action="{{ route(FRONT_STORE) }}" id="register_form" method="POST">
                             <div class="col-sm-8">
                                 @csrf
 
@@ -143,4 +143,6 @@
 
 @section('jsCustom')
     <script src="frontend/assets/js/register_user.js"></script>
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\RegisterUserRequest', '#register_form') !!}
 @endsection
