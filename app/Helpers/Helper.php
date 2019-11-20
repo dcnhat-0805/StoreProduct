@@ -26,6 +26,7 @@ use App\Models\Category;
 use Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Arr;
 use Intervention\Image\ImageManagerStatic as ImageResize;
 
 /**
@@ -272,6 +273,13 @@ class Helper
     public static function loadMoney($price)
     {
         return number_format($price,0,",",".") . ' ₫';
+    }
+
+    public static function randomArrayKey($data)
+    {
+        $data = $data->pluck('id')->toArray();
+
+        return Arr::random($data, 3);
     }
 
 }
