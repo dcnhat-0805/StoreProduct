@@ -148,9 +148,9 @@ class ProductCategory extends Model
                         categories.category_slug, product_categories.product_category_slug, product_types.product_type_slug"
             )
             ->where('products.product_slug', utf8convert($description))
-//            ->orWhere('product_categories.product_category_slug', $description)
-//            ->orWhere('product_types.product_type_slug', $description)
-//            ->orWhere('products.product_slug', $description)
+            ->orWhere('product_categories.product_category_slug', $description)
+            ->orWhere('product_types.product_type_slug', $description)
+            ->orWhere('products.product_slug', $description)
             ->first();
 
         return $products;

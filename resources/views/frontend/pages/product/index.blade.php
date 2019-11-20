@@ -124,57 +124,59 @@
     </div>
     <!-- //top products -->
     <!-- special offers -->
-    @php
-        $arrayRandom = App\Helpers\Helper::randomArrayKey($products);
-    @endphp
-    <div class="featured-section" id="projects">
-        <div class="container">
-            <!-- tittle heading -->
-            <h3 class="tittle-w3l">Special Offers
-                <span class="heading-style">
+    @if(isset($products) && count($products) > 3)
+        @php
+            $arrayRandom = App\Helpers\Helper::randomArrayKey($products);
+        @endphp
+        <div class="featured-section" id="projects">
+            <div class="container">
+                <!-- tittle heading -->
+                <h3 class="tittle-w3l">Special Offers
+                    <span class="heading-style">
 					<i></i>
 					<i></i>
 					<i></i>
 				</span>
-            </h3>
-            <!-- //tittle heading -->
-            <div class="content-bottom-in">
-                <ul id="jsFleiselCustom">
-                    @foreach($products as $key => $product)
-                        @if(in_array($product->id, $arrayRandom))
-                            <li>
-                            <div class="w3l-specilamk">
-                                <div class="speioffer-agile">
-                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
-                                        <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="{{ $product->product_image }}">
-                                    </a>
-                                </div>
-                                <div class="product-name-w3l">
-                                    <h4>
-                                        <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">{!!  $product->product_description !!}</a>
-                                    </h4>
-                                    <div class="w3l-pricehkj text-center">
-                                        <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}</span>
-                                        @if(!empty($product->product_promotion) || $product->product_promotion > 0)
-                                            <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
-                                        @endif
+                </h3>
+                <!-- //tittle heading -->
+                <div class="content-bottom-in">
+                    <ul id="jsFleiselCustom">
+                        @foreach($products as $key => $product)
+                            @if(in_array($product->id, $arrayRandom))
+                                <li>
+                                    <div class="w3l-specilamk">
+                                        <div class="speioffer-agile">
+                                            <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
+                                                <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="{{ $product->product_image }}">
+                                            </a>
+                                        </div>
+                                        <div class="product-name-w3l">
+                                            <h4>
+                                                <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">{!!  $product->product_description !!}</a>
+                                            </h4>
+                                            <div class="w3l-pricehkj text-center">
+                                                <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}</span>
+                                                @if(!empty($product->product_promotion) || $product->product_promotion > 0)
+                                                    <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
+                                                @endif
+                                            </div>
+                                            <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                                <button type="button" class="button btn btn-custon-three btn-primary add-to-cart" data-id="{{ $product->id }}"
+                                                        {{--                                                                onclick="window.location.href = '{{ route(FRONT_ADD_CART, ['id' => $product->id]) }}'"--}}
+                                                        style="width: 100%; font-size: 20px">
+                                                    Add to cart
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
-                                        <button type="button" class="button btn btn-custon-three btn-primary add-to-cart" data-id="{{ $product->id }}"
-                                                {{--                                                                onclick="window.location.href = '{{ route(FRONT_ADD_CART, ['id' => $product->id]) }}'"--}}
-                                                style="width: 100%; font-size: 20px">
-                                            Add to cart
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </li>
-                        @endif
-                    @endforeach
-                </ul>
+                                </li>
+                            @endif
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
+    @endif
     <!-- //special offers -->
 @endsection
 

@@ -20,7 +20,7 @@ class ProductController extends Controller
         $category_name = Category::getCategoryNameBySlug($category_slug);
         $product_category_name = ProductCategory::getProductCategoryNameBySlug($slug);
         $titleName = ProductCategory::getNameAndSlugBySlug($slug);
-        $products = Product::getListProductBySlugProductCategory($slug);
+        $products = Product::getListProductOnFrontEnd($slug);
 
         if (!count($products) && isset($params['page']) && $params['page']) {
             $route = Helper::isHasDataByPages($products);
@@ -35,9 +35,10 @@ class ProductController extends Controller
     {
         $titleName = Product::getNameAndSlugBySlug($description);
         $product = Product::getProductBySlugAndId($description);
+        $products = Product::getListProductOnFrontEndByCategoryId($product->category_id);
 //        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
         $titleName['product_name'] = $product->product_description;
 
-        return view('frontend.pages.product.detail', compact('titleName', 'product'));
+        return view('frontend.pages.product.detail', compact('titleName', 'product', 'products'));
     }
 }
