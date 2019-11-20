@@ -15,7 +15,7 @@
             <div class="login-form">
                 <div class="hpanel">
                     <div class="panel-body">
-                        <form action="{{ route(FRONT_END_LOGIN) }}" method="POST">
+                        <form action="{{ route(FRONT_END_LOGIN) }}" method="POST" id="login_user_form">
                             <div class="col-sm-8">
                                 @csrf
 
@@ -65,4 +65,6 @@
 @endsection
 
 @section('jsCustom')
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\LoginFrontEndRequest', '#login_user_form') !!}
 @endsection
