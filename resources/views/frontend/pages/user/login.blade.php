@@ -3,10 +3,10 @@
 @endsection
 @section('content')
     <div class="row col-sm-12">
-        <div class="col-sm-10" style="margin: 0 auto;">
+        <div class="col-sm-10" style="margin: 35px auto;">
             <div class="row text-center m-b-md custom-login">
-                <div class="col-sm-8">
-                    <h3>Welcome to StoreOnline! Please login.</h3>
+                <div class="col-sm-8" style="padding-bottom: 20px;">
+                    <h3 class="text-left">Welcome to StoreOnline! Please login.</h3>
                 </div>
                 <div class="col">
                     <span class="float-right">New member? <a href="{{ route(FRONT_REGISTER) }}">Register</a> here.</span>

@@ -4,10 +4,10 @@
 @endsection
 @section('content')
     <div class="row col-sm-12">
-        <div class="col-sm-10" style="margin: 0 auto;">
+        <div class="col-sm-10" style="margin: 35px auto;">
             <div class="row text-center m-b-md custom-login">
-                <div class="col-sm-8">
-                    <h3>Create your StoreOnline Account</h3>
+                <div class="col-sm-8" style="padding-bottom: 20px;">
+                    <h3 class="text-left">Create your StoreOnline Account</h3>
                 </div>
                 <div class="col">
                     <span class="float-right">Already member? <a href="{{ route(FRONT_LOGIN) }}">Login</a> here.</span>
