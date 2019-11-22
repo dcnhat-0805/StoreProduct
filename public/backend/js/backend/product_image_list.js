@@ -33,8 +33,8 @@ $(document).ready(function () {
                 previewsContainer: previewsId,
                 thumbnailWidth: 120,
                 thumbnailHeight: 120,
-                dictCancelUpload: 'キャンセル',
-                dictCancelUploadConfirmation: 'アップロードをキャンセルします。よろしいですか？',
+                dictCancelUpload: 'Cancel',
+                dictCancelUploadConfirmation: 'Cancel upload. Is it OK ?',
                 // dictRemoveFileConfirmation: 'ファイルを削除します。よろしいですか？',
 
                 init: function() {
