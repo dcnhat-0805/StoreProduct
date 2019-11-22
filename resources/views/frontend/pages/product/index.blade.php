@@ -60,12 +60,21 @@
                                         <div class="col-xs-4 product-men">
                                             <div class="men-pro-item simpleCart_shelfItem">
                                                 <div class="men-thumb-item">
-                                                    <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="">
-                                                    <div class="men-cart-pro">
-                                                        <div class="inner-men-cart-pro">
-                                                            <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}" class="link-product-add-cart">Quick View</a>
+                                                    @if(isset($product->product_image) && $product->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $product->product_image))
+                                                        <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="">
+                                                        <div class="men-cart-pro">
+                                                            <div class="inner-men-cart-pro">
+                                                                <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}" class="link-product-add-cart">Quick View</a>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    @else
+                                                        <img class="image-product" src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="">
+                                                        <div class="men-cart-pro">
+                                                            <div class="inner-men-cart-pro">
+                                                                <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}" class="link-product-add-cart">Quick View</a>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                     @if($product->product_option == NEWS)
                                                         <span class="product-new-top">New</span>
                                                     @endif
@@ -148,9 +157,15 @@
                                 <li>
                                     <div class="w3l-specilamk">
                                         <div class="speioffer-agile">
-                                            <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
-                                                <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="{{ $product->product_image }}">
-                                            </a>
+                                            @if(isset($product->product_image) && $product->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $product->product_image))
+                                                <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
+                                                    <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="{{ $product->product_image }}">
+                                                </a>
+                                            @else
+                                                <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
+                                                    <img class="image-product" src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="{{ $product->product_image }}">
+                                                </a>
+                                            @endif
                                         </div>
                                         <div class="product-name-w3l">
                                             <h4>

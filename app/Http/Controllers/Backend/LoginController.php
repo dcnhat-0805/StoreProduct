@@ -49,6 +49,12 @@ class LoginController extends Controller
             UserLog::saveAdminLog($message, $email);
             Session::flash("success", trans("messages.admin.login_success"));
             Session::forget(SESSION_REMEMBER_TOKEN);
+            Session::put(SESSION_LAST_ACTIVE_TIME, time());
+            $lastUrl = Session::get(SESSION_LAST_URL);
+
+            if ($lastUrl && $lastUrl !== route(ADMIN_SHOW_LOGIN)) {
+                return redirect($lastUrl);
+            }
 
             return redirect(route(ADMIN_DASHBOARD));
         } else {
@@ -72,6 +78,8 @@ class LoginController extends Controller
     {
         Auth::guard('admins')->logout();
         Session::flash("success", trans("messages.admin.logout_success"));
+        Session::forget(SESSION_LAST_ACTIVE_TIME);
+
         return redirect(route(ADMIN_LOGIN));
     }
 }

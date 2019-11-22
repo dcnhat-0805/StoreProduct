@@ -39,15 +39,21 @@
                 <div class="grid images_3_of_2">
                     <div class="jsFlexSlider">
                         <ul class="slides">
-                            @if(isset($product->product_image) && $product->product_image !== '0')
+                            @if(isset($product->product_image) && $product->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $product->product_image))
                                 <li data-thumb="{{ FILE_PATH_PRODUCT . $product->product_image }}">
                                     <div class="thumb-image">
                                         <img src="{{ FILE_PATH_PRODUCT . $product->product_image }}" data-imagezoom="true" class="img-responsive" alt="">
                                     </div>
                                 </li>
+                            @else
+                                <li data-thumb="{{ FILE_PATH_PRODUCT_THUMP }}">
+                                    <div class="thumb-image">
+                                        <img src="{{ FILE_PATH_PRODUCT_THUMP }}" data-imagezoom="true" class="img-responsive" alt="">
+                                    </div>
+                                </li>
                             @endif
                             @foreach($product->productImage as $productImage)
-                                @if(isset($productImage->product_image_name) && $productImage->product_image_name !== '0')
+                                @if(isset($productImage->product_image_name) && $productImage->product_image_name !== '0' && file_exists(FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name))
                                     <li data-thumb="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}">
                                         <div class="thumb-image">
                                             <img src="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}" data-imagezoom="true" class="img-responsive" alt="">
@@ -207,9 +213,15 @@
                             <li>
                                 <div class="w3l-specilamk">
                                     <div class="speioffer-agile">
-                                        <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
-                                            <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="{{ $product->product_image }}">
-                                        </a>
+                                        @if(isset($product->product_image) && $product->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $product->product_image))
+                                            <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
+                                                <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="{{ $product->product_image }}">
+                                            </a>
+                                        @else
+                                            <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
+                                                <img class="image-product" src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="{{ $product->product_image }}">
+                                            </a>
+                                        @endif
                                     </div>
                                     <div class="product-name-w3l">
                                         <h4>

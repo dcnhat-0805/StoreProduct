@@ -150,7 +150,7 @@ class Helper
                 $dataImage = [];
                 $dataImage['name'] = $images;
                 $dataImage['url'] = $filePath . $images;
-                $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
+                $dataImage['size'] = Helper::getRemoteFileSize(file_exists($dataImage['url']) ? filesize($dataImage['url']) : 0 . 'KB');
 //            $dataImage['url'] = asset(\Storage::url('app/' . $images));
 //            $dataImage['size'] = Helper::getRemoteFileSize(\Storage::size($images));
                 $response['images'][] = $dataImage;
@@ -169,7 +169,7 @@ class Helper
                     $dataImage['name'] = $image;
                     $dataImage['url'] = $filePath . $image;
 //                    $dataImage['url'] = \Storage::url($image);
-                    $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
+                    $dataImage['size'] = Helper::getRemoteFileSize(file_exists($dataImage['url']) ? filesize($dataImage['url']) : 0 . 'KB');
                     $response['images'][] = $dataImage;
                 }
             }

@@ -101,6 +101,8 @@ const FRONT_LOGIN_SOCIALITE = 'front.end.login.facebook';
 const FRONT_FORGET_PASSWORD = 'front.end.forget.password';
 
 const SESSION_REMEMBER_TOKEN = 'ss.remember.token';
+const SESSION_LAST_ACTIVE_TIME = 'ss.last.active.time';
+const SESSION_LAST_URL = 'ss.last.url';
 
 const SESSION_ROW_IDS = 'ss.row.ids';
 
@@ -108,6 +110,7 @@ const PREFIX_PRODUCT = 'product';
 const PREFIX_PRODUCT_DETAIL = 'product-detail';
 const FILE_PATH_PRODUCT = 'backend/images/uploads/product/';
 const FILE_PATH_PRODUCT_IMAGE = 'backend/images/uploads/product/detail/';
+const FILE_PATH_PRODUCT_THUMP = 'backend/img/product/thump_product.png';
 
 const SESSION_PRODUCT_IMAGE = 'ss.product.image';
 const SESSION_LIST_PRODUCT_IMAGE = 'ss.list.product.image';
