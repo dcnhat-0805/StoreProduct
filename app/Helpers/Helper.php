@@ -17,6 +17,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Wards;
 use DateTime;
 use DatePeriod;
 use DateInterval;
@@ -280,6 +281,18 @@ class Helper
         $data = $data->pluck('id')->toArray();
 
         return Arr::random($data, 3);
+    }
+
+    public static function loadAddressByWardsId($wardsId)
+    {
+        $address = Wards::select('wards.path_with_type')
+                ->join('districts', 'wards.parent_code', 'districts.code')
+                ->join('cities', 'districts.parent_code', 'cities.code')
+                ->where('wards.code', '=' , $wardsId)
+                ->pluck('wards.path_with_type')
+                ->first();
+
+        return $address;
     }
 
 }

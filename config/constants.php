@@ -51,6 +51,7 @@ const EMAIL_SUBJECT_PREFIX = '';
 const EMAIL_SUBJECT_PREFIX_USER = '';
 const EMAIL_SUBJECT = '[StoreOnline] Please reset your password !';
 const EMAIL_SUBJECT_USER = '[StoreOnline] Confirm your account on StoreOnline !';
+const EMAIL_SUBJECT_SHOPPING = '[StoreOnline] Notice of successful orders !';
 
 const LIMIT = 10;
 const FRONT_LIMIT = 25;
@@ -88,6 +89,7 @@ const FRONT_ADD_CART = 'front.end.add.cart';
 const FRONT_UPDATE_CART = 'front.end.update.cart';
 const FRONT_CHECK_COUNT_CART = 'front.end.check.count.cart';
 const FRONT_PURCHASE = 'front.end.purchase';
+const FRONT_SHOPPING_CART = 'front.end.shopping.cart';
 
 const FRONT_LOGIN = 'front.end.show.form.login';
 const FRONT_END_LOGIN = 'front.end.login';
@@ -99,6 +101,8 @@ const FRONT_LOGIN_SOCIALITE = 'front.end.login.facebook';
 const FRONT_FORGET_PASSWORD = 'front.end.forget.password';
 
 const SESSION_REMEMBER_TOKEN = 'ss.remember.token';
+
+const SESSION_ROW_IDS = 'ss.row.ids';
 
 const PREFIX_PRODUCT = 'product';
 const PREFIX_PRODUCT_DETAIL = 'product-detail';

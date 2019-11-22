@@ -88,9 +88,13 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="cart-price">
-                                                    <span
-                                                        class="cart-item-price cart-item-price-before item_price">{{ App\Helpers\Helper::loadMoney($cart->price) }}</span>
-                                                    <del>{{ App\Helpers\Helper::loadMoney($cart->options->promotion) }}</del>
+                                                    <span class="cart-item-price cart-item-price-before item_price">
+                                                        {{ App\Helpers\Helper::loadMoney($cart->price) }}
+                                                    </span>
+
+                                                    @if(!empty($cart->options->promotion) && $cart->options->promotion > 0)
+                                                        <del>{{ App\Helpers\Helper::loadMoney($cart->options->promotion) }}</del>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td class="text-center">

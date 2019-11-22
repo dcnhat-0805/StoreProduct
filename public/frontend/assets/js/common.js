@@ -211,14 +211,19 @@ let Commons = (function ($) {
 
         $(document).on('change', '.jsSelectDistrict', function () {
             let districtId = $(this).val();
+            $("button.btn-success, .btn-login, .btn-place-order").prop('disabled', false);
 
             modules.loadWardsByDistrictId(districtId);
+        });
+
+        $(document).on('change', '.jsSelectWards', function () {
+            $("button.btn-success, .btn-login, .btn-place-order").prop('disabled', false);
         });
     };
     $('form').each(function (index, value) {
         for (let i=0; i < value.length; i++) {
             $(value[i]).bind("keyup change", function () {
-                $("button.btn-success, .btn-login").prop('disabled', false);
+                $("button.btn-success, .btn-login, .btn-place-order").prop('disabled', false);
                 $(this).parent().find('.error').text('');
             });
         }

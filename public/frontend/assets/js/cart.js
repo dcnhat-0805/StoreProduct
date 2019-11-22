@@ -172,9 +172,9 @@ let CartJs = (function ($) {
         data['ids'] = Commons.getArrayValueLocalStorage(CART_IDS);
 
         $('.voucher-input').hide();
-        $('.checkout-order-total-button').prop('disabled', false);
+        $(".checkout-order-total-button:not('.btn-place-order')").prop('disabled', false);
         if (!data['ids'].length) {
-            $('.checkout-order-total-button').prop('disabled', true);
+            $(".checkout-order-total-button:not('.btn-place-order')").prop('disabled', true);
         }
 
         $('.row_id_checkout').val(data['ids']);

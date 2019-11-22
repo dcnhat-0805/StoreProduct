@@ -66,9 +66,13 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="cart-price">
-                                                    <span
-                                                        class="cart-item-price cart-item-price-before item_price">{{ App\Helpers\Helper::loadMoney($cart->price) }}</span>
-                                                    <del>{{ App\Helpers\Helper::loadMoney($cart->options->promotion) }}</del>
+                                                    <span class="cart-item-price cart-item-price-before item_price">
+                                                        {{ App\Helpers\Helper::loadMoney($cart->price) }}
+                                                    </span>
+
+                                                    @if(!empty($cart->options->promotion) && $cart->options->promotion > 0)
+                                                        <del>{{ App\Helpers\Helper::loadMoney($cart->options->promotion) }}</del>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td class="text-center">
@@ -223,7 +227,7 @@
                                                 </div>
                                             </div>
                                             <input type="hidden" name="row_id_checkout" class="row_id_checkout">
-                                            <button class="next-btn checkout-order-total-button automation-checkout-order-total-button-button btn btn-custon-three btn-warning">
+                                            <button id="btn-place-order" class="next-btn checkout-order-total-button automation-checkout-order-total-button-button btn btn-custon-three btn-warning btn-place-order">
                                                 Place Order
                                             </button>
                                         </div>

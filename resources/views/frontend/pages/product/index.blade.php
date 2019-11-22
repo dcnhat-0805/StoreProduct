@@ -77,8 +77,10 @@
                                                         </a>
                                                     </h4>
                                                     <div class="info-product-price">
-                                                        <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}</span>
-                                                        @if(!empty($product->product_promotion) || $product->product_promotion > 0)
+                                                        <span class="item_price">
+                                                            {{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}
+                                                        </span>
+                                                        @if(!empty($product->product_promotion) && $product->product_promotion > 0)
                                                             <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
                                                         @endif
                                                     </div>
@@ -155,8 +157,10 @@
                                                 <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">{!!  $product->product_description !!}</a>
                                             </h4>
                                             <div class="w3l-pricehkj text-center">
-                                                <span class="item_price">{{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}</span>
-                                                @if(!empty($product->product_promotion) || $product->product_promotion > 0)
+                                                <span class="item_price">
+                                                    {{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}
+                                                </span>
+                                                @if(!empty($product->product_promotion) && $product->product_promotion > 0)
                                                     <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
                                                 @endif
                                             </div>

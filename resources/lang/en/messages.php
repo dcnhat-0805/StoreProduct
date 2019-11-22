@@ -81,6 +81,7 @@ return [
 
     'users' => [
         'create_success' => 'Account registration successful! A confirmation email has been sent to the email you registered. Please activate your account.',
+        'shopping_success' => 'Order Success! Please check your email.',
         'create_failed' => 'Unsuccessfully add new user.',
         'accept_success' => 'Account verification successful.',
         'accept_failed' => 'Account verification unsuccessful.',
