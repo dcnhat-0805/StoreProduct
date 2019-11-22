@@ -201,6 +201,7 @@
 <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 {!! JsValidator::formRequest('App\Http\Requests\LoginRequest', '#loginForm') !!}
 <script src="{{ \App\Helpers\Helper::asset('backend/js/backend/common.js') }}"></script>
+<script src="{{ App\Helpers\Helper::asset('backend/js/backend/disabled_button_submit.js') }}"></script>
 </body>
 
 </html>

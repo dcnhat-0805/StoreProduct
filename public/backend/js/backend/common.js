@@ -98,7 +98,7 @@ let Commons = (function ($) {
     });
 
     $('.modal').on('hide.bs.modal, show.bs.modal', function () {
-        $("button.btn-success").prop('disabled', false);
+        $(this).find("button.btn-success, .loginbtn").prop('disabled', false);
     });
 
     modules.getProductCategory = function (categoryId) {
@@ -237,11 +237,23 @@ let Commons = (function ($) {
         $(this).prop('disabled', true);
     });
 
+    $('#loginForm').each(function (index, value) {
+        for (let i=0; i < value.length; i++) {
+            $(value[i]).bind("keyup change", function () {
+                $('#loginForm').find("button.btn-success, .loginbtn").prop('disabled', false);
+            });
+        }
+
+        $(this).find('input[name=remember_token]').on('ifChanged', function () {
+            $('#loginForm').find("button.btn-success, .loginbtn").prop('disabled', false);
+        });
+    });
+
     modules.formValidation = function (url, formId, summerNoteId = null) {
         $(formId).each(function (index, value) {
             for (let i=0; i < value.length; i++) {
                 $(value[i]).bind("keyup change", function () {
-                    $("button.btn-success").prop('disabled', false);
+                    $(this).find("button.btn-success, .loginbtn").prop('disabled', false);
                     let name = $(this).attr('name');
                     let className = (!ARRAY_NAME.includes(name)) ? $(this).next()[0].classList[1] : $(this).parent().next()[0].classList[1];
                     let val = $(this).val();
@@ -273,7 +285,7 @@ let Commons = (function ($) {
                 $(this).parent().parent().parent().parent().parent().parent().parent().next().children().children().children().children().prop('disabled', false).trigger("chosen:updated");
                 $('.error_' + name).text('');
             }
-            $("button.btn-success").prop('disabled', false);
+            $(this).find("button.btn-success, .loginbtn").prop('disabled', false);
             $('input[name=submit]').val('');
         });
 
@@ -288,7 +300,7 @@ let Commons = (function ($) {
                 } else {
                     $('.' + className).text('');
                 }
-                $("button.btn-success").prop('disabled', false);
+                $(this).find("button.btn-success, .loginbtn").prop('disabled', false);
                 $('input[name=submit]').val('');
             });
         }
