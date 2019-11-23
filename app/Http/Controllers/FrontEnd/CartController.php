@@ -105,7 +105,7 @@ class CartController extends Controller
     {
         $data = $request->all();
         $rowIds = Session::get(SESSION_ROW_IDS);
-        $data['order_code'] = '#SOP_' . uniqid() . '_' . time();
+        $data['order_code'] = 'SOP_' . uniqid() . '_' . time();
         $data['user_id'] = Auth::user() ? Auth::user()->id : null;
         $data['order_name'] = $request->get('name');
         $data['order_email'] = $request->get('email');

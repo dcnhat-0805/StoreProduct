@@ -9,16 +9,22 @@ use Auth;
 
 class OrderController extends Controller
 {
-    public function myOrder($userId)
+    public function myOrder(Request $request)
     {
-        $orders = Order::getListOrderByUserId($userId);
+        $user  = Auth::user();
+        if ($user) {
+            $orders = Order::getListOrderByUserId($user->id);
 
-        dd($orders, Auth::user());
+            return view('frontend.pages.order.index', compact('orders', 'user'));
+        } else {
+            abort(404);
+        }
     }
 
-    function checkOrder($orderCode) {
+    function checkOrder($orderCode)
+    {
         $order = Order::getListOrderByOrderCode($orderCode);
 
-        return view('frontend.pages.order.index', compact('order', 'orderCode'));
+        return view('frontend.pages.order.detail', compact('order', 'orderCode'));
     }
 }

@@ -46,7 +46,7 @@
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navBarDropdownAccount">
                                     <a class="dropdown-item" href="#">Manage my account</a>
-                                    <a class="dropdown-item" href="{{ route(FRONT_MY_ORDERS, Auth::user()->id) }}">My orders</a>
+                                    <a class="dropdown-item" href="{{ route(FRONT_MY_ORDERS, ['sop' => convertStringToUrl(Auth::user()->name)]) }}">My orders</a>
                                     <a class="dropdown-item" href="{{ route(FRONT_LOGOUT) }}">
                                         <i class="fa fa-sign-out dropdown-item-icon" aria-hidden="true"></i>Logout
                                     </a>
