@@ -81,6 +81,8 @@ const SORT_PARAMS_ALLOWED = [
     'id' => 'id',
 ];
 
+const STATUS_ENABLE = 1;
+
 const FRONT_END_HOME_INDEX = 'front.end.home.index';
 const FRONT_PRODUCT_LIST = 'front.end.product.index';
 const FRONT_PRODUCT_DETAIL = 'front.end.product.detail';
@@ -90,6 +92,7 @@ const FRONT_UPDATE_CART = 'front.end.update.cart';
 const FRONT_CHECK_COUNT_CART = 'front.end.check.count.cart';
 const FRONT_PURCHASE = 'front.end.purchase';
 const FRONT_SHOPPING_CART = 'front.end.shopping.cart';
+const FRONT_MY_ORDERS = 'front.end.my.orders';
 
 const FRONT_LOGIN = 'front.end.show.form.login';
 const FRONT_END_LOGIN = 'front.end.login';

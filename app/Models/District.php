@@ -38,6 +38,9 @@ class District extends Model
     public static function getOptionDistrict($city_id = null)
     {
         $districts = self::getDistrictByCityId($city_id);
+        if (!$city_id) {
+            $districts = self::getAllDistrict();
+        }
 
         $districtOption = [];
 

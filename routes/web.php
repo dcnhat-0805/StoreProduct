@@ -144,6 +144,8 @@ Route::namespace('FrontEnd')->group(function(){
             ->name(FRONT_FORGET_PASSWORD);
         Route::post('/checkEmailUser', 'UserController@checkEmailUser');
         Route::post('/updatePassword', 'UserController@updatePassword');
+        Route::get('/order/{user_id}', 'OrderController@myOrder')
+            ->name(FRONT_MY_ORDERS);
         Route::get('/order/{code}', 'OrderController@checkOrder')
             ->name(FRONT_SHOPPING_CART);
     });

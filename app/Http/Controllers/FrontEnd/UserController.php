@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\FrontEnd;
 
+use App\Helpers\Helper;
 use App\Http\Requests\ForgetPasswordFrontEndRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\UpdatePasswordFrontEndRequest;

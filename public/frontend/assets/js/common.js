@@ -175,6 +175,19 @@ let Commons = (function ($) {
     });
 
     modules.loadAddressSelectBox = function () {
+        let cityId = $('select[name=city]').val();
+        let districtId = $('select[name=district]').val();
+        let wardsId = $('select[name=wards]').val();
+
+        $('select[name=city]').prop('disabled', false);
+        $('select[name=district]').prop('disabled', false);
+        $('select[name=wards]').prop('disabled', false);
+
+        if (!cityId) {
+            $('select[name=district]').prop('disabled', true);
+            $('select[name=wards]').prop('disabled', true);
+        }
+
         modules.loadDistrictByCityId = function(cityId) {
             $.ajax({
                 url : '/account/ajaxGetDistricts',
@@ -187,7 +200,7 @@ let Commons = (function ($) {
                     $('.district').html(data)
                 }
             });
-        }
+        };
 
         modules.loadWardsByDistrictId = function (districtId) {
             $.ajax({
@@ -201,7 +214,7 @@ let Commons = (function ($) {
                     $('.wards').html(data)
                 }
             });
-        }
+        };
 
         $('.jsSelectCity').on('change', function () {
             let cityId = $(this).val();

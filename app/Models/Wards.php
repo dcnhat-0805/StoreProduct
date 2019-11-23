@@ -33,6 +33,9 @@ class Wards extends Model
     public static function getOptionWards($district_id = null)
     {
         $wards = self::getWardsByDistrictId($district_id);
+        if (empty($district_id)) {
+            $wards = self::getAllWards();
+        }
 
         $wardsOption = [];
 

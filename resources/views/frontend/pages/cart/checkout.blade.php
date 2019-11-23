@@ -9,6 +9,9 @@
 
     @php
         $user = Auth::user();
+        if (isset($user)) {
+            $address = App\Helpers\Helper::getAddressByWardsId($user->address);
+        }
     @endphp
     <!-- top Products -->
     <div class="ads-grid box-cart">
@@ -153,7 +156,7 @@
                                             <div class="col-sm-10" style="padding: 0; margin-bottom: 20px;">
                                                 <div class="col-sm-4 city" style="padding: 0;">
                                                     {{
-                                                        Form::select('city', $cities, old('city'),
+                                                        Form::select('city', $cities, isset($address->cityId) ? $address->cityId : old('city'),
                                                         [
                                                             'class' => 'form-control jsSelectCity address-user-checkout'
                                                         ])
@@ -161,7 +164,7 @@
                                                 </div>
                                                 <div class="col-sm-4 district" style="padding: 0;">
                                                     {{
-                                                        Form::select('district', $districts, old('district'),
+                                                        Form::select('district', $districts, isset($address->districtId) ? $address->districtId : old('district'),
                                                         [
                                                             'class' => 'form-control jsSelectDistrict address-user-checkout'
                                                         ])
@@ -169,7 +172,7 @@
                                                 </div>
                                                 <div class="col-sm-4 wards" style="padding: 0;">
                                                     {{
-                                                        Form::select('wards', $wards, old('wards'),
+                                                        Form::select('wards', $wards, isset($address->wardsId) ? $address->wardsId : old('wards'),
                                                         [
                                                             'class' => 'form-control jsSelectWards address-user-checkout'
                                                         ])

@@ -295,4 +295,19 @@ class Helper
         return $address;
     }
 
+    public static function getAddressByWardsId($wardsId)
+    {
+        $address = Wards::where('wards.code', '=' , $wardsId)
+                ->select([
+                    'wards.code as wardsId',
+                    'districts.code as districtId',
+                    'cities.code as cityId',
+                ])
+                ->join('districts', 'wards.parent_code', 'districts.code')
+                ->join('cities', 'districts.parent_code', 'cities.code')
+                ->first();
+
+        return $address;
+    }
+
 }
