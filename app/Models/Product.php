@@ -336,6 +336,24 @@ class Product extends Model
 //            ->orderBy('id', 'DESC')->get();
 //    }
 
+    public static function updateCountBuy($productId)
+    {
+        $product = self::showProduct($productId);
+
+        return $product->update([
+            'count_buy' => $product->count_buy++,
+        ]);
+    }
+
+    public static function updateProductView($productId)
+    {
+        $product = self::showProduct($productId);
+
+        return $product->update([
+            'product_view' => $product->product_view++,
+        ]);
+    }
+
     public static function getListProduct()
     {
         return self::select(

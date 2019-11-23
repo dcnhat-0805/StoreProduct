@@ -130,6 +130,8 @@ class CartController extends Controller
                 $orderDetail['options'] = serialize($cart->options);
                 $orderDetail['amount'] = $cart->price;
                 $orderDetails[$key] = OrderDetail::create($orderDetail);
+
+                Product::updateCountBuy($cart->id);
                 Cart::remove($cart->rowId);
                 Session::forget(SESSION_ROW_IDS);
             }

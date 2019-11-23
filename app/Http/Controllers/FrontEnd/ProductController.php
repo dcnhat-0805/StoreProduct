@@ -39,6 +39,8 @@ class ProductController extends Controller
 //        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
         $titleName['product_name'] = $product->product_description;
 
+        Product::updateProductView($product->id);
+
         return view('frontend.pages.product.detail', compact('titleName', 'product', 'products'));
     }
 }
