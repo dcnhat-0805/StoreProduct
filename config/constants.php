@@ -193,6 +193,16 @@ const OPTION_GENDER = [
     '2' => 'Female',
 ];
 
+const MAX_RATING = 5;
+
+const RATING_POINT = [
+    1 => 1,
+    2 => 2,
+    3 => 3,
+    4 => 4,
+    5 => 5,
+];
+
 const MIN_YEAR = 60;
 const OPTION = "選択";
 const YEAR = 60;

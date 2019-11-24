@@ -47,9 +47,14 @@ class ProductController extends Controller
             $ratePoint = Rating::getRatingByUserId($user->id, $product->id);
         }
 
+        $avgRating = number_format(Rating::getAvgRatingByProductId($product->id), 0);
+        $countRating = Rating::getCountRating($product->id);
+
         Product::updateProductView($product->id);
 
-        return view('frontend.pages.product.detail', compact('titleName', 'product', 'products', 'ratePoint'));
+        return view('frontend.pages.product.detail', compact(
+            'titleName', 'product', 'products', 'ratePoint', 'avgRating', 'countRating'
+        ));
     }
 
     public function updateRating(Request $request)

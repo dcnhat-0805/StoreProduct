@@ -7,16 +7,6 @@
 @section('content')
     <div class="ads-grid box-order" style="margin-top: 20px">
         <div class="container" style="padding: 0;">
-            <!-- tittle heading -->
-{{--            <h3 class="tittle-w3l">My Orders--}}
-
-{{--                <span class="heading-style">--}}
-{{--					<i></i>--}}
-{{--					<i></i>--}}
-{{--					<i></i>--}}
-{{--				</span>--}}
-{{--            </h3>--}}
-
             <div class="row">
                 <div class="col-sm-12">
                     <div class="col-md-3">

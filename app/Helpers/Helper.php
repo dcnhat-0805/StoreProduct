@@ -17,6 +17,7 @@
 
 namespace App\Helpers;
 
+use App\Models\Rating;
 use App\Models\Wards;
 use DateTime;
 use DatePeriod;
@@ -308,6 +309,11 @@ class Helper
                 ->first();
 
         return $address;
+    }
+
+    public static function getCountRatingByProductIdAndPoint($productId, $point)
+    {
+        return Rating::getCountRatingByPoint($productId, $point);
     }
 
 }

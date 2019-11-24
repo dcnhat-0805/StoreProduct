@@ -219,13 +219,6 @@ span.address {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
 }
-.jsRating i {
-    font-size: 30px;
-    margin-right: 4px;
-}
-.jsRating.disabled {
-    pointer-events: none;
-}
 .lable-title {
     border-left: 1px solid #000;
     font-size: 14px;
@@ -255,6 +248,130 @@ span.address {
 .form-group select {
     margin-bottom: 15px;
     width: 99%;
+}
+.jsRating i {
+    font-size: 30px;
+    margin-right: 4px;
+}
+.jsRatingComment i {
+    font-size: 30px;
+    margin-right: 4px;
+}
+.jsRatingComment {
+    margin: 15px 0;
+}
+.jsRating.disabled {
+    pointer-events: none;
+}
+.jsRatingDetail i {
+    font-size: 18px;
+}
+.jsRatingUser i {
+    font-size: 40px;
+    margin-left: 5px;
+}
+.jsRatingUserDetail i {
+    font-size: 18px;
+    margin-left: 5px;
+}
+.jsRatingUser.disabled,
+.jsRatingUserDetail > .disabled {
+    pointer-events: none;
+}
+.jsRatingUserDetail {
+    float: left;
+    position: relative;
+    width: 130px;
+}
+.jsRatingDetail.disabled {
+    pointer-events: none;
+}
+.col-sm-4.box-count-rating,
+.sop-rating-box {
+     white-space: nowrap;
+}
+.mod-rating {
+    padding: 20px 24px;
+}
+.content {
+    margin-top: 18px;
+}
+.summary {
+    float: left;
+    margin-right: 90px;
+}
+.detail {
+    float: left;
+}
+.count-rating {
+    white-space: nowrap;
+    display: inline-block;
+}
+.score-average {
+    font-size: 48px;
+}
+.pdp-mod-review .mod-rating .score-max {
+    font-size: 32px;
+    color: #9e9e9e;
+    text-align: center;
+    line-height: 40px;
+}
+.mod-rating .count {
+    margin-top: 9px;
+    color: #757575;
+}
+.form-question {
+    margin: 10px 0;
+}
+.comment-form {
+    width: 100%;
+    float: left;
+    background: #f8f8f8;
+    border: 1px solid #dadada;
+    padding: 20px;
+    margin: 20px 0;
+    display: none;
+}
+.comment-content-text {
+    width: 100%;
+    float: left;
+}
+.comment-content-text textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    padding: 10px;
+    line-height: 1.4em;
+    border-radius: 3px;
+    font-size: 14px;
+    letter-spacing: .6px;
+}
+.comment-name-and-email {
+    width: 100%;
+    float: left;
+    padding: 10px 0;
+    overflow: hidden;
+}
+.comment-name-and-email input {
+    width: 100%;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+    padding: 7px 10px;
+    margin: 7px 0;
+    border-radius: 3px;
+    letter-spacing: .6px;
+}
+.comment-btn {
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 105px;
+    display: grid;
+}
+.comment-btn > button {
+    width: 50%;
+    margin-bottom: 20px;
 }
 .tag {
     font-weight: 700;
@@ -480,6 +597,10 @@ ul.pagination {
     background-color: #fff;
 }
 .body-product-content {
+    background-color: #fff;
+    overflow-y: hidden;
+}
+.sop-body-product-content {
     background-color: #fff;
     overflow-y: hidden;
 }
