@@ -1,6 +1,9 @@
 @extends('frontend.layouts.app')
 @section('cssCustom')
 @endsection
+@section('title')
+    Order detail
+@endsection
 @section('content')
     <div class="ads-grid box-order" style="margin-top: 20px">
         <div class="container" style="padding: 0;">
@@ -102,7 +105,11 @@
                                         <div class="order-detail-{{ $key }}">
                                             <div class="col-sm-8">
                                                 <div class="order-image col-sm-2">
-                                                    <img src="/backend/images/uploads/product/{{ $options['image'] }}" alt="" class="image-detail">
+                                                    @if(isset($options['image']) && $options['image'] !== '0' && file_exists('/backend/images/uploads/product/' . $options['image']))
+                                                        <img src="/backend/images/uploads/product/{{ $options['image'] }}" alt="" class="image-detail">
+                                                    @else
+                                                        <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" class="image-detail">
+                                                    @endif
                                                 </div>
                                                 <div class="order-name col-sm-10">
                                                     <div class="title name">

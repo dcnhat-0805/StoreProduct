@@ -7,7 +7,9 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductCategory;
+use App\Models\Rating;
 use Cart;
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -33,14 +35,51 @@ class ProductController extends Controller
 
     public function detail($description)
     {
+        $user = Auth::user();
         $titleName = Product::getNameAndSlugBySlug($description);
         $product = Product::getProductBySlugAndId($description);
         $products = Product::getListProductOnFrontEndByCategoryId($product->category_id);
 //        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
         $titleName['product_name'] = $product->product_description;
 
+        $ratePoint = 3;
+        if ($user) {
+            $ratePoint = Rating::getRatingByUserId($user->id, $product->id);
+        }
+
         Product::updateProductView($product->id);
 
-        return view('frontend.pages.product.detail', compact('titleName', 'product', 'products'));
+        return view('frontend.pages.product.detail', compact('titleName', 'product', 'products', 'ratePoint'));
+    }
+
+    public function updateRating(Request $request)
+    {
+        if ($request->ajax()) {
+            $user = Auth::user();
+            $productId = $request->get('productId');
+
+            $productId = !$productId ? 0 : $productId;
+            $product = Product::showProduct($productId);
+
+            if (!$product) {
+                return response()->json(0);
+            } else {
+                $point = $request->get('point');
+
+                $rating = Rating::firstorNew([
+                    'user_id' => $user->id,
+                    'product_id' => $product->id,
+                ]);
+                $rating->point = $point;
+
+                if ($rating->save()) {
+                    $ratePoint = Rating::getRatingByUserId($user->id, $product->id);
+
+                    return response()->json($ratePoint);
+                } else {
+                    return response()->json(0);
+                }
+            }
+        }
     }
 }

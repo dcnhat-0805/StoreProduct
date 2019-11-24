@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="frontend/assets/css/flexslider.css" type="text/css" media="screen" />
 @endsection
 @section('content')
+    @php
+        $user = Auth::user();
+    @endphp
+
     @include('frontend.layouts.header_top', [
         'titleName' => isset($titleName) && $titleName ? $titleName : null,
         'namePage' => null,
@@ -67,21 +71,9 @@
                 </div>
             </div>
             <div class="col-md-7 single-right-left simpleCart_shelfItem">
-                <h3>{{ $product->product_name }}</h3>
-                <div class="rating1">
-					<span class="starRating">
-						<input id="rating5" type="radio" name="rating" value="5">
-						<label for="rating5">5</label>
-						<input id="rating4" type="radio" name="rating" value="4">
-						<label for="rating4">4</label>
-						<input id="rating3" type="radio" name="rating" value="3" checked="">
-						<label for="rating3">3</label>
-						<input id="rating2" type="radio" name="rating" value="2">
-						<label for="rating2">2</label>
-						<input id="rating1" type="radio" name="rating" value="1">
-						<label for="rating1">1</label>
-					</span>
-                    </div>
+                <h3>{{ $product->product_description }}</h3>
+                <input type="hidden" class="product_id" value="{{ $product->id }}">
+                <div class="jsRating {{ !$user ? 'disabled' : '' }}"></div>
                     <p>
                         <span class="item_price product-price-item">
                             {{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}
@@ -261,4 +253,37 @@
     <!-- imagezoom -->
     <script src="frontend/assets/js/imagezoom.js"></script>
     <script src="frontend/assets/js/detail.js"></script>
+    <script src="frontend/assets/js/stars.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.jsRating').stars({
+                stars: 5,
+                value : {{ $ratePoint }},
+                click: function(index) {
+                    let productId = parseInt($('.product_id').val());
+
+                    if (index >=1 && index <= 5) {
+                        $.ajax({
+                            url : '/updateRating',
+                            dataType : 'JSON',
+                            type : 'POST',
+                            data : {
+                                productId : productId,
+                                point : index
+                            },
+                            beforeSend : function (data) {
+
+                            },
+                            success : function (data) {
+
+                            },
+                            error : function (data) {
+
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    </script>
 @endsection

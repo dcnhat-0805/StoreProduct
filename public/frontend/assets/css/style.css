@@ -219,6 +219,13 @@ span.address {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
 }
+.jsRating i {
+    font-size: 30px;
+    margin-right: 4px;
+}
+.jsRating.disabled {
+    pointer-events: none;
+}
 .tag {
     font-weight: 700;
     color: #fff;
@@ -2760,6 +2767,10 @@ img.zoom-img:hover{
     font-size: 25px;
     color: #000;
     margin-bottom: 13px;
+    padding: 4px 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .single-right-left p {
     margin: 10px 0 15px;

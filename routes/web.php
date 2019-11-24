@@ -107,6 +107,7 @@ Route::namespace('FrontEnd')->group(function(){
         ->name(FRONT_PRODUCT_LIST);
     Route::get('/detail/{description}', 'ProductController@detail')
         ->name(FRONT_PRODUCT_DETAIL);
+    Route::post('/updateRating', 'ProductController@updateRating');
 
     Route::group(['prefix' => 'cart'], function(){
         Route::get('/list', 'CartController@index')

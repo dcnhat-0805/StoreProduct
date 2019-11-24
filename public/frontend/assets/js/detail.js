@@ -71,4 +71,37 @@ $(document).ready(function () {
             });
         });
     }
+
+
+
+    // $('input[name=rating]').on('change', function () {
+    //     let point = parseInt($(this).val());
+    //     let productId = parseInt($('.product_id').val());
+    //
+    //     if (point >=1 && point <= 5) {
+    //         $.ajax({
+    //             url : '/updateRaty',
+    //             dataType : 'JSON',
+    //             type : 'POST',
+    //             data : {
+    //                 productId : productId,
+    //                 point : point
+    //             },
+    //             beforeSend : function (data) {
+    //
+    //             },
+    //             success : function (data) {
+    //                 let ratePoint = Math.ceil(data);
+    //                 console.log(ratePoint, data, point);
+    //
+    //                 if (ratePoint >= 1) {
+    //                     // $('#rating' + ratePoint).prop('checked', true);
+    //                 }
+    //             },
+    //             error : function (data) {
+    //
+    //             }
+    //         });
+    //     }
+    // });
 });
