@@ -76,7 +76,7 @@ ul.pagination {
     border-bottom: 2px solid #cccccc;
 }
 
-.jsDatepcker[readonly] {
+.jsDatepicker[readonly] {
     background-color: #ffffff;
 }
 

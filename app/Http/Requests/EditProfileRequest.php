@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterUserRequest extends FormRequest
+class EditProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +25,8 @@ class RegisterUserRequest extends FormRequest
     {
         return [
             'name' => "required|min:5|max:50|unique:users,name," . ($this->id ?? ""),
-            'email' => 'required|email|unique:users,email,' . ($this->id ?? ""),
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:10,' . ($this->id ?? ""),
-            'password_user' => 'required|min:8|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
-            'confirm_password' => "required|same:password_user",
+
         ];
     }
     public function messages()

@@ -127,6 +127,20 @@ Route::namespace('FrontEnd')->group(function(){
     });
 
     Route::group(['prefix' => 'account'], function () {
+        Route::get('/profile', 'ProfileController@showProfile')
+            ->name(FRONT_SHOW_PROFILE);
+        Route::get('/profile/edit', 'ProfileController@showEditProfile')
+            ->name(FRONT_SHOW_EDIT_PROFILE);
+        Route::post('/profile/edit', 'ProfileController@editProfile')
+            ->name(FRONT_EDIT_PROFILE);
+        Route::get('/profile/edit_mail', 'ProfileController@showFormEditEmail')
+            ->name(FRONT_SHOW_EDIT_EMAIL);
+        Route::post('/profile/edit_mail', 'ProfileController@editEmail')
+            ->name(FRONT_EDIT_EMAIL);
+        Route::get('/profile/change_password', 'ProfileController@showFormEditPassword')
+            ->name(FRONT_SHOW_EDIT_PASSWORD);
+        Route::post('/profile/change_password', 'ProfileController@changePassword')
+            ->name(FRONT_EDIT_PASSWORD);
         Route::get('/register', 'UserController@showRegisterForm')
             ->name(FRONT_REGISTER);
         Route::post('/store', 'UserController@store')

@@ -57,17 +57,17 @@ $(function () {
         endDate: moment()
     };
 
-    $('.jsDatepcker').daterangepicker(
+    $('.jsDatepicker').daterangepicker(
         $.extend(dateOptions, {
             opens: 'right'
         })
     );
 
-    $('.jsDatepcker').on('apply.daterangepicker', function(ev, picker) {
+    $('.jsDatepicker').on('apply.daterangepicker', function(ev, picker) {
         $(this).val(picker.startDate.format('YYYY/MM/DD') + ' - ' + picker.endDate.format('YYYY/MM/DD'));
     });
 
-    $('.jsDatepcker').on('cancel.daterangepicker', function(ev, picker) {
+    $('.jsDatepicker').on('cancel.daterangepicker', function(ev, picker) {
         $(this).val('');
     });
 });

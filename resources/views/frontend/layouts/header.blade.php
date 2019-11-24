@@ -45,8 +45,10 @@
                                     {{ Auth::user()->name }}'s account
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navBarDropdownAccount">
-                                    <a class="dropdown-item" href="#">Manage my account</a>
-                                    <a class="dropdown-item" href="{{ route(FRONT_MY_ORDERS, ['sop' => convertStringToUrl(Auth::user()->name)]) }}">My orders</a>
+                                    <a class="dropdown-item" href="{{ route(FRONT_SHOW_PROFILE) }}">
+                                        <i class="fa fa-user-circle-o dropdown-item-icon" aria-hidden="true"></i>Manage my account</a>
+                                    <a class="dropdown-item" href="{{ route(FRONT_MY_ORDERS, ['sop' => convertStringToUrl(Auth::user()->name)]) }}">
+                                        <i class="fa fa-suitcase dropdown-item-icon" aria-hidden="true"></i>My orders</a>
                                     <a class="dropdown-item" href="{{ route(FRONT_LOGOUT) }}">
                                         <i class="fa fa-sign-out dropdown-item-icon" aria-hidden="true"></i>Logout
                                     </a>

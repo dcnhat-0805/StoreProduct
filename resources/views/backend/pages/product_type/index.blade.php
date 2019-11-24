@@ -128,7 +128,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="name">Created at</label>
-                                                <input type="text" readonly class="form-control jsDatepcker" name="created_at" value="{{ request()->get('created_at') }}" >
+                                                <input type="text" readonly class="form-control jsDatepicker" name="created_at" value="{{ request()->get('created_at') }}" >
                                             </div>
                                         </div>
                                         <div class="col-sm-6">

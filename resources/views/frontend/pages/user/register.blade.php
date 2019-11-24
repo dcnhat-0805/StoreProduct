@@ -99,6 +99,48 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label class="control-label" for="address">Birthday</label>
+                                    <div class="form-address">
+                                        <div class="col-sm-4 birthday_year" style="padding: 0;">
+                                            <select class="form-control account-profile-edit__birthday__year" id="birthday_year" name="birthday_year" >
+                                                <option value="">Year</option>
+                                                @for($y = date('Y') - GROWN_YEAR; $y >= date('Y') - YEAR; $y--)
+                                                    <option value="{{ $y }}" {{ isset($user->birthday) && date('Y', strtotime($user->birthday)) == $y ? 'selected' : '' }}>{{ $y }}</option>
+                                                @endfor
+                                            </select>
+
+                                        </div>
+                                        <div class="col-sm-4 birthday_month" style="padding: 0;">
+                                            {{
+                                                Form::select('birthday_month', OPTION_MONTH, isset($user->birthday) ? date('m', strtotime($user->birthday)) : old('birthday_month'),
+                                                [
+                                                    'class' => 'form-control account-profile-edit__birthday__month',
+                                                    'id' => 'birthday_month'
+                                                ])
+                                            }}
+                                        </div>
+                                        <div class="col-sm-4 birthday_day" style="padding: 0;">
+                                            {{
+                                                Form::select('birthday_day', OPTION_DAY, isset($user->birthday) ? date('d', strtotime($user->birthday)) : old('birthday_day'),
+                                                [
+                                                    'class' => 'form-control account-profile-edit__birthday__day',
+                                                    'id' => 'birthday_day'
+                                                ])
+                                            }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="address">Gender</label>
+                                    {{
+                                        Form::select('gender', OPTION_GENDER, isset($user->gender) ? $user->gender : old('gender'),
+                                        [
+                                            'class' => 'form-control account-profile-edit__gender',
+                                            'id' => 'gender'
+                                        ])
+                                    }}
+                                </div>
+                                <div class="form-group">
                                     <label class="control-label required after" for="password" style="margin-top: 10px">Password</label>
                                     <input type="password" title="Password" placeholder="Please enter password..."
                                            name="password_user" id="password_user" class="form-control" value="{{ old('password_user') }}">

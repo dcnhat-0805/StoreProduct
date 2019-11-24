@@ -233,7 +233,7 @@ let Commons = (function ($) {
         });
     };
 
-    $("button.btn-success:not('.product')").on('click', function () {
+    $("button.btn-success:not('.product, #btnSearch')").on('click', function () {
         $(this).prop('disabled', true);
     });
 

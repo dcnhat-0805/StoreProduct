@@ -20,7 +20,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'birthday', 'gender', 'password',
         'phone', 'address', 'social_id',
         'avatar', 'code', 'status'
     ];
@@ -64,12 +64,17 @@ class User extends Authenticatable
 
     public static function createUser($request)
     {
-        if ($request['password'] !== '') {
-            $request['password'] = Hash::make($request['password']);
+        if ($request['password_user'] !== '') {
+            $request['password'] = Hash::make($request['password_user']);
         }
         if (isset($request['wards']) && $request['wards']) {
             $request['address'] = $request['wards'];
         }
+
+        if ($request['birthday_year'] && $request['birthday_month'] && $request['birthday_day']) {
+            $request['birthday'] = $request['birthday_year'] . '-' . $request['birthday_month'] . '-' . $request['birthday_day'];
+        }
+
         $request['code'] = md5(uniqid(rand(), true));
 
         return self::create($request);
@@ -83,6 +88,11 @@ class User extends Authenticatable
     public static function updateUser($id, $request)
     {
         $user = self::showUser($id);
+
+        if ($request['birthday_year'] && $request['birthday_month'] && $request['birthday_day']) {
+            $request['birthday'] = $request['birthday_year'] . '-' . $request['birthday_month'] . '-' . $request['birthday_day'];
+        }
+
         return $user->update($request);
     }
 
