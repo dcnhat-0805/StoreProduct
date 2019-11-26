@@ -45,6 +45,9 @@ const ADMIN_ADD = 'admin.add';
 const ADMIN_EDIT = 'admin.edit';
 const ADMIN_DELETE = 'admin.delete';
 
+const ADMIN_ORDER_INDEX = 'admin.order.index';
+const ADMIN_ORDER_DETAIL = 'admin.order.detail';
+
 const EMAIL_FORM = 'store.online.232@gmail.com';
 const EMAIL_NAME = 'StoreOnline';
 const EMAIL_SUBJECT_PREFIX = '';
@@ -58,6 +61,10 @@ const FRONT_LIMIT = 25;
 
 const ACCEPT = 1;
 const NOT_ACCEPT = 0;
+
+const PENDING = 0;
+const DELIVERY = 1;
+const FINISH = 2;
 
 const ADMIN = 1;
 const CATEGORY = 2;

@@ -93,6 +93,13 @@ Route::namespace('Backend')->group(function(){
             });
         });
 
+        Route::group(['prefix' => 'order'], function () {
+            Route::get('/', 'OrderController@index')
+                ->name(ADMIN_ORDER_INDEX);
+            Route::get('/detail/{id}', 'OrderController@detail')
+                ->name(ADMIN_ORDER_DETAIL);
+        });
+
         Route::group(['prefix' => 'ajax'], function(){
             Route::get('/list_product_category', 'AjaxController@getProductCategory');
             Route::get('/listProductType', 'AjaxController@getProductType');

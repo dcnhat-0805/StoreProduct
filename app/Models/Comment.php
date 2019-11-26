@@ -37,10 +37,21 @@ class Comment extends Model
     {
         $comments = self::where('comments.user_id', $userId)
             ->where('comments.product_id', $productId)
+            ->whereNull('users.deleted_at')
+            ->whereNull('products.deleted_at')
             ->join('users', 'users.id', 'comments.user_id')
             ->join('products', 'products.id', 'comments.product_id')
-            ->select('comments.*', 'users.name', 'users.phone')
-            ->groupBy('comments.id')
+            ->select('comments.*', 'users.id as userId', 'users.name', 'users.phone')
+            ->selectRaw('users.id as userId')
+            ->whereIn('users.id', function ($query) {
+                $query->from('users')
+                    ->selectRaw('users.id')
+                    ->whereNull('users.deleted_at')
+                    ->where('users.status', true)
+                    ->groupBy('users.id');
+            })
+            ->orderBy('comments.created_at')
+            ->groupBy('comments.id', 'users.id')
             ->paginate(LIMIT);
 
         return $comments;

@@ -321,4 +321,15 @@ class Helper
         return Rating::getRatingByUserIdAndProductId($userId, $productId);
     }
 
+    public static function loadStatusOrder($status)
+    {
+        if ($status == DELIVERY) {
+            return 'Delivery';
+        } elseif ($status == FINISH) {
+            return 'Finish';
+        } else {
+            return 'Pending';
+        }
+    }
+
 }

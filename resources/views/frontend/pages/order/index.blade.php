@@ -24,55 +24,7 @@
                             <div class="member-info">
                                 <p><span>Hello,&nbsp;</span><span id="sop_current_logon_user_name">{{ $user->name }}</span></p>
                             </div>
-                            @if(Auth::check())
-                                <ul class="nav-container">
-                                <li class="item" id="Manage-My-Account" data-spm-anchor-id="a2o4n.order_list.0.i1.4f515d0a0VTrig">
-                                    <a href="" data-spm="Manage-My-Account"><span>Manage My Account</span></a>
-                                    <ul class="item-container">
-                                        <li id="My-profile" class="sub">
-                                            <a href="" data-spm="My-profile">My Profile</a>
-                                        </li>
-                                        <li id="Address-book" class="sub">
-                                            <a href="" data-spm="Address-book">Address Book</a>
-                                        </li>
-                                        <li id="Payment-methods" class="sub">
-                                            <a href="" data-spm="Payment-methods">My Payment Options</a>
-                                        </li>
-                                        <li id="Vouchers" class="sub">
-                                            <a href="" data-spm="Vouchers">Vouchers</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="item" id="My-Orders">
-                                    <a class="active" href="{{ route(FRONT_MY_ORDERS, ['sop' => convertStringToUrl(Auth::user()->name)]) }}" data-spm="My-Orders"><span>My Orders</span></a>
-                                    <ul class="item-container">
-                                        <li id="Returns" class="sub">
-                                            <a href="" data-spm="Returns">My Returns</a>
-                                        </li>
-                                        <li id="Cancellations" class="sub">
-                                            <a href="" data-spm="Cancellations">My Cancellations</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="item" id="My-Reviews">
-                                    <a href="" data-spm="My-Reviews"><span>My Reviews</span></a>
-                                    <ul class="item-container">
-
-                                    </ul>
-                                </li>
-                                <li class="item" id="My-Wishlists">
-                                    <a href="" data-spm="My-Wishlists"><span>My Wishlist &amp; Followed Stores</span></a>
-                                    <ul class="item-container">
-
-                                    </ul>
-                                </li>
-                                <li class="item" id="Sell-On-Lazada"><a href="" data-spm="Sell-On-Lazada"><span>Sell On Lazada</span></a>
-                                    <ul class="item-container">
-
-                                    </ul>
-                                </li>
-                            </ul>
-                            @endif
+                            @include('frontend.layouts.side_bar.account_side_bar')
                         </div>
                     </div>
                     <div class="col-md-9">

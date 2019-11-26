@@ -1,5 +1,5 @@
 @php
-    use App\Models\Product;
+    use App\Models\Order;
     $params = $_GET;
     unset($params['sort']);
     unset($params['desc']);
@@ -7,8 +7,8 @@
     $user = Auth::guard('admins')->user();
 @endphp
 @extends('backend.layouts.app')
-@section('title', 'List product')
-@section('titleMenu', 'Product')
+@section('title', 'List order')
+@section('titleMenu', 'Order')
 @section('cssCustom')
     <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/colorpicker.css') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/datepicker3.css') }}"/>
@@ -17,23 +17,24 @@
     <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/assets/css/normalize.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/assets/css/demo.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/assets/css/component.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/order.css') }}" />
     <!-- summernote CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/summernote/summernote.css') }}">
 @endsection
 @section('content')
     <div class="sparkline13-list">
-        @if ($user->can('viewProduct', Product::class))
+        @if ($user->can('viewOrder', Order::class))
             <div class="sparkline13-hd">
                 <div class="main-sparkline13-hd">
-                    <h1 style="text-transform: capitalize;">List <span class="table-project-n">Of</span> Product</h1>
+                    <h1 style="text-transform: capitalize;">List <span class="table-project-n">Of</span> Order</h1>
                 </div>
             </div>
             <div class="sparkline13-graph">
                 <div class="datatable-dashv1-list custom-datatable-overright">
-                    <div id="toolbar">
+                    <div id="toolbar" class="hide">
                         <!-- Button to Open the Add Modal -->
-                        <button id="addProduct" class="btn btn-custon-three btn-default" type="button"
+                        <button id="addProductType" class="btn btn-custon-three btn-default" type="button"
                                 onclick="window.location.href = '{{ route(ADMIN_PRODUCT_ADD_INDEX) }}'"
                                 title="Add new product"><i class="fa fa-plus"></i> Register
                         </button>
@@ -43,7 +44,7 @@
                             <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Delete
                         </button>
                     </div>
-                    <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"
+                    <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-sort="true" data-show-columns="true"
                            data-show-pagination-switch="true" data-show-refresh="true" data-key-events="true"
                            data-show-toggle="true" data-resizable="true" data-cookie="true"
                            data-cookie-id-table="saveId" data-show-export="true" data-click-to-select="true"
@@ -52,49 +53,34 @@
                         <tr>
                             <th data-field="state" data-checkbox="true"></th>
                             <th data-field="id">ID</th>
-                            <th data-field="category_name" data-editable="true">Category name</th>
-                            <th data-field="product_category_name" data-editable="true">Product category name</th>
-                            <th data-field="product_type_name" data-editable="true">Product type name</th>
-                            <th data-field="name" data-editable="true">Name</th>
-                            <th data-field="image" data-editable="true">Image</th>
+                            <th data-field="category_name" data-editable="true">Order Name</th>
+                            <th data-field="product_category_name" data-editable="true">Order Email</th>
+                            <th data-field="product_type_name" data-editable="true">Order Phone</th>
+                            <th data-field="name" data-editable="true">Order total</th>
                             <th data-field="created_at" data-editable="true">Created date</th>
                             <th data-field="status" data-editable="true">Status</th>
                             <th data-field="action">Action</th>
                         </tr>
                         </thead>
                         <tbody class="list-category">
-                        @if($products)
-                            @foreach($products as $product)
-                                <tr id="category-{{ $product->id }}" data-id="{{ $product->id }}">
+                        @if($orders)
+                            @foreach($orders as $order)
+                                <tr id="category-{{ $order->id }}" data-id="{{ $order->id }}">
                                     <td></td>
-                                    <td class="text-center">{{ $product->id }}</td>
-                                    <td class="">{{ $product->category->category_name }}</td>
-                                    <td class="">{{ $product->productCategory->product_category_name }}</td>
-                                    <td class="">{{ $product->product_type_id ? $product->productType->product_type_name : '' }}</td>
-                                    <td class="">{{ $product->product_name }}</td>
-                                    <td class="">
-                                        <img class="product-image text-center" src="{{ FILE_PATH_PRODUCT .  $product->product_image }}" alt="">
-                                        <div class="list-image">
-                                            @if(count($product->productImage))
-                                                @foreach($product->productImage as $productImage)
-                                                    <img class="product-image text-center" src="{{ FILE_PATH_PRODUCT_IMAGE .  $productImage->product_image_name }}" alt="">
-                                                @endforeach
-                                            @endif
-                                        </div>
-                                    </td>
-                                    <td class="text-center">{{ $product->created_at }}</td>
-                                    <td class="text-center">{{ $product->product_status == 1 ? 'Display' : 'Not display' }}</td>
+                                    <td class="text-center">{{ $order->id }}</td>
+                                    <td class="">{{ $order->order_name }}</td>
+                                    <td class="">{{ $order->order_email }}</td>
+                                    <td class="">{{ $order->order_phone }}</td>
+                                    <td class="">{{ App\Helpers\Helper::loadMoney($order->order_monney) }}</td>
+                                    <td class="text-center">{{ $order->created_at }}</td>
+                                    <td class="text-center">{{ App\Helpers\Helper::loadStatusOrder($order->order_status) }}</td>
                                     <td class="datatable-ct text-center">
-                                        <button data-toggle="modal" title="Edit {{ $product->product_name }}" class="pd-setting-ed"
-                                                data-original-title="Edit"
-                                                onclick="window.location.href = '{{ route(ADMIN_PRODUCT_EDIT, ['id' => $product->id]) }}'"
-                                                type="button">
-                                            <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-                                        </button>
-                                        <button data-toggle="modal" title="Delete {{$product->product_type_name}}" class="pd-setting-ed"
-                                                data-id="{{ $product->id }}" data-url="{{route(ADMIN_PRODUCT_DELETE, ['id' => $product->id])}}"
-                                                data-original-title="Trash" data-target="#delete" type="button">
-                                            <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        <button data-toggle="modal" title="Detail {{ $order->id }}" class="pd-setting-ed"
+                                                data-original-title="Edit" data-target="#detailOrder"
+                                                data-id="{{ $order->id }}"
+                                                data-code="{{ $order->order_code }}"
+                                                data-name="Order detail by {{ $order->order_name }}" type="button">
+                                            <i class="fa fa-eye" aria-hidden="true"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -106,9 +92,9 @@
                     <!-- Pagination -->
                     <div class="pagination-wrapper header" style="margin-top: 20px;">
                         <nav class="nav-pagination store-unit clearfix" aria-label="Page navigation">
-                            <span class="info">{{ $products->currentPage() }} / {{ $products->lastPage() }} pages（total of {{ $products->total() }}）</span>
+                            <span class="info">{{ $orders->currentPage() }} / {{ $orders->lastPage() }} pages（total of {{ $orders->total() }}）</span>
                             <ul class="pull-right">
-                                <li> {{ $products->appends($_GET)->links('backend.pagination') }}</li>
+                                <li> {{ $orders->appends($_GET)->links('backend.pagination') }}</li>
                             </ul>
                         </nav>
                     </div>
@@ -149,41 +135,6 @@
                                                 <input type="text" readonly class="form-control jsDatepicker" name="created_at" value="{{ request()->get('created_at') }}" >
                                             </div>
                                         </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="name">Category</label>
-                                                {{
-                                                    Form::select('category_id', $category, request()->get('category_id'),
-                                                    [
-                                                        'class' => 'form-control category-id jsSelectCategory'
-                                                    ])
-                                                }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="name">Product category</label>
-                                                {{
-                                                    Form::select('product_category_id', $productCategories, request()->get('product_category_id'),
-                                                    [
-                                                        'class' => 'form-control product-category-id jsSelectProductCategory',
-                                                    ])
-                                                }}
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="name">Product type</label>
-                                                {{
-                                                    Form::select('product_type_id', $productTypes, request()->get('product_type_id'),
-                                                    [
-                                                        'class' => 'form-control product-type-id jsSelectProductType',
-                                                    ])
-                                                }}
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -201,6 +152,37 @@
                                             class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
                                     </button>
                                     <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" id="btnClear" onclick="window.location.href = '{{route(ADMIN_PRODUCT_INDEX)}}'">
+                                        <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Search Modal-->
+    <div class="modal fade" id="detailOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="min-width: 700px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal__order__title" style="text-transform: capitalize;">__</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row" style="margin: 5px">
+                        <div class="col-lg-12">
+                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_PRODUCT_INDEX) }}">
+                                <div class="box-body sop__box-order__detail">
+                                </div><!-- /.box-body -->
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-custon-three btn-success" id="btnSearch"><i
+                                            class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
+                                    </button>
+                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal">
                                         <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
                                     </button>
                                 </div>
@@ -244,8 +226,5 @@
 		============================================ -->
     <script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote.min.js') }}"></script>
     <script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote-active.js') }}"></script>
-    <script src="{{ App\Helpers\Helper::asset('backend/js/backend/product.js') }}"></script>
-    @if ($user->cannot('updateProduct', Product::class))
-        <script src="{{ App\Helpers\Helper::asset('backend/js/backend/disabled_checkbox.js') }}"></script>
-    @endif
+    <script src="{{ App\Helpers\Helper::asset('backend/js/backend/order.js') }}"></script>
 @endsection

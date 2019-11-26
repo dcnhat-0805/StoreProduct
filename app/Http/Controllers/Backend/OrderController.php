@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,7 +15,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = Order::getListAllOrder();
+
+        return view('backend.pages.order.index', compact('orders'));
     }
 
     /**
@@ -38,15 +41,15 @@ class OrderController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function detail(Request $request, $id)
     {
-        //
+        if ($request->ajax()) {
+            $order = Order::getListOrderById($id);
+
+            $html = view('backend.pages.order.detail', compact('order'))->render();
+
+            return response()->json($html);
+        }
     }
 
     /**

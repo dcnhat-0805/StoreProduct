@@ -58,6 +58,16 @@
                     </li>
 
                     <?php
+                    $isShowOrder = in_array(request()->route()->uri(), ['admin/order']);
+                    ?>
+
+                    <li class=" {{ $isShowOrder ? 'active' : '' }} ">
+                        <a title="Landing Page" href="{{route(ADMIN_ORDER_INDEX)}}" aria-expanded="false"><span
+                                class="educate-icon educate-course icon-wrap" aria-hidden="true"></span>
+                            <span class="mini-click-non">Order</span></a>
+                    </li>
+
+                    <?php
                     $isShowUser = in_array(request()->route()->uri(), ['admin/list']);
                     ?>
                     <li id="removable">

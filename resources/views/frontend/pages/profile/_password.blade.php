@@ -16,7 +16,7 @@
         <div class="container" style="padding: 0;">
             <div class="row">
                 <div class="col-sm-12">
-                    @include('frontend.layouts.side_bar.acount_side_bar')
+                    @include('frontend.layouts.side_bar.account_side_bar')
                     <div class="col-md-9">
                         <div class="order-detail-lable" data-spm-anchor-id="">
                             <a>Manage My Account</a>
