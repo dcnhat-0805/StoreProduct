@@ -76,16 +76,20 @@ $(document).ready(function () {
 
     $(document).on('click', '.btnShowFormQuestion', function () {
         $(this).removeClass('btnShowFormQuestion').addClass('btnHideFormQuestion');
-        $('.sop__comment_form').show();
+        $('.sop__comment_form').slideDown();
+        $('button').prop('disabled', false);
 
-        $(document).on('click', '.btnHideFormQuestion', function () {
-            $(this).removeClass('btnHideFormQuestion').addClass('btnShowFormQuestion');
-            $('.sop__comment_form').hide();
-            $('html,body').animate({
-                scrollTop: $('.sop__comment_form').offset().top - 100
-            }, 1000);
+        $(document).on('click', '.btnHideFormQuestion, #closeCommentForm', function (e) {
+            // e.preventDefault();
+            $('button').prop('disabled', false);
+            $('.btnHideFormQuestion').removeClass('btnHideFormQuestion').addClass('btnShowFormQuestion');
+            $('.sop__comment_form').slideUp();
         });
     });
+
+    $('#btnSendComment').on('click', function () {
+        $('#formSendComment').submit();
+    })
 
     // $('input[name=rating]').on('change', function () {
     //     let point = parseInt($(this).val());

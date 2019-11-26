@@ -2,6 +2,9 @@
 @section('cssCustom')
     <link rel="stylesheet" href="backend/css/custom.css">
 @endsection
+@section('title')
+    Register
+@endsection
 @section('content')
     <div class="row col-sm-12">
         <div class="col-sm-10" style="margin: 35px auto;">

@@ -1,6 +1,9 @@
 @extends('frontend.layouts.app')
 @section('cssCustom')
 @endsection
+@section('title')
+    Login
+@endsection
 @section('content')
     <div class="row col-sm-12">
         <div class="col-sm-10" style="margin: 35px auto;">

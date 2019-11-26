@@ -10,7 +10,7 @@ class Rating extends Model
 
     protected $fillable = ['user_id', 'product_id', 'point', ];
 
-    public static function getRatingByUserId($userId, $productId)
+    public static function getRatingByUserIdAndProductId($userId, $productId)
     {
         $rating = self::where('ratings.user_id', $userId)
                 ->where('ratings.product_id', $productId)

@@ -165,6 +165,11 @@ Route::namespace('FrontEnd')->group(function(){
             ->name(FRONT_SHOPPING_CART);
     });
 
+    Route::group(['prefix' => 'comments'], function () {
+        Route::post('/sendComment', 'CommentController@sendComment')
+            ->name(FRONT_SEND_COMMENT);
+    });
+
     Route::group(['prefix' => 'socialite'], function () {
         Route::get('/login/{social}', 'LoginController@loginSocial')
             ->name(FRONT_LOGIN_SOCIALITE);

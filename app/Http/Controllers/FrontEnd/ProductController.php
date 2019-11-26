@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FrontEnd;
 
 use App\Helpers\Helper;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\ProductCategory;
@@ -44,16 +45,18 @@ class ProductController extends Controller
 
         $ratePoint = 3;
         if ($user) {
-            $ratePoint = Rating::getRatingByUserId($user->id, $product->id);
+            $ratePoint = Rating::getRatingByUserIdAndProductId($user->id, $product->id);
         }
 
         $avgRating = number_format(Rating::getAvgRatingByProductId($product->id), 0);
         $countRating = Rating::getCountRating($product->id);
+        $comments = Comment::getCommentByProductIdAndUserId($user->id, $product->id);
 
         Product::updateProductView($product->id);
 
         return view('frontend.pages.product.detail', compact(
-            'titleName', 'product', 'products', 'ratePoint', 'avgRating', 'countRating'
+            'titleName', 'product', 'products', 'ratePoint', 'avgRating', 'countRating',
+            'comments'
         ));
     }
 
@@ -78,7 +81,7 @@ class ProductController extends Controller
                 $rating->point = $point;
 
                 if ($rating->save()) {
-                    $ratePoint = Rating::getRatingByUserId($user->id, $product->id);
+                    $ratePoint = Rating::getRatingByUserIdAndProductId($user->id, $product->id);
 
                     return response()->json($ratePoint);
                 } else {

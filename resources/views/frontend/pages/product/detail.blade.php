@@ -157,6 +157,19 @@
     <div class="featured-section expand-product-content" id="expand-product-content">
         <div class="container">
             <h4 class="label-product-content">Product details of {{ $product->product_description }}</h4>
+            <div class="body-product-content">
+                {!! $product->product_content !!}
+            </div>
+
+            <div class="expand-button-show">
+                <button class="button btn btn-custon-three btn-primary btn-view-more">View More</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="featured-section expand-product-content" id="expand-product-content">
+        <div class="container">
+            <h4 class="label-product-content">Ratings & Reviews of {{ $product->product_description }}</h4>
             <div class="sop-body-product-content" style="height: auto !important;">
                 <div class="col-sm-4">
                     <div class="summary">
@@ -186,7 +199,8 @@
                 </div>
             </div>
             <div class="comment-form sop__comment_form">
-                <form action="" class="comment_form__client">
+                <form action="{{ route(FRONT_SEND_COMMENT) }}" class="comment_form__client" id="formSendComment" method="POST">
+                    @csrf
                     <div class="col-sm-8 pull-left">
                         <div class="product-rating">
                             <div>How much do you rate this product ?</div>
@@ -204,7 +218,7 @@
 {{--                        </div>--}}
                     </div>
                     <div class="col-sm-4 comment-btn">
-                        <button type="submit" class="btn btn-custon-three btn-success" id="btnSendComment">
+                        <button class="btn btn-custon-three btn-success" id="btnSendComment">
                             <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Send
                         </button>
                         <button id="closeCommentForm" class="btn btn-custon-three btn-danger">
@@ -213,33 +227,67 @@
                     </div>
                 </form>
             </div>
-        </div>
-    </div>
+            @if(!empty($comments))
+                <div class="comment__body sop__common_form sop__comment_list">
+                    @foreach($comments as $key => $comment)
+                        <div class="comment-item">
+                            @if($comment->type == CUSTOMER_ASK)
+                                <div class="comment-avatar">
+                                    <div class="avatar">D</div>
+                                </div>
+                                <div class="comment-info">
+                                <div class="comment-title">
+                                    <div class="comment-name">
+                                        <div class="name">{{ $comment->name }}</div>
+                                        @if($comment->phone)
+                                            <div class="phone">{{ $comment->phone }}</div>
+                                        @endif
+                                    </div>
+                                    <div class="comment-star">
+                                        <div class="jsStarsComment{{ $key }}"></div>
+                                    </div>
+                                </div>
+                                <div class="comment-content">{!! $comment->comment_contents !!}</div>
+                                <div class="comment-footer">
+                                    <div class="comment-like" data-id="66267">
+                                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                        <span class="value_like">0</span>
+                                        <span class="action">Like</span>
+                                    </div>
+                                    <div class="time">{{ date('H:i:s Y/m/d', strtotime($comment->created_at)) }}</div>
+                                </div>
+                            </div>
+                            @endif
 
-    <div class="featured-section expand-product-content" id="expand-product-content">
-        <div class="container">
-            <h4 class="label-product-content">Product details of {{ $product->product_description }}</h4>
-            <div class="body-product-content">
-                {!! $product->product_content !!}
-            </div>
-
-            <div class="expand-button-show">
-                <button class="button btn btn-custon-three btn-primary btn-view-more">View More</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="featured-section expand-product-question" id="expand-product-question">
-        <div class="container">
-            <h4 class="label-product-question">Question of {{ $product->product_description }}</h4>
-            <div class="body-product-question">
-                <div class="mod-title">Questions about this product (9)</div>
-                <div class="form-question">
-                    <form action="">
-                        <textarea rows="4" cols="50" placeholder="Describe yourself here..."></textarea>
-                    </form>
+                            @if($comment->type == ADMIN_REPLY)
+                                <div class="comment-child-list">
+                                <div class="comment-child-item">
+                                    <div class="comment-avatar">
+                                        <div class="avatar">AD</div>
+                                    </div>
+                                    <div class="comment-info">
+                                        <div class="comment-title">
+                                            <div class="comment-name">
+                                                <div class="admin">Admin</div>
+                                            </div>
+                                        </div>
+                                        <div class="comment-content">Mobilecity xin kính chào quý khách. Cảm ơn anh Dương đã quan tâm đến sản phẩm của Mobilecity. Sản phẩm cần được unlock ít nhất 7 ngày, sau đó cài được tiếng việt anh ạ. Em đã liên hệ đến SĐT anh để lại giúp anh tư vấn và tặng mã giảm giá cho anh rồi ạ. Cảm ơn anh đã tin tưởng và sử dụng dịch vụ của Mobilecity. Mobilecity rất hân hạnh được phục vụ quý khách!</div>
+                                        <div class="comment-footer">
+                                            <div class="comment-like" data-id="66539">
+                                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                                <span class="value_like">0</span>
+                                                <span class="action">Like</span>
+                                            </div>
+                                            <div class="time">3 giờ trước</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    @endforeach
                 </div>
-            </div>
+            @endif
         </div>
     </div>
     <!-- //top products -->
@@ -320,14 +368,21 @@
     <script src="frontend/assets/js/imagezoom.js"></script>
     <script src="frontend/assets/js/detail.js"></script>
     <script src="frontend/assets/js/stars.min.js"></script>
+    <script type="text/javascript" src="{{ asset('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+    {!! JsValidator::formRequest('App\Http\Requests\CommentRequest', '#formSendComment') !!}
     <script>
         $(document).ready(function () {
 
             const MAX_RATE = 5;
             const MIN_RATE = 1;
 
+            $('.jsRating').stars({
+                stars: MAX_RATE,
+                value: {{ $ratePoint }},
+            });
+
             $('.jsRatingComment').stars({
-                stars: 5,
+                stars: MAX_RATE,
                 value: {{ $avgRating }},
                 click: function (index) {
                     let productId = parseInt($('.product_id').val());
@@ -352,17 +407,14 @@
                 }
             });
 
-            $('.jsRating').stars({
-                stars: 5,
-                value: {{ $ratePoint }},
-            });
-
             $('.jsRatingDetail').stars({
                 stars: 5
             });
+
             $('.jsRatingUser').stars({
-                stars: 5,
+                stars : MAX_RATE,
                 value : {{ $avgRating }}
+
             });
 
             for (let i = MAX_RATE; i >= MIN_RATE; i--) {
@@ -377,6 +429,15 @@
                     value : i,
                 });
             }
+
+            @if(!empty($comments))
+                @for($i = 0; $i < count($comments); $i++)
+                    $('.jsStarsComment' + {{ $i }}).stars({
+                        stars : MAX_RATE,
+                        value : {{ App\Helpers\Helper::getPointRatingByUserIdAndProductId($comments[$i]->user_id, $comments[$i]->product_id) }}
+                    });
+                @endfor
+            @endif
         });
     </script>
 @endsection

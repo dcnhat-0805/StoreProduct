@@ -13,7 +13,7 @@ class CommentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,21 @@ class CommentRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'comment_contents' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+          'required' => ':attributes cannot be left blank.'
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'comment_contents' => 'Comment contents'
         ];
     }
 }

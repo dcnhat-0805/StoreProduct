@@ -316,4 +316,9 @@ class Helper
         return Rating::getCountRatingByPoint($productId, $point);
     }
 
+    public static function getPointRatingByUserIdAndProductId($userId, $productId)
+    {
+        return Rating::getRatingByUserIdAndProductId($userId, $productId);
+    }
+
 }

@@ -42,6 +42,11 @@ class User extends Authenticatable
         'deleted_at'
     ];
 
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'user_id', 'id');
+    }
+
     public static function getListAllUser()
     {
         return self::select(

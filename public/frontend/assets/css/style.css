@@ -373,6 +373,130 @@ span.address {
     width: 50%;
     margin-bottom: 20px;
 }
+.comment__body.sop__common_form.sop__comment_list {
+    width: 100%;
+    float: left;
+    background: #fff;
+    border: 1px solid #dadada;
+    padding: 20px;
+    margin: 20px 0;
+}
+.comment-avatar {
+    float: left;
+    width: 40px;
+    margin-right: 10px;
+}
+.comment-avatar .avatar {
+    width: 40px;
+    height: 40px;
+    background: #0e8ce4;
+    display: block;
+    text-align: center;
+    line-height: 40px;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.comment-item {
+    width: 100%;
+    float: left;
+    margin-bottom: 15px;
+}
+.comment-info {
+    width: calc(100% - 50px);
+    float: left;
+}
+.comment-info .comment-title {
+    width: 100%;
+    float: left;
+    line-height: 25px;
+    margin-bottom: 5px;
+}
+.comment-info .comment-title .comment-name {
+    float: left;
+}
+.comment-info .comment-title .comment-name .name {
+    float: left;
+    margin-right: 10px;
+    font-weight: 700;
+    color: #777;
+    line-height: 25px;
+}
+.comment-info .comment-title .comment-name .phone {
+    float: left;
+    font-size: 12px;
+    line-height: 27px;
+    color: #777;
+}
+.comment-info .comment-title .comment-star {
+    float: right;
+}
+.comment-info .comment-content {
+    line-height: 20px;
+    float: left;
+    white-space: pre-wrap;
+    width: 100%;
+    text-align: justify;
+    margin-bottom: 10px;
+}
+.comment-info .comment-footer .comment-like {
+    float: left;
+    cursor: pointer;
+    margin-right: 8px;
+    font-size: 12px;
+    color: #777;
+    line-height: 20px;
+}
+.comment-info .comment-footer .time {
+    float: left;
+    margin-right: 10px;
+    font-size: 12px;
+    color: #777;
+    line-height: 20px;
+}
+.comment-child-list {
+    width: 100%;
+    float: left;
+    padding-top: 10px;
+}
+.comment-child-item {
+    width: 100%;
+    float: left;
+    margin-top: 10px;
+    background: #f8f8f8;
+    border: 1px solid #e4e1e3;
+    padding: 10px;
+    position: relative;
+}
+.comment-child-item:before {
+    bottom: 100%;
+    left: 20px;
+    top: -20px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    border-color: transparent;
+    border-bottom-color: #e4e1e3;
+    border-width: 10px;
+    margin-left: -9px;
+}
+.comment-avatar {
+    float: left;
+    width: 40px;
+    margin-right: 10px;
+}
+.comment-avatar .avatar_thumb {
+    width: 40px!important;
+    height: 40px!important;
+}
+.comment-info {
+    width: calc(100% - 50px);
+    float: left;
+}
+#projects {
+    margin-top: 20px;
+}
 .tag {
     font-weight: 700;
     color: #fff;
