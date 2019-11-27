@@ -58,7 +58,7 @@
     margin-bottom: 20px;
 }
 .order-image {
-    width: 100%;
+    /*width: 100%;*/
     height: 100%;
     padding: 8px 12px;
 }
@@ -70,7 +70,7 @@
     border: 1px dashed #0e8ce4;
 }
 .order-name {
-    /*padding: 10px 30px;*/
+    padding: 10px 30px;
 }
 .title.name {
     overflow: hidden;

@@ -1,16 +1,4 @@
 <div class="order-{{ $order->order_code }} box-info-order">
-    <div class="row order-header">
-        <div id="root_{{ $order->order_code }}" class="page-root">
-            <div class="detail-info" data-spm-anchor-id="">
-                <div class="pull-left detail-info-left">
-                    <div>
-                        <p class="order-number">Order&nbsp;<span class="order-code">{{ $order->order_code }}</span></p>
-                        <p class="text desc light-gray">Placed on {{ date('d M Y H:i:s', strtotime($order->created_at)) }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row order-body">
         <div class="rootBody_{{ $order->order_code }} page-root">
             @if(!empty($order->orderDetail))

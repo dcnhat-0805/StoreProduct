@@ -75,7 +75,7 @@
                                     <td class="text-center">{{ $order->created_at }}</td>
                                     <td class="text-center">{{ App\Helpers\Helper::loadStatusOrder($order->order_status) }}</td>
                                     <td class="datatable-ct text-center">
-                                        <button data-toggle="modal" title="Detail {{ $order->id }}" class="pd-setting-ed"
+                                        <button data-toggle="modal" title="Detail {{ $order->order_code }}" class="pd-setting-ed"
                                                 data-original-title="Edit" data-target="#detailOrder"
                                                 data-id="{{ $order->id }}"
                                                 data-code="{{ $order->order_code }}"
@@ -167,7 +167,16 @@
         <div class="modal-dialog" role="document" style="min-width: 700px;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal__order__title" style="text-transform: capitalize;">__</h5>
+                    <h5 class="modal-title" id="modal__order__title" style="text-transform: capitalize;">
+                        <div class="detail-info" data-spm-anchor-id="">
+                            <div class="pull-left detail-info-left">
+                                <div>
+                                    <p class="order-number"><span class="order__name"></span>&nbsp;<span class="order-code order__code"></span></p>
+                                    <p class="text desc light-gray order__time"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>

@@ -96,7 +96,7 @@ Route::namespace('Backend')->group(function(){
         Route::group(['prefix' => 'order'], function () {
             Route::get('/', 'OrderController@index')
                 ->name(ADMIN_ORDER_INDEX);
-            Route::get('/detail/{id}', 'OrderController@detail')
+            Route::get('/detail/{code}', 'OrderController@detail')
                 ->name(ADMIN_ORDER_DETAIL);
         });
 

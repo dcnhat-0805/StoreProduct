@@ -41,14 +41,14 @@ class OrderController extends Controller
         //
     }
 
-    public function detail(Request $request, $id)
+    public function detail(Request $request, $code)
     {
         if ($request->ajax()) {
-            $order = Order::getListOrderById($id);
+            $order = Order::getListOrderById($code);
 
             $html = view('backend.pages.order.detail', compact('order'))->render();
 
-            return response()->json($html);
+            return response()->json(['html' => $html, 'order' => $order]);
         }
     }
 
