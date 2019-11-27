@@ -21,10 +21,16 @@ class OrderController extends Controller
         }
     }
 
-    function checkOrder($orderCode)
+    function orderDetail($orderCode)
     {
-        $order = Order::getListOrderByOrderCode($orderCode);
+        $user  = Auth::user();
 
-        return view('frontend.pages.order.detail', compact('order', 'orderCode'));
+        if ($user) {
+            $order = Order::getListOrderByOrderCode($orderCode);
+
+            return view('frontend.pages.order.detail', compact('order', 'orderCode', 'user'));
+        } else {
+            abort(404);
+        }
     }
 }

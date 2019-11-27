@@ -9,14 +9,7 @@
         <div class="container" style="padding: 0;">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="col-md-3">
-                        <div class="sop-playground-nav">
-                            <div class="member-info">
-                                <p><span>Hello,&nbsp;</span><span id="sop_current_logon_user_name">{{ $order->order_name }}</span></p>
-                            </div>
-                            @include('frontend.layouts.side_bar.account_side_bar')
-                        </div>
-                    </div>
+                    @include('frontend.layouts.side_bar.account_side_bar')
                     <div class="col-md-9">
                         <div class="order-detail-lable" data-spm-anchor-id="">
                             <a>Order Details</a>

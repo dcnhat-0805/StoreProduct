@@ -79,7 +79,8 @@
                                                 data-original-title="Edit" data-target="#detailOrder"
                                                 data-id="{{ $order->id }}"
                                                 data-code="{{ $order->order_code }}"
-                                                data-name="Order detail by {{ $order->order_name }}" type="button">
+                                                data-name="Order detail by {{ $order->order_name }}"
+                                                data-status="{{ $order->order_status }}" type="button">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </button>
                                     </td>
@@ -148,8 +149,8 @@
                                     </div>
                                 </div><!-- /.box-body -->
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-custon-three btn-success" id="btnSearch"><i
-                                            class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
+                                    <button type="submit" class="btn btn-custon-three btn-success" data-target="#deliveryOrder">
+                                        <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
                                     </button>
                                     <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" id="btnClear" onclick="window.location.href = '{{route(ADMIN_PRODUCT_INDEX)}}'">
                                         <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
@@ -184,18 +185,16 @@
                 <div class="modal-body">
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
-                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_PRODUCT_INDEX) }}">
-                                <div class="box-body sop__box-order__detail">
-                                </div><!-- /.box-body -->
-                                <div class="modal-footer">
-                                    <button type="submit" class="btn btn-custon-three btn-success" id="btnSearch"><i
-                                            class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
-                                    </button>
-                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal">
-                                        <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
-                                    </button>
-                                </div>
-                            </form>
+                            <div class="box-body sop__box-order__detail">
+                            </div><!-- /.box-body -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-custon-three btn-success btn__delivery" data-toggle="modal" data-target="#deliveryOrder">
+                                    <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Apply
+                                </button>
+                                <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal">
+                                    <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -203,7 +202,7 @@
         </div>
     </div>
     <!-- delete Modal-->
-    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deliveryOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -214,13 +213,12 @@
                 </div>
                 <div class="modal-body">
                     <form style="min-height: 70px;">
-                        <input type="hidden" name="id" id="productId">
-                        <input type="hidden" id="urlDelete">
-                        <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">Do you want to delete product ?</h5>
+                        <input type="hidden" name="id" id="order__id">
+                        <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">Do you want to delivery ?</h5>
                     </form>
                 </div>
                 <div class="modal-footer modal-delete">
-                    <button type="button" class="btn btn-custon-three btn-success" id="btnDeleteProduct"><i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Yes</button>
+                    <button type="button" class="btn btn-custon-three btn-success" id="btnDeliveryOrder"><i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Yes</button>
                     <button class="btn btn-custon-three btn-danger" type="button" data-dismiss="modal"><i class="fa fa-times edu-danger-error" aria-hidden="true"></i> No</button>
                     <div>
                     </div>

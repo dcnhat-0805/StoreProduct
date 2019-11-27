@@ -98,7 +98,7 @@ let Commons = (function ($) {
     });
 
     $('.modal').on('hide.bs.modal, show.bs.modal', function () {
-        $(this).find("button.btn-success, .loginbtn").prop('disabled', false);
+        $(this).find("button.btn-success, .loginbtn, .btn__delivery").prop('disabled', false);
     });
 
     modules.getProductCategory = function (categoryId) {
@@ -233,19 +233,19 @@ let Commons = (function ($) {
         });
     };
 
-    $("button.btn-success:not('.product, #btnSearch')").on('click', function () {
+    $("button.btn-success:not('.product, #btnSearch, .btn__delivery')").on('click', function () {
         $(this).prop('disabled', true);
     });
 
     $('#loginForm').each(function (index, value) {
         for (let i=0; i < value.length; i++) {
             $(value[i]).bind("keyup change", function () {
-                $('#loginForm').find("button.btn-success, .loginbtn").prop('disabled', false);
+                $('#loginForm').find("button.btn-success, .loginbtn, .btn__delivery").prop('disabled', false);
             });
         }
 
         $(this).find('input[name=remember_token]').on('ifChanged', function () {
-            $('#loginForm').find("button.btn-success, .loginbtn").prop('disabled', false);
+            $('#loginForm').find("button.btn-success, .loginbtn, .btn__delivery").prop('disabled', false);
         });
     });
 
@@ -253,7 +253,7 @@ let Commons = (function ($) {
         $(formId).each(function (index, value) {
             for (let i=0; i < value.length; i++) {
                 $(value[i]).bind("keyup change", function () {
-                    $(this).find("button.btn-success, .loginbtn").prop('disabled', false);
+                    $(this).find("button.btn-success, .loginbtn, .btn__delivery").prop('disabled', false);
                     let name = $(this).attr('name');
                     let className = (!ARRAY_NAME.includes(name)) ? $(this).next()[0].classList[1] : $(this).parent().next()[0].classList[1];
                     let val = $(this).val();
@@ -285,7 +285,7 @@ let Commons = (function ($) {
                 $(this).parent().parent().parent().parent().parent().parent().parent().next().children().children().children().children().prop('disabled', false).trigger("chosen:updated");
                 $('.error_' + name).text('');
             }
-            $(this).find("button.btn-success, .loginbtn").prop('disabled', false);
+            $(this).find("button.btn-success, .loginbtn, .btn__delivery").prop('disabled', false);
             $('input[name=submit]').val('');
         });
 
@@ -300,7 +300,7 @@ let Commons = (function ($) {
                 } else {
                     $('.' + className).text('');
                 }
-                $(this).find("button.btn-success, .loginbtn").prop('disabled', false);
+                $(this).find("button.btn-success, .loginbtn, .btn__delivery").prop('disabled', false);
                 $('input[name=submit]').val('');
             });
         }
@@ -431,21 +431,23 @@ $(document).ready(function () {
     //     Commons.getOptionProductType(productCategoryId);
     // });
 
-    function preventEnter(ev) {
-        if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {
-            return false;
-        } else {
-            return true;
+    if (window.location.pathname !== '/admin/login') {
+        function preventEnter(ev) {
+            if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {
+                return false;
+            } else {
+                return true;
+            }
         }
-    }
 
-    let inputArr = [
-        "input[type=text]", "input[type=email]",
-        "input[type=password]", "input[type=url]",
-        "input[type=datetime]", "input[type=date]",
-        "input[type=month]", "input[type=week]",
-        "input[type=time]", "input[datetime-local]",
-        "input[number]", "input[range]", "input[radio]"
-    ];
-    inputArr.forEach(e => $(e).keypress(preventEnter));
+        let inputArr = [
+            "input[type=text]", "input[type=email]",
+            "input[type=password]", "input[type=url]",
+            "input[type=datetime]", "input[type=date]",
+            "input[type=month]", "input[type=week]",
+            "input[type=time]", "input[datetime-local]",
+            "input[number]", "input[range]", "input[radio]"
+        ];
+        inputArr.forEach(e => $(e).keypress(preventEnter));
+    }
 });

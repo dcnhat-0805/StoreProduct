@@ -98,6 +98,8 @@ Route::namespace('Backend')->group(function(){
                 ->name(ADMIN_ORDER_INDEX);
             Route::get('/detail/{code}', 'OrderController@detail')
                 ->name(ADMIN_ORDER_DETAIL);
+            Route::post('/delivery/{id}', 'OrderController@delivery')
+                ->name(ADMIN_ORDER_DELIVERY);
         });
 
         Route::group(['prefix' => 'ajax'], function(){
@@ -168,7 +170,7 @@ Route::namespace('FrontEnd')->group(function(){
         Route::post('/updatePassword', 'UserController@updatePassword');
         Route::get('/order', 'OrderController@myOrder')
             ->name(FRONT_MY_ORDERS);
-        Route::get('/order/view/{code}', 'OrderController@checkOrder')
+        Route::get('/order/view/{code}', 'OrderController@orderDetail')
             ->name(FRONT_SHOPPING_CART);
     });
 

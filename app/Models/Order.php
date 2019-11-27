@@ -239,4 +239,17 @@ class Order extends Model
 
         return $orders;
     }
+
+    public static function deliveryOrder($id)
+    {
+        $order = self::getListOrderById($id);
+
+        if ($order->order_status == PENDING) {
+            return $order->update([
+                'order_status' => DELIVERY,
+            ]);
+        }
+
+        return;
+    }
 }
