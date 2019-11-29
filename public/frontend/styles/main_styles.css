@@ -1703,8 +1703,8 @@ select option
 .product_panel
 {
 	display: none;
-	margin-left: -60px;
-	margin-right: -60px;
+	/*margin-left: -60px;*/
+	/*margin-right: -60px;*/
 }
 .product_panel.active
 {
@@ -1757,6 +1757,7 @@ select option
 {
 	display: block;
 	position: relative;
+    height: 100%;
 	max-width: 100%;
 }
 .product_content
@@ -1768,6 +1769,7 @@ select option
 	font-size: 16px;
 	font-weight: 500;
 	margin-top: 25px;
+    color: #df3b3b;
 }
 .product_price.discount
 {
@@ -1784,16 +1786,20 @@ select option
 {
 	margin-top: 4px;
 	overflow: hidden;
+    padding: 0 20px;
 }
 .product_name div
 {
 	width: 100%;
-
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .product_name div a
 {
 	font-size: 14px;
 	font-weight: 400;
+    text-transform: capitalize;
 	color: #000000;
 	white-space: nowrap;
 	-webkit-transition: all 200ms ease;
@@ -2052,6 +2058,7 @@ select option
 	text-align: center;
 	line-height: 36px;
 	font-size: 12px;
+    text-transform: uppercase;
 }
 .product_new
 {
@@ -2081,8 +2088,8 @@ select option
 
 .popular_categories
 {
-	padding-top: 88px;
-	padding-bottom: 90px;
+	padding-top: 30px;
+	/*padding-bottom: 90px;*/
 }
 .popular_categories_title
 {
@@ -2295,8 +2302,9 @@ select option
 .new_arrivals
 {
 	width: 100%;
-	padding-top: 96px;
-	padding-bottom: 96px;
+	padding-top: 30px;
+    background: #eff6fa;
+	/*padding-bottom: 96px;*/
 }
 .new_arrivals_title
 {
@@ -2601,10 +2609,10 @@ select option
 
 .best_sellers
 {
-	padding-top: 56px;
+	padding-top: 30px;
 	background: #eff6fa;
-	padding-bottom: 50px;
-	margin-top: -77px;
+	/*padding-bottom: 50px;*/
+	margin-top: 20px;
 }
 .bestsellers_panel
 {
@@ -2891,8 +2899,8 @@ select option
 
 .trends
 {
-	padding-top: 80px;
-	padding-bottom: 80px;
+	padding-top: 30px;
+	/*padding-bottom: 80px;*/
 }
 .trends_overlay
 {
@@ -3119,8 +3127,8 @@ select option
 
 .reviews
 {
-	padding-top: 96px;
-	padding-bottom: 125px;
+	padding-top: 30px;
+	padding-bottom: 80px;
 }
 .reviews_title_container
 {
@@ -3752,4 +3760,7 @@ select option
 }
 .list-cart:focus {
     outline: none;
+}
+.panel {
+    padding: 0 30px;
 }

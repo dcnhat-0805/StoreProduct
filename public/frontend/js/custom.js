@@ -640,7 +640,13 @@ $(document).ready(function()
 		})
 		.slick(
 		{
-			rows:2,
+            // zIndex: 10,
+            autoplaySpeed: 3000,
+            speed: 300,
+            // centerMode: true,
+            // variableWidth: true,
+            autoplay: true,
+			rows:1,
 			slidesToShow:5,
 			slidesToScroll:5,
 			infinite:false,
