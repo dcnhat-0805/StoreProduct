@@ -67,4 +67,15 @@ class CommentController extends Controller
             }
         }
     }
+
+    public function deleteReply(Request $request, $id)
+    {
+        if ($request->ajax()) {
+            $repComment = ReplyComment::findOrFail($id);
+
+            if ($repComment->delete()) {
+                return response()->json(['success' => 'yes'], 200);
+            }
+        }
+    }
 }

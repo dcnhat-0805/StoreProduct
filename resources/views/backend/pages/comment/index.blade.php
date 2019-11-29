@@ -196,6 +196,7 @@
                     <form action="" class="form__rep__comment">
                         <div class="col-sm-9">
                             <div class="chat__message clearfix">
+                                <input type="hidden" name="rep_comment_id" class="rep__comment__id">
                                 <input type="hidden" name="comment_id" class="comment__id">
                                 <input type="hidden" class="user__id">
                                 <input type="hidden" class="product__id">

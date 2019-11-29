@@ -111,6 +111,7 @@ Route::namespace('Backend')->group(function(){
                 ->name(ADMIN_COMMENT_REPLY);
             Route::post('/delete/{id}', 'CommentController@delete')
                 ->name(ADMIN_COMMENT_DELETE);
+            Route::post('/deleteReply/{id}', 'CommentController@deleteReply');
             Route::post('/destroy', 'CommentController@destroy')
                 ->name(ADMIN_COMMENT_DESTROY);
         });

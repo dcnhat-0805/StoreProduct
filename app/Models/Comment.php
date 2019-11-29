@@ -34,10 +34,10 @@ class Comment extends Model
         return $this->hasMany(ReplyComment::class, 'comment_id', 'id');
     }
 
-    public static function getCommentByProductIdAndUserId($userId, $productId)
+    public static function getCommentByProductIdAndUserId($productId)
     {
-        $comments = self::where('comments.user_id', $userId)
-            ->where('comments.product_id', $productId)
+        $comments = self::where('comments.product_id', $productId)
+//            ->where('comments.user_id', $userId)
             ->whereNull('users.deleted_at')
             ->whereNull('products.deleted_at')
             ->join('users', 'users.id', 'comments.user_id')
@@ -145,7 +145,7 @@ class Comment extends Model
     public static function getCommentByUserIdAndProductId($userId, $productId, $params = null)
     {
         $comments = self::filter($params);
-        $comments = self::whereNull('comments.deleted_at')
+        $comments = $comments->whereNull('comments.deleted_at')
             ->whereNull('users.deleted_at')
             ->whereNull('products.deleted_at')
             ->where('comments.user_id', $userId)
@@ -174,7 +174,8 @@ class Comment extends Model
                     $product->whereNull('products.deleted_at');
                 },
             ])
-            ->get();
+            ->orderBy('comments.created_at', 'DESC')
+            ->paginate(LIMIT);
 
         return $comments;
     }
@@ -198,5 +199,24 @@ class Comment extends Model
         return $comments;
     }
 
+    public static function getDistinctDetailProduct($productId, $params = null)
+    {
+        $comments = self::filter($params);
+
+        $order = Helper::getSortParam($params);
+        if ($order == '1 = 1') {
+            $order = "comments.product_id DESC ";
+        }
+
+        $comments = $comments->selectRaw("DISTINCT(comments.user_id), product_id")
+                ->where('comments.product_id', $productId)
+                ->join('users', 'users.id', '=', 'comments.user_id')
+//                ->join('products', 'products.id', '=', 'comments.product_id')
+                ->distinct()
+                ->orderByRaw($order)
+                ->paginate(LIMIT);
+
+        return $comments;
+    }
 
 }

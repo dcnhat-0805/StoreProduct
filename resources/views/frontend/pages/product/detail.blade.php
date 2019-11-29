@@ -230,60 +230,70 @@
             @if(!empty($comments))
                 <div class="comment__body sop__common_form sop__comment_list">
                     @foreach($comments as $key => $comment)
-                        <div class="comment-item">
-                            @if($comment->type == CUSTOMER_ASK)
+                        @php
+                            $commentProducts = \App\Models\Comment::getCommentByUserIdAndProductId($comment->user_id, $comment->product_id);
+                            $user = \App\Models\User::showUser($comment->user_id);
+                        @endphp
+
+                            <div class="comment-item">
                                 <div class="comment-avatar">
-                                    <div class="avatar">D</div>
+                                    <div class="avatar">{{ $user->name[0] }}</div>
                                 </div>
                                 <div class="comment-info">
                                 <div class="comment-title">
                                     <div class="comment-name">
-                                        <div class="name">{{ $comment->name }}</div>
-                                        @if($comment->phone)
-                                            <div class="phone">{{ $comment->phone }}</div>
-                                        @endif
+                                        <div class="name">{{ $user->name }}</div>
+{{--                                        @if($user->phone)--}}
+{{--                                            <div class="phone">{{ $user->phone }}</div>--}}
+{{--                                        @endif--}}
                                     </div>
                                     <div class="comment-star">
                                         <div class="jsStarsComment{{ $key }}"></div>
                                     </div>
                                 </div>
-                                <div class="comment-content">{!! $comment->comment_contents !!}</div>
+                                @foreach($commentProducts as $key => $commentProduct)
+                                        @php
+                                            $repComments = \App\Models\ReplyComment::getCommentReply($commentProduct->commentId);
+                                        @endphp
+                                    <div class="comment-content">{!! $commentProduct->comment_contents !!}</div>
+
+                                        @if(count($repComments))
+                                            <div class="comment-child-list">
+                                                <div class="comment-child-item">
+                                                    <div class="comment-avatar">
+                                                        <div class="avatar">AD</div>
+                                                    </div>
+                                                    <div class="comment-info">
+                                                        <div class="comment-title">
+                                                            <div class="comment-name">
+                                                                <div class="admin">Admin</div>
+                                                            </div>
+                                                        </div>
+                                                        @foreach($repComments as $repComment)
+                                                            <div class="comment-content">{!! $repComment->comment_reply !!}</div>
+                                                        @endforeach
+                                                        <div class="comment-footer">
+                                                            <div class="comment-like" data-id="66539">
+                                                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                                                <span class="value_like">0</span>
+                                                                <span class="action">Like</span>
+                                                            </div>
+                                                            <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($repComment->created_at)) }}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+                                @endforeach
                                 <div class="comment-footer">
                                     <div class="comment-like" data-id="66267">
                                         <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
                                         <span class="value_like">0</span>
                                         <span class="action">Like</span>
                                     </div>
-                                    <div class="time">{{ date('H:i:s Y/m/d', strtotime($comment->created_at)) }}</div>
+                                    <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($commentProduct->created_at)) }}</div>
                                 </div>
                             </div>
-                            @endif
-
-                            @if($comment->type == ADMIN_REPLY)
-                                <div class="comment-child-list">
-                                <div class="comment-child-item">
-                                    <div class="comment-avatar">
-                                        <div class="avatar">AD</div>
-                                    </div>
-                                    <div class="comment-info">
-                                        <div class="comment-title">
-                                            <div class="comment-name">
-                                                <div class="admin">Admin</div>
-                                            </div>
-                                        </div>
-                                        <div class="comment-content">Mobilecity xin kính chào quý khách. Cảm ơn anh Dương đã quan tâm đến sản phẩm của Mobilecity. Sản phẩm cần được unlock ít nhất 7 ngày, sau đó cài được tiếng việt anh ạ. Em đã liên hệ đến SĐT anh để lại giúp anh tư vấn và tặng mã giảm giá cho anh rồi ạ. Cảm ơn anh đã tin tưởng và sử dụng dịch vụ của Mobilecity. Mobilecity rất hân hạnh được phục vụ quý khách!</div>
-                                        <div class="comment-footer">
-                                            <div class="comment-like" data-id="66539">
-                                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                                <span class="value_like">0</span>
-                                                <span class="action">Like</span>
-                                            </div>
-                                            <div class="time">3 giờ trước</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            @endif
                         </div>
                     @endforeach
                 </div>

@@ -63,6 +63,9 @@
 .me {
     color: #94C2ED;
 }
+.online {
+    color: #86BB71;
+}
 .chat__comment .chat-history .other-message {
     background: #94C2ED;
 }
@@ -127,10 +130,13 @@
     text-align: right;
     position: absolute;
     right: 0;
+    top: 25%;
+    bottom: 0;
     white-space: nowrap;
 }
-.btn__reply__comment, .btn__remove__comment {
+.btn__reply__comment, .btn__remove__comment,
+.btn__edit__comment__admin, .btn__remove__comment__admin{
     /*background: none !important;*/
     /*border: none !important;*/
-    padding: 5px;
+    padding: 2px 5px;
 }

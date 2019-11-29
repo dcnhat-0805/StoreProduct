@@ -45,6 +45,8 @@ $(document).ready(function () {
         let comment_id = $(this).data('id');
         let user_id = $(this).data('user_id');
         let product_id = $(this).data('product_id');
+        $('.rep__comment__id').val('');
+        $('.comment__reply').val('');
 
         $('.comment__id').val(comment_id);
         $('.user__id').val(user_id);
@@ -55,6 +57,8 @@ $(document).ready(function () {
         $('.comment__id').val('');
         $('.user__id').val('');
         $('.product__id').val('');
+        $('.rep__comment__id').val('');
+        $('.comment__reply').val('');
         resetFormRepComment();
     });
 
@@ -99,6 +103,51 @@ $(document).ready(function () {
         if (r == true) {
             $.ajax({
                 url : '/admin/comment/delete/' + comment_id,
+                dataType : 'JSON',
+                type : 'POST',
+                beforeSend : function() {
+                    $('.error__comment_reply').hide();
+                },
+                success : function (data) {
+                    if (data.success === 'yes') {
+                        resetFormRepComment();
+                        loadCommentOfUser(product_id, user_id);
+                    }
+                }
+            });
+        } else {
+            $(this).prop('disabled', false);
+        }
+    });
+
+    //update
+    $(document).on('click', '.btn__edit__comment__admin', function () {
+        $('.form__rep__comment').show();
+        let id = $(this).data('id');
+        let comment_id = $(this).data('comment_id');
+        let user_id = $(this).data('user_id');
+        let product_id = $(this).data('product_id');
+        let comment_reply = $(this).data('comment_reply');
+        if (comment_reply) {
+            $('.comment__reply').val(comment_reply);
+        }
+
+        $('.rep__comment__id').val(id);
+        $('.comment__id').val(comment_id);
+        $('.user__id').val(user_id);
+        $('.product__id').val(product_id);
+    });
+
+    $(document).on('click', '.btn__remove__comment__admin', function () {
+        let comment_id = $(this).data('id');
+        let user_id = $(this).data('user_id');
+        let product_id = $(this).data('product_id');
+        $(this).prop('disabled', true);
+
+        let r = window.confirm('Are you sure you want to delete the reply comment ?');
+        if (r == true) {
+            $.ajax({
+                url : '/admin/comment/deleteReply/' + comment_id,
                 dataType : 'JSON',
                 type : 'POST',
                 beforeSend : function() {

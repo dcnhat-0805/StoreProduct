@@ -50,7 +50,9 @@ class ProductController extends Controller
 
         $avgRating = number_format(Rating::getAvgRatingByProductId($product->id), 0);
         $countRating = Rating::getCountRating($product->id);
-        $comments = Comment::getCommentByProductIdAndUserId($user->id, $product->id);
+//        $comments = Comment::getCommentByProductIdAndUserId($product->id);
+        $comments = Comment::getDistinctDetailProduct($product->id);
+
 
         Product::updateProductView($product->id);
 

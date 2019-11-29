@@ -387,19 +387,21 @@ span.address {
     margin-right: 10px;
 }
 .comment-avatar .avatar {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
+    border-radius: 30px;
     background: #0e8ce4;
+    color: #fff;
     display: block;
     text-align: center;
-    line-height: 40px;
+    line-height: 30px;
     text-transform: uppercase;
     font-weight: bold;
 }
 .comment-item {
     width: 100%;
     float: left;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
 }
 .comment-info {
     width: calc(100% - 50px);
@@ -436,7 +438,7 @@ span.address {
     white-space: pre-wrap;
     width: 100%;
     text-align: justify;
-    margin-bottom: 10px;
+    /*margin-bottom: 10px;*/
 }
 .comment-info .comment-footer .comment-like {
     float: left;
@@ -461,7 +463,7 @@ span.address {
 .comment-child-item {
     width: 100%;
     float: left;
-    margin-top: 10px;
+    margin-bottom: 20px;
     background: #f8f8f8;
     border: 1px solid #e4e1e3;
     padding: 10px;
@@ -483,8 +485,8 @@ span.address {
 }
 .comment-avatar {
     float: left;
-    width: 40px;
-    margin-right: 10px;
+    width: 30px;
+    /*margin-right: 10px;*/
 }
 .comment-avatar .avatar_thumb {
     width: 40px!important;
