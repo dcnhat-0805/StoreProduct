@@ -58,7 +58,7 @@
                     </li>
 
                     <?php
-                    $isShowOrder = in_array(request()->route()->uri(), ['admin/order']);
+                        $isShowOrder = in_array(request()->route()->uri(), ['admin/order']);
                     ?>
 
                     <li class=" {{ $isShowOrder ? 'active' : '' }} ">
@@ -67,8 +67,19 @@
                             <span class="mini-click-non">Order</span></a>
                     </li>
 
+                    @if ($user->can('viewComment', App\Models\Comment::class))
+                        <?php
+                            $isShowComment = in_array(request()->route()->uri(), ['admin/comment']);
+                        ?>
+                        <li class=" {{ $isShowComment ? 'active' : '' }} ">
+                            <a title="Landing Page" href="{{route(ADMIN_COMMENT_INDEX)}}" aria-expanded="false"><span
+                                    class="educate-icon educate-message icon-wrap" aria-hidden="true"></span>
+                                <span class="mini-click-non">Comment</span></a>
+                        </li>
+                    @endif
+
                     <?php
-                    $isShowUser = in_array(request()->route()->uri(), ['admin/list']);
+                        $isShowUser = in_array(request()->route()->uri(), ['admin/list']);
                     ?>
                     <li id="removable">
                         <a class="has-arrow" href="#" aria-expanded="false">

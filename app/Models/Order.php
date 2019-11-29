@@ -159,7 +159,11 @@ class Order extends Model
             $keyword = addslashes($params['keyword']);
             if ($keyword != 0 || $keyword != null) {
                 $orders = $orders->where('users.name', 'like', "%$keyword%")
-                    ->orWhere('users.email', 'like', "%$keyword%");
+                    ->orWhere('users.email', 'like', "%$keyword%")
+                    ->orWhere('orders.order_name', 'like', "%$keyword%")
+                    ->orWhere('orders.order_email', 'like', "%$keyword%")
+                    ->orWhere('orders.order_phone', 'like', "%$keyword%")
+                    ->orWhere('orders.order_monney', 'like', "%$keyword%");
             }
         }
 
@@ -171,28 +175,6 @@ class Order extends Model
                 $orders = $orders->whereRaw("orders.created_at BETWEEN ? AND ?", [$publishDate[0], date('Y/m/d', strtotime("+1 day", strtotime($publishDate[1])))]);
             }
         }
-
-        if (isset($params['category_id'])) {
-            $category_id = $params['category_id'];
-            if ($category_id != 0) {
-                $orders = $orders->whereIn('categories.id', explode(',', $category_id));
-            }
-        }
-
-        if (isset($params['product_category_id'])) {
-            $product_category_id = $params['product_category_id'];
-            if ($product_category_id != 0) {
-                $orders = $orders->whereIn('product_categories.id', explode(',', $product_category_id));
-            }
-        }
-
-        if (isset($params['product_type_id'])) {
-            $product_type_id = $params['product_type_id'];
-            if ($product_type_id != 0) {
-                $orders = $orders->whereIn('product_types.id', explode(',', $product_type_id));
-            }
-        }
-
 
         if (isset($params['status'])) {
             $status = $params['status'];

@@ -53,10 +53,10 @@
                         <tr>
                             <th data-field="state" data-checkbox="true"></th>
                             <th data-field="id">ID</th>
-                            <th data-field="category_name" data-editable="true">Order Name</th>
-                            <th data-field="product_category_name" data-editable="true">Order Email</th>
-                            <th data-field="product_type_name" data-editable="true">Order Phone</th>
-                            <th data-field="name" data-editable="true">Order total</th>
+                            <th data-field="order_name" data-editable="true">Order Name</th>
+                            <th data-field="order_email" data-editable="true">Order Email</th>
+                            <th data-field="order_phone" data-editable="true">Order Phone</th>
+                            <th data-field="order_total" data-editable="true">Order total</th>
                             <th data-field="created_at" data-editable="true">Created date</th>
                             <th data-field="status" data-editable="true">Status</th>
                             <th data-field="action">Action</th>
@@ -65,7 +65,7 @@
                         <tbody class="list-category">
                         @if($orders)
                             @foreach($orders as $order)
-                                <tr id="category-{{ $order->id }}" data-id="{{ $order->id }}">
+                                <tr id="order-{{ $order->id }}" data-id="{{ $order->id }}">
                                     <td></td>
                                     <td class="text-center">{{ $order->id }}</td>
                                     <td class="">{{ $order->order_name }}</td>
@@ -76,7 +76,7 @@
                                     <td class="text-center">{{ App\Helpers\Helper::loadStatusOrder($order->order_status) }}</td>
                                     <td class="datatable-ct text-center">
                                         <button data-toggle="modal" title="Detail {{ $order->order_code }}" class="pd-setting-ed"
-                                                data-original-title="Edit" data-target="#detailOrder"
+                                                data-original-title="Detail" data-target="#detailOrder"
                                                 data-id="{{ $order->id }}"
                                                 data-code="{{ $order->order_code }}"
                                                 data-name="Order detail by {{ $order->order_name }}"
@@ -119,7 +119,7 @@
                 <div class="modal-body">
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
-                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_PRODUCT_INDEX) }}">
+                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_ORDER_INDEX) }}">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -140,19 +140,19 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="checkbox" class="i-checks" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
+                                                <input type="checkbox" class="jsCheckBox" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
                                                 <label for="status" style="margin-right: 20px;">Display</label>
-                                                <input type="checkbox" class="i-checks"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
+                                                <input type="checkbox" class="jsCheckBox"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
                                                 <label for="status">Not display</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div><!-- /.box-body -->
                                 <div class="modal-footer">
-                                    <button type="submit" class="btn btn-custon-three btn-success" data-target="#deliveryOrder">
+                                    <button type="submit" class="btn btn-custon-three btn-success" id="btnSearch">
                                         <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
                                     </button>
-                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" id="btnClear" onclick="window.location.href = '{{route(ADMIN_PRODUCT_INDEX)}}'">
+                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" id="btnClear" onclick="window.location.href = '{{route(ADMIN_ORDER_INDEX)}}'">
                                         <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
                                     </button>
                                 </div>

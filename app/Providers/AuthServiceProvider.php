@@ -2,10 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\Comment;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductType;
+use App\Policies\CommentPolicy;
 use App\Policies\OrderPolicy;
 use App\Policies\ProductCategoryPolicy;
 use App\Policies\ProductPolicy;
@@ -32,6 +34,7 @@ class AuthServiceProvider extends ServiceProvider
         ProductType::class => ProductTypePolicy::class,
         Product::class => ProductPolicy::class,
         Order::class => OrderPolicy::class,
+        Comment::class => CommentPolicy::class,
     ];
 
     /**

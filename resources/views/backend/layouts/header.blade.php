@@ -818,6 +818,27 @@
                                     </ul>
                                 </li>
 
+                                <?php
+                                $isShowOrder = in_array(request()->route()->uri(), ['admin/order']);
+                                ?>
+
+                                <li class=" {{ $isShowOrder ? 'active' : '' }} ">
+                                    <a title="Landing Page" href="{{route(ADMIN_ORDER_INDEX)}}" aria-expanded="false"><span
+                                            class="educate-icon educate-course icon-wrap" aria-hidden="true"></span>
+                                        <span class="mini-click-non">Order</span></a>
+                                </li>
+
+                                @if ($user->can('viewComment', App\Models\Comment::class))
+                                    <?php
+                                        $isShowComment = in_array(request()->route()->uri(), ['admin/comment']);
+                                    ?>
+                                    <li class=" {{ $isShowComment ? 'active' : '' }} ">
+                                        <a title="Landing Page" href="{{route(ADMIN_COMMENT_INDEX)}}" aria-expanded="false"><span
+                                                class="educate-icon educate-message icon-wrap" aria-hidden="true"></span>
+                                            <span class="mini-click-non">Comment</span></a>
+                                    </li>
+                                @endif
+
                                 <li>
                                     <a data-toggle="collapse" data-target="#pages" href="#">
                                         <span class="educate-icon educate-professor icon-wrap"></span>

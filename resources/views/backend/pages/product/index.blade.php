@@ -65,7 +65,7 @@
                         <tbody class="list-category">
                         @if($products)
                             @foreach($products as $product)
-                                <tr id="category-{{ $product->id }}" data-id="{{ $product->id }}">
+                                <tr id="product-{{ $product->id }}" data-id="{{ $product->id }}">
                                     <td></td>
                                     <td class="text-center">{{ $product->id }}</td>
                                     <td class="">{{ $product->category->category_name }}</td>
@@ -188,9 +188,9 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="checkbox" class="i-checks" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
+                                                <input type="checkbox" class="jsCheckBox" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
                                                 <label for="status" style="margin-right: 20px;">Display</label>
-                                                <input type="checkbox" class="i-checks"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
+                                                <input type="checkbox" class="jsCheckBox"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
                                                 <label for="status">Not display</label>
                                             </div>
                                         </div>

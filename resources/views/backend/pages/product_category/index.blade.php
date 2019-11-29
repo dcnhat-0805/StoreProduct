@@ -54,7 +54,7 @@
                     <tbody class="list-category">
                     @if($productCategories)
                         @foreach($productCategories as $productCategory)
-                            <tr id="category-{{$productCategory->id}}" data-id="{{ $productCategory->id }}">
+                            <tr id="product__category-{{$productCategory->id}}" data-id="{{ $productCategory->id }}">
                                 <td></td>
                                 <td class="text-center">{{$productCategory->id}}</td>
                                 <td class="">{{$productCategory->category->category_name}}</td>

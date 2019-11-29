@@ -341,6 +341,40 @@ class Product extends Model
 //            ->orderBy('id', 'DESC')->get();
 //    }
 
+    public static function getCommentOfUser($params = null)
+    {
+        $products = self::filter($params);
+        $order = Helper::getSortParam($params);
+        if ($order == '1 = 1') {
+            $order = "products.id DESC ";
+        }
+
+        $products = $products->whereNull('products.deleted_at')
+//            ->whereNull('product_types.deleted_at')
+            ->whereNull('product_categories.deleted_at')
+            ->whereNull('categories.deleted_at')
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+//            ->join('product_types', 'product_types.id', '=', 'products.product_type_id')
+//            ->join('product_images', 'products.id', '=', 'product_images.product_id')
+            ->selectRaw("products.*")
+            ->with([
+                'comment' => function ($comment) {
+                    $comment->where('comments.comment_status', true);
+                    $comment->with([
+                        'users' => function ($users) {
+                            $users->where('users.status', true);
+                        }
+                    ]);
+                },
+            ])
+            ->groupBy('products.id')
+            ->orderByRaw($order)
+            ->paginate(LIMIT);
+
+        return $products;
+    }
+
     public static function updateCountBuy($productId)
     {
         $product = self::showProduct($productId);

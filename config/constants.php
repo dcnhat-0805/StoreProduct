@@ -49,6 +49,11 @@ const ADMIN_ORDER_INDEX = 'admin.order.index';
 const ADMIN_ORDER_DETAIL = 'admin.order.detail';
 const ADMIN_ORDER_DELIVERY = 'admin.order.delivery';
 
+const ADMIN_COMMENT_INDEX = 'admin.comment.index';
+const ADMIN_COMMENT_REPLY = 'admin.comment.reply';
+const ADMIN_COMMENT_DELETE = 'admin.comment.delete';
+const ADMIN_COMMENT_DESTROY = 'admin.comment.destroy';
+
 const EMAIL_FORM = 'store.online.232@gmail.com';
 const EMAIL_NAME = 'StoreOnline';
 const EMAIL_SUBJECT_PREFIX = '';

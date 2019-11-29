@@ -102,6 +102,19 @@ Route::namespace('Backend')->group(function(){
                 ->name(ADMIN_ORDER_DELIVERY);
         });
 
+        Route::group(['prefix' => 'comment'], function () {
+            Route::get('/', 'CommentController@index')
+                ->name(ADMIN_COMMENT_INDEX);
+            Route::get('/detail', 'CommentController@detail')
+                ->name(ADMIN_COMMENT_REPLY);
+            Route::post('/reply', 'CommentController@reply')
+                ->name(ADMIN_COMMENT_REPLY);
+            Route::post('/delete/{id}', 'CommentController@delete')
+                ->name(ADMIN_COMMENT_DELETE);
+            Route::post('/destroy', 'CommentController@destroy')
+                ->name(ADMIN_COMMENT_DESTROY);
+        });
+
         Route::group(['prefix' => 'ajax'], function(){
             Route::get('/list_product_category', 'AjaxController@getProductCategory');
             Route::get('/listProductType', 'AjaxController@getProductType');
