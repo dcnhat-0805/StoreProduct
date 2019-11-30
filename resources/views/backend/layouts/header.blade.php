@@ -802,17 +802,17 @@
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a title="Category" href="{{route(ADMIN_PRODUCT_CATEGORY_INDEX)}}">
+                                            <a title="Product category" href="{{route(ADMIN_PRODUCT_CATEGORY_INDEX)}}">
                                                 <span class="mini-sub-pro">Product category</span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a title="Category" href="{{route(ADMIN_PRODUCT_TYPE_INDEX)}}">
+                                            <a title="Product type" href="{{route(ADMIN_PRODUCT_TYPE_INDEX)}}">
                                                 <span class="mini-sub-pro">Product type</span>
                                             </a>
                                         </li>
                                         <li class="">
-                                            <a title="Category" href="{{route(ADMIN_PRODUCT_INDEX)}}">
+                                            <a title="Product" href="{{route(ADMIN_PRODUCT_INDEX)}}">
                                                 <span class="mini-sub-pro">Product</span>
                                             </a>
                                         </li>
@@ -824,7 +824,7 @@
                                 ?>
 
                                 <li class=" {{ $isShowOrder ? 'active' : '' }} ">
-                                    <a title="Landing Page" href="{{route(ADMIN_ORDER_INDEX)}}" aria-expanded="false"><span
+                                    <a title="Order" href="{{route(ADMIN_ORDER_INDEX)}}" aria-expanded="false"><span
                                             class="educate-icon educate-course icon-wrap" aria-hidden="true"></span>
                                         <span class="mini-click-non">Order</span></a>
                                 </li>
@@ -834,7 +834,7 @@
                                         $isShowComment = in_array(request()->route()->uri(), ['admin/comment']);
                                     ?>
                                     <li class=" {{ $isShowComment ? 'active' : '' }} ">
-                                        <a title="Landing Page" href="{{route(ADMIN_COMMENT_INDEX)}}" aria-expanded="false"><span
+                                        <a title="Comment" href="{{route(ADMIN_COMMENT_INDEX)}}" aria-expanded="false"><span
                                                 class="educate-icon educate-message icon-wrap" aria-hidden="true"></span>
                                             <span class="mini-click-non">Comment</span></a>
                                     </li>
@@ -847,8 +847,13 @@
                                     </a>
                                     <ul id="pages" class="collapse dropdown-header-top">
                                         <li class="">
-                                            <a title="Category" href="{{route(ADMIN_INDEX)}}">
+                                            <a title="User" href="{{route(ADMIN_INDEX)}}">
                                                 <span class="mini-sub-pro">User</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{request()->route()->getPrefix() == 'admin/customer' ? 'active' : ''}}">
+                                            <a title="Customer" href="{{route(ADMIN_CUSTOMER_INDEX)}}">
+                                                <span class="mini-sub-pro">Customer</span>
                                             </a>
                                         </li>
                                     </ul>

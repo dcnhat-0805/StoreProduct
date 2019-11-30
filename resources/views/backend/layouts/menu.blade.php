@@ -63,7 +63,7 @@
                     ?>
 
                     <li class=" {{ $isShowOrder ? 'active' : '' }} ">
-                        <a title="Landing Page" href="{{route(ADMIN_ORDER_INDEX)}}" aria-expanded="false"><span
+                        <a title="Order" href="{{route(ADMIN_ORDER_INDEX)}}" aria-expanded="false"><span
                                 class="educate-icon educate-course icon-wrap" aria-hidden="true"></span>
                             <span class="mini-click-non">Order</span></a>
                     </li>
@@ -74,7 +74,7 @@
                             $isShowComment = in_array(request()->route()->uri(), ['admin/comment']);
                         ?>
                         <li class=" {{ $isShowComment ? 'active' : '' }} ">
-                            <a title="Landing Page" href="{{route(ADMIN_COMMENT_INDEX)}}" aria-expanded="false"><span
+                            <a title="Comment" href="{{route(ADMIN_COMMENT_INDEX)}}" aria-expanded="false"><span
                                     class="educate-icon educate-message icon-wrap" aria-hidden="true"></span>
                                 <span class="mini-click-non">Comment</span></a>
                         </li>
@@ -91,12 +91,12 @@
                             </a>
                             <ul class="submenu-angle {{ $isShowUser ? 'show' : '' }}" aria-expanded="false">
                                     <li class="{{request()->route()->uri() == 'admin/list' ? 'active' : ''}}">
-                                        <a title="Login" href="{{route(ADMIN_INDEX)}}">
+                                        <a title="User" href="{{route(ADMIN_INDEX)}}">
                                             <span class="mini-sub-pro">Admin</span>
                                         </a>
                                     </li>
                                     <li class="{{request()->route()->getPrefix() == 'admin/customer' ? 'active' : ''}}">
-                                        <a title="Login" href="{{route(ADMIN_CUSTOMER_INDEX)}}">
+                                        <a title="Customer" href="{{route(ADMIN_CUSTOMER_INDEX)}}">
                                             <span class="mini-sub-pro">Customer</span>
                                         </a>
                                     </li>
