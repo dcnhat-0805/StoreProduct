@@ -93,6 +93,7 @@
 
     <!-- Hot New Arrivals -->
 
+    @if(count($products))
     <div class="new_arrivals">
         <div class="container">
             <div class="row">
@@ -102,13 +103,13 @@
                             <div class="new_arrivals_title">SUGGESTIONS TODAY</div>
                             <ul class="clearfix">
 
-                                @if(!empty($products['best']))
+                                @if(count($products['best']))
                                     <li class="active">BEST</li>
                                 @endif
-                                @if(!empty($products['news']))
+                                @if(count($products['news']))
                                         <li>NEW</li>
                                 @endif
-                                @if(!empty($products['hot']))
+                                @if(count($products['hot']))
                                         <li>HOT</li>
                                 @endif
                             </ul>
@@ -118,7 +119,7 @@
                             <div class="col-lg-12" style="z-index:1;">
 
                                 <!-- Product Panel -->
-                                @if(!empty($products['best']))
+                                @if(count($products['best']))
                                     <div class="product_panel panel active">
                                         <div class="arrivals_slider slider">
 
@@ -153,8 +154,8 @@
                                         <div class="arrivals_slider_dots_cover"></div>
                                     </div>
                                 @endif
-                                @if(!empty($products['news']))
-                                    <div class="product_panel panel">
+                                @if(count($products['news']))
+                                    <div class="product_panel panel {{ !count($products['best']) ? 'active' : ''}}">
                                         <div class="arrivals_slider slider">
 
                                             <!-- Slider Item -->
@@ -188,8 +189,8 @@
                                         <div class="arrivals_slider_dots_cover"></div>
                                     </div>
                                 @endif
-                                @if(!empty($products['hot']))
-                                    <div class="product_panel panel">
+                                @if(count($products['hot']))
+                                    <div class="product_panel panel {{ !count($products['best']) && !count($products['news']) ? 'active' : ''}}">
                                         <div class="arrivals_slider slider">
 
                                             <!-- Slider Item -->
@@ -232,6 +233,7 @@
             </div>
         </div>
     </div>
+    @endif
 
     <!-- Best Sellers -->
 

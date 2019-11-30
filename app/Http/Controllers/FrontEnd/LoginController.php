@@ -38,6 +38,12 @@ class LoginController extends Controller
         Auth::login($authUser);
 
         Session::flash("success", trans("messages.login.login_success"));
+        $lastUrl = Session::get(SESSION_LAST_URL_CUSTOMER);
+
+        if ($lastUrl && $lastUrl !== route(FRONT_LOGIN)) {
+            return redirect($lastUrl);
+        }
+
         return redirect()->route(FRONT_END_HOME_INDEX);
     }
 

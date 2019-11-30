@@ -152,7 +152,7 @@ const PREFIX_PRODUCT = 'product';
 const PREFIX_PRODUCT_DETAIL = 'product-detail';
 const FILE_PATH_PRODUCT = 'backend/images/uploads/product/';
 const FILE_PATH_PRODUCT_IMAGE = 'backend/images/uploads/product/detail/';
-const FILE_PATH_PRODUCT_THUMP = 'backend/img/product/thump_product.png';
+const FILE_PATH_PRODUCT_THUMP = 'backend/img/product/thump_product.jpg';
 
 const SESSION_PRODUCT_IMAGE = 'ss.product.image';
 const SESSION_LIST_PRODUCT_IMAGE = 'ss.list.product.image';
