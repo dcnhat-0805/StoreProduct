@@ -147,12 +147,10 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="checkbox" class="jsCheckBox" name="status[]"
-                                                       value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
-                                                <label for="status" style="margin-right: 20px;">Display</label>
-                                                <input type="checkbox" class="jsCheckBox" name="status[]"
-                                                       value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
-                                                <label for="status">Not display</label>
+                                                <input type="checkbox" class="jsCheckBox" id="display" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>
+                                                <label for="display" class="label__status">Display</label>
+                                                <input type="checkbox" class="jsCheckBox" id="not__display" name="status[]" value="{{ NOT_DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', NOT_DISPLAY, 'checked') }}>
+                                                <label for="not__display" class="label__status">Not display</label>
                                             </div>
                                         </div>
                                     </div>

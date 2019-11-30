@@ -68,8 +68,8 @@
                                 <tr id="order-{{ $order->id }}" data-id="{{ $order->id }}">
                                     <td></td>
                                     <td class="text-center">{{ $order->id }}</td>
-                                    <td class="">{{ $order->order_name }}</td>
-                                    <td class="">{{ $order->order_email }}</td>
+                                    <td class="">{{ $order->user_name ? $order->user_name : $order->order_name  }}</td>
+                                    <td class="">{{ $order->user_email ? $order->user_email : $order->order_email }}</td>
                                     <td class="">{{ $order->order_phone }}</td>
                                     <td class="">{{ App\Helpers\Helper::loadMoney($order->order_monney) }}</td>
                                     <td class="text-center">{{ $order->created_at }}</td>
@@ -140,10 +140,14 @@
                                     <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <input type="checkbox" class="jsCheckBox" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
-                                                <label for="status" style="margin-right: 20px;">Display</label>
-                                                <input type="checkbox" class="jsCheckBox"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
-                                                <label for="status">Not display</label>
+                                                <input type="checkbox" class="jsCheckBox" id="pending" name="status[]" value="{{ PENDING }}" {{ App\Helpers\Helper::setCheckedForm('status', PENDING, 'checked') }}>
+                                                <label for="pending" class="label__status">Pending</label>
+                                                <input type="checkbox" class="jsCheckBox" id="delivery" name="status[]" value="{{ DELIVERY }}" {{ App\Helpers\Helper::setCheckedForm('status', DELIVERY, 'checked') }}>
+                                                <label for="delivery" class="label__status">Delivery</label>
+                                                <input type="checkbox" class="jsCheckBox" id="finish" name="status[]" value="{{ FINISH }}" {{ App\Helpers\Helper::setCheckedForm('status', FINISH, 'checked') }}>
+                                                <label for="finish" class="label__status">Finish</label>
+                                                <input type="checkbox" class="jsCheckBox" id="cancel" name="status[]" value="{{ CANCEL }}" {{ App\Helpers\Helper::setCheckedForm('status', CANCEL, 'checked') }}>
+                                                <label for="cancel" class="label__status">Cancel</label>
                                             </div>
                                         </div>
                                     </div>

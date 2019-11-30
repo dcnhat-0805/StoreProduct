@@ -9,7 +9,7 @@ Your order is pending shop confirmation(within 24 hours)
 <br>
 Please check your order regularly.
 <br>
-[<a href="{{ route(FRONT_SHOPPING_CART, ['order_code' => $order->order_code, 'sop' => convertStringToUrl($order->order_email)]) }}">Check orders</a>]
+[<a href="{{ route(FRONT_ORDER_DETAIL, ['order_code' => $order->order_code, 'sop' => convertStringToUrl($order->order_email)]) }}">Check orders</a>]
 <br>
 <br>
 ────────────────────<br>

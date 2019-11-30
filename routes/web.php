@@ -194,7 +194,9 @@ Route::namespace('FrontEnd')->group(function(){
         Route::get('/order', 'OrderController@myOrder')
             ->name(FRONT_MY_ORDERS);
         Route::get('/order/view/{code}', 'OrderController@orderDetail')
-            ->name(FRONT_SHOPPING_CART);
+            ->name(FRONT_ORDER_DETAIL);
+        Route::get('/order/cancel/{code}', 'OrderController@cancelOrder')
+            ->name(FRONT_ORDER_CANCEL);
     });
 
     Route::group(['prefix' => 'comments'], function () {

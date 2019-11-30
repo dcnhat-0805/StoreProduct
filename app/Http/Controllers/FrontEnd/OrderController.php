@@ -21,7 +21,7 @@ class OrderController extends Controller
         }
     }
 
-    function orderDetail($orderCode)
+    public function orderDetail($orderCode)
     {
         $user  = Auth::user();
 
@@ -29,6 +29,19 @@ class OrderController extends Controller
             $order = Order::getListOrderByOrderCode($orderCode);
 
             return view('frontend.pages.order.detail', compact('order', 'orderCode', 'user'));
+        } else {
+            abort(404);
+        }
+    }
+
+    public function cancelOrder($orderCode)
+    {
+        $user  = Auth::user();
+
+        if ($user) {
+            Order::cancelOrder($orderCode);
+
+            return back();
         } else {
             abort(404);
         }

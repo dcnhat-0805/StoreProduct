@@ -327,6 +327,8 @@ class Helper
             return 'Delivery';
         } elseif ($status == FINISH) {
             return 'Finish';
+        } elseif ($status == CANCEL) {
+            return 'Cancel';
         } else {
             return 'Pending';
         }

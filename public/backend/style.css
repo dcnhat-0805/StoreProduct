@@ -4795,3 +4795,12 @@ button.removeProductAttribute:focus {
 .jsProductAttribute .jsCheckBox.pull-left {
     line-height: 40px;
 }
+.label__status {
+    margin-right: 30px;
+}
+.label__status:hover {
+    cursor: pointer;
+}
+.label__radio:hover {
+    cursor: pointer;
+}

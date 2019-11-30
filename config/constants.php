@@ -80,6 +80,9 @@ const DELIVERY = 1;
 const FINISH = 2;
 const CANCEL = 3;
 
+const DISPLAY = 1;
+const NOT_DISPLAY = 0;
+
 const ADMIN = 1;
 const CATEGORY = 2;
 const PRODUCT_CATEGORY = 3;
@@ -112,7 +115,8 @@ const FRONT_ADD_CART = 'front.end.add.cart';
 const FRONT_UPDATE_CART = 'front.end.update.cart';
 const FRONT_CHECK_COUNT_CART = 'front.end.check.count.cart';
 const FRONT_PURCHASE = 'front.end.purchase';
-const FRONT_SHOPPING_CART = 'front.end.shopping.cart';
+const FRONT_ORDER_DETAIL = 'front.end.order.detail';
+const FRONT_ORDER_CANCEL = 'front.end.order.cancel';
 const FRONT_MY_ORDERS = 'front.end.my.orders';
 
 const FRONT_LOGIN = 'front.end.show.form.login';

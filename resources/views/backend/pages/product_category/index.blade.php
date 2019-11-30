@@ -147,14 +147,10 @@
                                             <div class="form-group">
                                                 <label for="status" class="required after">Status</label>
                                                 <div class="status">
-                                                    <div class="jsCheckBox pull-left">
-                                                        <input type="checkbox" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
-                                                        <label><i></i> Display </label>
-                                                    </div>
-                                                    <div class="jsCheckBox pull-left">
-                                                        <input type="checkbox"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
-                                                        <label><i></i> Not display </label>
-                                                    </div>
+                                                    <input type="checkbox" class="jsCheckBox" id="display" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>
+                                                    <label for="display" class="label__status">Display</label>
+                                                    <input type="checkbox" class="jsCheckBox" id="not__display" name="status[]" value="{{ NOT_DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', NOT_DISPLAY, 'checked') }}>
+                                                    <label for="not__display" class="label__status">Not display</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -218,12 +214,12 @@
                                             <label for="status" class="required after">Status</label>
                                             <div class="product-category-status">
                                                 <div class="jsRadio pull-left">
-                                                    <input type="radio" value="1" name="product_category_status" checked {{ old('product_category_status') ? 'checked' : '' }}>
-                                                    <label><i></i> Display </label>
+                                                    <input type="radio" value="1" id="display" name="product_category_status" checked {{ old('product_category_status') ? 'checked' : '' }}>
+                                                    <label for="display" class="label__radio"><i></i> Display </label>
                                                 </div>
                                                 <div class="jsRadio pull-left">
-                                                    <input type="radio" value="0" name="product_category_status" {{ old('product_category_status') == 0 && old('product_category_status') != null ? 'checked' : '' }}>
-                                                    <label><i></i> Not display </label>
+                                                    <input type="radio" value="0" id="not__display" name="product_category_status" {{ old('product_category_status') == 0 && old('product_category_status') != null ? 'checked' : '' }}>
+                                                    <label for="not__display" class="label__radio"><i></i> Not display </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -295,12 +291,12 @@
                                             <label for="status" class="required after">Status</label>
                                             <div class="product-category-status">
                                                 <div class="jsRadio pull-left">
-                                                    <input type="radio" value="1" name="product_category_status" {{ old('product_category_status') ? 'checked' : '' }}>
-                                                    <label><i></i> Display </label>
+                                                    <input type="radio" value="1" id="display" name="product_category_status" checked {{ old('product_category_status') ? 'checked' : '' }}>
+                                                    <label for="display" class="label__radio"><i></i> Display </label>
                                                 </div>
                                                 <div class="jsRadio pull-left">
-                                                    <input type="radio" value="0" name="product_category_status" {{ old('product_category_status') == 0 && old('product_category_status') != null ? 'checked' : '' }}>
-                                                    <label><i></i> Not display </label>
+                                                    <input type="radio" value="0" id="not__display" name="product_category_status" {{ old('product_category_status') == 0 && old('product_category_status') != null ? 'checked' : '' }}>
+                                                    <label for="not__display" class="label__radio"><i></i> Not display </label>
                                                 </div>
                                             </div>
                                         </div>

@@ -37,7 +37,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="detail-right-info pull-right">
-                                                    <a href="{{ route(FRONT_SHOPPING_CART, ['code' => $order->order_code, 'sop' => $order->order_email]) }}">MANAGE</a>
+                                                    @if($order->order_status == PENDING)
+                                                        <a href="{{ route(FRONT_ORDER_CANCEL, ['code' => $order->order_code, 'sop' => $order->order_email]) }}">CANCEL</a>
+                                                    @endif
+                                                    <a href="{{ route(FRONT_ORDER_DETAIL, ['code' => $order->order_code, 'sop' => $order->order_email]) }}">MANAGE</a>
                                                 </div>
                                             </div>
                                         </div>

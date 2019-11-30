@@ -124,6 +124,7 @@ class Order extends Model
         $orders = self::where('orders.user_id', '=', $userId)
                 ->whereNull('orders.deleted_at')
                 ->where('users.status', STATUS_ENABLE)
+                ->where('orders.order_status', '<>', CANCEL)
                 ->select(
                     'orders.id',
                     'orders.order_code',
@@ -180,11 +181,17 @@ class Order extends Model
             $status = $params['status'];
 
             $orders = $orders->where(function ($query) use ($status) {
-                if (in_array(0, $status)) {
+                if (in_array(PENDING, $status)) {
                     $query->orWhereRaw("(orders.order_status = 0)");
                 }
-                if (in_array(1, $status)) {
+                if (in_array(DELIVERY, $status)) {
                     $query->orWhereRaw("(orders.order_status = 1)");
+                }
+                if (in_array(FINISH, $status)) {
+                    $query->orWhereRaw("(orders.order_status = 2)");
+                }
+                if (in_array(CANCEL, $status)) {
+                    $query->orWhereRaw("(orders.order_status = 3)");
                 }
             });
         }
@@ -205,7 +212,7 @@ class Order extends Model
             ->whereNull('order_details.deleted_at')
             ->join('order_details', 'order_details.order_id', 'orders.id')
             ->join('users', 'orders.user_id', 'users.id')
-            ->selectRaw("orders.*, order_details.order_id, users.name, users.email,  users.phone")
+            ->selectRaw("orders.*, order_details.order_id, users.name as user_name, users.email as user_email,  users.phone")
             ->with([
                 'users' => function ($users) {
                     $users->whereNull('users.deleted_at')
@@ -229,6 +236,19 @@ class Order extends Model
         if ($order->order_status == PENDING) {
             return $order->update([
                 'order_status' => DELIVERY,
+            ]);
+        }
+
+        return;
+    }
+
+    public static function cancelOrder($code)
+    {
+        $order = self::getListOrderByOrderCode($code);
+
+        if ($order->order_status == PENDING) {
+            return $order->update([
+                'order_status' => CANCEL,
             ]);
         }
 

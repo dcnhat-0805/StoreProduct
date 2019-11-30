@@ -8,6 +8,7 @@ const urlCreate = '/admin/add';
 const formCreateId = '#createAdmin';
 const formEditId = '#editAdmin';
 const arrayName = ['name', 'email', 'password', 'confirm_password', 'role'];
+const ADMIN = 1;
 
 let AdminJs = (function ($) {
     let modules = {};
@@ -201,6 +202,8 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
+
+    $('#table').find('input.btSelectItem[data-id='+ ADMIN +']').remove();
 
     $('.jsSelectPermission').chosen({
         width: "100%"
