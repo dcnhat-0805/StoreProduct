@@ -248,21 +248,23 @@ let Commons = (function ($) {
 
 $(document).ready(function () {
 
-    function preventEnter(ev) {
-        if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {
-            return false;
-        } else {
-            return true;
+    if (window.location.pathname !== '/account/login') {
+        function preventEnter(ev) {
+            if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {
+                return false;
+            } else {
+                return true;
+            }
         }
-    }
 
-    let inputArr = [
-        "input[type=text]", "input[type=email]",
-        "input[type=password]", "input[type=url]",
-        "input[type=datetime]", "input[type=date]",
-        "input[type=month]", "input[type=week]",
-        "input[type=time]", "input[datetime-local]",
-        "input[number]", "input[range]", "input[radio]"
-    ];
-    inputArr.forEach(e => $(e).keypress(preventEnter));
+        let inputArr = [
+            "input[type=text]", "input[type=email]",
+            "input[type=password]", "input[type=url]",
+            "input[type=datetime]", "input[type=date]",
+            "input[type=month]", "input[type=week]",
+            "input[type=time]", "input[datetime-local]",
+            "input[number]", "input[range]", "input[radio]"
+        ];
+        inputArr.forEach(e => $(e).keypress(preventEnter));
+    }
 });

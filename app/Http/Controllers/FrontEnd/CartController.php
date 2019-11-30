@@ -20,7 +20,7 @@ use DB;
 use Auth;
 use Closure;
 
-class CartController extends Controller
+class CartController extends FrontEndController
 {
     /**
      * Display a listing of the resource.

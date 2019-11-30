@@ -6,6 +6,7 @@ use Closure;
 use Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Session\Store;
+use Illuminate\Support\Facades\Session;
 
 class AdminLoginMiddleware
 {
@@ -27,12 +28,15 @@ class AdminLoginMiddleware
     {
 
         if (Auth::guard("admins")->check()) {
-
             $isLoggedIn = $request->path() != 'admin/logout';
 
-            if(time() - $this->session->get(SESSION_LAST_ACTIVE_TIME) > $this->timeout){
-                $this->session->forget(SESSION_LAST_ACTIVE_TIME);
-//                Cookie::queue('lastUrl', $isLoggedIn ? $this->getLastUrl() : route(ADMIN_DASHBOARD));
+            if (!Session::has(SESSION_LAST_ACTIVE_TIME)) {
+
+                Session::put(SESSION_LAST_ACTIVE_TIME, time());
+
+            } elseif(time() - Session::get(SESSION_LAST_ACTIVE_TIME) > $this->getTimeOut()){
+
+                Session::forget(SESSION_LAST_ACTIVE_TIME);
                 Auth::guard('admins')->logout();
 
                 if (request()->ajax()) {
@@ -40,12 +44,12 @@ class AdminLoginMiddleware
                 }
 
                 $lastUrl = $isLoggedIn ? $this->getLastUrl() : route(ADMIN_DASHBOARD);
-                $this->session->put(SESSION_LAST_URL, $lastUrl);
+                Session::put(SESSION_LAST_URL, $lastUrl);
 
                 return redirect(route(ADMIN_SHOW_LOGIN));
             }
 
-            $isLoggedIn ? $this->session->put('SESSION_LAST_ACTIVE_TIME', time()) : $this->session->forget(SESSION_LAST_ACTIVE_TIME);
+            $isLoggedIn ? Session::put(SESSION_LAST_ACTIVE_TIME, time()) : Session::forget(SESSION_LAST_ACTIVE_TIME);
 
             $admin = Auth::guard("admins")->user();
 
@@ -67,5 +71,10 @@ class AdminLoginMiddleware
         }
 
         return route(ADMIN_DASHBOARD);
+    }
+
+    protected function getTimeOut()
+    {
+        return (env('TIMEOUT_BACK_END')) ?: $this->timeout;
     }
 }

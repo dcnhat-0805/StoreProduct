@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
-class ProfileController extends Controller
+class ProfileController extends FrontEndController
 {
     public function showProfile(Request $request)
     {

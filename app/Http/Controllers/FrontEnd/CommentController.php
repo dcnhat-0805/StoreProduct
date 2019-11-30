@@ -10,7 +10,7 @@ use Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
-class CommentController extends Controller
+class CommentController extends FrontEndController
 {
     public function sendComment(CommentRequest $request)
     {

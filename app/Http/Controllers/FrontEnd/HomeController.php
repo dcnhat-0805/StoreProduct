@@ -8,7 +8,7 @@ use App\Models\ProductType;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class HomeController extends Controller
+class HomeController extends FrontEndController
 {
 
     public function index(Request $request)

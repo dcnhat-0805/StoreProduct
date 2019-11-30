@@ -7,7 +7,7 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Auth;
 
-class OrderController extends Controller
+class OrderController extends FrontEndController
 {
     public function myOrder(Request $request)
     {

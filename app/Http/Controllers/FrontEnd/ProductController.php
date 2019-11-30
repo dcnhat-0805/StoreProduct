@@ -14,7 +14,7 @@ use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class ProductController extends Controller
+class ProductController extends FrontEndController
 {
     public function index($slug)
     {

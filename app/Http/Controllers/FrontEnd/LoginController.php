@@ -63,6 +63,7 @@ class LoginController extends Controller
         if (Auth::check()) {
             Auth::logout();
             Session::flash("success", trans("messages.login.logout_success"));
+            Session::forget(SESSION_LAST_ACTIVE_TIME_CUSTOMER);
 
             return redirect()->route(FRONT_LOGIN);
         }
@@ -90,6 +91,11 @@ class LoginController extends Controller
         if (Auth::attempt($dataLogin, $remember)) {
             UserLog::saveUserLog($message, $email);
             Session::flash("success", trans("messages.users.login_success"));
+            $lastUrl = Session::get(SESSION_LAST_URL_CUSTOMER);
+
+            if ($lastUrl && $lastUrl !== route(FRONT_LOGIN)) {
+                return redirect($lastUrl);
+            }
 
             return redirect(route(FRONT_END_HOME_INDEX));
         } else {
