@@ -82,7 +82,7 @@
 
                     @if ($user->can('viewAdmin', $admin))
                         <?php
-                            $isShowUser = in_array(request()->route()->uri(), ['admin/list']);
+                            $isShowUser = in_array(request()->route()->uri(), ['admin/list']) || in_array(request()->route()->getPrefix(), ['admin/customer']);
                         ?>
                         <li id="removable">
                             <a class="has-arrow" href="#" aria-expanded="false">
@@ -93,6 +93,11 @@
                                     <li class="{{request()->route()->uri() == 'admin/list' ? 'active' : ''}}">
                                         <a title="Login" href="{{route(ADMIN_INDEX)}}">
                                             <span class="mini-sub-pro">Admin</span>
+                                        </a>
+                                    </li>
+                                    <li class="{{request()->route()->getPrefix() == 'admin/customer' ? 'active' : ''}}">
+                                        <a title="Login" href="{{route(ADMIN_CUSTOMER_INDEX)}}">
+                                            <span class="mini-sub-pro">Customer</span>
                                         </a>
                                     </li>
                             </ul>

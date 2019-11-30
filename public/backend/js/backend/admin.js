@@ -1,7 +1,7 @@
 let btnAddAdmin = $('.btn-add-admin');
 let btnEditAdmin = $('.btn-edit-admin');
-let btnDeleteAdmin = $('.btn-delete-admin');
-const btnDelete = $('#removeAdmin');
+let btnDeleteItem = $('.btn-delete-admin');
+const btnDeleteAll = $('#removeAdmin');
 const btnClear = $('#btnClear');
 const btnSearch = $('#btnSearch');
 const urlCreate = '/admin/add';
@@ -9,6 +9,7 @@ const formCreateId = '#createAdmin';
 const formEditId = '#editAdmin';
 const arrayName = ['name', 'email', 'password', 'confirm_password', 'role'];
 const ADMIN = 1;
+const NOT_VALUE_LOCAL = [];
 
 let AdminJs = (function ($) {
     let modules = {};
@@ -88,26 +89,29 @@ let AdminJs = (function ($) {
                 id : id
             },
             success : function (data) {
-                btnDeleteAdmin.prop('disabled', true);
+                Commons.removeLocalStorage(ADMIN_IDS);
+                Commons.removeLocalStorage(ADMIN_DELETE_ALL);
+                btnDeleteItem.prop('disabled', true);
                 location.reload();
             },
             error : function (data) {
-                btnDeleteAdmin.prop('disabled', true);
+                btnDeleteItem.prop('disabled', true);
                 location.reload();
             }
         });
     };
 
     modules.reloadSelectAllCheckBox = function () {
+        $('#table').find('input.btSelectItem[data-id='+ ADMIN +']').remove();
         let isCheckAll = Commons.getSingleValueLocalStorage(ADMIN_DELETE_ALL);
 
         if (isCheckAll == NOT_DELETE_ALL) {
             let ids_admin = Commons.getArrayValueLocalStorage(ADMIN_IDS);
 
             if (ids_admin.length) {
-                btnDelete.attr('disabled', false);
+                btnDeleteAll.attr('disabled', false);
             } else {
-                btnDelete.attr('disabled', true);
+                btnDeleteAll.attr('disabled', true);
             }
 
             $('.btSelectItem').each(function (k, v) {
@@ -120,7 +124,7 @@ let AdminJs = (function ($) {
             });
         } else {
             $('.btSelectAll').prop('checked', true);
-            btnDelete.attr('disabled', false);
+            btnDeleteAll.attr('disabled', false);
             $('.btSelectItem').each(function (k, v) {
                 $(v).prop('checked', true);
             });
@@ -128,6 +132,7 @@ let AdminJs = (function ($) {
     };
 
     modules.checkboxAdmin = function (checkbox) {
+        console.log(1);
         Commons.setLocalStorageDeleteAll(ADMIN_DELETE_ALL, NOT_DELETE_ALL);
         let id = checkbox.data("id");
         let ids_admin = Commons.getArrayValueLocalStorage(ADMIN_IDS);
@@ -146,7 +151,7 @@ let AdminJs = (function ($) {
         modules.reloadSelectAllCheckBox();
     };
 
-    modules.checkAllCatrgory = function () {
+    modules.checkAllAdmin = function () {
         if ($('.btSelectAll').is(':checked')) {
             modules.getAllListAdmin();
             $('.btSelectAll').prop('checked', true);
@@ -215,7 +220,7 @@ $(document).ready(function () {
        AdminJs.createNewAdmin(formData);
     });
 
-    btnDeleteAdmin.on('click', function () {
+    btnDeleteItem.on('click', function () {
         let id = $('#admin_id').val();
         if (!id) {
             AdminJs.destroyAdmin();
@@ -233,12 +238,12 @@ $(document).ready(function () {
 
     AdminJs.reloadSelectAllCheckBox();
 
-    $('.btSelectItem').on('change', function () {
+    $(document).on('change', '.btSelectItem', function () {
         AdminJs.checkboxAdmin($(this));
     });
 
-    $('.btSelectAll').change(function () {
-        AdminJs.checkAllCatrgory();
+    $(document).on('change', '.btSelectAll', function () {
+        AdminJs.checkAllAdmin();
     });
 
     btnClear.on('click', function () {

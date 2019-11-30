@@ -61,6 +61,10 @@ const ADMIN_COMMENT_REPLY = 'admin.comment.reply';
 const ADMIN_COMMENT_DELETE = 'admin.comment.delete';
 const ADMIN_COMMENT_DESTROY = 'admin.comment.destroy';
 
+const ADMIN_CUSTOMER_INDEX = 'admin.customer.index';
+const ADMIN_CUSTOMER_DELETE = 'admin.customer.delete';
+const ADMIN_CUSTOMER_DESTROY = 'admin.customer.destroy';
+
 const EMAIL_FORM = 'store.online.232@gmail.com';
 const EMAIL_NAME = 'StoreOnline';
 const EMAIL_SUBJECT_PREFIX = '';

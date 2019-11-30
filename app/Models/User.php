@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -47,14 +48,78 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class, 'user_id', 'id');
     }
 
-    public static function getListAllUser()
+    private static function filter($params)
     {
-        return self::select(
-                'name', 'email', 'password',
+        $user = new User();
+
+        if (isset($params['keyword'])) {
+            $keyword = addslashes($params['keyword']);
+            if ($keyword != 0 || $keyword != null) {
+                $user = $user->where('users.name', 'like', "%$keyword%")
+                    ->orWhere('users.email', 'like', "%$keyword%");
+            }
+        }
+
+        if (isset($params['created_at'])) {
+            $publishDate = $params['created_at'];
+            if ($publishDate != 0) {
+                $publishDate = str_replace('+', ' ', $publishDate);
+                $publishDate = explode(' - ', $publishDate);
+                $user = $user->whereRaw("users.created_at BETWEEN ? AND ?", [$publishDate[0], date('Y/m/d', strtotime("+1 day", strtotime($publishDate[1])))]);
+            }
+        }
+
+
+        if (isset($params['status'])) {
+            $status = $params['status'];
+
+            $user = $user->where(function ($query) use ($status) {
+                if (in_array(0, $status)) {
+                    $query->orWhereRaw("(users.status = 0)");
+                }
+                if (in_array(1, $status)) {
+                    $query->orWhereRaw("(users.status = 1)");
+                }
+            });
+        }
+
+        return $user;
+    }
+
+    public static function getListAllUser($params = null)
+    {
+        $user = self::filter($params);
+        $order = Helper::getSortParam($params);
+        if ($order == '1 = 1') {
+            $order = "users.id DESC ";
+        }
+        return $user->select(
+                'id', 'name', 'email',
                 'phone', 'address', 'social_id',
                 'avatar', 'status'
             )
-            ->orderBy('id', 'DESC')->get();
+            ->orderBy($order)->get();
+    }
+
+    public static function getAllUser($params = null)
+    {
+        $users = self::filter($params);
+        $order = Helper::getSortParam($params);
+        if ($order == '1 = 1') {
+            $order = "users.id desc";
+        }
+        $users = $users->whereNull('social_id')
+            ->join('wards', 'wards.code', 'users.address')
+            ->join('districts', 'wards.parent_code', 'districts.code')
+            ->join('cities', 'districts.parent_code', 'cities.code')
+            ->select(
+                'users.id', 'users.name', 'users.email', 'users.created_at', 'users.address', 'users.gender',
+                'users.phone', 'wards.path_with_type as address_user', 'users.birthday', 'users.status',
+                'cities.code as cityId', 'districts.code as districtId'
+            )
+            ->orderByRaw($order)->paginate(LIMIT);
+
+        return $users;
     }
 
     public static function getListUser()
@@ -113,6 +178,7 @@ class User extends Authenticatable
     public static function deleteUser($id)
     {
         $user = self::showUser($id);
+
         return $user->delete();
     }
 

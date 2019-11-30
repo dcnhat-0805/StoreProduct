@@ -2,84 +2,73 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\City;
+use App\Models\District;
+use App\Models\User;
+use App\Models\Wards;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 class CustomerController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $params = \request()->all();
+        $users = User::getAllUser($params);
+        $cities = City::getOptionCity();
+        $districts = District::getOptionDistrict();
+        $wards = Wards::getOptionWards();
+
+        return view('backend.pages.customer.index', compact('users', 'cities', 'districts', 'wards'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function getListAllCustomer(Request $request)
     {
-        //
+        $users = User::getAllUser();
+        $data = [];
+
+        if (count($users)) {
+            foreach ($users as $user) {
+                $data[] = [
+                    'id' => $user->id
+                ];
+            }
+        }
+
+        return response()->json(array_flatten($data));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function delete($id)
     {
-        //
+        $user = Auth::guard('admins')->user();
+
+        if ($user->can('deleteCustomer', User::class)) {
+            try {
+                User::deleteUser($id);
+
+                Session::flash("success", trans("messages.user.delete_success"));
+                return response()->json();
+            } catch (\Exception $e) {
+                Session::flash("error", trans("messages.user.delete_failed"));
+                return response()->json();
+            }
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function destroy(Request $request)
     {
-        //
-    }
+        $user = Auth::guard('admins')->user();
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        if ($user->can('deleteCustomer', User::class)) {
+            try {
+                User::destroy($request->get('ids'));
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+                Session::flash("success", trans("messages.user.delete_success"));
+            } catch (\Exception $e) {
+                Session::flash("error", trans("messages.user.delete_failed"));
+            }
+        }
     }
 }

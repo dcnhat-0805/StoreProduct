@@ -59,7 +59,7 @@
                                 <td>{{ $ad->email }}</td>
                                 <td>{{ PERMISSION[$ad->role] }} ({{ $ad->role }})</td>
                                 <td class="text-center">{{ $ad->created_at }}</td>
-                                <td class="text-center">@if($ad->admin_status == 1) Display @else Not display @endif</td>
+                                <td class="text-center">@if($ad->admin_status == 1) Active @else Not active @endif</td>
                                 <td class="datatable-ct text-center">
                                     <button data-toggle="modal" title="Edit {{ $ad->name }}" class="pd-setting-ed"
                                             data-original-title="Edit" data-target="#edit" data-id="{{ $ad->id }}" data-name="{{ $ad->name }}"
@@ -142,9 +142,9 @@
                                                 <label for="status" class="required after">Status</label>
                                                 <div class="status">
                                                     <input type="checkbox" class="jsCheckBox" id="display" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>
-                                                    <label for="display" class="label__status">Display</label>
+                                                    <label for="display" class="label__status">Active</label>
                                                     <input type="checkbox" class="jsCheckBox" id="not__display" name="status[]" value="{{ NOT_DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', NOT_DISPLAY, 'checked') }}>
-                                                    <label for="not__display" class="label__status">Not display</label>
+                                                    <label for="not__display" class="label__status">Not active</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -234,11 +234,11 @@
                                             <div class="admin-status">
                                                 <div class="jsRadio pull-left">
                                                     <input type="radio" value="1" id="display" name="admin_status" checked {{ old('admin_status') ? 'checked' : '' }}>
-                                                    <label for="display" class="label__radio"><i></i> Display </label>
+                                                    <label for="display" class="label__radio"><i></i> Active </label>
                                                 </div>
                                                 <div class="jsRadio pull-left">
                                                     <input type="radio" value="0" id="not__display" name="admin_status" {{ old('admin_status') == 0 && old('admin_status') != null ? 'checked' : '' }}>
-                                                    <label for="not__display" class="label__radio"><i></i> Not display </label>
+                                                    <label for="not__display" class="label__radio"><i></i> Not active </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -264,7 +264,7 @@
         <div class="modal-dialog" role="document" style="min-width: 700px;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel" style="text-transform: capitalize;">Chỉnh sửa admin
+                    <h5 class="modal-title" id="exampleModalLabel" style="text-transform: capitalize;">Edit admin
                         &raquo; <span class="title"></span></h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
@@ -318,11 +318,11 @@
                                             <div class="admin-status">
                                                 <div class="jsRadio pull-left">
                                                     <input type="radio" value="1" id="display" name="admin_status" checked {{ old('admin_status') ? 'checked' : '' }}>
-                                                    <label for="display" class="label__radio"><i></i> Display </label>
+                                                    <label for="display" class="label__radio"><i></i> Active </label>
                                                 </div>
                                                 <div class="jsRadio pull-left">
                                                     <input type="radio" value="0" id="not__display" name="admin_status" {{ old('admin_status') == 0 && old('admin_status') != null ? 'checked' : '' }}>
-                                                    <label for="not__display" class="label__radio"><i></i> Not display </label>
+                                                    <label for="not__display" class="label__radio"><i></i> Not active </label>
                                                 </div>
                                             </div>
                                         </div>

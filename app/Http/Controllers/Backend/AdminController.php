@@ -119,14 +119,17 @@ class AdminController extends Controller
     public function delete($id)
     {
         $user = Auth::guard('admins')->user();
-        $admin = Admin::deleteAdmin($id);
 
-        if ($user->can('deleteAdmin', Admin::class) && isset($admin)) {
-            Session::flash("success", trans("messages.admin.delete_success"));
-            return response()->json();
-        } else {
-            Session::flash("error", trans("messages.admin.delete_failed"));
-            return response()->json();
+        if ($user->can('deleteAdmin', Admin::class)) {
+            try {
+                Admin::deleteAdmin($id);
+
+                Session::flash("success", trans("messages.admin.delete_success"));
+                return response()->json();
+            } catch (\Exception $e) {
+                Session::flash("error", trans("messages.admin.delete_failed"));
+                return response()->json();
+            }
         }
     }
 
@@ -137,9 +140,11 @@ class AdminController extends Controller
 
         if (count($admin)) {
             foreach ($admin as $ad) {
-                $data[] = [
-                    'id' => $ad->id
-                ];
+                if ($ad->id !== ADMIN) {
+                    $data[] = [
+                        'id' => $ad->id
+                    ];
+                }
             }
         }
 
@@ -152,7 +157,7 @@ class AdminController extends Controller
 
         if ($user->can('deleteAdmin', Admin::class)) {
             try {
-                Admin::destroy($request->input('ids'));
+                Admin::destroy($request->get('ids'));
                 Session::flash("success", trans("messages.admin.delete_success"));
             } catch (\Exception $e) {
                 Session::flash("error", trans("messages.admin.delete_failed"));

@@ -125,6 +125,16 @@ Route::namespace('Backend')->group(function(){
                 ->name(ADMIN_COMMENT_DESTROY);
         });
 
+        Route::group(['prefix' => 'customer'], function () {
+            Route::get('/', 'CustomerController@index')
+                ->name(ADMIN_CUSTOMER_INDEX);
+            Route::get('/list_all_customer', 'CustomerController@getListAllCustomer');
+            Route::delete('/delete/{id}', 'CustomerController@delete')
+                ->name(ADMIN_CUSTOMER_DELETE);
+            Route::delete('/destroy', 'CustomerController@destroy')
+                ->name(ADMIN_CUSTOMER_DESTROY);
+        });
+
         Route::group(['prefix' => 'ajax'], function(){
             Route::get('/list_product_category', 'AjaxController@getProductCategory');
             Route::get('/listProductType', 'AjaxController@getProductType');

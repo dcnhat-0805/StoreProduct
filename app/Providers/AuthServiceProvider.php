@@ -7,7 +7,9 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductType;
+use App\Models\User;
 use App\Policies\CommentPolicy;
+use App\Policies\CustomerPolicy;
 use App\Policies\OrderPolicy;
 use App\Policies\ProductCategoryPolicy;
 use App\Policies\ProductPolicy;
@@ -35,6 +37,7 @@ class AuthServiceProvider extends ServiceProvider
         Product::class => ProductPolicy::class,
         Order::class => OrderPolicy::class,
         Comment::class => CommentPolicy::class,
+        User::class => CustomerPolicy::class,
     ];
 
     /**
