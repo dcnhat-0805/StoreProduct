@@ -18,7 +18,7 @@ class OrderPolicy
      */
     public function viewOrder(Admin $admin)
     {
-        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -33,7 +33,7 @@ class OrderPolicy
      */
     public function createOrder(Admin $admin)
     {
-        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -48,7 +48,7 @@ class OrderPolicy
      */
     public function updateOrder(Admin $admin)
     {
-        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -63,7 +63,7 @@ class OrderPolicy
      */
     public function deleteOrder(Admin $admin)
     {
-        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -78,7 +78,7 @@ class OrderPolicy
      */
     public function restoreOrder(Admin $admin)
     {
-        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 
@@ -93,7 +93,7 @@ class OrderPolicy
      */
     public function forceDeleteOrder(Admin $admin)
     {
-        if (in_array($admin->role, [ADMIN, CATEGORY, PRODUCT_CATEGORY, PRODUCT_TYPE, PRODUCT])) {
+        if (in_array($admin->role, [ADMIN])) {
             return true;
         }
 

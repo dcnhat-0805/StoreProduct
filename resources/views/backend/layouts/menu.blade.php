@@ -57,6 +57,7 @@
                         </ul>
                     </li>
 
+                    @if ($user->can('viewOrder', App\Models\Order::class))
                     <?php
                         $isShowOrder = in_array(request()->route()->uri(), ['admin/order']);
                     ?>
@@ -66,6 +67,7 @@
                                 class="educate-icon educate-course icon-wrap" aria-hidden="true"></span>
                             <span class="mini-click-non">Order</span></a>
                     </li>
+                    @endif
 
                     @if ($user->can('viewComment', App\Models\Comment::class))
                         <?php
@@ -78,24 +80,24 @@
                         </li>
                     @endif
 
-                    <?php
-                        $isShowUser = in_array(request()->route()->uri(), ['admin/list']);
-                    ?>
-                    <li id="removable">
-                        <a class="has-arrow" href="#" aria-expanded="false">
-                            <span class="educate-icon educate-professor icon-wrap"></span>
-                            <span class="mini-click-non">User</span>
-                        </a>
-                        <ul class="submenu-angle {{ $isShowUser ? 'show' : '' }}" aria-expanded="false">
-                            @if ($user->can('viewAdmin', $admin))
-                                <li class="{{request()->route()->uri() == 'admin/list' ? 'active' : ''}}">
-                                    <a title="Login" href="{{route(ADMIN_INDEX)}}">
-                                        <span class="mini-sub-pro">Admin</span>
-                                    </a>
-                                </li>
-                            @endif
-                        </ul>
-                    </li>
+                    @if ($user->can('viewAdmin', $admin))
+                        <?php
+                            $isShowUser = in_array(request()->route()->uri(), ['admin/list']);
+                        ?>
+                        <li id="removable">
+                            <a class="has-arrow" href="#" aria-expanded="false">
+                                <span class="educate-icon educate-professor icon-wrap"></span>
+                                <span class="mini-click-non">User</span>
+                            </a>
+                            <ul class="submenu-angle {{ $isShowUser ? 'show' : '' }}" aria-expanded="false">
+                                    <li class="{{request()->route()->uri() == 'admin/list' ? 'active' : ''}}">
+                                        <a title="Login" href="{{route(ADMIN_INDEX)}}">
+                                            <span class="mini-sub-pro">Admin</span>
+                                        </a>
+                                    </li>
+                            </ul>
+                        </li>
+                    @endif
                 </ul>
             </nav>
         </div>

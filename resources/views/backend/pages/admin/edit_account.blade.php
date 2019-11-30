@@ -56,7 +56,7 @@
                         </div>
                         <div class="row">
                             <div class="form-group edit__account">
-                                <label for="password" class="required after">Password</label>
+                                <label for="password" class="">Password</label>
                                 <span class="label__title__edit"><a href="{{ route(ADMIN_ACCOUNT_EDIT_PASSWORD) }}">Edit</a></span>
                                 <input type="password" class="form-control admin-password"
                                        name="password"  readonly disabled value="11111111" placeholder="Password ....">
