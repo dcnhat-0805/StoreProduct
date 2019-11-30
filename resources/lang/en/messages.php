@@ -67,8 +67,8 @@ return [
         ],
         'password' => [
             'required' => ':attribute cannot be left blank.',
-            'min' => ':attribute must be at least 8 characters.',
-            'regex' => ' must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.'
+            'min' => ':attribute must be at least 8 characters',
+            'regex' => ' :attribute must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.'
         ],
         'confirm_password' => [
             'required' => ':attribute cannot be left blank.',
@@ -123,8 +123,8 @@ return [
         ],
         'password' => [
             'required' => ':attribute cannot be left blank.',
-            'min' => ':attribute must be at least 8 characters.',
-            'regex' => ':attribute must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.'
+            'min' => ':attribute must be at least 8 characters',
+            'regex' => ' :attribute must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.'
         ],
         'confirm_password' => [
             'required' => ':attribute cannot be left blank.',
@@ -189,7 +189,7 @@ return [
         ],
         'password' => [
             'required' => ':attribute cannot be left blank.',
-            'min' => ':attribute must be at least 8 characters.',
+            'min' => ':attribute must be at least 8 characters',
             'regex' => ':attribute must contain at least 1 uppercase letter, 1 lowercase letter, 1 number and 1 special character.'
         ],
         'confirm_password' => [

@@ -46,6 +46,15 @@ Route::namespace('Backend')->group(function(){
         Route::get('/list_admin', 'AdminController@getListAdmin');
         Route::delete('/destroy', 'AdminController@destroy');
 
+        Route::group(['prefix' => 'account'], function(){
+            Route::get('/edit', 'AccountController@editAccount')->name(ADMIN_ACCOUNT_EDIT);
+            Route::post('/update', 'AccountController@updateAccount')->name(ADMIN_ACCOUNT_UPDATE);
+            Route::get('edit_email', 'AccountController@editEmail')->name(ADMIN_ACCOUNT_EDIT_EMAIL);
+            Route::post('update_email', 'AccountController@updateEmail')->name(ADMIN_ACCOUNT_UPDATE_EMAIL);
+            Route::get('edit_password', 'AccountController@editPassword')->name(ADMIN_ACCOUNT_EDIT_PASSWORD);
+            Route::post('update_password', 'AccountController@updatePassword')->name(ADMIN_ACCOUNT_UPDATE_PASSWORD);
+        });
+
         Route::group(['prefix' => 'category'], function(){
             Route::get('/', 'CategoryController@index')->name(ADMIN_CATEGORY_INDEX);
             Route::post('add', 'CategoryController@store')->name(ADMIN_CATEGORY_ADD);

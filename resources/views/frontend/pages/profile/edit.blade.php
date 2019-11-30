@@ -70,6 +70,8 @@
                                     <div class="form-group">
                                         <label class="control-label" for="password">Password</label>
                                         <span class="lable-title lable-title-email"><a href="{{ route(FRONT_SHOW_EDIT_PASSWORD) }}">Edit</a></span>
+                                        <input type="password" class="form-control admin-password"
+                                               name="password"  readonly disabled value="11111111" placeholder="Password ....">
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label required after" for="phone">Phone number</label>

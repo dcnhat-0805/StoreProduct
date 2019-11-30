@@ -14,6 +14,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $from = date("Y/m/d", strtotime('-6 days'));
+        $to = date("Y/m/d");
+//        dd($from, $to);
         return view('backend.pages.index');
     }
 

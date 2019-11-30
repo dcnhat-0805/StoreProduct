@@ -45,6 +45,13 @@ const ADMIN_ADD = 'admin.add';
 const ADMIN_EDIT = 'admin.edit';
 const ADMIN_DELETE = 'admin.delete';
 
+const ADMIN_ACCOUNT_EDIT = 'admin.account.edit';
+const ADMIN_ACCOUNT_UPDATE = 'admin.account.update';
+const ADMIN_ACCOUNT_EDIT_EMAIL = 'admin.account.edit.email';
+const ADMIN_ACCOUNT_UPDATE_EMAIL = 'admin.account.update.email';
+const ADMIN_ACCOUNT_EDIT_PASSWORD = 'admin.account.edit.password';
+const ADMIN_ACCOUNT_UPDATE_PASSWORD = 'admin.account.update.password';
+
 const ADMIN_ORDER_INDEX = 'admin.order.index';
 const ADMIN_ORDER_DETAIL = 'admin.order.detail';
 const ADMIN_ORDER_DELIVERY = 'admin.order.delivery';

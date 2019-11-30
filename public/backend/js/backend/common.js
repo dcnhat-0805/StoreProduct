@@ -233,7 +233,7 @@ let Commons = (function ($) {
         });
     };
 
-    $("button.btn-success:not('.product, #btnSearch, .btn__delivery, .btn__reply-comment, .btn__remove__comment')").on('click', function () {
+    $("button.btn-success:not('.product, #btnSearch, .btn__delivery, .btn__reply-comment, .btn__remove__comment, .btn__edit__account')").on('click', function () {
         $(this).prop('disabled', true);
     });
 

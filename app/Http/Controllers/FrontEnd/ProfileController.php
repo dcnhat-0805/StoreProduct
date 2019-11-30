@@ -55,6 +55,9 @@ class ProfileController extends Controller
         if (isset($input['email'])) {
             unset($input['email']);
         }
+        if (isset($input['password'])) {
+            unset($input['password']);
+        }
         if (isset($input['id'])) {
             unset($input['id']);
         }
@@ -138,6 +141,7 @@ class ProfileController extends Controller
             $account->password = Hash::make($request->input('password_user'));
             $account->save();
 
+            Auth::logoutOtherDevices($request->input('password_user'));
             Session::flash("success", trans("messages.users.update_success"));
             return redirect()->route(FRONT_SHOW_PROFILE, ['sop' => convertStringToUrl($user->name)]);
         } else {

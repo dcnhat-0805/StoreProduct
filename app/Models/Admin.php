@@ -129,6 +129,22 @@ class Admin extends Authenticatable
         }
     }
 
+    public static function updateAccountAdmin($id, $request)
+    {
+        $user = self::showAdmin($id);
+
+        return $user->update($request);
+    }
+
+    public static function updateEmailAccount($id, $request)
+    {
+        $user = self::showAdmin($id);
+
+        return $user->update([
+            'email' => $request['email']
+        ]);
+    }
+
     public static function deleteAdmin($id)
     {
         $user = self::showAdmin($id);

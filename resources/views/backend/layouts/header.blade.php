@@ -189,19 +189,20 @@
                                             </a>
                                             <ul role="menu"
                                                 class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                                                <li><a href="#"><span
+                                                <li>
+                                                    <a href="{{ route(ADMIN_ACCOUNT_EDIT) }}"><span
                                                             class="edu-icon edu-home-admin author-log-ic"></span>My
                                                         Account</a>
                                                 </li>
-                                                <li><a href="#"><span
-                                                            class="edu-icon edu-user-rounded author-log-ic"></span>My
-                                                        Profile</a>
+                                                <li>
+                                                    <a href="{{ route(ADMIN_ACCOUNT_EDIT_EMAIL) }}"><span
+                                                            class="edu-icon edu-user-rounded author-log-ic"></span>Change email
+                                                    </a>
                                                 </li>
-                                                <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User
-                                                        Billing</a>
-                                                </li>
-                                                <li><a href="#"><span
-                                                            class="edu-icon edu-settings author-log-ic"></span>Settings</a>
+                                                <li>
+                                                    <a href="{{ route(ADMIN_ACCOUNT_EDIT_PASSWORD) }}">
+                                                        <span class="edu-icon edu-money author-log-ic"></span>Change password
+                                                    </a>
                                                 </li>
                                                 <li><a href="{{ route(ADMIN_LOGOUT) }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
@@ -868,7 +869,7 @@
                         <div class="row">
                             <div class="col-xs-9 col-sm-9">
                                 <ul class="breadcome-menu">
-                                    <li><a href="#">Dashboard</a> <span class="bread-slash">/</span>
+                                    <li><a href="#">Dashboard</a> <span class="bread-slash">@hasSection('titleMenu')/@endif</span>
                                     </li>
                                     <li><span class="bread-blod">@yield('titleMenu')</span>
                                     </li>
@@ -876,7 +877,7 @@
                             </div>
 
                             <?php
-                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create']);
+                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create', 'admin']) || in_array(request()->route()->getPrefix(), ['admin/account']);;
                             ?>
                             @if(!$isShowBtnSearch)
                                 <div class="col-xs-3 col-sm-3">
