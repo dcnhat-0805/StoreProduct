@@ -1,5 +1,5 @@
 <!-- product left -->
-<input type="hidden" class="description" value="{{ $slug }}">
+<input type="hidden" class="description" value="{{ isset($slug) ? $slug : '' }}">
 <div class="side-bar col-sm-12">
     <!-- price range -->
     <div class="range">
@@ -18,7 +18,7 @@
         <ul>
             <li>
                 <input type="checkbox" class="jsCheckBox" id="local" name="local" value="local"
-                       data-href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $slug, 'location' => 1]) }}">
+                       data-href="">
                 <label for="local" class="label__span">Local</label>
             </li>
             <li>

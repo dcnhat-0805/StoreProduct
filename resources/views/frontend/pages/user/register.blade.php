@@ -107,7 +107,7 @@
                                         <div class="col-sm-4 birthday_year" style="padding: 0;">
                                             <select class="form-control account-profile-edit__birthday__year" id="birthday_year" name="birthday_year" >
                                                 <option value="">Year</option>
-                                                @for($y = date('Y') - GROWN_YEAR; $y >= date('Y') - YEAR; $y--)
+                                                @for($y = date('Y'); $y >= date('Y') - YEAR; $y--)
                                                     <option value="{{ $y }}" {{ isset($user->birthday) && date('Y', strtotime($user->birthday)) == $y ? 'selected' : '' }}>{{ $y }}</option>
                                                 @endfor
                                             </select>

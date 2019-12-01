@@ -88,7 +88,8 @@
                     <div class="header_search">
                         <div class="header_search_content">
                             <div class="header_search_form_container">
-                                <form action="{{ route(FRONT_END_HOME_INDEX) }}" class="header_search_form clearfix">
+                                <form action="{{ route(FRONT_SEARCH_BY_WORD) }}" class="header_search_form clearfix" method="get">
+                                    @csrf
                                     <input type="search" name="keyword" class="header_search_input"
                                            placeholder="Search for products..." value="{{ request()->get('keyword') }}">
                                     <button type="submit" class="header_search_button trans_300" value="Submit"><img

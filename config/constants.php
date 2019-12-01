@@ -162,6 +162,7 @@ const IMAGE_RESIZE_PREFIX = 'product-';
 
 const KEYWORD = 'keyword';
 const FRONT_SEARCH_BY_WORD = 'front.end.search.by.word';
+const FRONT_LOAD_DATA_SEARCH = 'front.end.load.data.search';
 
 const CUSTOMER_ASK = 0;
 const ADMIN_REPLY = 1;
@@ -243,7 +244,7 @@ const RATING_POINT = [
 
 const MIN_YEAR = 60;
 const OPTION = "選択";
-const YEAR = 60;
+const YEAR = 119;
 const MONTH_MAX = 12;
 const DAY_MAX = 31;
 const POST_NEW = 7;

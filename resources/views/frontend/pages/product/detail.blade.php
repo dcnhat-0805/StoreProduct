@@ -227,7 +227,7 @@
                     </div>
                 </form>
             </div>
-            @if(!empty($comments))
+            @if(count($comments))
                 <div class="comment__body sop__common_form sop__comment_list">
                     @foreach($comments as $key => $comment)
                         @php

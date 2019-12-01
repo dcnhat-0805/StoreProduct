@@ -421,11 +421,11 @@ class Product extends Model
     public static function getProductBySearch($params = null)
     {
 
-        $products = $products->whereNull('products.deleted_at')
+        $products = self::whereNull('products.deleted_at')
             ->whereNull('product_types.deleted_at')
             ->whereNull('product_categories.deleted_at')
             ->whereNull('categories.deleted_at')
-            ->where('products.product_option', $option)
+//            ->where('products.product_option', $option)
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
             ->leftjoin('product_categories', 'product_categories.id', '=', 'products.product_category_id')
@@ -447,12 +447,11 @@ class Product extends Model
                 },
             ])
             ->groupBy('products.id')
-            ->orderByRaw($order)
-            ->limit(LIMIT);
+            ->orderByRaw('products.id');
 
         $products = self::getQueryBySearchParams($products, $params, null);
 
-        return $products->get();
+        return $products->paginate(LIMIT);
     }
 
 //    public static function getListAllProduct()

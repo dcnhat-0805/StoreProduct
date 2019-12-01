@@ -15,16 +15,23 @@ class HomeController extends FrontEndController
     {
         $params = self::getSearchParams();
         $products = [];
-        $products['best'] = Product::getProductByOption(BEST, $params);
-        $products['news'] = Product::getProductByOption(NEWS, $params);
-        $products['hot'] = Product::getProductByOption(HOT, $params);
+        $products['best'] = Product::getProductByOption(BEST);
+        $products['news'] = Product::getProductByOption(NEWS);
+        $products['hot'] = Product::getProductByOption(HOT);
 
         return view('frontend.pages.index', compact('products'));
     }
 
+    public function getDataSearch(Request $request)
+    {
+        $params = self::getSearchParams();
+        $products = Product::getProductBySearch($params);
+
+        return view('frontend.pages.search.index', compact('products', 'params'));
+    }
+
     public function searchByWord(Request $request)
     {
-
         $searchParams = request()->all();
         unset($searchParams['keyword']);
         if (isset($searchParams['sort']) && $searchParams['sort'] == 'location') {
@@ -34,7 +41,7 @@ class HomeController extends FrontEndController
 
         $searchParams = array_merge($searchParams, [KEYWORD => $request->keyword]);
 
-        return redirect(route(FRONT_END_HOME_INDEX, $searchParams));
+        return redirect(route(FRONT_LOAD_DATA_SEARCH, $searchParams));
     }
 
     public static function getSearchParams()

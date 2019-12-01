@@ -145,10 +145,12 @@ Route::namespace('Backend')->group(function(){
 Route::namespace('FrontEnd')->group(function(){
     Route::get('/', 'HomeController@index')
         ->name(FRONT_END_HOME_INDEX);
-    Route::get('/{slug}', 'ProductController@index')
+    Route::get('sop/{slug}', 'ProductController@index')
         ->name(FRONT_PRODUCT_LIST);
-    Route::post('/searchByWord', 'HomeController@searchByWord')
+    Route::get('/searchByWord', 'HomeController@searchByWord')
         ->name(FRONT_SEARCH_BY_WORD);
+    Route::get('/catalog', 'HomeController@getDataSearch')
+        ->name(FRONT_LOAD_DATA_SEARCH);
     Route::get('/detail/{description}', 'ProductController@detail')
         ->name(FRONT_PRODUCT_DETAIL);
     Route::post('/updateRating', 'ProductController@updateRating');
