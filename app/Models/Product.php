@@ -89,6 +89,49 @@ class Product extends Model
     {
         self::getConnectionResolver()->connection()->rollBack();
     }
+
+
+    public static function getQueryBySearchParams($model, $params, $page = null)
+    {
+        if (isset($params[KEYWORD])) {
+            $keyword = preg_replace('!\s+!', ' ', $params[KEYWORD]);
+
+            if ($keyword != '') {
+                $wordArray = preg_split("/\s|・|　/", $keyword);
+                $keyword = explode(" ", $keyword);
+                $model = $model->where(function ($subQuery) use ($wordArray, $keyword) {
+                    foreach ($keyword as $key => $value) {
+                        $subQuery->orWhere(function ($query) use ($wordArray, $value) {
+                            if (count($wordArray) > 1) {
+                                $query->orWhere('categories.category_name', 'like', "%$value%")
+                                    ->orWhere('product_categories.product_category_name', 'like', "%$value%")
+                                    ->orWhere('product_types.product_type_name', 'like', "%$value%")
+                                    ->orWhere('products.product_name', 'like', "%$value%");
+                            } else {
+                                $query->orWhereRaw("REPLACE (REPLACE (REPLACE (categories.category_name,'・',''),' ',''),'　','') LIKE ?", "%$value%")
+                                    ->orWhereRaw("REPLACE (REPLACE (REPLACE (product_categories.product_category_name,'・',''),' ',''),'　','') LIKE ?", "%$value%")
+                                    ->orWhereRaw("REPLACE (REPLACE (REPLACE (product_types.product_type_name,'・',''),' ',''),'　','') LIKE ?", "%$value%")
+                                    ->orWhereRaw("REPLACE (REPLACE (REPLACE (products.product_name,'・',''),' ',''),'　','') LIKE ?", "%$value%");
+                            }
+
+                            $query->orWhere('products.id', 'like', "%$value%")
+                                ->orWhere('products.product_name', 'like', "%$value%")
+                                ->orWhere('products.product_slug', 'like', "%$value%")
+                                ->orWhere('products.product_price', 'like', "%$value%")
+                                ->orWhere('products.product_promotion', 'like', "%$value%")
+                                ->orWhere('products.product_description', 'like', "%$value%")
+                                ->orWhere('products.product_description_slug', 'like', "%$value%")
+                                ->orWhere('products.product_meta_title', 'like', "%$value%")
+                                ->orWhere('products.product_meta_description', 'like', "%$value%");
+                        });
+                    }
+                });
+            }
+        }
+
+        return $model;
+    }
+
     private static function filter($params)
     {
         $products = new Product();
@@ -97,7 +140,10 @@ class Product extends Model
             $keyword = addslashes($params['keyword']);
             if ($keyword != 0 || $keyword != null) {
                 $products = $products->where('product_name', 'like', "%$keyword%")
-                    ->orWhere('product_slug', 'like', "%$keyword%");
+                    ->orWhere('product_slug', 'like', "%$keyword%")
+                    ->orWhere('categories.category_name', 'like', "%$keyword%")
+                    ->orWhere('product_categories.product_category_name', 'like', "%$keyword%")
+                    ->orWhere('product_types.product_type_name', 'like', "%$keyword%");
             }
         }
 
@@ -339,14 +385,14 @@ class Product extends Model
             $order = "products.id DESC ";
         }
 
-        $products = $products->whereNull('products.deleted_at')
+        $products = self::whereNull('products.deleted_at')
 //            ->whereNull('product_types.deleted_at')
             ->whereNull('product_categories.deleted_at')
             ->whereNull('categories.deleted_at')
             ->where('products.product_option', $option)
             ->join('categories', 'categories.id', '=', 'products.category_id')
-            ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
-//            ->join('product_types', 'product_types.id', '=', 'products.product_type_id')
+            ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
+            ->leftjoin('product_categories', 'product_categories.id', '=', 'products.product_category_id')
 //            ->join('product_images', 'products.id', '=', 'product_images.product_id')
             ->selectRaw("products.*")
             ->with([
@@ -370,6 +416,43 @@ class Product extends Model
             ->get();
 
         return $products;
+    }
+
+    public static function getProductBySearch($params = null)
+    {
+
+        $products = $products->whereNull('products.deleted_at')
+            ->whereNull('product_types.deleted_at')
+            ->whereNull('product_categories.deleted_at')
+            ->whereNull('categories.deleted_at')
+            ->where('products.product_option', $option)
+            ->join('categories', 'categories.id', '=', 'products.category_id')
+            ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
+            ->leftjoin('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+//            ->join('product_images', 'products.id', '=', 'product_images.product_id')
+            ->selectRaw("products.*")
+            ->with([
+                'category' => function ($category) {
+                    $category->whereNull('categories.deleted_at');
+                },
+                'productCategory' => function ($productCategory) {
+                    $productCategory->whereNull('product_categories.deleted_at');
+                },
+                'productType' => function ($productType) {
+                    $productType->whereNull('product_types.deleted_at');
+                },
+                'productImage' => function ($productImage) {
+                    $productImage->whereNull('product_images.deleted_at')
+                        ->where('product_images.product_image_name', '<>', '0');
+                },
+            ])
+            ->groupBy('products.id')
+            ->orderByRaw($order)
+            ->limit(LIMIT);
+
+        $products = self::getQueryBySearchParams($products, $params, null);
+
+        return $products->get();
     }
 
 //    public static function getListAllProduct()

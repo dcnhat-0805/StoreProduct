@@ -78,7 +78,7 @@
                 <div class="col-lg-2 col-sm-3 col-3 order-1">
                     <div class="logo_container">
                         <div class="logo">
-                            <a href="{{route(FRONT_END_HOME_INDEX)}}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
+                            <a href="{{ route(FRONT_END_HOME_INDEX) }}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
                         </div>
                     </div>
                 </div>
@@ -88,23 +88,9 @@
                     <div class="header_search">
                         <div class="header_search_content">
                             <div class="header_search_form_container">
-                                <form action="#" class="header_search_form clearfix">
-                                    <input type="search" required="required" class="header_search_input"
-                                           placeholder="Search for products...">
-{{--                                    <div class="custom_dropdown">--}}
-{{--                                        <div class="custom_dropdown_list">--}}
-{{--                                            <span class="custom_dropdown_placeholder clc">All Categories</span>--}}
-{{--                                            <i class="fas fa-chevron-down"></i>--}}
-{{--                                            <ul class="custom_list clc">--}}
-{{--                                                <li><a class="clc" href="#">All Categories</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Computers</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Laptops</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Cameras</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Hardware</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Smartphones</a></li>--}}
-{{--                                            </ul>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+                                <form action="{{ route(FRONT_END_HOME_INDEX) }}" class="header_search_form clearfix">
+                                    <input type="search" name="keyword" class="header_search_input"
+                                           placeholder="Search for products..." value="{{ request()->get('keyword') }}">
                                     <button type="submit" class="header_search_button trans_300" value="Submit"><img
                                             src="frontend/images/search.png" alt=""></button>
                                 </form>

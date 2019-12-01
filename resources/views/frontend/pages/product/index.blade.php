@@ -201,4 +201,5 @@
 
 @section('jsCustom')
     <script src="frontend/assets/js/cart.js"></script>
+    <script src="frontend/assets/js/search.js"></script>
 @endsection

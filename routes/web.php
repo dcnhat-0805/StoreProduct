@@ -147,6 +147,8 @@ Route::namespace('FrontEnd')->group(function(){
         ->name(FRONT_END_HOME_INDEX);
     Route::get('/{slug}', 'ProductController@index')
         ->name(FRONT_PRODUCT_LIST);
+    Route::post('/searchByWord', 'HomeController@searchByWord')
+        ->name(FRONT_SEARCH_BY_WORD);
     Route::get('/detail/{description}', 'ProductController@detail')
         ->name(FRONT_PRODUCT_DETAIL);
     Route::post('/updateRating', 'ProductController@updateRating');

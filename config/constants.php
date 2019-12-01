@@ -160,6 +160,9 @@ const IMAGE_RESIZE_WIDTH = 320;
 const IMAGE_RESIZE_HEIGHT = 240;
 const IMAGE_RESIZE_PREFIX = 'product-';
 
+const KEYWORD = 'keyword';
+const FRONT_SEARCH_BY_WORD = 'front.end.search.by.word';
+
 const CUSTOMER_ASK = 0;
 const ADMIN_REPLY = 1;
 

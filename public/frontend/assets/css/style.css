@@ -5726,4 +5726,9 @@ input[type="radio"], input[type="checkbox"] {
 
 }
 
+.label__span {
+    cursor: pointer;
+    font-weight: 400;
+}
+
 /*--//responsive--*/
