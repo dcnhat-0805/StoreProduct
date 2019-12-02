@@ -1,4 +1,18 @@
 <!-- product left -->
+{{--@dd(request()->url())--}}
+@php
+    $route = FRONT_PRODUCT_DETAIL;
+    if (isset($is_page_search) && $is_page_search) {
+    $route = FRONT_LOAD_DATA_SEARCH;
+    }
+    if (isset($slug)) {
+        $searchParams = ['slug' => $slug];
+    }
+    if (isset($params)) {
+        $searchParams = $params;
+    }
+    $searchParams = array_merge($searchParams, $_GET);
+@endphp
 <input type="hidden" class="description" value="{{ isset($slug) ? $slug : '' }}">
 <div class="side-bar col-sm-12">
     <!-- price range -->
@@ -13,47 +27,47 @@
         </ul>
     </div>
     <!-- Location -->
-    <div class="left-side">
-        <h3 class="agileits-sear-head">Location</h3>
-        <ul>
-            <li>
-                <input type="checkbox" class="jsCheckBox" id="local" name="local" value="local"
-                       data-href="">
-                <label for="local" class="label__span">Local</label>
-            </li>
-            <li>
-                <input type="checkbox" class="jsCheckBox" id="overseas">
-                <label for="overseas" class="label__span">Overseas</label>
-            </li>
-        </ul>
-    </div>
+{{--    <div class="left-side">--}}
+{{--        <h3 class="agileits-sear-head">Location</h3>--}}
+{{--        <ul>--}}
+{{--            <li>--}}
+{{--                <input type="checkbox" class="jsCheckBox" id="local" name="local" value="local"--}}
+{{--                       data-href="{{ request()->fullUrl() }}">--}}
+{{--                <label for="local" class="label__span">Local</label>--}}
+{{--            </li>--}}
+{{--            <li>--}}
+{{--                <input type="checkbox" class="jsCheckBox" id="overseas" name="overseas" value="overseas" data-href="{{ request()->fullUrl() }}">--}}
+{{--                <label for="overseas" class="label__span">Overseas</label>--}}
+{{--            </li>--}}
+{{--        </ul>--}}
+{{--    </div>--}}
     <!-- Brand -->
     <div class="left-side">
         <h3 class="agileits-sear-head">Brand</h3>
         <ul>
             <li>
-                <input type="checkbox" class="jsCheckBox">
-                <label class="label__span">Apple</label>
+                <input type="checkbox" class="jsCheckBox" id="apple" name="brand" value="apple" data-href="{{ request()->fullUrl() }}">
+                <label for="apple" class="label__span">Apple</label>
             </li>
             <li>
-                <input type="checkbox" class="jsCheckBox">
-                <label class="label__span">SamSung</label>
+                <input type="checkbox" class="jsCheckBox" id="apple" name="brand" value="apple" data-href="{{ request()->fullUrl() }}">
+                <label for="apple" class="label__span">SamSung</label>
             </li>
             <li>
-                <input type="checkbox" class="jsCheckBox">
-                <label class="label__span">Oppo</label>
+                <input type="checkbox" class="jsCheckBox" id="apple" name="brand" value="apple" data-href="{{ request()->fullUrl() }}">
+                <label for="apple" class="label__span">Oppo</label>
             </li>
             <li>
-                <input type="checkbox" class="jsCheckBox">
-                <label class="label__span">Xiaomi</label>
+                <input type="checkbox" class="jsCheckBox" id="xiaomi" name="brand" value="xiaomi" data-href="{{ request()->fullUrl() }}">
+                <label for="xiaomi" class="label__span">Xiaomi</label>
             </li>
             <li>
-                <input type="checkbox" class="jsCheckBox">
-                <label class="label__span">Nokia</label>
+                <input type="checkbox" class="jsCheckBox" id="nokia" name="brand" value="nokia" data-href="{{ request()->fullUrl() }}">
+                <label for="nokia" class="label__span">Nokia</label>
             </li>
             <li>
-                <input type="checkbox" class="jsCheckBox">
-                <label class="label__span">Sony</label>
+                <input type="checkbox" class="jsCheckBox" id="sony" name="brand" value="sony" data-href="{{ request()->fullUrl() }}">
+                <label for="sony" class="label__span">Sony</label>
             </li>
         </ul>
     </div>

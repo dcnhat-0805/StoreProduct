@@ -75,7 +75,6 @@ $(document).ready(function () {
 
     function setNewHref(element, param, value) {
         let text = element.data('href');
-        console.log(text, new URL(text));
         if (text) {
             let href = new URL(text);
             href.searchParams.set(param, value);
@@ -85,10 +84,41 @@ $(document).ready(function () {
 
     $('input.jsCheckBox').each(function (i, e) {
         $(e).on('ifChanged', function () {
-            console.log($(this).data('href'), getAllUrlParams($(this).data('href')));
-            // console.log(setNewHref($(this), 'local, 1'));
-            // window.href.location = '/'
+            let url = $(this).data('href');
+            let param = $(this).attr('name');
+            let value = $(this).val();
+            let newUrl = setUrlParam(url, param, value);
+
+            window.location.href = newUrl;
         })
-    })
+    });
+
+    function setUrlParam(url, param, value){
+        let hash       = {};
+        let parser     = document.createElement('a');
+
+        parser.href    = url;
+
+        let parameters = parser.search.split(/\?|&/);
+
+        for(let i=0; i < parameters.length; i++) {
+            if(!parameters[i])
+                continue;
+
+            let ary      = parameters[i].split('=');
+            hash[ary[0]] = ary[1];
+        }
+
+        hash[param] = value;
+
+        let list = [];
+        Object.keys(hash).forEach(function (key) {
+            list.push(key + '=' + hash[key]);
+        });
+
+        parser.search = '?' + list.join('&');
+
+        return parser.href;
+    }
 
 });

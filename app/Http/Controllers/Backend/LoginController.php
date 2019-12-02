@@ -77,7 +77,7 @@ class LoginController extends Controller
     {
         Auth::guard('admins')->logout();
         Session::flash("success", trans("messages.admin.logout_success"));
-        Session::forget(SESSION_LAST_ACTIVE_TIME);
+        Session::forget(SESSION_LAST_URL);
 
         return redirect(route(ADMIN_LOGIN));
     }

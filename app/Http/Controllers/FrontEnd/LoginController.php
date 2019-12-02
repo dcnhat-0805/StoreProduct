@@ -69,7 +69,7 @@ class LoginController extends Controller
         if (Auth::check()) {
             Auth::logout();
             Session::flash("success", trans("messages.login.logout_success"));
-            Session::forget(SESSION_LAST_ACTIVE_TIME_CUSTOMER);
+            Session::forget(SESSION_LAST_URL_CUSTOMER);
 
             return redirect()->route(FRONT_LOGIN);
         }

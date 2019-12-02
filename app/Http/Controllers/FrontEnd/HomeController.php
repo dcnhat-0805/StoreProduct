@@ -26,8 +26,9 @@ class HomeController extends FrontEndController
     {
         $params = self::getSearchParams();
         $products = Product::getProductBySearch($params);
+        $is_page_search = true;
 
-        return view('frontend.pages.search.index', compact('products', 'params'));
+        return view('frontend.pages.search.index', compact('products', 'params', 'is_page_search'));
     }
 
     public function searchByWord(Request $request)
@@ -51,6 +52,11 @@ class HomeController extends FrontEndController
         if (\request()->has(KEYWORD)) {
             $params[KEYWORD] = request()->get(KEYWORD);
 //            $params[KEYWORD] = self::removeUnsafeString($params[KEYWORD]);
+        }
+
+        if (\request()->has('local')) {
+            $params['local'] = request()->get('local');
+            $params['local'] = self::removeUnsafeString($params['local']);
         }
 
         return $params;
