@@ -50,12 +50,12 @@
                 <label for="apple" class="label__span">Apple</label>
             </li>
             <li>
-                <input type="checkbox" class="jsCheckBox" id="apple" name="brand" value="apple" data-href="{{ request()->fullUrl() }}">
-                <label for="apple" class="label__span">SamSung</label>
+                <input type="checkbox" class="jsCheckBox" id="samsung" name="brand" value="samsung" data-href="{{ request()->fullUrl() }}">
+                <label for="samsung" class="label__span">SamSung</label>
             </li>
             <li>
-                <input type="checkbox" class="jsCheckBox" id="apple" name="brand" value="apple" data-href="{{ request()->fullUrl() }}">
-                <label for="apple" class="label__span">Oppo</label>
+                <input type="checkbox" class="jsCheckBox" id="oppo" name="brand" value="oppo" data-href="{{ request()->fullUrl() }}">
+                <label for="oppo" class="label__span">Oppo</label>
             </li>
             <li>
                 <input type="checkbox" class="jsCheckBox" id="xiaomi" name="brand" value="xiaomi" data-href="{{ request()->fullUrl() }}">

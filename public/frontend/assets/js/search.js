@@ -78,20 +78,40 @@ $(document).ready(function () {
         if (text) {
             let href = new URL(text);
             href.searchParams.set(param, value);
-            element.data('href', 1);
+            element.attr('data-href', href);
+
+            return href;
         }
     }
 
-    $('input.jsCheckBox').each(function (i, e) {
+    $('input.jsCheckBox[name=brand]').each(function (i, e) {
         $(e).on('ifChanged', function () {
-            let url = $(this).data('href');
             let param = $(this).attr('name');
             let value = $(this).val();
-            let newUrl = setUrlParam(url, param, value);
-
-            window.location.href = newUrl;
+            setNewHref($("input.jsCheckBox:checked[name=brand]"), param, value);
+            let url = setNewHref($("input.jsCheckBox:checked[name=brand]"), param, value);
+            window.location.href = url;
+            $('input.jsCheckBox:not(:checked)[name=brand]').parent().parent().hide();
         })
     });
+
+    setParamsChecked();
+    function setParamsChecked()
+    {
+        let brandSearch = urlParam('brand');
+        if(brandSearch) {
+            brandSearch = brandSearch.split(/,|%2C/);
+            if (brandSearch != null && brandSearch.length > 0) {
+                $('input.jsCheckBox[name=brand]').each(function () {
+                    let brand = $(this).val();
+
+                    if (brandSearch.indexOf(brand) != -1) {
+                        $(this).parent().addClass("checked");
+                    }
+                });
+            }
+        }
+    }
 
     function setUrlParam(url, param, value){
         let hash       = {};
