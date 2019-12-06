@@ -7,6 +7,7 @@ use App\Services\UploadService;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 
 class Product extends Model
@@ -90,6 +91,37 @@ class Product extends Model
         self::getConnectionResolver()->connection()->rollBack();
     }
 
+    public static function getSearchParams()
+    {
+        $params = [];
+
+        if (\request()->has(KEYWORD)) {
+            $params[KEYWORD] = request()->get(KEYWORD);
+//            $params[KEYWORD] = self::removeUnsafeString($params[KEYWORD]);
+        }
+
+        if (\request()->has(COLORS)) {
+            $params[COLORS] = request()->get(COLORS);
+            $params[COLORS] = self::removeUnsafeString($params[COLORS]);
+        }
+
+        if (\request()->has(DISCOUNT)) {
+            $params[DISCOUNT] = request()->get(DISCOUNT);
+            $params[DISCOUNT] = self::removeUnsafeString($params[DISCOUNT]);
+        }
+
+        return $params;
+    }
+
+    public static function removeUnsafeString($string)
+    {
+        $string = rtrim($string, '/');
+        $string = rtrim($string, '%');
+        $string = trim(preg_replace('/\s+/', ' ', $string));
+
+        return $string;
+    }
+
 
     public static function getQueryBySearchParams($model, $params, $page = null)
     {
@@ -126,6 +158,23 @@ class Product extends Model
                         });
                     }
                 });
+            }
+        }
+
+        if (isset($params[COLORS])) {
+            $color = $params[COLORS];
+            if ($color) {
+                $model = $model->whereRaw('products.product_promotion is not null AND product_attributes.attribute_item_name = ' . $color)
+                    ->selectRaw('product_attributes.attribute_item_name')
+//                    ->groupBy('product_attributes.product_id')
+                    ->join('product_attributes', 'product_attributes.product_id', '=', 'products.id');
+            }
+        }
+
+        if (isset($params[DISCOUNT])) {
+            $discount = $params[DISCOUNT];
+            if ($discount) {
+                $model = $model->whereRaw('products.product_promotion is not null AND (((products.product_price - products.product_promotion) / products.product_price) * 100) <=' . $discount);
             }
         }
 
@@ -235,21 +284,16 @@ class Product extends Model
 
     public static function getListProductOnFrontEnd($slug, $params = null)
     {
-        $products = self::filter($params);
-        $order = Helper::getSortParam($params);
-        if ($order == '1 = 1') {
-            $order = "products.id DESC ";
-        }
-
-        $products = $products->whereNull('products.deleted_at')
-//            ->whereNull('product_types.deleted_at')
+        $products = self::whereNull('products.deleted_at')
+            ->whereNull('product_types.deleted_at')
             ->whereNull('product_categories.deleted_at')
             ->whereNull('categories.deleted_at')
+//            ->where('products.product_option', $option)
             ->join('categories', 'categories.id', '=', 'products.category_id')
-            ->join('product_categories', 'product_categories.id', '=', 'products.product_category_id')
             ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
+            ->leftjoin('product_categories', 'product_categories.id', '=', 'products.product_category_id')
 //            ->join('product_images', 'products.id', '=', 'product_images.product_id')
-            ->selectRaw("products.*")
+            ->select("products.*")
             ->with([
                 'category' => function ($category) {
                     $category->whereNull('categories.deleted_at');
@@ -261,18 +305,33 @@ class Product extends Model
                     $productType->whereNull('product_types.deleted_at');
                 },
                 'productImage' => function ($productImage) {
-                    $productImage->whereNull('product_images.deleted_at');
+                    $productImage->whereNull('product_images.deleted_at')
+                        ->where('product_images.product_image_name', '<>', '0');
                 },
             ])
-            ->where('categories.category_slug', $slug)
+            ->orWhere('categories.category_slug', $slug)
             ->orWhere('product_categories.product_category_slug', $slug)
             ->orWhere('product_types.product_type_slug', $slug)
             ->orWhere('products.product_slug', $slug)
-            ->groupBy('products.id')
-            ->orderByRaw($order)
-            ->paginate(FRONT_LIMIT);
+//            ->groupBy('products.id')
+            ->orderBy('products.id', 'DESC');
 
-        return $products;
+        $products = self::getQueryBySearchParams($products, $params, null);
+        dd($products->get());
+
+        return $products->paginate(FRONT_LIMIT);
+    }
+
+    public static function getArrayProductId($slug, $params = null)
+    {
+        $products = self::getListProductOnFrontEnd($slug, $params);
+        $arrayProductId = [];
+
+        foreach ($products as $product) {
+            array_push($arrayProductId, $product->id);
+        }
+
+        return $arrayProductId;
     }
 
     public static function getListProductOnFrontEndByCategoryId($category_id, $params = null)
@@ -420,7 +479,6 @@ class Product extends Model
 
     public static function getProductBySearch($params = null)
     {
-
         $products = self::whereNull('products.deleted_at')
             ->whereNull('product_types.deleted_at')
             ->whereNull('product_categories.deleted_at')

@@ -1576,10 +1576,11 @@ button.w3view-cart {
   padding: 15px;
   background:#f5f4f0;
 }
-  h3.agileits-sear-head {
+h3.agileits-sear-head {
     color: #FF5722;
     margin-bottom: 20px;
     font-size: 21px;
+    text-transform: capitalize;
 }
 .search-hotel{
     padding: 15px 0;
@@ -5729,6 +5730,7 @@ input[type="radio"], input[type="checkbox"] {
 .label__span {
     cursor: pointer;
     font-weight: 400;
+    text-transform: capitalize;
 }
 
 /*--//responsive--*/

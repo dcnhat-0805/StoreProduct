@@ -18,12 +18,13 @@ class ProductController extends FrontEndController
 {
     public function index($slug)
     {
-        $params = request()->all();
+        $params = Product::getSearchParams();
         $category_slug = request()->get('parent');
         $category_name = Category::getCategoryNameBySlug($category_slug);
         $product_category_name = ProductCategory::getProductCategoryNameBySlug($slug);
         $titleName = ProductCategory::getNameAndSlugBySlug($slug);
-        $products = Product::getListProductOnFrontEnd($slug);
+        $products = Product::getListProductOnFrontEnd($slug, $params);
+        $arrayProductId = Product::getArrayProductId($slug, $params);
 
         if (!count($products) && isset($params['page']) && $params['page']) {
             $route = Helper::isHasDataByPages($products);
@@ -31,7 +32,7 @@ class ProductController extends FrontEndController
             return redirect($route);
         }
 
-        return view('frontend.pages.product.index', compact('titleName', 'products', 'slug'));
+        return view('frontend.pages.product.index', compact('titleName', 'products', 'slug', 'arrayProductId'));
     }
 
     public function detail($description)

@@ -1,3 +1,8 @@
+const COLOR = 'color';
+const DISCOUNT = 'discount';
+
+const ARRAY_FILTER = ['color', 'discount'];
+
 $(document).ready(function () {
 
     function getAllUrlParams(url) {
@@ -63,14 +68,16 @@ $(document).ready(function () {
         return obj;
     }
 
-    function urlParam(name){
+    function urlParam(name) {
         let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-        if (results==null) {
+        if (results == null){
             return null;
-        } else {
-            return results[1] || 0;
+        }
+        else{
+            return decodeURIComponent(results[1]);
         }
     }
+
 
 
     function setNewHref(element, param, value) {
@@ -84,29 +91,50 @@ $(document).ready(function () {
         }
     }
 
-    $('input.jsCheckBox[name=brand]').each(function (i, e) {
-        $(e).on('ifChanged', function () {
-            let param = $(this).attr('name');
-            let value = $(this).val();
-            setNewHref($("input.jsCheckBox:checked[name=brand]"), param, value);
-            let url = setNewHref($("input.jsCheckBox:checked[name=brand]"), param, value);
-            window.location.href = url;
-            $('input.jsCheckBox:not(:checked)[name=brand]').parent().parent().hide();
-        })
+    ARRAY_FILTER.forEach(function (filter) {
+        checkBoxFilterSearch(filter);
     });
 
-    setParamsChecked();
-    function setParamsChecked()
-    {
-        let brandSearch = urlParam('brand');
-        if(brandSearch) {
-            brandSearch = brandSearch.split(/,|%2C/);
-            if (brandSearch != null && brandSearch.length > 0) {
-                $('input.jsCheckBox[name=brand]').each(function () {
-                    let brand = $(this).val();
+    function checkBoxFilterSearch(filter) {
+        $('input.jsCheckBox[name="'+ filter +'"]').each(function (i, e) {
+            $(e).on('ifChanged', function () {
+                let param = $(this).attr('name');
+                let value = $(this).val();
+                let url = setNewHref($('input.jsCheckBox[name="'+ filter +'"]'), param, value);
+                window.location.href = url;
 
-                    if (brandSearch.indexOf(brand) != -1) {
+                // $('input.jsCheckBox:not(:checked)[name=brand]').parent().parent().hide();
+            });
+            $(e).on('ifUnchecked', function () {
+                let param = $(this).attr('name');
+                let value = '';
+                let url = setNewHref($('input.jsCheckBox[name="'+ filter +'"]'), param, value);
+                window.location.href = url;
+
+                // $('input.jsCheckBox:not(:checked)[name=brand]').parent().parent().hide();
+            });
+        });
+    }
+
+    ARRAY_FILTER.forEach(function (filter) {
+        setParamsChecked(filter);
+    });
+
+    function setParamsChecked(filter)
+    {
+        let filterSearch = urlParam(filter);
+        if(filterSearch) {
+            filterSearch = filterSearch.split(/,|%2C/);
+            if (filterSearch != null && filterSearch.length > 0) {
+                $('input.jsCheckBox[name="'+ filter +'"]').each(function () {
+                    let color = $(this).val();
+
+                    if (filterSearch.indexOf(color) != -1) {
+                        $(this).prop('checked', true);
                         $(this).parent().addClass("checked");
+                    } else {
+                        $(this).prop('checked', false);
+                        $(this).parent().removeClass("checked");
                     }
                 });
             }

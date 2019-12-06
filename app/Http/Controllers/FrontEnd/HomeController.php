@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\FrontEnd;
 
+use App\Helpers\Helper;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductType;
@@ -13,7 +14,7 @@ class HomeController extends FrontEndController
 
     public function index(Request $request)
     {
-        $params = self::getSearchParams();
+        $params = Product::getSearchParams();
         $products = [];
         $products['best'] = Product::getProductByOption(BEST);
         $products['news'] = Product::getProductByOption(NEWS);
@@ -24,11 +25,12 @@ class HomeController extends FrontEndController
 
     public function getDataSearch(Request $request)
     {
-        $params = self::getSearchParams();
+        $params = Product::getSearchParams();
         $products = Product::getProductBySearch($params);
+        $arrayProductId = Helper::getArrayProductId($products);
         $is_page_search = true;
 
-        return view('frontend.pages.search.index', compact('products', 'params', 'is_page_search'));
+        return view('frontend.pages.search.index', compact('products', 'params', 'is_page_search', 'arrayProductId'));
     }
 
     public function searchByWord(Request $request)
@@ -43,30 +45,5 @@ class HomeController extends FrontEndController
         $searchParams = array_merge($searchParams, [KEYWORD => $request->keyword]);
 
         return redirect(route(FRONT_LOAD_DATA_SEARCH, $searchParams));
-    }
-
-    public static function getSearchParams()
-    {
-        $params = [];
-
-        if (\request()->has(KEYWORD)) {
-            $params[KEYWORD] = request()->get(KEYWORD);
-//            $params[KEYWORD] = self::removeUnsafeString($params[KEYWORD]);
-        }
-
-        if (\request()->has('local')) {
-            $params['local'] = request()->get('local');
-            $params['local'] = self::removeUnsafeString($params['local']);
-        }
-
-        return $params;
-    }
-
-    public static function removeUnsafeString($string)
-    {
-        $string = rtrim($string, '/');
-        $string = trim(preg_replace('/\s+/', ' ', $string));
-
-        return $string;
     }
 }

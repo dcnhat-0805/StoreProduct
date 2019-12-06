@@ -17,6 +17,7 @@
 
 namespace App\Helpers;
 
+use App\Models\ProductAttribute;
 use App\Models\Rating;
 use App\Models\Wards;
 use DateTime;
@@ -362,4 +363,19 @@ class Helper
         }
     }
 
+    public static function getAttributeFilter($arrayProductId, $attributeName)
+    {
+        return ProductAttribute::getAttributeItemName($arrayProductId, $attributeName);
+    }
+
+    public static function getArrayProductId($products)
+    {
+        $arrayProductId = [];
+
+        foreach ($products as $product) {
+            array_push($arrayProductId, $product->id);
+        }
+
+        return $arrayProductId;
+    }
 }

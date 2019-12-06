@@ -32,7 +32,7 @@ class CustomerMiddleware
             $lastUrl = $this->getLastUrl();
             Session::put(SESSION_LAST_URL_CUSTOMER, $lastUrl);
 
-            return redirect()->route(FRONT_LOGIN);
+            return redirect()->route(FRONT_END_HOME_INDEX);
         }
 
         Session::put(SESSION_LAST_ACTIVE_TIME_CUSTOMER, time());

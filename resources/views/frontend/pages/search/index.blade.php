@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 @section('title')
-    {{ $params['keyword'] }}
+    {{ $params['keyword'] . ' - Buy ' . $params['keyword'] . ' in Vietnam | storeOnline.vn' }}
 @endsection
 @section('cssCustom')
 @endsection

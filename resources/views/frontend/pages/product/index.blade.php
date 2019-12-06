@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 @section('title')
-    {{ $slug }}
+    {{ $slug . ' - Buy ' . $slug . ' in Vietnam | storeOnline.vn' }}
 @endsection
 @section('cssCustom')
 @endsection

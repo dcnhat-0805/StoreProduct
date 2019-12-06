@@ -161,6 +161,7 @@ const IMAGE_RESIZE_HEIGHT = 240;
 const IMAGE_RESIZE_PREFIX = 'product-';
 
 const KEYWORD = 'keyword';
+const COLORS = 'color';
 const FRONT_SEARCH_BY_WORD = 'front.end.search.by.word';
 const FRONT_LOAD_DATA_SEARCH = 'front.end.load.data.search';
 
@@ -255,6 +256,24 @@ const COLOR = 1;
 const STORAGE = 2;
 const SIZE = 3;
 const MATERIALS = 4;
+
+const ATTRIBUTE_FILTER = [
+    1 => 'color',
+    2 => 'storage',
+    3 => 'size',
+    4 => 'materials',
+];
+
+const DISCOUNT_FILTER = [
+    1 => '5%',
+    2 => '10%',
+    3 => '20%',
+    4 => '30%',
+    5 => '50%',
+    6 => '60%',
+];
+
+const DISCOUNT = 'discount';
 
 const BEST = 1;
 const NEWS = 2;
