@@ -139,6 +139,13 @@ class ProductCategory extends Model
             ->first();
     }
 
+    public static function isProductCategorySlug($slug)
+    {
+        return self::whereNull('deleted_at')
+            ->where('product_category_slug', $slug)
+            ->exists();
+    }
+
     public static function getNameAndSlugBySlug($description)
     {
         $products = self::join('categories', 'categories.id', '=', 'product_categories.category_id')

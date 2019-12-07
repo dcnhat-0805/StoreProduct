@@ -61,6 +61,11 @@ class Product extends Model
         return $this->hasMany(Comment::class, 'product_id', 'id');
     }
 
+    public function rating()
+    {
+        return $this->hasMany(Rating::class, 'product_id', 'id');
+    }
+
     /**
      * Begin transaction
      *
@@ -108,6 +113,16 @@ class Product extends Model
         if (\request()->has(DISCOUNT)) {
             $params[DISCOUNT] = request()->get(DISCOUNT);
             $params[DISCOUNT] = self::removeUnsafeString($params[DISCOUNT]);
+        }
+
+        if (\request()->has(RATING)) {
+            $params[RATING] = request()->get(RATING);
+            $params[RATING] = self::removeUnsafeString($params[RATING]);
+        }
+
+        if (\request()->has(PRICE)) {
+            $params[PRICE] = request()->get(PRICE);
+            $params[PRICE] = self::removeUnsafeString($params[PRICE]);
         }
 
         return $params;
@@ -164,17 +179,41 @@ class Product extends Model
         if (isset($params[COLORS])) {
             $color = $params[COLORS];
             if ($color) {
-                $model = $model->whereRaw('products.product_promotion is not null AND product_attributes.attribute_item_name = ' . $color)
-                    ->selectRaw('product_attributes.attribute_item_name')
-//                    ->groupBy('product_attributes.product_id')
-                    ->join('product_attributes', 'product_attributes.product_id', '=', 'products.id');
+                $model = $model->where('product_attributes.attribute_item_name', 'like', '%' . $color .'%');
             }
         }
 
         if (isset($params[DISCOUNT])) {
             $discount = $params[DISCOUNT];
             if ($discount) {
-                $model = $model->whereRaw('products.product_promotion is not null AND (((products.product_price - products.product_promotion) / products.product_price) * 100) <=' . $discount);
+                $model = $model->whereRaw('products.product_promotion is not null AND (((products.product_price - products.product_promotion) / products.product_price) * 100) >=' . $discount);
+            }
+        }
+
+        if (isset($params[RATING])) {
+            $rating = (int) $params[RATING];
+            $rating = number_format($rating, 4, '.', ',');
+            if ($rating) {
+                $model = $model->selectRaw('AVG(ratings.point) AS average_rating')
+                    ->havingRaw('AVG(ratings.point) >= ?', [$rating])
+//                    ->havingRaw('AVG(ratings.point) <= ?', [6.0000])
+                    ->join('ratings', 'ratings.product_id', 'products.id');
+            }
+        }
+
+        if (isset($params[PRICE])) {
+            $price = $params[PRICE];
+            $price = explode(',', $price);
+            if (!$price[0] && $price[1]) {
+                $model = $model->whereRaw("products.product_promotion <= ?", [(int) $price[1]])
+                            ->orWhereRaw("products.product_price <= ?", [(int) $price[1]]);
+            }
+            if ($price[0] && !$price[1]) {
+                $model = $model->whereRaw("products.product_promotion >= ?", [(int) $price[0]])
+                        ->orWhereRaw("products.product_price >= ?", [(int) $price[0]]);
+            }
+            if ($price[0] && $price[1]) {
+                $model = $model->whereRaw("products.product_promotion BETWEEN ? AND ?", [(int) $price[0], (int) $price[1]]);
             }
         }
 
@@ -243,6 +282,13 @@ class Product extends Model
         return $products;
     }
 
+    public static function isProductSlug($slug)
+    {
+        return self::whereNull('deleted_at')
+            ->where('product_slug', $slug)
+            ->exists();
+    }
+
     public static function getListAllProduct($params = null)
     {
         $products = self::filter($params);
@@ -284,6 +330,11 @@ class Product extends Model
 
     public static function getListProductOnFrontEnd($slug, $params = null)
     {
+        $isCategorySlug = Category::isCategorySlug($slug);
+        $isProductCategorySlug = ProductCategory::isProductCategorySlug($slug);
+        $isProductTypeSlug = ProductType::isProductTypeSlug($slug);
+        $isProductSlug = self::isProductSlug($slug);
+
         $products = self::whereNull('products.deleted_at')
             ->whereNull('product_types.deleted_at')
             ->whereNull('product_categories.deleted_at')
@@ -292,8 +343,9 @@ class Product extends Model
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
             ->leftjoin('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+            ->leftjoin('product_attributes', 'product_attributes.product_id', '=', 'products.id')
 //            ->join('product_images', 'products.id', '=', 'product_images.product_id')
-            ->select("products.*")
+            ->selectRaw("products.*")
             ->with([
                 'category' => function ($category) {
                     $category->whereNull('categories.deleted_at');
@@ -309,15 +361,36 @@ class Product extends Model
                         ->where('product_images.product_image_name', '<>', '0');
                 },
             ])
-            ->orWhere('categories.category_slug', $slug)
-            ->orWhere('product_categories.product_category_slug', $slug)
-            ->orWhere('product_types.product_type_slug', $slug)
-            ->orWhere('products.product_slug', $slug)
-//            ->groupBy('products.id')
+//            ->where('categories.category_slug', $slug)
+//            ->orWhere('product_categories.product_category_slug', $slug)
+//            ->orWhere('product_types.product_type_slug', $slug)
+//            ->orWhere('products.product_slug', $slug)
+            ->groupBy('products.id')
             ->orderBy('products.id', 'DESC');
 
+        if ($isCategorySlug) {
+            $products = $products->where('categories.category_slug', $slug);
+        }
+        if ($isProductCategorySlug) {
+            $products = $products->where('product_categories.product_category_slug', $slug);
+        }
+        if ($isProductTypeSlug) {
+            $products = $products->where('product_types.product_type_slug', $slug);
+        }
+        if ($isProductSlug) {
+            $products = $products->where('products.product_slug', $slug);
+        }
+
         $products = self::getQueryBySearchParams($products, $params, null);
-        dd($products->get());
+
+
+//        if (isset($params[RATING])) {
+//            $rating = (int) $params[RATING];
+//            $rating = number_format($rating, 4, '.', ',');
+//            if ($rating) {
+//                $products = $products->where('avg_rating', '>=', $rating);
+//            }
+//        }
 
         return $products->paginate(FRONT_LIMIT);
     }

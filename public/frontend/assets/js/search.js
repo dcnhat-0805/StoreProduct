@@ -1,5 +1,7 @@
 const COLOR = 'color';
 const DISCOUNT = 'discount';
+const RATING = 'rating';
+const PRICE = 'price';
 
 const ARRAY_FILTER = ['color', 'discount'];
 
@@ -78,7 +80,13 @@ $(document).ready(function () {
         }
     }
 
+    function convertArrayStringToArrayFloat(array) {
+        let newArray = array.split(',').map(function(item) {
+            return parseFloat(item, 10);
+        });
 
+        return newArray;
+    }
 
     function setNewHref(element, param, value) {
         let text = element.data('href');
@@ -140,6 +148,38 @@ $(document).ready(function () {
             }
         }
     }
+
+    let filterRating = urlParam(RATING);
+    if(filterRating) {
+        if (filterRating != null && filterRating > 0) {
+            $('.filter__rating[data-rating="'+ parseFloat(filterRating) +'"]').addClass('active');
+        }
+    }
+
+    let filterPrice = urlParam(PRICE);
+
+    if (filterPrice) {
+        filterPrice = convertArrayStringToArrayFloat(urlParam(PRICE));
+        if (!isNaN(filterPrice[0]) && filterPrice[0]) {
+            $('.filter__price__min').val(filterPrice[0]);
+        }
+
+        if (!isNaN(filterPrice[1]) && filterPrice[1]) {
+            $('.filter__price__max').val(filterPrice[1]);
+        }
+    }
+
+    $('.btn-search__by__price').on('click', function () {
+        let price = [];
+        let min = $('.filter__price__min').val();
+        let max = $('.filter__price__max').val();
+
+        price.push([min, max]);
+        $('.filter__price-value').val(price);
+
+        let url = setNewHref($(this), 'price', price);
+        window.location.href = url;
+    });
 
     function setUrlParam(url, param, value){
         let hash       = {};

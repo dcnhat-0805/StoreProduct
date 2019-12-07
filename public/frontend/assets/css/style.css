@@ -286,6 +286,55 @@ span.address {
 .jsRatingDetail.disabled {
     pointer-events: none;
 }
+.filter__rating.active{
+    color: #ec4445;
+}
+.main__filter__price {
+    padding-bottom: 20px;
+}
+.filter__price {
+    float: left;
+    display: block;
+    width: 90px;
+    height: 30px;
+    padding: 0 7px;
+    text-align: left;
+    color: #404040;
+    border: 1px solid #a8a8a8;
+    border-radius: 3px;
+    outline: 0;
+    background-color: #fff;
+    -webkit-box-shadow: 0 1px 1px 0 #ececec;
+    box-shadow: 0 1px 1px 0 #ececec;
+    -webkit-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear;
+    min-width: auto;
+    -moz-appearance: textfield;
+}
+.dash__gray {
+    float: left;
+    width: 10px;
+    text-align: center;
+    line-height: 30px;
+    color: gray;
+}
+.btn-search__by__price {
+    float: left;
+    height: 30px;
+    padding: 0 7px;
+    border-radius: 3px;
+    outline: 0;
+    margin-left: 4px;
+}
+.btn-search__by__price {
+    color: #fff;
+    background-color: #f57224;
+    border-color: #f57224;
+    border: 1px solid transparent;
+    padding-left: 12px;
+    padding-right: 12px;
+}
 .col-sm-4.box-count-rating,
 .sop-rating-box {
      white-space: nowrap;

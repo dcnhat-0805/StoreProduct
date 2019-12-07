@@ -32,6 +32,10 @@ class CustomerMiddleware
             $lastUrl = $this->getLastUrl();
             Session::put(SESSION_LAST_URL_CUSTOMER, $lastUrl);
 
+            if ($lastUrl && $lastUrl !== route(FRONT_LOGIN)) {
+                return redirect($lastUrl);
+            }
+
             return redirect()->route(FRONT_END_HOME_INDEX);
         }
 

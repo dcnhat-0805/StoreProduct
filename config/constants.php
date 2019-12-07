@@ -271,9 +271,13 @@ const DISCOUNT_FILTER = [
     4 => '30%',
     5 => '50%',
     6 => '60%',
+    7 => '70%',
+    8 => '80%',
 ];
 
 const DISCOUNT = 'discount';
+const RATING = 'rating';
+const PRICE = 'price';
 
 const BEST = 1;
 const NEWS = 2;

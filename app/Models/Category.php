@@ -180,6 +180,13 @@ class Category extends Model
                 ->first();
     }
 
+    public static function isCategorySlug($slug)
+    {
+        return self::whereNull('deleted_at')
+            ->where('category_slug', $slug)
+            ->exists();
+    }
+
     public function searchCategory($keyWord, $length)
     {
         if ($keyWord == '') {

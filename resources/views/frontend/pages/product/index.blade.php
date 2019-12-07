@@ -135,7 +135,7 @@
     </div>
     <!-- //top products -->
     <!-- special offers -->
-    @if(isset($products) && count($products) > 3)
+    @if(isset($products) && count($products) >= 3)
         @php
             $arrayRandom = App\Helpers\Helper::randomArrayKey($products);
         @endphp

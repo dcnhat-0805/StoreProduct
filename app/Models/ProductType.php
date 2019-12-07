@@ -203,4 +203,11 @@ class ProductType extends Model
 
         return $productTypeOption;
     }
+
+    public static function isProductTypeSlug($slug)
+    {
+        return self::whereNull('deleted_at')
+            ->where('product_type_slug', $slug)
+            ->exists();
+    }
 }

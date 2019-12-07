@@ -92,7 +92,7 @@
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </button>
                                         <button data-toggle="modal" title="Delete {{$product->product_type_name}}" class="pd-setting-ed"
-                                                data-id="{{ $product->id }}" data-url="{{route(ADMIN_PRODUCT_DELETE, ['id' => $product->id])}}"
+                                                data-id="{{ $product->id }}" data-url="{{ route(ADMIN_PRODUCT_DELETE, ['id' => $product->id]) }}"
                                                 data-original-title="Trash" data-target="#delete" type="button">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </button>
