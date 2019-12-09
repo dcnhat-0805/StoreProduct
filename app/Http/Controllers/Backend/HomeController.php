@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -16,8 +19,34 @@ class HomeController extends Controller
     {
         $from = date("Y/m/d", strtotime('-6 days'));
         $to = date("Y/m/d");
-//        dd($from, $to);
-        return view('backend.pages.index');
+        $countUserBetweenFromTo = User::getCountUSerBetweenFromTo($from, $to);
+        $countUser = User::getCountUSer();
+        $percentageUser = ($countUserBetweenFromTo * 100) / $countUser;
+        $countMoney = Order::getCountMoney();
+        $countMoneyBetweenFromTo = Order::getCountMoneyBetWeenFromTo($from, $to);
+        $percentageMoney = Order::getPercentageByStatusFromTo($from, $to, FINISH);
+        $countReimbursement = Order::getReimbursement();
+        $countReimbursementFromTo = Order::getCountReimbursementBetWeenFromTo($from, $to);
+        $percentageReimbursement = Order::getPercentageByStatusFromTo($from, $to, CANCEL);
+        $countOrder = Order::getCountOrder();
+        $countOrderFinish = Order::getCountOrderFromTo($from, $to, FINISH);
+        $countOrderCancel = Order::getCountOrderFromTo($from, $to, CANCEL);
+        $analyticsUser = User::getAnalyticsUSerBetweenFromTo($from, $to);
+        $analyticsUser = substr(implode($analyticsUser), 0, -1);
+        $analyticsOrderFinish = Order::getAnalyticsOrderBetweenFromTo($from, $to, FINISH);
+        $analyticsOrderFinish = substr(implode($analyticsOrderFinish), 0, -1);
+        $analyticsOrderCancel = Order::getAnalyticsOrderBetweenFromTo($from, $to, CANCEL);
+        $analyticsOrderCancel = substr(implode($analyticsOrderCancel), 0, -1);
+        $arrayStringDate = Helper::getArrayStringDateBetweenFromTo($from, $to);
+        $arrayStringDate = substr(implode($arrayStringDate), 0, -1);
+
+        return view('backend.pages.index', compact(
+            'countUserBetweenFromTo', 'countUser', 'percentageUser',
+            'countMoneyBetweenFromTo', 'countMoney', 'percentageMoney',
+            'countReimbursement', 'countReimbursementFromTo', 'percentageReimbursement',
+            'countOrder', 'countOrderFinish', 'countOrderCancel',
+            'arrayStringDate', 'analyticsUser', 'analyticsOrderFinish', 'analyticsOrderCancel'
+        ));
     }
 
     /**

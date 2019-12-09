@@ -882,7 +882,7 @@
                             </div>
 
                             <?php
-                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create', 'admin']) || in_array(request()->route()->getPrefix(), ['admin/account']);;
+                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create']) || in_array(request()->route()->getPrefix(), ['admin/account']);;
                             ?>
                             @if(!$isShowBtnSearch)
                                 <div class="col-xs-3 col-sm-3">

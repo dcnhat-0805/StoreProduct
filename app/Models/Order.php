@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Order extends Model
 {
@@ -227,6 +228,117 @@ class Order extends Model
             ->paginate(LIMIT);
 
         return $orders;
+    }
+
+    public static function getCountMoneyBetWeenFromTo($from, $to)
+    {
+        $amount = self::whereNull('orders.deleted_at')
+                ->where('orders.created_at', '>=', $from)
+                ->where('orders.created_at', '<', date('Y/m/d', strtotime("+1 day", strtotime($to))))
+            ->where('orders.order_status', '=', FINISH)
+                ->selectRaw("orders.order_monney")->sum('orders.order_monney');
+
+        return $amount;
+    }
+
+    public static function getCountMoney()
+    {
+        $amount = self::whereNull('orders.deleted_at')
+                ->selectRaw("orders.order_monney")
+                ->sum("orders.order_monney");
+
+        return $amount;
+    }
+
+    public static function getCountReimbursementBetWeenFromTo($from, $to)
+    {
+        $amount = self::whereNull('orders.deleted_at')
+                ->where('orders.created_at', '>=', $from)
+                ->where('orders.created_at', '<', date('Y/m/d', strtotime("+1 day", strtotime($to))))
+                ->where('orders.order_status', '=', CANCEL)
+                ->selectRaw("orders.order_monney")
+                ->sum("orders.order_monney");
+
+        return $amount;
+    }
+
+    public static function getReimbursement()
+    {
+        $amount = self::whereNull('orders.deleted_at')
+                ->selectRaw("orders.order_monney")
+                ->sum("orders.order_monney");
+
+        return $amount;
+    }
+
+    public static function getAnalyticsOrderBetweenFromTo($from, $to, $status)
+    {
+        $orders = self::where('orders.order_status', $status)
+            ->where('orders.created_at', '>=', $from)
+            ->where('orders.created_at', '<', date('Y/m/d', strtotime("+1 day", strtotime($to))))
+            ->select(
+                DB::raw("SUM(orders.order_monney) as countMoney"),
+                DB::raw("DATE_FORMAT(orders.created_at, '%Y/%m/%d') as date")
+            )
+            ->groupby('date')
+            ->orderBy('date')
+            ->pluck('countMoney', 'date');
+//            ->get()
+//            ->toArray();
+
+        $arrayDate = Helper::getArrayDateBetweenFromTo($from, $to);
+        $analyticsOrder = [];
+        foreach ($arrayDate as $date) {
+            $item = 0 . ',';
+            foreach ($orders as $key => $value) {
+                if ($key == $date) {
+                    $item = number_format($value, 0, ',', '') . ',';
+                }
+            }
+
+            array_push($analyticsOrder, $item);
+        }
+
+        return $analyticsOrder;
+    }
+
+    public static function getCountOrder()
+    {
+        $orders = self::whereNull('orders.deleted_at')
+            ->select(
+                DB::raw("SUM(orders.order_monney) as countMoney"),
+                DB::raw("DATE_FORMAT(orders.created_at, '%Y/%m/%d') as date")
+            )
+            ->groupby('date')
+            ->orderBy('date')
+            ->pluck('countMoney', 'date');
+
+        return count($orders);
+    }
+
+    public static function getCountOrderFromTo($from, $to, $status)
+    {
+        $orders = self::whereNull('orders.deleted_at')
+            ->where('orders.order_status', $status)
+            ->where('orders.created_at', '>=', $from)
+            ->where('orders.created_at', '<', date('Y/m/d', strtotime("+1 day", strtotime($to))))
+            ->select(
+                DB::raw("SUM(orders.order_monney) as countMoney"),
+                DB::raw("DATE_FORMAT(orders.created_at, '%Y/%m/%d') as date")
+            )
+            ->groupby('date')
+            ->orderBy('date')
+            ->pluck('countMoney', 'date');
+
+        return count($orders);
+    }
+
+    public static function getPercentageByStatusFromTo($from, $to, $status)
+    {
+        $countOrder = self::getCountOrder();
+        $countOrderByStatus = self::getCountOrderFromTo($from, $to, $status);
+
+        return ($countOrderByStatus * 100) / $countOrder;
     }
 
     public static function deliveryOrder($id)

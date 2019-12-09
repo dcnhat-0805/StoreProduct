@@ -18,6 +18,10 @@ class LoginController extends Controller
 {
     public function showLoginForm()
     {
+        if (Auth::check()) {
+            return redirect()->route(FRONT_END_HOME_INDEX);
+        }
+
         return view('frontend.pages.user.login');
     }
 

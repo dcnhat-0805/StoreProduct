@@ -278,6 +278,11 @@ class Helper
         return number_format($price,0,",",".") . ' ₫';
     }
 
+    public static function loadPercentage($percentage)
+    {
+        return number_format($percentage,0,",",".") . '%';
+    }
+
     public static function randomArrayKey($data)
     {
         $data = $data->pluck('id')->toArray();
@@ -377,5 +382,35 @@ class Helper
         }
 
         return $arrayProductId;
+    }
+
+    public static function getArrayDateBetweenFromTo($from, $to)
+    {
+        $begin = new \DateTime($from);
+        $end = new \DateTime($to);
+
+        $period = new \DatePeriod(
+            $begin,
+            new \DateInterval('P1D'),
+            $end->modify('+1 day')
+        );
+        $date = [];
+        foreach ($period as $key => $dt) {
+            array_push($date, $dt->format("Y/m/d"));
+        }
+
+        return $date;
+    }
+
+    public static function getArrayStringDateBetweenFromTo($from, $to)
+    {
+        $arrayDates = self::getArrayDateBetweenFromTo($from, $to);
+
+        $date = [];
+        foreach ($arrayDates as $arrayDate) {
+            array_push($date, $arrayDate . ',');
+        }
+
+        return $date;
     }
 }

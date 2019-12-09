@@ -1,11 +1,36 @@
 (function ($) {
     "use strict";
 
+
+    function convertArrayStringToArrayFloat(array) {
+        let newArray = array.split(',').map(function(item) {
+            return item;
+        });
+
+        return newArray;
+    }
+
     let jsLineChart = $("#jsLineChart");
-    let heightChart = $('#jsPieChart')[0].offsetHeight;
+    // let heightChart = $('#jsPieChart')[0].offsetHeight;
+    let heightChart = 500;
     jsLineChart.css({
         height: heightChart
     });
+
+    let dateLabel = $('.date__label__chart').val();
+    dateLabel = convertArrayStringToArrayFloat(dateLabel);
+
+    let dateAnalyticsUser = $('.date__analytics__user').val();
+    dateAnalyticsUser = convertArrayStringToArrayFloat(dateAnalyticsUser);
+    console.log(dateAnalyticsUser);
+
+    let dateAnalyticsOrderFinish = $('.date__analytics__order__finish').val();
+    dateAnalyticsOrderFinish = convertArrayStringToArrayFloat(dateAnalyticsOrderFinish);
+    console.log(dateAnalyticsOrderFinish);
+
+    let dateAnalyticsOrderCancel = $('.date__analytics__order__cancel').val();
+    dateAnalyticsOrderCancel = convertArrayStringToArrayFloat(dateAnalyticsOrderCancel);
+    console.log(dateAnalyticsOrderCancel);
 
     new Chart(jsLineChart, {
         type: "line",
@@ -19,35 +44,35 @@
             scales: {
                 xAxes: [{
                     display: !0,
-                    gridLines: {color: "#f3f3f3", drawTicks: !1},
-                    scaleLabel: {display: !0, labelString: "Month"}
+                    gridLines: {color: "#f3f3f3", drawTicks: !0},
+                    // scaleLabel: {display: !0, labelString: "Month"},
                 }],
                 yAxes: [{
                     display: !0,
-                    gridLines: {color: "#f3f3f3", drawTicks: !1},
-                    scaleLabel: {display: !0, labelString: "Value"}
+                    gridLines: {color: "#f3f3f3", drawTicks: !0},
+                    // scaleLabel: {display: !0, labelString: "Value"}
                 }]
             },
             // title: {display: !0, text: "Chart.js Line Chart - Legend"}
         },
         data: {
-            labels: ["Jan", "Feb", "Mar", "April", "May", "June", "July"],
+            labels: dateLabel,
             datasets: [
                 {
-                    label: "Orange",
-                    data: [65, 59, 80, 81, 56, 55, 40],
+                    label: "Customer",
+                    data: dateAnalyticsUser,
+                    lineTension: 0,
                     fill: !1,
-                    // borderDash: [5, 5],
-                    borderColor: "#9C27B0",
-                    pointBorderColor: "#9C27B0",
-                    pointBackgroundColor: "#9C27B0",
+                    borderColor: "#006DF0",
+                    pointBorderColor: "#006DF0",
+                    pointBackgroundColor: "#006DF0",
                     pointBorderWidth: 2,
                     pointHoverBorderWidth: 2,
                     pointRadius: 4
                 },
                 {
-                    label: "Green",
-                    data: [28, 48, 40, 19, 86, 27, 90],
+                    label: "Revenues",
+                    data: dateAnalyticsOrderFinish,
                     fill: !1,
                     // borderDash: [5, 5],
                     borderColor: "#65b12d",
@@ -58,29 +83,17 @@
                     pointRadius: 4
                 },
                 {
-                    label: "Red",
-                    data: [45, 25, 16, 36, 67, 18, 76],
-                    lineTension: 0,
+                    label: "Reimbursement",
+                    data: dateAnalyticsOrderCancel,
                     fill: !1,
-                    borderColor: "#D80027",
-                    pointBorderColor: "#D80027",
-                    pointBackgroundColor: "#D80027",
+                    // borderDash: [5, 5],
+                    borderColor: "#9C27B0",
+                    pointBorderColor: "#9C27B0",
+                    pointBackgroundColor: "#9C27B0",
                     pointBorderWidth: 2,
                     pointHoverBorderWidth: 2,
                     pointRadius: 4
                 },
-                {
-                    label: "Blue",
-                    data: [35, 25, 27, 36, 39, 18, 86],
-                    lineTension: 0,
-                    fill: !1,
-                    borderColor: "#006DF0",
-                    pointBorderColor: "#006DF0",
-                    pointBackgroundColor: "#006DF0",
-                    pointBorderWidth: 2,
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 4
-                }
             ]
         }
     })

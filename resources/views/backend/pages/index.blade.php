@@ -15,50 +15,44 @@
 <div class="analytics-sparkle-area">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <div class="analytics-sparkle-line reso-mg-b-30">
                     <div class="analytics-content">
-                        <h5>Computer Technologies</h5>
-                        <h2>$<span class="counter">5000</span> <span class="tuition-fees">Tuition Fees</span></h2>
-                        <span class="text-success">20%</span>
+                        <h5>Customer <span>( {{ $countUserBetweenFromTo }}/{{ $countUser }} )</span></h5>
+                        <h2><span class="counter">{{ $countUserBetweenFromTo }}</span> <span class="tuition-fees">/ {{ $countUser }} customers</span></h2>
+                        <span class="text-success">{{ $percentageUser }}%</span>
                         <div class="progress m-b-0">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:20%;"> <span class="sr-only">20% Complete</span> </div>
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{ $percentageUser }}%;">
+                                <span class="sr-only">{{ $percentageUser }}% Complete</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <div class="analytics-sparkle-line reso-mg-b-30">
                     <div class="analytics-content">
-                        <h5>Accounting Technologies</h5>
-                        <h2>$<span class="counter">3000</span> <span class="tuition-fees">Tuition Fees</span></h2>
-                        <span class="text-danger">30%</span>
+                        <h5>Revenues <span>( {{ $countOrderFinish }}/{{ $countOrder }} )</span></h5>
+                        <h2><span class="counter">{{ \App\Helpers\Helper::loadMoney($countMoneyBetweenFromTo) }}</span> <span class="tuition-fees">/ {{ \App\Helpers\Helper::loadMoney($countMoney) }}</span></h2>
+                        <span class="text-danger">{{ \App\Helpers\Helper::loadPercentage($percentageMoney) }}</span>
                         <div class="progress m-b-0">
-                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:30%;"> <span class="sr-only">230% Complete</span> </div>
+                            <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{ \App\Helpers\Helper::loadPercentage($percentageMoney) }};">
+                                <span class="sr-only">{{ \App\Helpers\Helper::loadPercentage($percentageMoney) }} Complete</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
                 <div class="analytics-sparkle-line reso-mg-b-30 table-mg-t-pro dk-res-t-pro-30">
                     <div class="analytics-content">
-                        <h5>Electrical Engineering</h5>
-                        <h2>$<span class="counter">2000</span> <span class="tuition-fees">Tuition Fees</span></h2>
-                        <span class="text-info">60%</span>
+                        <h5>Order reimbursement rate <span>( {{ $countOrderCancel }}/{{ $countOrder }} )</span></h5>
+                        <h2><span class="counter">{{ \App\Helpers\Helper::loadMoney($countReimbursementFromTo) }}</span> <span class="tuition-fees">/ {{ \App\Helpers\Helper::loadMoney($countMoney) }}</span></h2>
+                        <span class="text-info">{{ \App\Helpers\Helper::loadPercentage($percentageReimbursement) }}</span>
                         <div class="progress m-b-0">
-                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:60%;"> <span class="sr-only">20% Complete</span> </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-12">
-                <div class="analytics-sparkle-line table-mg-t-pro dk-res-t-pro-30">
-                    <div class="analytics-content">
-                        <h5>Chemical Engineering</h5>
-                        <h2>$<span class="counter">3500</span> <span class="tuition-fees">Tuition Fees</span></h2>
-                        <span class="text-inverse">80%</span>
-                        <div class="progress m-b-0">
-                            <div class="progress-bar progress-bar-inverse" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:80%;"> <span class="sr-only">230% Complete</span> </div>
+                            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: {{ \App\Helpers\Helper::loadPercentage($percentageReimbursement) }};">
+                                <span class="sr-only">{{ \App\Helpers\Helper::loadPercentage($percentageReimbursement) }} Complete</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,26 +65,30 @@
     <div class="charts-area mg-b-15">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="charts-single-pro">
                         <div class="alert-title">
-                            <h2>Line Chart Multi Axis</h2>
+                            <h2>The chart shows the number of customers, sales, and order reimbursement rates</h2>
                         </div>
                         <div id="axis-chart">
+                            <input type="hidden" class="date__label__chart" value="{{ $arrayStringDate }}">
+                            <input type="hidden" class="date__analytics__user" value="{{ $analyticsUser }}">
+                            <input type="hidden" class="date__analytics__order__finish" value="{{ $analyticsOrderFinish }}">
+                            <input type="hidden" class="date__analytics__order__cancel" value="{{ $analyticsOrderCancel }}">
                             <canvas id="jsLineChart"></canvas>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <div class="charts-single-pro responsive-mg-b-30">
-                        <div class="alert-title">
-                            <h2>Pie Chart</h2>
-                        </div>
-                        <div id="pie-chart">
-                            <canvas id="jsPieChart"></canvas>
-                        </div>
-                    </div>
-                </div>
+{{--                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">--}}
+{{--                    <div class="charts-single-pro responsive-mg-b-30">--}}
+{{--                        <div class="alert-title">--}}
+{{--                            <h2>Pie Chart</h2>--}}
+{{--                        </div>--}}
+{{--                        <div id="pie-chart">--}}
+{{--                            <canvas id="jsPieChart"></canvas>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
             </div>
         </div>
     </div>
