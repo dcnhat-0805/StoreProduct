@@ -10,33 +10,43 @@ use App\Http\Controllers\Controller;
 
 class HomeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function daily()
     {
         $from = date("Y/m/d", strtotime('-6 days'));
         $to = date("Y/m/d");
+        $dateRange = \request()->get('date_range', ' - ');
+        $dates = explode(" - ", $dateRange);
+        if (strtotime($dates[0])) {
+            $from = $dates[0];
+        }
+        if (strtotime($dates[1])) {
+            $to = $dates[1];
+        }
+
         $countUserBetweenFromTo = User::getCountUSerBetweenFromTo($from, $to);
         $countUser = User::getCountUSer();
         $percentageUser = ($countUserBetweenFromTo * 100) / $countUser;
+
         $countMoney = Order::getCountMoney();
-        $countMoneyBetweenFromTo = Order::getCountMoneyBetWeenFromTo($from, $to);
+        $countMoneyBetweenFromTo = Order::getCountMoneyBetWeenFromTo($from, $to, FINISH);
         $percentageMoney = Order::getPercentageByStatusFromTo($from, $to, FINISH);
-        $countReimbursement = Order::getReimbursement();
-        $countReimbursementFromTo = Order::getCountReimbursementBetWeenFromTo($from, $to);
+
+        $countReimbursementFromTo = Order::getCountMoneyBetWeenFromTo($from, $to, CANCEL);
         $percentageReimbursement = Order::getPercentageByStatusFromTo($from, $to, CANCEL);
+
         $countOrder = Order::getCountOrder();
         $countOrderFinish = Order::getCountOrderFromTo($from, $to, FINISH);
         $countOrderCancel = Order::getCountOrderFromTo($from, $to, CANCEL);
+
         $analyticsUser = User::getAnalyticsUSerBetweenFromTo($from, $to);
         $analyticsUser = substr(implode($analyticsUser), 0, -1);
+
         $analyticsOrderFinish = Order::getAnalyticsOrderBetweenFromTo($from, $to, FINISH);
         $analyticsOrderFinish = substr(implode($analyticsOrderFinish), 0, -1);
+
         $analyticsOrderCancel = Order::getAnalyticsOrderBetweenFromTo($from, $to, CANCEL);
         $analyticsOrderCancel = substr(implode($analyticsOrderCancel), 0, -1);
+
         $arrayStringDate = Helper::getArrayStringDateBetweenFromTo($from, $to);
         $arrayStringDate = substr(implode($arrayStringDate), 0, -1);
 
@@ -45,73 +55,58 @@ class HomeController extends Controller
             'countMoneyBetweenFromTo', 'countMoney', 'percentageMoney',
             'countReimbursement', 'countReimbursementFromTo', 'percentageReimbursement',
             'countOrder', 'countOrderFinish', 'countOrderCancel',
-            'arrayStringDate', 'analyticsUser', 'analyticsOrderFinish', 'analyticsOrderCancel'
+            'arrayStringDate', 'analyticsUser', 'analyticsOrderFinish', 'analyticsOrderCancel',
+            'from', 'to'
         ));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function monthly()
     {
-        //
-    }
+        $from = date("Y/m/d", strtotime('-6 days'));
+        $to = date("Y/m/d");
+        $dateRange = \request()->get('date_range', ' - ');
+        $dates = explode(" - ", $dateRange);
+        if (strtotime($dates[0])) {
+            $from = $dates[0];
+        }
+        if (strtotime($dates[1])) {
+            $to = $dates[1];
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $countUserBetweenFromTo = User::getCountUSerBetweenFromToMonth($from, $to);
+        $countUser = User::getCountUSer();
+        $percentageUser = ($countUserBetweenFromTo * 100) / $countUser;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $countMoney = Order::getCountMoney();
+        $countMoneyBetweenFromTo = Order::getCountMoneyBetWeenFromToMonth($from, $to, FINISH);
+        $percentageMoney = Order::getPercentageByStatusFromToMonth($from, $to, FINISH);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
+        $countReimbursementFromTo = Order::getCountMoneyBetWeenFromToMonth($from, $to, CANCEL);
+        $percentageReimbursement = Order::getPercentageByStatusFromToMonth($from, $to, CANCEL);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        $countOrder = Order::getCountOrder();
+        $countOrderFinish = Order::getCountOrderFromToMonth($from, $to, FINISH);
+        $countOrderCancel = Order::getCountOrderFromToMonth($from, $to, CANCEL);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $analyticsUser = User::getAnalyticsUSerBetweenFromToMonth($from, $to);
+        $analyticsUser = substr(implode($analyticsUser), 0, -1);
+
+        $analyticsOrderFinish = Order::getAnalyticsOrderBetweenFromToMonth($from, $to, FINISH);
+        $analyticsOrderFinish = substr(implode($analyticsOrderFinish), 0, -1);
+
+        $analyticsOrderCancel = Order::getAnalyticsOrderBetweenFromToMonth($from, $to, CANCEL);
+        $analyticsOrderCancel = substr(implode($analyticsOrderCancel), 0, -1);
+
+        $arrayStringDate = Helper::getArrayStringDateBetweenFromToMonth($from, $to);
+        $arrayStringDate = substr(implode($arrayStringDate), 0, -1);
+
+        return view('backend.pages.index', compact(
+            'countUserBetweenFromTo', 'countUser', 'percentageUser',
+            'countMoneyBetweenFromTo', 'countMoney', 'percentageMoney'
+            , 'countReimbursementFromTo', 'percentageReimbursement',
+            'countOrder', 'countOrderFinish', 'countOrderCancel',
+            'arrayStringDate', 'analyticsUser', 'analyticsOrderFinish', 'analyticsOrderCancel',
+            'from', 'to'
+        ));
     }
 }

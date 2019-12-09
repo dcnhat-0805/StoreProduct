@@ -17,20 +17,17 @@
         height: heightChart
     });
 
-    let dateLabel = $('.date__label__chart').val();
+    let dateLabel = $('.data__label__chart').val();
     dateLabel = convertArrayStringToArrayFloat(dateLabel);
 
-    let dateAnalyticsUser = $('.date__analytics__user').val();
+    let dateAnalyticsUser = $('.data__analytics__user').val();
     dateAnalyticsUser = convertArrayStringToArrayFloat(dateAnalyticsUser);
-    console.log(dateAnalyticsUser);
 
-    let dateAnalyticsOrderFinish = $('.date__analytics__order__finish').val();
+    let dateAnalyticsOrderFinish = $('.data__analytics__order__finish').val();
     dateAnalyticsOrderFinish = convertArrayStringToArrayFloat(dateAnalyticsOrderFinish);
-    console.log(dateAnalyticsOrderFinish);
 
-    let dateAnalyticsOrderCancel = $('.date__analytics__order__cancel').val();
+    let dateAnalyticsOrderCancel = $('.data__analytics__order__cancel').val();
     dateAnalyticsOrderCancel = convertArrayStringToArrayFloat(dateAnalyticsOrderCancel);
-    console.log(dateAnalyticsOrderCancel);
 
     new Chart(jsLineChart, {
         type: "line",

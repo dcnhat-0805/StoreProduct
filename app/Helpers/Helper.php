@@ -413,4 +413,33 @@ class Helper
 
         return $date;
     }
+
+    public static function getArrayDateBetweenFromToMonth($from, $to)
+    {
+        $begin = new \DateTime($from);
+        $end = new \DateTime($to);
+
+
+        $interval = DateInterval::createFromDateString('1 month');
+        $period   = new DatePeriod($begin, $interval, $end);
+        $date = [];
+
+        foreach ($period as $key => $dt) {
+            array_push($date, $dt->format("Y/m"));
+        }
+
+        return $date;
+    }
+
+    public static function getArrayStringDateBetweenFromToMonth($from, $to)
+    {
+        $arrayDates = self::getArrayDateBetweenFromToMonth($from, $to);
+
+        $date = [];
+        foreach ($arrayDates as $arrayDate) {
+            array_push($date, $arrayDate . ',');
+        }
+
+        return $date;
+    }
 }

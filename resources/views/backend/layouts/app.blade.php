@@ -99,6 +99,10 @@
     <!-- summernote CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/summernote/summernote.css') }}">
+    <!-- Datepicker -->
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/colorpicker.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/datepicker3.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/daterangepicker/daterangepicker.css') }}"/>
 
     <!-- modernizr JS
 		============================================ -->
@@ -127,7 +131,7 @@
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="logo-pro">
-                        <a href="{{route(ADMIN_DASHBOARD)}}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
+                        <a href="{{ route(ADMIN_DASHBOARD_DAILY) }}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
                     </div>
                 </div>
             </div>
@@ -170,7 +174,7 @@
     <script src="backend/js/jquery.sticky.js"></script>
     <!-- scrollUp JS
         ============================================ -->
-    <script src="backend/js/jquery.scrollUp.min.js"></script>
+{{--    <script src="backend/js/jquery.scrollUp.min.js"></script>--}}
     <!-- mCustomScrollbar JS
         ============================================ -->
     <script src="backend/js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>

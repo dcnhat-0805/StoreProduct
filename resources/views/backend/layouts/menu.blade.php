@@ -8,8 +8,8 @@
 <div class="left-sidebar-pro">
     <nav id="sidebar" class="">
         <div class="sidebar-header">
-            <a href="{{ route(ADMIN_DASHBOARD) }}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
-            <strong><a href="{{ route(ADMIN_DASHBOARD) }}"><img src="backend/img/logo/store-online.png" alt=""/></a></strong>
+            <a href="{{ route(ADMIN_DASHBOARD_DAILY) }}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
+            <strong><a href="{{ route(ADMIN_DASHBOARD_DAILY) }}"><img src="backend/img/logo/store-online.png" alt=""/></a></strong>
         </div>
         <div class="left-custom-menu-adp-wrap comment-scrollbar">
             <nav class="sidebar-nav left-sidebar-menu-pro">
@@ -18,7 +18,7 @@
                     $isShowDashboard = in_array(request()->route()->uri(), ['admin']);
                     ?>
                     <li class=" {{ $isShowDashboard ? 'active' : '' }} ">
-                        <a title="Landing Page" href="{{route(ADMIN_DASHBOARD)}}" aria-expanded="false"><span
+                        <a title="Landing Page" href="{{ route(ADMIN_DASHBOARD_DAILY) }}" aria-expanded="false"><span
                             class="educate-icon educate-home icon-wrap sub-icon-mg" aria-hidden="true"></span>
                         <span class="mini-click-non">Dashboard</span></a>
                     </li>

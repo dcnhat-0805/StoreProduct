@@ -10,7 +10,8 @@
  * @link      https://laravel.com Laravel(tm) Project
  */
 
-const ADMIN_DASHBOARD = 'admin.dashboard';
+const ADMIN_DASHBOARD_DAILY = 'admin.dashboard.daily';
+const ADMIN_DASHBOARD_MONTHLY = 'admin.dashboard.monthly';
 
 const ADMIN_SHOW_LOGIN = 'login';
 const ADMIN_LOGIN = 'admin.login';

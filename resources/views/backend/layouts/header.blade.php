@@ -782,7 +782,7 @@
                         <nav id="dropdown">
                             <ul class="mobile-menu-nav">
                                 <li>
-                                    <a title="Landing Page" href="{{route(ADMIN_DASHBOARD)}}" aria-expanded="false"><span
+                                    <a title="Landing Page" href="{{ route(ADMIN_DASHBOARD_DAILY) }}" aria-expanded="false"><span
                                             class="educate-icon educate-home icon-wrap sub-icon-mg" aria-hidden="true"></span>
                                         <span class="mini-click-non">Dashboard</span></a>
                                 </li>
@@ -872,9 +872,9 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="breadcome-list">
                         <div class="row">
-                            <div class="col-xs-9 col-sm-9">
+                            <div class="col-xs-6 col-sm-6">
                                 <ul class="breadcome-menu">
-                                    <li><a href="#">Dashboard</a> <span class="bread-slash">@hasSection('titleMenu')/@endif</span>
+                                    <li><a href="{{ route(ADMIN_DASHBOARD_DAILY) }}">Dashboard</a> <span class="bread-slash">@hasSection('titleMenu')/@endif</span>
                                     </li>
                                     <li><span class="bread-blod">@yield('titleMenu')</span>
                                     </li>
@@ -882,14 +882,50 @@
                             </div>
 
                             <?php
-                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create']) || in_array(request()->route()->getPrefix(), ['admin/account']);;
+                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create', 'admin/daily', 'admin/monthly']) || in_array(request()->route()->getPrefix(), ['admin/account']);
                             ?>
                             @if(!$isShowBtnSearch)
-                                <div class="col-xs-3 col-sm-3">
+                                <div class="col-xs-6 col-sm-6">
                                     <div class="breadcome-heading text-right">
                                         <button type="button" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#search" id="modalSearch">
                                             <i class="fa fa-tasks" aria-hidden="true"></i>
                                         </button>
+                                    </div>
+                                </div>
+                            @endif
+
+                            <?php
+                                $isShowSearchDate = in_array(request()->route()->uri(), ['admin/daily', 'admin/monthly']);
+
+                                $route = ADMIN_DASHBOARD_DAILY;
+                                if (request()->route()->uri() == 'admin/monthly') {
+                                    $route = ADMIN_DASHBOARD_MONTHLY;
+                                }
+                                $searchParams = [];
+                                $searchParams = array_merge($searchParams, $_GET);
+                            ?>
+                            @if($isShowSearchDate)
+                                <div class="col-xs-6 col-sm-6">
+                                    <div class="breadcome-heading text-right">
+                                        <form action="{{ route($route, $searchParams) }}" id="formSearchByDate">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="box__search_by__date">
+                                                        <input type="text" readonly class="form-control jsDatepickerDashboard" name="date_range" value="{{ request()->get('created_at') }}" >
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="box__search_by__date">
+                                                        <button class="dashboard__analytics dashboard__daily {{ request()->route()->uri() == 'admin/daily' ? 'active' : '' }}">
+                                                            <a href="{{ route(ADMIN_DASHBOARD_DAILY, $searchParams) }}" class="daily">Daily</a>
+                                                        </button>
+                                                        <button class="dashboard__analytics dashboard__monthly {{ request()->route()->uri() == 'admin/monthly' ? 'active' : '' }}">
+                                                            <a href="{{ route(ADMIN_DASHBOARD_MONTHLY, $searchParams) }}" class="monthly">Monthly</a>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             @endif

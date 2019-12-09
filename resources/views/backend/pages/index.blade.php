@@ -15,7 +15,7 @@
 <div class="analytics-sparkle-area">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="padding-left: 0">
                 <div class="analytics-sparkle-line reso-mg-b-30">
                     <div class="analytics-content">
                         <h5>Customer <span>( {{ $countUserBetweenFromTo }}/{{ $countUser }} )</span></h5>
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="padding: 0">
                 <div class="analytics-sparkle-line reso-mg-b-30">
                     <div class="analytics-content">
                         <h5>Revenues <span>( {{ $countOrderFinish }}/{{ $countOrder }} )</span></h5>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12">
+            <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12" style="padding-right: 0">
                 <div class="analytics-sparkle-line reso-mg-b-30 table-mg-t-pro dk-res-t-pro-30">
                     <div class="analytics-content">
                         <h5>Order reimbursement rate <span>( {{ $countOrderCancel }}/{{ $countOrder }} )</span></h5>
@@ -65,16 +65,18 @@
     <div class="charts-area mg-b-15">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="padding: 0">
                     <div class="charts-single-pro">
                         <div class="alert-title">
                             <h2>The chart shows the number of customers, sales, and order reimbursement rates</h2>
                         </div>
-                        <div id="axis-chart">
-                            <input type="hidden" class="date__label__chart" value="{{ $arrayStringDate }}">
-                            <input type="hidden" class="date__analytics__user" value="{{ $analyticsUser }}">
-                            <input type="hidden" class="date__analytics__order__finish" value="{{ $analyticsOrderFinish }}">
-                            <input type="hidden" class="date__analytics__order__cancel" value="{{ $analyticsOrderCancel }}">
+                        <div id="axis-chart" class="box__chart">
+                            <input type="hidden" class="data__label__chart" value="{{ $arrayStringDate }}">
+                            <input type="hidden" class="data__analytics__user" value="{{ $analyticsUser }}">
+                            <input type="hidden" class="data__analytics__order__finish" value="{{ $analyticsOrderFinish }}">
+                            <input type="hidden" class="data__analytics__order__cancel" value="{{ $analyticsOrderCancel }}">
+                            <input type="hidden" class="data__analytics__order__cancel" value="{{ $analyticsOrderCancel }}">
+                            <input type="hidden" class="date__from__to" value="{{ $from }} - {{ $to }}">
                             <canvas id="jsLineChart"></canvas>
                         </div>
                     </div>
@@ -102,5 +104,6 @@
     <script src="backend/js/charts/Chart.js"></script>
     <script src="backend/js/backend/pie_chart.js"></script>
     <script src="backend/js/backend/line_chart.js"></script>
+    <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/datepicker_dashboard.js') }}"></script>
 
 @endsection

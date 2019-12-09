@@ -38,7 +38,8 @@ Route::namespace('Backend')->group(function(){
     }
     );
     Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function(){
-        Route::get('/', 'HomeController@index')->name(ADMIN_DASHBOARD);
+        Route::get('/daily', 'HomeController@daily')->name(ADMIN_DASHBOARD_DAILY);
+        Route::get('/monthly', 'HomeController@monthly')->name(ADMIN_DASHBOARD_MONTHLY);
         Route::get('/list', 'AdminController@index')->name(ADMIN_INDEX);
         Route::post('add', 'AdminController@store')->name(ADMIN_ADD);
         Route::post('edit/{id}', 'AdminController@update')->name(ADMIN_EDIT);

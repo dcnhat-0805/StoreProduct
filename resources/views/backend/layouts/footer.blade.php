@@ -6,7 +6,7 @@
                     <p>Copyright © 2019 Store Online. All rights reserved.</p>
                     <nav class="nav-footer">
                         <ul>
-                            <li><a href="{{ route(ADMIN_DASHBOARD) }}">Home</a></li>
+                            <li><a href="{{ route(ADMIN_DASHBOARD_DAILY) }}">Home</a></li>
                             <li><a href="#">Privacy policy</a></li>
                             <li><a href="#">Terms of service</a></li>
                             <li><a href="#">Send feedback</a></li>

@@ -43,7 +43,7 @@ class AdminLoginMiddleware
                     return response()->json(['error' => 'Unauthenticated.'], 302);
                 }
 
-                $lastUrl = $isLoggedIn ? $this->getLastUrl() : route(ADMIN_DASHBOARD);
+                $lastUrl = $isLoggedIn ? $this->getLastUrl() : route(ADMIN_DASHBOARD_DAILY);
                 Session::put(SESSION_LAST_URL, $lastUrl);
 
                 return redirect(route(ADMIN_SHOW_LOGIN));
@@ -70,7 +70,7 @@ class AdminLoginMiddleware
             return url()->current();
         }
 
-        return route(ADMIN_DASHBOARD);
+        return route(ADMIN_DASHBOARD_DAILY);
     }
 
     protected function getTimeOut()

@@ -123,28 +123,48 @@ class User extends Authenticatable
         return $users;
     }
 
-    public static function getCountUSerBetweenFromTo($from, $to, $params = null)
+    public static function getCountUSerBetweenFromTo($from, $to)
     {
-        $users = self::filter($params);
-        $order = Helper::getSortParam($params);
-        if ($order == '1 = 1') {
-            $order = "users.id desc";
-        }
-
         $users = self::whereNull('social_id')
             ->where('users.status', true)
             ->where('users.created_at', '>=', $from)
             ->where('users.created_at', '<', date('Y/m/d', strtotime("+1 day", strtotime($to))))
-            ->join('wards', 'wards.code', 'users.address')
-            ->join('districts', 'wards.parent_code', 'districts.code')
-            ->join('cities', 'districts.parent_code', 'cities.code')
             ->select(
-                'users.id', 'users.name', 'users.email', 'users.created_at', 'users.address', 'users.gender',
-                'users.phone', 'wards.path_with_type as address_user', 'users.birthday', 'users.status',
-                'cities.code as cityId', 'districts.code as districtId'
-            )->count();
+                DB::raw('count(case when (users.status = 1) then 1 else null end) as countUser'),
+                DB::raw("DATE_FORMAT(users.created_at, '%Y/%m') as month")
+            )
+            ->groupby('month')
+            ->orderBy('month')
+            ->get();
 
-        return $users;
+        $total = 0;
+        foreach ($users as $user) {
+            $total += $user['countUser'];
+        }
+
+        return $total;
+    }
+
+    public static function getCountUSerBetweenFromToMonth($from, $to)
+    {
+        $users = self::whereNull('social_id')
+            ->where('users.status', true)
+            ->where('users.created_at', '>=', $from)
+            ->where('users.created_at', '<', date('Y/m/d', strtotime("+1 day", strtotime($to))))
+            ->select(
+                DB::raw('count(case when (users.status = 1) then 1 else null end) as countUser'),
+                DB::raw("DATE_FORMAT(users.created_at, '%Y/%m') month")
+            )
+            ->groupby('month')
+            ->orderBy('month')
+            ->get();
+
+        $total = 0;
+        foreach ($users as $user) {
+            $total += $user['countUser'];
+        }
+
+        return $total;
     }
 
     public static function getAnalyticsUSerBetweenFromTo($from, $to)
@@ -179,18 +199,43 @@ class User extends Authenticatable
         return $analyticsUser;
     }
 
+    public static function getAnalyticsUSerBetweenFromToMonth($from, $to)
+    {
+        $users = self::whereNull('social_id')
+            ->where('users.status', true)
+            ->where('users.created_at', '>=', $from)
+            ->where('users.created_at', '<', date('Y/m/d', strtotime("+1 day", strtotime($to))))
+            ->select(
+                DB::raw('count(case when (users.status = 1) then 1 else null end) as countUser'),
+                DB::raw("DATE_FORMAT(users.created_at, '%Y/%m') as month")
+            )
+            ->groupby('month')
+            ->orderBy('month')
+            ->pluck('countUser', 'month');
+//            ->get()
+//            ->toArray();
+
+        $arrayDate = Helper::getArrayDateBetweenFromTo($from, $to);
+        $analyticsUser = [];
+        foreach ($arrayDate as $date) {
+            $item = 0 . ',';
+            foreach ($users as $key => $value) {
+                if ($key == $date) {
+                    $item = $value . ',';
+                }
+            }
+
+            array_push($analyticsUser, $item);
+        }
+
+        return $analyticsUser;
+    }
+
     public static function getCountUSer()
     {
         $users = self::whereNull('social_id')
             ->where('users.status', true)
-            ->join('wards', 'wards.code', 'users.address')
-            ->join('districts', 'wards.parent_code', 'districts.code')
-            ->join('cities', 'districts.parent_code', 'cities.code')
-            ->select(
-                'users.id', 'users.name', 'users.email', 'users.created_at', 'users.address', 'users.gender',
-                'users.phone', 'wards.path_with_type as address_user', 'users.birthday', 'users.status',
-                'cities.code as cityId', 'districts.code as districtId'
-            )->count();
+            ->count();
 
         return $users;
     }

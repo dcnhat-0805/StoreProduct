@@ -22,7 +22,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (Auth::guard('admins')->check()) {
-            return redirect(route(ADMIN_DASHBOARD));
+            return redirect(route(ADMIN_DASHBOARD_DAILY));
         }
 
         return view('backend.login');
@@ -55,7 +55,7 @@ class LoginController extends Controller
                 return redirect($lastUrl);
             }
 
-            return redirect(route(ADMIN_DASHBOARD));
+            return redirect(route(ADMIN_DASHBOARD_DAILY));
         } else {
             $count_user = Admin::where("email", $email)->count();
             if ($count_user) {
