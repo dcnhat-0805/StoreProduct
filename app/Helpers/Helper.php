@@ -80,6 +80,30 @@ class Helper
         return $order;
     }
 
+    /**
+     * Get Sort Param
+     *
+     * @param array $params param
+     *
+     * @return string
+     */
+    public static function getSortParamFrontEnd($params)
+    {
+        $order = 'products.id desc';
+
+        if (isset($params[SORT]) && $params[SORT] == 'popularity') {
+            $order = 'products.id desc';
+        }
+        if (isset($params[SORT]) && $params[SORT] == 'priceasc') {
+            $order = 'products.product_price asc, products.product_promotion asc';
+        }
+        if (isset($params[SORT]) && $params[SORT] == 'pricedesc') {
+            $order = 'products.product_price desc, products.product_promotion desc';
+        }
+
+        return $order;
+    }
+
     public static function setCheckedForm($name, $value, $status)
     {
         return isset($_GET[$name]) && (in_array($value, $_GET[$name])) || !isset($_GET[$name]) ? $status : "";
@@ -441,5 +465,22 @@ class Helper
         }
 
         return $date;
+    }
+
+    /**
+     * Is sort field by order
+     *
+     * @param $fieldName
+     * @param $order
+     *
+     * @return bool
+     */
+    public static function isSortFieldByOrder($fieldName, $order)
+    {
+        if ($order == "asc") {
+            return isset($_GET['sort']) && $_GET['sort'] == $fieldName && !isset($_GET['desc']);
+        } else if ($order == "desc") {
+            return isset($_GET['sort']) && $_GET['sort'] == $fieldName && isset($_GET['desc']);
+        } else return false;
     }
 }

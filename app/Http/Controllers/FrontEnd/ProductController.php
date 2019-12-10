@@ -23,7 +23,8 @@ class ProductController extends FrontEndController
         $category_name = Category::getCategoryNameBySlug($category_slug);
         $product_category_name = ProductCategory::getProductCategoryNameBySlug($slug);
         $titleName = ProductCategory::getNameAndSlugBySlug($slug);
-        $products = Product::getListProductOnFrontEnd($slug, $params);
+        $order = Helper::getSortParamFrontEnd(\request()->all());
+        $products = Product::getListProductOnFrontEnd($slug, $params, $order);
         $arrayProductId = Product::getArrayProductId($slug, $params);
 
         if (!count($products) && isset($params['page']) && $params['page']) {
@@ -32,7 +33,7 @@ class ProductController extends FrontEndController
             return redirect($route);
         }
 
-        return view('frontend.pages.product.index', compact('titleName', 'products', 'slug', 'arrayProductId'));
+        return view('frontend.pages.product.index', compact('titleName', 'products', 'slug', 'arrayProductId', 'params'));
     }
 
     public function detail($description)

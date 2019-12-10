@@ -41,10 +41,10 @@
                                     <span style="position:absolute; right: 0;">Sort By:</span>
                                 </div>
                                 <div class="float-right col-sm-6">
-                                    <select name="" class="form-control form-group">
-                                        <option value="">Popularity</option>
-                                        <option value="">Price low to high</option>
-                                        <option value="">Price high to low</option>
+                                    <select name="" class="form-control form-group" onchange="location = this.value;">
+                                        <option value="{{ route(FRONT_PRODUCT_LIST, array_merge(['slug' => $slug, 'sort' => 'popularity'])) }}" {{ isset($_GET[SORT]) && $_GET[SORT] == 'popularity' ? 'selected' : '' }}>Popularity</option>
+                                        <option value="{{ route(FRONT_PRODUCT_LIST, array_merge(['slug' => $slug, 'sort' => 'priceasc'])) }}" {{ isset($_GET[SORT]) && $_GET[SORT] == 'priceasc' ? 'selected' : '' }}>Price low to high</option>
+                                        <option value="{{ route(FRONT_PRODUCT_LIST, array_merge(['slug' => $slug, 'sort' => 'pricedesc'])) }}" {{ isset($_GET[SORT]) && $_GET[SORT] == 'pricedesc' ? 'selected' : '' }}>Price high to low</option>
                                     </select>
                                 </div>
                             </div>

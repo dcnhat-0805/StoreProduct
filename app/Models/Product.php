@@ -125,6 +125,11 @@ class Product extends Model
             $params[PRICE] = self::removeUnsafeString($params[PRICE]);
         }
 
+        if (\request()->has(SORT)) {
+            $params[SORT] = request()->get(SORT);
+//            $params[PRICE] = self::removeUnsafeString($params[PRICE]);
+        }
+
         return $params;
     }
 
@@ -328,7 +333,7 @@ class Product extends Model
         return $products;
     }
 
-    public static function getListProductOnFrontEnd($slug, $params = null)
+    public static function getListProductOnFrontEnd($slug, $params = null, $order = 'products.id desc')
     {
         $isCategorySlug = Category::isCategorySlug($slug);
         $isProductCategorySlug = ProductCategory::isProductCategorySlug($slug);
@@ -366,7 +371,7 @@ class Product extends Model
 //            ->orWhere('product_types.product_type_slug', $slug)
 //            ->orWhere('products.product_slug', $slug)
             ->groupBy('products.id')
-            ->orderBy('products.id', 'DESC');
+            ->orderByRaw($order);
 
         if ($isCategorySlug) {
             $products = $products->where('categories.category_slug', $slug);

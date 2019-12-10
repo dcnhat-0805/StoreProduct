@@ -279,6 +279,7 @@ const DISCOUNT_FILTER = [
 const DISCOUNT = 'discount';
 const RATING = 'rating';
 const PRICE = 'price';
+const SORT = 'sort';
 
 const BEST = 1;
 const NEWS = 2;
