@@ -26,7 +26,8 @@ class HomeController extends FrontEndController
     public function getDataSearch(Request $request)
     {
         $params = Product::getSearchParams();
-        $products = Product::getProductBySearch($params);
+        $order = Helper::getSortParamFrontEnd(\request()->all());
+        $products = Product::getProductBySearch($params, $order);
         $arrayProductId = Helper::getArrayProductId($products);
         $is_page_search = true;
 

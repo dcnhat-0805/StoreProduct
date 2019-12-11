@@ -9,6 +9,11 @@
         'titleName' => isset($titleName) && $titleName ? $titleName : null,
         'namePage' => 'Search Results',
     ])
+    @php
+        if (isset($params[SORT])) {
+            unset($params[SORT]);
+        }
+    @endphp
 
 {{--    @include('frontend.layouts.banner')--}}
 
@@ -18,15 +23,6 @@
     <!-- top Products -->
     <div class="ads-grid">
         <div class="container">
-            <!-- tittle heading -->
-{{--            <h3 class="tittle-w3l">{{ App\Helpers\Helper::getTitleName($titleName ?? null) }}--}}
-
-{{--                <span class="heading-style">--}}
-{{--					<i></i>--}}
-{{--					<i></i>--}}
-{{--					<i></i>--}}
-{{--				</span>--}}
-{{--            </h3>--}}
             <div class="row">
                 <div class="col-sm-3">
                     @include('frontend.layouts.side_bar.side_bar_left')
@@ -41,10 +37,10 @@
                                 <span style="position:absolute; right: 0;">Sort By:</span>
                             </div>
                             <div class="float-right col-sm-6">
-                                <select name="" class="form-control form-group">
-                                    <option value="">Popularity</option>
-                                    <option value="">Price low to high</option>
-                                    <option value="">Price high to low</option>
+                                <select name="" class="form-control form-group" onchange="location = this.value;">
+                                    <option value="{{ route(FRONT_LOAD_DATA_SEARCH, array_merge(['sort' => 'popularity'], $params)) }}" {{ isset($_GET[SORT]) && $_GET[SORT] == 'popularity' ? 'selected' : '' }}>Popularity</option>
+                                    <option value="{{ route(FRONT_LOAD_DATA_SEARCH, array_merge(['sort' => 'priceasc'], $params)) }}" {{ isset($_GET[SORT]) && $_GET[SORT] == 'priceasc' ? 'selected' : '' }}>Price low to high</option>
+                                    <option value="{{ route(FRONT_LOAD_DATA_SEARCH, array_merge(['sort' => 'pricedesc'], $params)) }}" {{ isset($_GET[SORT]) && $_GET[SORT] == 'pricedesc' ? 'selected' : '' }}>Price high to low</option>
                                 </select>
                             </div>
                         </div>

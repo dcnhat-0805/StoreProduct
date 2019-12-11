@@ -555,7 +555,7 @@ class Product extends Model
         return $products;
     }
 
-    public static function getProductBySearch($params = null)
+    public static function getProductBySearch($params = null, $order = 'products.id')
     {
         $products = self::whereNull('products.deleted_at')
             ->whereNull('product_types.deleted_at')
@@ -583,7 +583,7 @@ class Product extends Model
                 },
             ])
             ->groupBy('products.id')
-            ->orderByRaw('products.id');
+            ->orderByRaw($order);
 
         $products = self::getQueryBySearchParams($products, $params, null);
 
