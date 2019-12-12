@@ -40,6 +40,12 @@
 		============================================ -->
     <link rel="stylesheet" href="backend/css/touchspin/jquery.bootstrap-touchspin.min.css">
     <link rel="stylesheet" href="backend/css/loading.css">
+
+    @if(Auth::check())
+    <!-- chart CSS
+		============================================ -->
+    <link rel="stylesheet" href="frontend/assets/css/chart.css">
+    @endif
     @yield('cssCustom')
 </head>
 
@@ -53,6 +59,10 @@
     <div class="container main-container">
         @yield('content')
     </div>
+
+    @if(Auth::check())
+        @include('frontend.pages.chat')
+    @endif
 
     @include('frontend.layouts.footer')
 </div>
@@ -102,6 +112,10 @@
 <script src="frontend/assets/js/loading.js"></script>
 <script src="frontend/assets/js/jquery.flexslider.js"></script>
 <script src="frontend/assets/js/disabled_button_submit.js"></script>
+
+@if(Auth::check())
+<script src="frontend/assets/js/chart.js"></script>
+@endif
 
 @if(Session::has('success'))
     <script type="text/javascript">
