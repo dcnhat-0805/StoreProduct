@@ -28,6 +28,10 @@ class HomeController extends Controller
         $percentageUser = ($countUserBetweenFromTo * 100) / $countUser;
 
         $countMoney = Order::getCountMoney();
+
+        $countDeliveryFromTo = Order::getCountMoneyBetWeenFromTo($from, $to, DELIVERY);
+        $percentageDelivery = Order::getPercentageByStatusFromTo($from, $to, DELIVERY);
+
         $countMoneyBetweenFromTo = Order::getCountMoneyBetWeenFromTo($from, $to, FINISH);
         $percentageMoney = Order::getPercentageByStatusFromTo($from, $to, FINISH);
 
@@ -35,11 +39,15 @@ class HomeController extends Controller
         $percentageReimbursement = Order::getPercentageByStatusFromTo($from, $to, CANCEL);
 
         $countOrder = Order::getCountOrder();
+        $countOrderDelivery = Order::getCountOrderFromTo($from, $to, DELIVERY);
         $countOrderFinish = Order::getCountOrderFromTo($from, $to, FINISH);
         $countOrderCancel = Order::getCountOrderFromTo($from, $to, CANCEL);
 
         $analyticsUser = User::getAnalyticsUSerBetweenFromTo($from, $to);
         $analyticsUser = substr(implode($analyticsUser), 0, -1);
+
+        $analyticsOrderDelivery = Order::getAnalyticsOrderBetweenFromTo($from, $to, DELIVERY);
+        $analyticsOrderDelivery = substr(implode($analyticsOrderDelivery), 0, -1);
 
         $analyticsOrderFinish = Order::getAnalyticsOrderBetweenFromTo($from, $to, FINISH);
         $analyticsOrderFinish = substr(implode($analyticsOrderFinish), 0, -1);
@@ -56,7 +64,7 @@ class HomeController extends Controller
             'countReimbursement', 'countReimbursementFromTo', 'percentageReimbursement',
             'countOrder', 'countOrderFinish', 'countOrderCancel',
             'arrayStringDate', 'analyticsUser', 'analyticsOrderFinish', 'analyticsOrderCancel',
-            'from', 'to'
+            'from', 'to', 'countDeliveryFromTo', 'percentageDelivery', 'countOrderDelivery', 'analyticsOrderDelivery'
         ));
     }
 
@@ -78,6 +86,10 @@ class HomeController extends Controller
         $percentageUser = ($countUserBetweenFromTo * 100) / $countUser;
 
         $countMoney = Order::getCountMoney();
+
+        $countDeliveryFromTo = Order::getCountMoneyBetWeenFromToMonth($from, $to, DELIVERY);
+        $percentageDelivery = Order::getPercentageByStatusFromToMonth($from, $to, DELIVERY);
+
         $countMoneyBetweenFromTo = Order::getCountMoneyBetWeenFromToMonth($from, $to, FINISH);
         $percentageMoney = Order::getPercentageByStatusFromToMonth($from, $to, FINISH);
 
@@ -85,11 +97,15 @@ class HomeController extends Controller
         $percentageReimbursement = Order::getPercentageByStatusFromToMonth($from, $to, CANCEL);
 
         $countOrder = Order::getCountOrder();
+        $countOrderDelivery = Order::getCountOrderFromToMonth($from, $to, DELIVERY);
         $countOrderFinish = Order::getCountOrderFromToMonth($from, $to, FINISH);
         $countOrderCancel = Order::getCountOrderFromToMonth($from, $to, CANCEL);
 
         $analyticsUser = User::getAnalyticsUSerBetweenFromToMonth($from, $to);
         $analyticsUser = substr(implode($analyticsUser), 0, -1);
+
+        $analyticsOrderDelivery = Order::getAnalyticsOrderBetweenFromToMonth($from, $to, DELIVERY);
+        $analyticsOrderDelivery = substr(implode($analyticsOrderDelivery), 0, -1);
 
         $analyticsOrderFinish = Order::getAnalyticsOrderBetweenFromToMonth($from, $to, FINISH);
         $analyticsOrderFinish = substr(implode($analyticsOrderFinish), 0, -1);
@@ -106,7 +122,7 @@ class HomeController extends Controller
             , 'countReimbursementFromTo', 'percentageReimbursement',
             'countOrder', 'countOrderFinish', 'countOrderCancel',
             'arrayStringDate', 'analyticsUser', 'analyticsOrderFinish', 'analyticsOrderCancel',
-            'from', 'to'
+            'from', 'to', 'countDeliveryFromTo', 'percentageDelivery', 'countOrderDelivery', 'analyticsOrderDelivery'
         ));
     }
 }

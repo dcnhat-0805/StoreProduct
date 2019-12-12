@@ -4810,16 +4810,16 @@ input.form-control.jsDatepickerDashboard {
     text-align: center;
     padding: 0;
 }
-.dashboard__analytics:active {
-    border-radius: ;
-}
 .dashboard__analytics.active {
     background-color: #2d7fd6;
 }
-.dashboard__analytics a {
+.dashboard__analytics {
     color: #2d7fd6;
 }
-.dashboard__analytics.active a {
+.dashboard__analytics:hover {
+    color: #2d7fd6;
+}
+.dashboard__analytics.active {
     color: white;
 }
 .dashboard__analytics {

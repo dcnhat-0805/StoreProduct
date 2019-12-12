@@ -23,6 +23,9 @@
     let dateAnalyticsUser = $('.data__analytics__user').val();
     dateAnalyticsUser = convertArrayStringToArrayFloat(dateAnalyticsUser);
 
+    let dateAnalyticsOrderDelivery = $('.data__analytics__order__delivery').val();
+    dateAnalyticsOrderDelivery = convertArrayStringToArrayFloat(dateAnalyticsOrderDelivery);
+
     let dateAnalyticsOrderFinish = $('.data__analytics__order__finish').val();
     dateAnalyticsOrderFinish = convertArrayStringToArrayFloat(dateAnalyticsOrderFinish);
 
@@ -68,6 +71,18 @@
                     pointRadius: 4
                 },
                 {
+                    label: "Delivery",
+                    data: dateAnalyticsOrderDelivery,
+                    fill: !1,
+                    // borderDash: [5, 5],
+                    borderColor: "#9C27B0",
+                    pointBorderColor: "#9C27B0",
+                    pointBackgroundColor: "#9C27B0",
+                    pointBorderWidth: 2,
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 4
+                },
+                {
                     label: "Revenues",
                     data: dateAnalyticsOrderFinish,
                     fill: !1,
@@ -84,9 +99,9 @@
                     data: dateAnalyticsOrderCancel,
                     fill: !1,
                     // borderDash: [5, 5],
-                    borderColor: "#9C27B0",
-                    pointBorderColor: "#9C27B0",
-                    pointBackgroundColor: "#9C27B0",
+                    borderColor: "#D80027",
+                    pointBorderColor: "#D80027",
+                    pointBackgroundColor: "#D80027",
                     pointBorderWidth: 2,
                     pointHoverBorderWidth: 2,
                     pointRadius: 4

@@ -916,12 +916,14 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="box__search_by__date">
-                                                        <button class="dashboard__analytics dashboard__daily {{ request()->route()->uri() == 'admin' ? 'active' : '' }}">
-                                                            <a href="{{ route(ADMIN_DASHBOARD_DAILY, $searchParams) }}" class="daily">Daily</a>
-                                                        </button>
-                                                        <button class="dashboard__analytics dashboard__monthly {{ request()->route()->uri() == 'admin/monthly' ? 'active' : '' }}">
-                                                            <a href="{{ route(ADMIN_DASHBOARD_MONTHLY, $searchParams) }}" class="monthly">Monthly</a>
-                                                        </button>
+                                                        <a class="dashboard__analytics dashboard__daily daily {{ request()->route()->uri() == 'admin' ? 'active' : '' }}" href="{{ route(ADMIN_DASHBOARD_DAILY, $searchParams) }}">
+                                                            Daily
+                                                        </a>
+                                                        <a class="dashboard__analytics dashboard__monthly monthly {{ request()->route()->uri() == 'admin/monthly' ? 'active' : '' }}"
+                                                           href="{{ route(ADMIN_DASHBOARD_MONTHLY, $searchParams) }}"
+                                                        >
+                                                            Monthly
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
