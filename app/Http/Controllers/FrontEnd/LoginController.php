@@ -5,6 +5,7 @@ namespace App\Http\Controllers\FrontEnd;
 use App\Http\Requests\LoginFrontEndRequest;
 use App\Models\City;
 use App\Models\District;
+use App\Models\ShoppingCart;
 use App\Models\UserLog;
 use App\Models\Wards;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
 use Auth;
+use Cart;
 
 class LoginController extends Controller
 {
@@ -40,6 +42,8 @@ class LoginController extends Controller
 
         $authUser = $this->findOrCreateUser($user);
         Auth::login($authUser);
+
+        ShoppingCart::createShoppingCart();
 
         Session::flash("success", trans("messages.login.login_success"));
         $lastUrl = Session::get(SESSION_LAST_URL_CUSTOMER);
@@ -102,6 +106,8 @@ class LoginController extends Controller
             UserLog::saveUserLog($message, $email);
             Session::flash("success", trans("messages.users.login_success"));
             $lastUrl = Session::get(SESSION_LAST_URL_CUSTOMER);
+
+            ShoppingCart::createShoppingCart();
 
             if ($lastUrl && $lastUrl !== route(FRONT_LOGIN)) {
                 return redirect($lastUrl);

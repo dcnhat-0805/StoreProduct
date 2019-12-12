@@ -10,6 +10,7 @@ use App\Models\District;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\ShoppingCart;
 use App\Models\Wards;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -29,7 +30,11 @@ class CartController extends FrontEndController
      */
     public function index()
     {
+        $user = Auth::user();
         $carts = Cart::content();
+        if ($user) {
+            $carts = ShoppingCart::getContentCart();
+        }
 
         return view('frontend.pages.cart.index', compact('carts'));
     }
@@ -38,15 +43,23 @@ class CartController extends FrontEndController
     {
         if ($request->ajax()) {
             $products = Product::showProduct($id);
+            $user = Auth::user();
 
             $cart = Helper::addToCart($products, $request->all());
             DB::beginTransaction();
             if (Cart::add($cart)) {
+                if ($user) {
+                    ShoppingCart::createShoppingCart();
+                }
 
+                $countCart = Cart::count();
+                if ($user) {
+                    $countCart = ShoppingCart::getCountCart();
+                }
 //                Cart::store($id);
                 DB::commit();
 //                Session::flash("success", trans("messages.front_end.cart.add_cart_success"));
-                return response()->json(['countCart' => Cart::count(), 'success' => trans("messages.front_end.cart.add_cart_success")], 200);
+                return response()->json(['countCart' => $countCart, 'success' => trans("messages.front_end.cart.add_cart_success")], 200);
             } else {
                 DB::rollBack();
 //                Session::flash("error", trans("messages.front_end.cart.add_cart_failed"));
@@ -58,15 +71,25 @@ class CartController extends FrontEndController
     public function updateCart(Request $request, $rowId)
     {
         if ($request->ajax()) {
-            $cart = Helper::updateCart($request->all(), $rowId);
+            $user = Auth::user();
+            if ($user) {
+                ShoppingCart::updateCart($request->all(), $rowId);
+                $cart = ShoppingCart::getContentCartByRowId($rowId);
+            } else {
+                $cart = Helper::updateCart($request->all(), $rowId);
+            }
 
             DB::beginTransaction();
             if ($cart) {
 
+                $countCart = Cart::count();
+                if ($user) {
+                    $countCart = ShoppingCart::getCountCart();
+                }
 //                Cart::store($cart->id);
                 DB::commit();
 //                Session::flash("success", trans("messages.front_end.cart.update_cart_success"));
-                return response()->json(['countCart' => Cart::count(), 'cart' => $cart, 'success' => trans("messages.front_end.cart.update_cart_success")], 200);
+                return response()->json(['countCart' => $countCart, 'cart' => $cart, 'success' => trans("messages.front_end.cart.update_cart_success")], 200);
             } else {
                 DB::rollBack();
 //                Session::flash("error", trans("messages.category.update_cart_failed"));
@@ -103,6 +126,7 @@ class CartController extends FrontEndController
 
     public function purchase(CheckCountRequest $request)
     {
+        $user = Auth::user();
         $data = $request->all();
         $rowIds = Session::get(SESSION_ROW_IDS);
         $data['order_code'] = 'SOP_' . uniqid() . '_' . time();
@@ -132,7 +156,11 @@ class CartController extends FrontEndController
                 $orderDetails[$key] = OrderDetail::create($orderDetail);
 
                 Product::updateCountBuy($cart->id);
-                Cart::remove($cart->rowId);
+                if ($user) {
+                    ShoppingCart::deleteCart($cart->rowId);
+                } else {
+                    Cart::remove($cart->rowId);
+                }
                 Session::forget(SESSION_ROW_IDS);
             }
 
@@ -148,8 +176,11 @@ class CartController extends FrontEndController
 
     public function listALLCart()
     {
-
+        $user = Auth::user();
         $carts = Cart::content();
+        if ($user) {
+            $carts = ShoppingCart::getContentCart();
+        }
         $data = [];
 
         if (count($carts)) {
@@ -165,8 +196,11 @@ class CartController extends FrontEndController
 
     public function getAllCart()
     {
-
+        $user = Auth::user();
         $carts = Cart::content();
+        if ($user) {
+            $carts = ShoppingCart::getContentCart();
+        }
         $data = [];
 
         if (count($carts)) {
@@ -184,11 +218,24 @@ class CartController extends FrontEndController
 
         if (isset($arrRowId) && $arrRowId) {
             foreach ($arrRowId as $rowId) {
-                $content = Cart::content();
+                $user = Auth::user();
+                $contents = Cart::content();
+                if ($user) {
+                    $contents = ShoppingCart::getContentCart();
+                }
 
-                if ( $content->has($rowId)) {
-                    $cartItem = Cart::get($rowId);
-                    array_push($carts, $cartItem);
+                if ($user) {
+                    foreach ($contents as $content) {
+                        if ($content->rowId == $rowId) {
+                            $cartItem = ShoppingCart::getContentCartByRowId($rowId);
+                            array_push($carts, $cartItem);
+                        }
+                    }
+                } else {
+                    if ($contents->has($rowId)) {
+                        $cartItem = Cart::get($rowId);
+                        array_push($carts, $cartItem);
+                    }
                 }
             }
         }
@@ -206,7 +253,6 @@ class CartController extends FrontEndController
         if ($selectAll) {
             $rowIds = $this->getAllCart();
         }
-
 
         $carts = $this->getCart($rowIds);
 
@@ -230,7 +276,12 @@ class CartController extends FrontEndController
 
     public function delete($rowId)
     {
-        Cart::remove($rowId);
+        $user = Auth::user();
+        if ($user) {
+            ShoppingCart::deleteCart($rowId);
+        } else {
+            Cart::remove($rowId);
+        }
 
         return response()->json(trans("messages.front_end.cart.delete_cart_success"), 200);
     }

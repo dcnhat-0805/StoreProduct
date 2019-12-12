@@ -121,7 +121,7 @@
                                 </tbody>
                             </table>
 
-                            @if (!Cart::count())
+                            @if (!$carts)
                                 <div class="not-cart" style="margin-top: 10%">
                                     <div class="text-not-cart text-center pb-2">There are no items in this cart</div>
                                     <div class="button-back-home text-center">

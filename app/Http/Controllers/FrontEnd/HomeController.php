@@ -6,6 +6,7 @@ use App\Helpers\Helper;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\ProductType;
+use App\Models\ShoppingCart;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -14,6 +15,7 @@ class HomeController extends FrontEndController
 
     public function index(Request $request)
     {
+//        dd(ShoppingCart::getContentCart());
         $params = Product::getSearchParams();
         $products = [];
         $products['best'] = Product::getProductByOption(BEST);

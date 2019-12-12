@@ -882,7 +882,7 @@
                             </div>
 
                             <?php
-                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create', 'admin/daily', 'admin/monthly']) || in_array(request()->route()->getPrefix(), ['admin/account']);
+                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create', 'admin', 'admin/monthly']) || in_array(request()->route()->getPrefix(), ['admin/account']);
                             ?>
                             @if(!$isShowBtnSearch)
                                 <div class="col-xs-6 col-sm-6">
@@ -895,7 +895,7 @@
                             @endif
 
                             <?php
-                                $isShowSearchDate = in_array(request()->route()->uri(), ['admin/daily', 'admin/monthly']);
+                                $isShowSearchDate = in_array(request()->route()->uri(), ['admin', 'admin/monthly']);
 
                                 $route = ADMIN_DASHBOARD_DAILY;
                                 if (request()->route()->uri() == 'admin/monthly') {
@@ -916,7 +916,7 @@
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="box__search_by__date">
-                                                        <button class="dashboard__analytics dashboard__daily {{ request()->route()->uri() == 'admin/daily' ? 'active' : '' }}">
+                                                        <button class="dashboard__analytics dashboard__daily {{ request()->route()->uri() == 'admin' ? 'active' : '' }}">
                                                             <a href="{{ route(ADMIN_DASHBOARD_DAILY, $searchParams) }}" class="daily">Daily</a>
                                                         </button>
                                                         <button class="dashboard__analytics dashboard__monthly {{ request()->route()->uri() == 'admin/monthly' ? 'active' : '' }}">

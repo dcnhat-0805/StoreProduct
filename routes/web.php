@@ -35,10 +35,9 @@ Route::namespace('Backend')->group(function(){
             ->name(ADMIN_FORGET_PASSWORD);
         Route::post('/checkEmailAdmin', 'PasswordResetController@checkEmailAdmin');
         Route::post('/updatePassword', 'PasswordResetController@updatePasswordAjax');
-    }
-    );
+    });
     Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function(){
-        Route::get('/daily', 'HomeController@daily')->name(ADMIN_DASHBOARD_DAILY);
+        Route::get('/', 'HomeController@daily')->name(ADMIN_DASHBOARD_DAILY);
         Route::get('/monthly', 'HomeController@monthly')->name(ADMIN_DASHBOARD_MONTHLY);
         Route::get('/list', 'AdminController@index')->name(ADMIN_INDEX);
         Route::post('add', 'AdminController@store')->name(ADMIN_ADD);
