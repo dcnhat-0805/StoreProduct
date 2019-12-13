@@ -44,7 +44,7 @@
     @if(Auth::check())
     <!-- chart CSS
 		============================================ -->
-    <link rel="stylesheet" href="frontend/assets/css/chart.css">
+    <link rel="stylesheet" href="frontend/assets/css/chat.css">
     @endif
     @yield('cssCustom')
 </head>
@@ -114,7 +114,7 @@
 <script src="frontend/assets/js/disabled_button_submit.js"></script>
 
 @if(Auth::check())
-<script src="frontend/assets/js/chart.js"></script>
+<script src="frontend/assets/js/chat.js"></script>
 @endif
 
 @if(Session::has('success'))

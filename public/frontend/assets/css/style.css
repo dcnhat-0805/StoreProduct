@@ -778,6 +778,7 @@ ul.pagination {
 .sop-body-product-content {
     background-color: #fff;
     overflow-y: hidden;
+    padding-top: 20px;
 }
 .expand-button-show {
     margin: 0 auto;

@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic);
-@import url(https://zavoloklom.github.io/material-design-iconic-font/css/docs.md-iconic-font.min.css);
+/*@import url(https://zavoloklom.github.io/material-design-iconic-font/css/docs.md-iconic-font.min.css);*/
 
 ul li{
     list-style: none;
@@ -9,14 +9,14 @@ ul li{
     position: fixed;
     margin: 1em;
     right: 0;
-    z-index: 998;
+    z-index: 1032;
 
 }
 
-.fab {
+.fabs .fab__chart {
     display: block;
-    width: 56px;
-    height: 56px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     text-align: center;
     color: #f0f0f0;
@@ -31,15 +31,25 @@ ul li{
     background: #42a5f5;
 }
 
-.fab > i {
-    font-size: 2em;
-    line-height: 55px;
+.fab__chart > .zmdi-comment-outline {
+    font-size: 1.5em;
+    line-height: 40px;
+    color: #fff;
     -webkit-transition: all .2s ease-out;
     -webkit-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
 }
 
-.fab:not(:last-child) {
+.fab__chart > .zmdi-close {
+    font-size: 1.5em;
+    line-height: 40px;
+    color: #fff;
+    -webkit-transition: all .2s ease-out;
+    -webkit-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.fab__chart:not(:last-child) {
     width: 0;
     height: 0;
     margin: 20px auto 0;
@@ -48,12 +58,12 @@ ul li{
     line-height: 40px;
 }
 
-.fab:not(:last-child) > i {
+.fab__chart:not(:last-child) > i {
     font-size: 1.4em;
     line-height: 40px;
 }
 
-.fab:not(:last-child).is-visible {
+.fab__chart:not(:last-child).is-visible {
     width: 40px;
     height: 40px;
     margin: 15px auto 10;
@@ -61,42 +71,42 @@ ul li{
     visibility: visible;
 }
 
-.fab:nth-last-child(1) {
+.fab__chart:nth-last-child(1) {
     -webkit-transition-delay: 25ms;
     transition-delay: 25ms;
 }
 
-.fab:not(:last-child):nth-last-child(2) {
+.fab__chart:not(:last-child):nth-last-child(2) {
     -webkit-transition-delay: 20ms;
     transition-delay: 20ms;
 }
 
-.fab:not(:last-child):nth-last-child(3) {
+.fab__chart:not(:last-child):nth-last-child(3) {
     -webkit-transition-delay: 40ms;
     transition-delay: 40ms;
 }
 
-.fab:not(:last-child):nth-last-child(4) {
+.fab__chart:not(:last-child):nth-last-child(4) {
     -webkit-transition-delay: 60ms;
     transition-delay: 60ms;
 }
 
-.fab:not(:last-child):nth-last-child(5) {
+.fab__chart:not(:last-child):nth-last-child(5) {
     -webkit-transition-delay: 80ms;
     transition-delay: 80ms;
 }
 
-.fab(:last-child):active,
-                 .fab(:last-child):focus,
-                                  .fab(:last-child):hover {
-                                                       box-shadow: 0 0 6px rgba(0, 0, 0, .16), 0 6px 12px rgba(0, 0, 0, .32);
-                                                   }
+.fab__chart:last-child:active,
+.fab__chart:last-child:focus,
+.fab__chart:last-child:hover {
+    box-shadow: 0 0 6px rgba(0, 0, 0, .16), 0 6px 12px rgba(0, 0, 0, .32);
+}
 /*Chatbox*/
 
 .chat {
     position: fixed;
-    right: 85px;
-    bottom: 20px;
+    right: 65px;
+    bottom: 15px;
     width: 400px;
     font-size: 12px;
     line-height: 22px;
@@ -124,11 +134,17 @@ ul li{
     font-family: 'Roboto';
     font-weight: 500;
     color: #f3f3f3;
-    height: 55px;
+    height: 45px;
     background: #42a5f5;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     padding-top: 8px;
+}
+span#chat_head {
+    font-size: 16px;
+    font-weight: 700;
+    text-transform: capitalize;
+    color: #fff;
 }
 .chat_header2 {
     /* margin: 10px; */
@@ -175,10 +191,40 @@ ul li{
 
 .chat_option img {
     border-radius: 50%;
-    width: 55px;
+    width: 45px;
     float: left;
     margin: -30px 20px 10px 20px;
     border: 4px solid rgba(0, 0, 0, 0.21);
+}
+
+.chat_option .chat__avatar {
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    float: left;
+    margin: -30px 20px 10px 20px;
+    border: 4px solid rgba(0, 0, 0, 0.21);
+}
+
+.chat_option .chat__avatar .chat__text {
+    position: relative;
+    background-color: #42a5f5;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 100%;
+}
+
+.chat_option .chat__text > span {
+    position: absolute;
+    top: 25%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 900;
+    text-transform: uppercase;
 }
 
 .change_img img{
@@ -341,23 +387,20 @@ ul li{
     background: rgba(0, 0, 0, 0);
 }
 
-.fab_field .fab {
+.fab_field .fab__option {
     width: 35px;
     height: 35px;
     box-shadow: none;
     margin: 5px;
 }
 
-.fab_field .fab>i {
+.fab_field .fab__option>i {
     font-size: 1.6em;
     line-height: 35px;
     color: #bbb;
 }
-.fab_field .fab>i:hover {
+.fab_field .fab__option>i:hover {
     color: #42a5f5;
-}
-.chat_conversion {
-
 }
 
 .chat_converse {
@@ -434,6 +477,36 @@ ul li{
     height: 40px;
     text-align: center;
     border-radius: 50%;
+}
+
+.chat .chat_converse .chat_msg_item .chat_avatar, .chat_avatar .chat__avatar{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    background-color: #42a5f5;
+}
+
+
+.chat_avatar .chat__avatar .chat__text {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 100%;
+}
+
+.chat_avatar .chat__text > span {
+    position: absolute;
+    top: 25%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    font-size: 30px;
+    text-align: center;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: #fff;
 }
 
 .chat .chat_converse .chat_msg_item.chat_msg_item_admin {
@@ -691,7 +764,7 @@ strong.chat_time {
 
 
 
-.blue .fab {
+.blue .fab__chart {
     background: #42a5f5;
     color: #fff;
 }

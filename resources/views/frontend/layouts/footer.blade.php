@@ -4,7 +4,7 @@
     <div class="container">
         <div class="row">
 
-            <div class="col-lg-3 footer_col">
+            <div class="col-sm-3 footer_col text-left">
                 <div class="logo_container">
                     <div class="logo">
                         <a href="{{route(FRONT_END_HOME_INDEX)}}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-2 offset-lg-2">
+            <div class="col-sm-3 offset-lg-2 text-left">
                 <div class="footer_column">
                     <div class="footer_title">Find it Fast</div>
                     <ul class="footer_list">
@@ -45,7 +45,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-2">
+            <div class="col-sm-3 text-left">
                 <div class="footer_column">
                     <ul class="footer_list footer_list_2">
                         <li><a href="#">Video Games & Consoles</a></li>
@@ -58,7 +58,7 @@
             </div>
 
             @if(Auth::check())
-                <div class="col-lg-2">
+                <div class="col-sm-3 text-left">
                     <div class="footer_column">
                         <div class="footer_title">Customer Care</div>
                         <ul class="footer_list">

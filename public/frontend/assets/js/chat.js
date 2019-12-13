@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    hideChat();
 
     $('#prime').click(function () {
         toggleFab();
@@ -8,13 +7,14 @@ $(document).ready(function () {
 
 //Toggle chat and links
     function toggleFab() {
-        $('.prime').toggleClass('zmdi-comment-outline');
-        $('.prime').toggleClass('zmdi-close');
-        $('.prime').toggleClass('is-active');
-        $('.prime').toggleClass('is-visible');
+        $('#prime i').toggleClass('fa-commenting-o');
+        $('#prime i').toggleClass('fa-times');
+        // $('#prime').toggleClass('is-active');
+        // $('#prime').toggleClass('is-visible');
         $('#prime').toggleClass('is-float');
         $('.chat').toggleClass('is-visible');
         $('.fab').toggleClass('is-visible');
+        hideChat();
 
     }
 
