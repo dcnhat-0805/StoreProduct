@@ -19,17 +19,46 @@ class ShoppingCart extends Model
 
         if ($contents) {
             foreach ($contents as $content) {
+                $isExistsContent = self::isExistsContent($content->rowId);
+                if ($isExistsContent) {
+                    $currentQty = self::getQuantityCart($content->rowId);
+                    $content->qty = $currentQty + $content->qty;
+                }
                 $shoppingCart = ShoppingCart::firstOrNew([
                     'user_id' => $user ? $user->id : null,
                     'rowId' => $content->rowId,
-                    'content' => serialize($content),
+//                    'content' => serialize($content),
                 ]);
+                $shoppingCart->content = serialize($content);
 
                 if ($shoppingCart->save()) {
                     Cart::remove($content->rowId);
                 }
             }
         }
+    }
+
+    public static function isExistsContent($rowId)
+    {
+        $user = Auth::user();
+        $contents = self::where('user_id', $user->id)
+            ->where('rowId', $rowId)->exists();
+
+        return $contents;
+    }
+
+    public static function getQuantityCart($rowId)
+    {
+        $user = Auth::user();
+        $contents = self::where('user_id', $user->id)
+            ->where('rowId', $rowId)
+            ->select('content')
+            ->pluck('content')
+            ->first();
+
+        $contents = unserialize($contents);
+
+        return $contents->qty;
     }
 
     public static function getCountCart()

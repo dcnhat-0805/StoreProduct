@@ -1,4 +1,5 @@
 @extends('frontend.layouts.app')
+@section('title', 'My cart')
 @section('cssCustom')
 @endsection
 @section('content')

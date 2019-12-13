@@ -218,6 +218,12 @@ Route::namespace('FrontEnd')->group(function(){
             ->name(FRONT_SEND_COMMENT);
     });
 
+    Route::group(['prefix' => 'contact'], function () {
+        Route::post('/sendContact', 'ContactController@sendContact')
+            ->name(FRONT_SEND_CONTACT);
+        Route::get('/getContact', 'ContactController@getContact');
+    });
+
     Route::group(['prefix' => 'socialite'], function () {
         Route::get('/login/{social}', 'LoginController@loginSocial')
             ->name(FRONT_LOGIN_SOCIALITE);

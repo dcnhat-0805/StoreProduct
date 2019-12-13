@@ -9,7 +9,7 @@ ul li{
     position: fixed;
     margin: 1em;
     right: 0;
-    z-index: 1032;
+    z-index: 989;
 
 }
 
@@ -29,6 +29,8 @@ ul li{
     z-index: 998;
     overflow: hidden;
     background: #42a5f5;
+    border: none;
+    outline: none;
 }
 
 .fab__chart > .zmdi-comment-outline {
@@ -120,6 +122,7 @@ ul li{
     -webkit-transition: all .2s ease-out;
     -webkit-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
+    background-color: #fff;
 }
 
 .chat_fullscreen {
@@ -168,8 +171,8 @@ span#chat_head {
 
 .chat.is-visible {
     opacity: 1;
-    -webkit-animation: zoomIn .2s cubic-bezier(.42, 0, .58, 1);
-    animation: zoomIn .2s cubic-bezier(.42, 0, .58, 1);
+    -webkit-animation: zoomIn .1s cubic-bezier(.42, 0, .58, 1);
+    animation: zoomIn .1s cubic-bezier(.42, 0, .58, 1);
 }
 .is-hide{
     opacity: 0
@@ -263,8 +266,8 @@ span#chat_head {
     height: 450px;
 }
 .chat_login p,.chat_body li, p, .fabs a {
-    -webkit-animation: zoomIn .5s cubic-bezier(.42, 0, .58, 1);
-    animation: zoomIn .5s cubic-bezier(.42, 0, .58, 1);
+    -webkit-animation: zoomIn .1s cubic-bezier(.42, 0, .58, 1);
+    animation: zoomIn .1s cubic-bezier(.42, 0, .58, 1);
 }
 .chat_body p {
     padding: 20px;
@@ -380,11 +383,15 @@ span#chat_head {
 #fab_camera {
     float: left;
     background: rgba(0, 0, 0, 0);
+    border: none;
+    outline: none;
 }
 
 #fab_send {
     float: right;
     background: rgba(0, 0, 0, 0);
+    border: none;
+    outline: none;
 }
 
 #fab_send:hover, #fab_camera:hover {
@@ -411,14 +418,16 @@ span#chat_head {
     position: relative;
     background: #fff;
     margin: 6px 0 0px 0;
-    height: 300px;
+    height: 250px;
     min-height: 0;
     font-size: 12px;
     line-height: 18px;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     float: right;
     padding-bottom: 100px;
+    display: none;
 }
 .chat_converse2{
     height: 100%;
@@ -437,22 +446,40 @@ span#chat_head {
 
 .chat .chat_converse .chat_msg_item {
     position: relative;
-    margin: 8px 0 15px 0;
-    padding: 8px 10px;
-    max-width: 60%;
+    margin: 10px;
+    padding: 8px 8px;
+    max-width: 80%;
     display: block;
     word-wrap: break-word;
-    border-radius: 3px;
-    -webkit-animation: zoomIn .5s cubic-bezier(.42, 0, .58, 1);
-    animation: zoomIn .5s cubic-bezier(.42, 0, .58, 1);
+    /* border-radius: 3px; */
+    -webkit-animation: zoomIn .1s cubic-bezier(.42, 0, .58, 1);
+    animation: zoomIn .1s cubic-bezier(.42, 0, .58, 1);
     clear: both;
     z-index: 999;
+    font-size: 14px;
+    border-radius: 20px;
+}
+.status:first-child {
+    /* margin: 0 0 0 0; */
+    margin-top: 0;
 }
 .status {
-    margin: 45px -50px 0 0;
+    margin: 50px 30px 0 0;
     float: right;
-    font-size: 11px;
-    opacity: 0.3;
+    /* font-size: 16px; */
+    /* opacity: .6; */
+    /* display: table-column-group; */
+    /* justify-content: center; */
+    /* background-color: #f5f5f6; */
+    -webkit-border-radius: 5rem;
+    -moz-border-radius: 5rem;
+    border-radius: 5rem;
+    color: #818891;
+    font-size: 14px;
+    line-height: 30px;
+    text-align: center;
+    /* margin: 5px auto; */
+    width: 40%;
 }
 .status2 {
     margin: -10px 20px 0 0;
@@ -467,7 +494,7 @@ span#chat_head {
 }
 
 .chat .chat_converse .chat_msg_item.chat_msg_item_admin .chat_avatar {
-    left: -52px;
+    left: -45px;
     background: rgba(0, 0, 0, 0.03);
 }
 
@@ -484,8 +511,8 @@ span#chat_head {
 }
 
 .chat .chat_converse .chat_msg_item .chat_avatar, .chat_avatar .chat__avatar{
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     text-align: center;
     border-radius: 50%;
     background-color: #42a5f5;
@@ -506,25 +533,28 @@ span#chat_head {
     bottom: 0;
     left: 0;
     right: 0;
-    font-size: 30px;
+    font-size: 16px;
     text-align: center;
     font-weight: 900;
     text-transform: uppercase;
     color: #fff;
+    white-space: nowrap;
 }
 
 .chat .chat_converse .chat_msg_item.chat_msg_item_admin {
-    margin-left: 60px;
+    margin-left: 50px;
     float: left;
-    background: rgba(0, 0, 0, 0.03);
-    color: #666;
+    background: rgba(0, 0, 0, 0.13);
+    color: #000;
 }
 
 .chat .chat_converse .chat_msg_item.chat_msg_item_user {
-    margin-right: 20px;
+    margin-left: 50px;
     float: right;
+    text-align: right;
     background: #42a5f5;
     color: #eceff1;
+    /* right: 0; */
 }
 
 .chat .chat_converse .chat_msg_item.chat_msg_item_admin:before {

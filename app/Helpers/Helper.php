@@ -483,4 +483,18 @@ class Helper
             return isset($_GET['sort']) && $_GET['sort'] == $fieldName && isset($_GET['desc']);
         } else return false;
     }
+
+
+
+    /**
+     * @param $date
+     * @return string
+     */
+    public static function formatDateWeekday($date)
+    {
+        $days = array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
+        $date_format = ($days[date("w", strtotime($date))]) . ' ' . date('Y M d ', strtotime($date));
+
+        return $date_format;
+    }
 }

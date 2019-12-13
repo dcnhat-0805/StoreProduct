@@ -138,6 +138,7 @@ const FRONT_REGISTER = 'front.end.register';
 const FRONT_STORE = 'front.end.store';
 const FRONT_ACCEPT = 'front.end.accept';
 const FRONT_SEND_COMMENT = 'front.end.send.comment';
+const FRONT_SEND_CONTACT = 'front.end.send.contact';
 const FRONT_LOGIN_SOCIALITE = 'front.end.login.facebook';
 const FRONT_FORGET_PASSWORD = 'front.end.forget.password';
 
@@ -168,6 +169,9 @@ const FRONT_LOAD_DATA_SEARCH = 'front.end.load.data.search';
 
 const CUSTOMER_ASK = 0;
 const ADMIN_REPLY = 1;
+
+const CUSTOMER_SEND = 0;
+const ADMIN_SEND = 1;
 
 const PRODUCT_ATTRIBUTE = [
     '' => 'Please select a product attribute',
