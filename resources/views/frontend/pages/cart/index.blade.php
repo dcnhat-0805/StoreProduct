@@ -37,10 +37,10 @@
                                     <th data-field="quantity" data-editable="true" class="text-center">Quantity</th>
                                     <th data-field="total" data-editable="true" class="text-center">Total</th>
                                     <th data-field="action" class="text-center deleteParent">
-                                        <button data-toggle="modal" title="Delete cart" class="pd-setting-ed deleteAllCart"
-                                                data-original-title="Trash" data-target="#deleteCart" data-id="1"
-                                                type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </button>
+{{--                                        <button data-toggle="modal" title="Delete cart" class="pd-setting-ed deleteAllCart"--}}
+{{--                                                data-original-title="Trash" data-target="#deleteCart" data-id="1"--}}
+{{--                                                type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>--}}
+{{--                                        </button>--}}
                                     </th>
                                 </tr>
                                 </thead>
