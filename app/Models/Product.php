@@ -110,6 +110,16 @@ class Product extends Model
             $params[COLORS] = self::removeUnsafeString($params[COLORS]);
         }
 
+        if (\request()->has(SIZES)) {
+            $params[SIZES] = request()->get(SIZES);
+            $params[SIZES] = self::removeUnsafeString($params[SIZES]);
+        }
+
+        if (\request()->has(MATERIAL)) {
+            $params[MATERIAL] = request()->get(MATERIAL);
+            $params[MATERIAL] = self::removeUnsafeString($params[MATERIAL]);
+        }
+
         if (\request()->has(DISCOUNT)) {
             $params[DISCOUNT] = request()->get(DISCOUNT);
             $params[DISCOUNT] = self::removeUnsafeString($params[DISCOUNT]);
@@ -185,6 +195,20 @@ class Product extends Model
             $color = $params[COLORS];
             if ($color) {
                 $model = $model->where('product_attributes.attribute_item_name', 'like', '%' . $color .'%');
+            }
+        }
+
+        if (isset($params[SIZES])) {
+            $size = $params[SIZES];
+            if ($size) {
+                $model = $model->where('product_attributes.attribute_item_name', 'like', '%' . $size .'%');
+            }
+        }
+
+        if (isset($params[MATERIAL])) {
+            $materials = $params[MATERIAL];
+            if ($materials) {
+                $model = $model->where('product_attributes.attribute_item_name', 'like', '%' . $materials .'%');
             }
         }
 

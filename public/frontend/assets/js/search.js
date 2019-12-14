@@ -3,7 +3,7 @@ const DISCOUNT = 'discount';
 const RATING = 'rating';
 const PRICE = 'price';
 
-const ARRAY_FILTER = ['color', 'discount'];
+const ARRAY_FILTER = ['color', 'discount', 'size', 'materials'];
 
 $(document).ready(function () {
 

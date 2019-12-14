@@ -166,6 +166,8 @@ const IMAGE_RESIZE_PREFIX = 'product-';
 
 const KEYWORD = 'keyword';
 const COLORS = 'color';
+const SIZES = 'size';
+const MATERIAL = 'materials';
 const FRONT_SEARCH_BY_WORD = 'front.end.search.by.word';
 const FRONT_LOAD_DATA_SEARCH = 'front.end.load.data.search';
 
@@ -179,8 +181,8 @@ const PRODUCT_ATTRIBUTE = [
     '' => 'Please select a product attribute',
     '1' => 'Color',
 //    '2' => 'Storage',
-    '2' => 'Size',
-    '3' => 'Materials',
+    '3' => 'Size',
+    '4' => 'Materials',
 ];
 
 const OPTION_DAY = array(

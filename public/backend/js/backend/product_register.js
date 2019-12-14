@@ -97,8 +97,8 @@ let productRegisterJs = (function ($) {
     '                                        <option value="" selected="selected">Please select a product attribute</option>\n' +
     '                                        <option value="1">Color</option>\n' +
     // '                                        <option value="2">Storage</option>\n' +
-    '                                        <option value="2">Size</option>\n' +
-    '                                        <option value="3">Materials</option>\n' +
+    '                                        <option value="3">Size</option>\n' +
+    '                                        <option value="4">Materials</option>\n' +
     '                                    </select>'
                                 + '</div>'
                                 + '<div class="col-sm-5">'
