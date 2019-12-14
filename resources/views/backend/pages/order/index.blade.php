@@ -230,7 +230,6 @@
             </div>
         </div>
     </div>
-    </div>
 @endsection
 @section('jsCustom')
     <!-- summernote JS
