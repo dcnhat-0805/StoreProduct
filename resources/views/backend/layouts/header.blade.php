@@ -829,6 +829,17 @@
                                         <span class="mini-click-non">Order</span></a>
                                 </li>
 
+                                @if ($user->can('viewContact', App\Models\Contact::class))
+                                    <?php
+                                    $isShowContact = in_array(request()->route()->uri(), ['admin/contact']);
+                                    ?>
+                                    <li class=" {{ $isShowContact ? 'active' : '' }} ">
+                                        <a title="Contact" href="{{route(ADMIN_CONTACT_INDEX)}}" aria-expanded="false"><span
+                                                class="educate-icon educate-interface icon-wrap" aria-hidden="true"></span>
+                                            <span class="mini-click-non">Contact</span></a>
+                                    </li>
+                                @endif
+
                                 @if ($user->can('viewComment', App\Models\Comment::class))
                                     <?php
                                         $isShowComment = in_array(request()->route()->uri(), ['admin/comment']);
@@ -837,17 +848,6 @@
                                         <a title="Comment" href="{{route(ADMIN_COMMENT_INDEX)}}" aria-expanded="false"><span
                                                 class="educate-icon educate-message icon-wrap" aria-hidden="true"></span>
                                             <span class="mini-click-non">Comment</span></a>
-                                    </li>
-                                @endif
-
-                                @if ($user->can('viewContact', App\Models\Contact::class))
-                                    <?php
-                                        $isShowContact = in_array(request()->route()->uri(), ['admin/contact']);
-                                    ?>
-                                    <li class=" {{ $isShowContact ? 'active' : '' }} ">
-                                        <a title="Comment" href="{{route(ADMIN_CONTACT_INDEX)}}" aria-expanded="false"><span
-                                                class="educate-icon educate-message icon-wrap" aria-hidden="true"></span>
-                                            <span class="mini-click-non">Contact</span></a>
                                     </li>
                                 @endif
 
