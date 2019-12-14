@@ -49,7 +49,7 @@
                 <li>
                     <input type="checkbox" class="jsCheckBox" id="{{ $filter }}" name="{{ DISCOUNT }}"
                            value="{{ $filter }}" data-href="{{ request()->fullUrl() }}">
-                    <label for="{{ $filter }}" class="label__span">{{ $filter . ' or More' }}</label>
+                    <label for="{{ $filter }}" class="label__span">{{ $filter . '% or More' }}</label>
                 </li>
             @endforeach
         </ul>

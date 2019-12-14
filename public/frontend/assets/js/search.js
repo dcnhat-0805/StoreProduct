@@ -135,9 +135,9 @@ $(document).ready(function () {
             filterSearch = filterSearch.split(/,|%2C/);
             if (filterSearch != null && filterSearch.length > 0) {
                 $('input.jsCheckBox[name="'+ filter +'"]').each(function () {
-                    let color = $(this).val();
+                    let attr = $(this).val();
 
-                    if (filterSearch.indexOf(color) != -1) {
+                    if (filterSearch.includes(attr)) {
                         $(this).prop('checked', true);
                         $(this).parent().addClass("checked");
                     } else {
