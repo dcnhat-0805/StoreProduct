@@ -6,16 +6,18 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
-class ContactController extends Controller
+class ContactController extends FrontEndController
 {
     public function sendContact(Request $request)
     {
         $input = $request->all();
+        $user = Auth::user();
 
         DB::beginTransaction();
         if (Contact::createContact($input)) {
-            $contacts = Contact::getContactOfUser();
+            $contacts = Contact::getContactOfUser($user->id);
             $content = view('frontend.pages._chat_content', compact('contacts'))->render();
 
             DB::commit();
@@ -27,7 +29,8 @@ class ContactController extends Controller
 
     public function getContact()
     {
-        $contacts = Contact::getContactOfUser();
+        $user = Auth::user();
+        $contacts = Contact::getContactOfUser($user->id);
         $content = view('frontend.pages._chat_content', compact('contacts'))->render();
 
         return response()->json($content);

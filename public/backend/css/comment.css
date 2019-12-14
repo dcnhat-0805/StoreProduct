@@ -61,10 +61,10 @@
     padding-left: 6px;
 }
 .me {
-    color: #94C2ED;
+    color: #86bb71;
 }
 .online {
-    color: #86BB71;
+    color: #94c2ed;
 }
 .chat__comment .chat-history .other-message {
     background: #94C2ED;
@@ -85,11 +85,11 @@
 }
 .chat__comment .chat-history .message.other-message:after {
     border-bottom-color: #94C2ED;
-    left: 93%;
+    right: 93%;
 }
 .chat__comment .chat-history .message:after {
     bottom: 100%;
-    left: 7%;
+    right: 7%;
     border: solid transparent;
     content: " ";
     height: 0;
@@ -139,4 +139,13 @@
     /*background: none !important;*/
     /*border: none !important;*/
     padding: 2px 5px;
+}
+.status {
+    margin: 0 auto;
+    text-align: center;
+    background-color: #ccc;
+    width: 40%;
+    padding: 5px 0;
+    border-radius: 20px;
+    margin-bottom: 20px;
 }

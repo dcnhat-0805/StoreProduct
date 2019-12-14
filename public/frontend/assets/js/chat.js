@@ -60,6 +60,7 @@ $(document).ready(function () {
             type : 'GET',
             success : function (data) {
                 $('#chat_converse').html('');
+                $('#chatSend').val('');
 
                 if ($('.chat').hasClass('show')) {
                     $('#chat_converse').append(data);

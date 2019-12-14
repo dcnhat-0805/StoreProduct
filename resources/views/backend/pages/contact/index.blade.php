@@ -7,7 +7,7 @@
     $user = Auth::guard('admins')->user();
 @endphp
 @extends('backend.layouts.app')
-@section('title', 'List comment')
+@section('title', 'List contact')
 @section('titleMenu', 'Order')
 @section('cssCustom')
     <link rel="stylesheet" type="text/css"
@@ -31,7 +31,7 @@
         @if ($user->can('viewComment', Comment::class))
             <div class="sparkline13-hd">
                 <div class="main-sparkline13-hd">
-                    <h1 style="text-transform: capitalize;">List <span class="table-project-n">Of</span> Comment</h1>
+                    <h1 style="text-transform: capitalize;">List <span class="table-project-n">Of</span> Contact</h1>
                 </div>
             </div>
             <div class="sparkline13-graph">
@@ -58,33 +58,29 @@
                         <tr>
                             <th data-field="state" data-checkbox="true"></th>
                             <th data-field="id" class="hide">ID</th>
-                            <th data-field="product_name" data-editable="true">Product Name</th>
                             <th data-field="user_name" data-editable="true">User Name</th>
                             <th data-field="user_email" data-editable="true">User Email</th>
-                            <th data-field="user_phone" data-editable="true">Order Phone</th>
+                            <th data-field="user_phone" data-editable="true">User Phone</th>
                             <th data-field="action">Action</th>
                         </tr>
                         </thead>
                         <tbody class="list-category">
-                        @if($comments)
-                            @foreach($comments as $comment)
+                        @if($contacts)
+                            @foreach($contacts as $contact)
                                 @php
-                                    $product = App\Models\Product::showProduct($comment->product_id);
-                                    $user = App\Models\User::showUser($comment->user_id);
+                                    $user = App\Models\User::showUser($contact->user_id);
                                 @endphp
-                                <tr id="comment-{{ $user->id }}" data-id="{{ $comment->product_id }}">
+                                <tr id="contact-{{ $contact->user_id }}" data-id="{{ $contact->user_id }}">
                                     <td></td>
-                                    <td class="text-center hide">{{ $user->commentId }}</td>
-                                    <td class="">{{ $product->product_name }}</td>
-                                    <td class="">{{ $user->name }}</td>
-                                    <td class="">{{ $user->email }}</td>
-                                    <td class="">{{ $user->phone }}</td>
+                                    <td class="text-center hide">{{ $contact->user_id }}</td>
+                                    <td class="">{{ $contact->name }}</td>
+                                    <td class="">{{ $contact->email }}</td>
+                                    <td class="">{{ $contact->phone }}</td>
                                     <td class="datatable-ct text-center">
-                                        <button data-toggle="modal" title="Reply {{ $user->name }}"
+                                        <button data-toggle="modal" title="Reply {{ $contact->name }}"
                                                 class="pd-setting-ed"
-                                                data-original-title="Edit" data-target="#replyComment"
-                                                data-product_id="{{ $comment->product_id }}"
-                                                data-user_id="{{ $user->id }}" type="button">
+                                                data-original-title="Edit" data-target="#replyContact"
+                                                data-user_id="{{ $contact->user_id }}" type="button">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </button>
                                     </td>
@@ -97,9 +93,9 @@
                     <!-- Pagination -->
                     <div class="pagination-wrapper header" style="margin-top: 20px;">
                         <nav class="nav-pagination store-unit clearfix" aria-label="Page navigation">
-                            <span class="info">{{ $comments->currentPage() }} / {{ $comments->lastPage() }} pages（total of {{ count($comments) }}）</span>
+                            <span class="info">{{ $contacts->currentPage() }} / {{ $contacts->lastPage() }} pages（total of {{ count($contacts) }}）</span>
                             <ul class="pull-right">
-                                <li> {{ $comments->appends($_GET)->links('backend.pagination') }}</li>
+                                <li> {{ $contacts->appends($_GET)->links('backend.pagination') }}</li>
                             </ul>
                         </nav>
                     </div>
@@ -124,7 +120,7 @@
                 <div class="modal-body">
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
-                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_COMMENT_INDEX) }}">
+                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_CONTACT_INDEX) }}">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -144,16 +140,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-12">
-                                            <div class="form-group">
-                                                <input type="checkbox" class="jsCheckBox" id="display" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>
-                                                <label for="display" class="label__status">Display</label>
-                                                <input type="checkbox" class="jsCheckBox" id="not__display" name="status[]" value="{{ NOT_DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', NOT_DISPLAY, 'checked') }}>
-                                                <label for="not__display" class="label__status">Not display</label>
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div><!-- /.box-body -->
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-custon-three btn-success"
@@ -162,7 +148,7 @@
                                     </button>
                                     <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal"
                                             id="btnClear"
-                                            onclick="window.location.href = '{{route(ADMIN_COMMENT_INDEX)}}'">
+                                            onclick="window.location.href = '{{route(ADMIN_CONTACT_INDEX)}}'">
                                         <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
                                     </button>
                                 </div>
@@ -174,7 +160,7 @@
         </div>
     </div>
     <!-- Search Modal-->
-    <div class="modal fade" id="replyComment" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="replyContact" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
          aria-hidden="true">
         <div class="modal-dialog" role="document" style="min-width: 700px;">
             <div class="modal-content">
@@ -191,58 +177,23 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <form action="" class="form__rep__comment">
+                    <form action="" class="form__rep__contact">
                         <div class="col-sm-9">
                             <div class="chat__message clearfix">
-                                <input type="hidden" name="rep_comment_id" class="rep__comment__id">
-                                <input type="hidden" name="comment_id" class="comment__id">
-                                <input type="hidden" class="user__id">
-                                <input type="hidden" class="product__id">
-                                <input type="hidden" name="comment_type" class="comment__type" value="{{ ADMIN_REPLY }}">
-                                <textarea name="comment_reply" class="comment__reply" placeholder="Type your message" rows="3"></textarea>
-                                <div class="error error__comment_reply">Please enter reply comment.</div>
+                                <input type="hidden" class="user__id" name="user_id">
+                                <textarea name="message" class="contact__reply" placeholder="Type your message" rows="3"></textarea>
+                                <div class="error error__contact_reply">Please enter reply contact.</div>
                             </div>
                         </div>
                         <div class="col-sm-3">
-                            <button type="button" class="btn btn-custon-three btn-success btn__reply-comment">
+                            <button type="button" class="btn btn-custon-three btn-success btn__reply-contact">
                                 <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Reply
                             </button>
-                            <button type="button" class="btn btn-custon-three btn-danger btn__cancel__comment">
+                            <button type="button" class="btn btn-custon-three btn-danger btn__cancel__contact" data-dismiss="modal">
                                 <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
                             </button>
                         </div>
                     </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- delete Modal-->
-    <div class="modal fade" id="deliveryOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form style="min-height: 70px;">
-                        <input type="hidden" name="id" id="comment_id">
-                        <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">Do
-                            you want to delivery ?</h5>
-                    </form>
-                </div>
-                <div class="modal-footer modal-delete">
-                    <button type="button" class="btn btn-custon-three btn-success" id="btnDeliveryOrder"><i
-                            class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Yes
-                    </button>
-                    <button class="btn btn-custon-three btn-danger" type="button" data-dismiss="modal"><i
-                            class="fa fa-times edu-danger-error" aria-hidden="true"></i> No
-                    </button>
-                    <div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -253,5 +204,5 @@
 		============================================ -->
     <script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote.min.js') }}"></script>
     <script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote-active.js') }}"></script>
-    <script src="{{ App\Helpers\Helper::asset('backend/js/backend/comment.js') }}"></script>
+    <script src="{{ App\Helpers\Helper::asset('backend/js/backend/contact.js') }}"></script>
 @endsection

@@ -62,6 +62,8 @@ const ADMIN_COMMENT_REPLY = 'admin.comment.reply';
 const ADMIN_COMMENT_DELETE = 'admin.comment.delete';
 const ADMIN_COMMENT_DESTROY = 'admin.comment.destroy';
 
+const ADMIN_CONTACT_INDEX = 'admin.contact.index';
+
 const ADMIN_CUSTOMER_INDEX = 'admin.customer.index';
 const ADMIN_CUSTOMER_DELETE = 'admin.customer.delete';
 const ADMIN_CUSTOMER_DESTROY = 'admin.customer.destroy';

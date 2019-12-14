@@ -493,7 +493,7 @@ class Helper
     public static function formatDateWeekday($date)
     {
         $days = array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
-        $date_format = ($days[date("w", strtotime($date))]) . ' ' . date('Y M d ', strtotime($date));
+        $date_format = date('D - Y M d', strtotime($date));
 
         return $date_format;
     }

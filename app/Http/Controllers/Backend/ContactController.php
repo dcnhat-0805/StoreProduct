@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -14,72 +16,36 @@ class ContactController extends Controller
      */
     public function index()
     {
-        //
+        $params = \request()->all();
+        $contacts = Contact::getDistinct($params);
+
+        return view('backend.pages.contact.index', compact('contacts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function detail(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            $userId = $request->get('user_id');
+            $contacts = Contact::getContactOfUser($userId);
+//            dd($contacts);
+
+            $html = view('backend.pages.contact._contact', compact('contacts'))->render();
+
+            return response()->json($html, 200);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function reply(Request $request)
     {
-        //
-    }
+        $input = $request->all();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        DB::beginTransaction();
+        if (Contact::repContact($input)) {
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+            DB::commit();
+            return response()->json(true);
+        } else {
+            DB::rollBack();
+        }
     }
 }

@@ -100,7 +100,7 @@ let Commons = (function ($) {
     });
 
     $('.modal').on('hide.bs.modal, show.bs.modal', function () {
-        $(this).find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
+        $(this).find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment, .btn__reply-contact").prop('disabled', false);
     });
 
     modules.getProductCategory = function (categoryId) {
@@ -235,7 +235,7 @@ let Commons = (function ($) {
         });
     };
 
-    $("button.btn-success:not('.product, #btnSearch, .btn__delivery, .btn__reply-comment, .btn__remove__comment, .btn__edit__account')").on('click', function () {
+    $("button.btn-success:not('.product, #btnSearch, .btn__delivery, .btn__reply-comment, .btn__remove__comment, .btn__edit__account, .btn__reply-contact')").on('click', function () {
         $(this).prop('disabled', true);
     });
 

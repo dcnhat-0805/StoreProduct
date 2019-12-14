@@ -116,12 +116,23 @@ Route::namespace('Backend')->group(function(){
                 ->name(ADMIN_COMMENT_INDEX);
             Route::get('/detail', 'CommentController@detail')
                 ->name(ADMIN_COMMENT_REPLY);
-            Route::post('/reply', 'CommentController@reply')
-                ->name(ADMIN_COMMENT_REPLY);
+            Route::post('/reply', 'CommentController@reply');
             Route::post('/delete/{id}', 'CommentController@delete')
                 ->name(ADMIN_COMMENT_DELETE);
             Route::post('/deleteReply/{id}', 'CommentController@deleteReply');
             Route::post('/destroy', 'CommentController@destroy')
+                ->name(ADMIN_COMMENT_DESTROY);
+        });
+
+        Route::group(['prefix' => 'contact'], function () {
+            Route::get('/', 'ContactController@index')
+                ->name(ADMIN_CONTACT_INDEX);
+            Route::get('/detail', 'ContactController@detail');
+            Route::post('/reply', 'ContactController@reply');
+            Route::post('/delete/{id}', 'ContactController@delete')
+                ->name(ADMIN_COMMENT_DELETE);
+            Route::post('/deleteReply/{id}', 'ContactController@deleteReply');
+            Route::post('/destroy', 'ContactController@destroy')
                 ->name(ADMIN_COMMENT_DESTROY);
         });
 
