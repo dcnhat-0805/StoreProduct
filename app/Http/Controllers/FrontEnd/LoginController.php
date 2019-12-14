@@ -43,7 +43,8 @@ class LoginController extends Controller
         $authUser = $this->findOrCreateUser($user);
         Auth::login($authUser);
 
-        ShoppingCart::createShoppingCart();
+        Cart::destroy();
+//        ShoppingCart::createShoppingCart();
 
         Session::flash("success", trans("messages.login.login_success"));
         $lastUrl = Session::get(SESSION_LAST_URL_CUSTOMER);
@@ -107,7 +108,8 @@ class LoginController extends Controller
             Session::flash("success", trans("messages.users.login_success"));
             $lastUrl = Session::get(SESSION_LAST_URL_CUSTOMER);
 
-            ShoppingCart::createShoppingCart();
+            Cart::destroy();
+//        ShoppingCart::createShoppingCart();
 
             if ($lastUrl && $lastUrl !== route(FRONT_LOGIN)) {
                 return redirect($lastUrl);
