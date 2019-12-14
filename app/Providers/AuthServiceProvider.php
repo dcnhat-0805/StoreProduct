@@ -3,12 +3,14 @@
 namespace App\Providers;
 
 use App\Models\Comment;
+use App\Models\Contact;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductCategory;
 use App\Models\ProductType;
 use App\Models\User;
 use App\Policies\CommentPolicy;
+use App\Policies\ContactPolicy;
 use App\Policies\CustomerPolicy;
 use App\Policies\OrderPolicy;
 use App\Policies\ProductCategoryPolicy;
@@ -38,6 +40,7 @@ class AuthServiceProvider extends ServiceProvider
         Order::class => OrderPolicy::class,
         Comment::class => CommentPolicy::class,
         User::class => CustomerPolicy::class,
+        Contact::class => ContactPolicy::class,
     ];
 
     /**

@@ -255,7 +255,7 @@
                                         @php
                                             $repComments = \App\Models\ReplyComment::getCommentReply($commentProduct->commentId);
                                         @endphp
-                                    <div class="comment-content">{!! $commentProduct->comment_contents !!}</div>
+                                    <div class="comment-content" data-id="{{ $commentProduct->commentId }}">{!! $commentProduct->comment_contents !!}</div>
 
                                         @if(count($repComments))
                                             <div class="comment-child-list">

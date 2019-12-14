@@ -174,7 +174,7 @@ class Comment extends Model
                     $product->whereNull('products.deleted_at');
                 },
             ])
-            ->orderBy('comments.created_at', 'DESC')
+            ->orderBy('comments.created_at', 'ASC')
             ->paginate(LIMIT);
 
         return $comments;

@@ -37,21 +37,8 @@ class Contact extends Model
             if ($publishDate != 0) {
                 $publishDate = str_replace('+', ' ', $publishDate);
                 $publishDate = explode(' - ', $publishDate);
-                $contact = $contact->whereRaw("contacts.created_at BETWEEN ? AND ?", [$publishDate[0], date('Y/m/d', strtotime("+1 day", strtotime($publishDate[1])))]);
+                $contact = $contact->whereRaw("contacts.created_at BETWEEN ? AND ?", [date('Y/m', strtotime($publishDate[0])), date('Y/m', strtotime("+1 day", strtotime($publishDate[1])))]);
             }
-        }
-
-        if (isset($params['status'])) {
-            $status = $params['status'];
-
-            $contact = $contact->where(function ($query) use ($status) {
-                if (in_array(0, $status)) {
-                    $query->orWhereRaw("(contacts.comment_status = 0)");
-                }
-                if (in_array(1, $status)) {
-                    $query->orWhereRaw("(contacts.comment_status = 1)");
-                }
-            });
         }
 
         return $contact;

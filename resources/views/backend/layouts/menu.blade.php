@@ -75,7 +75,7 @@
                         ?>
                         <li class=" {{ $isShowContact ? 'active' : '' }} ">
                             <a title="Comment" href="{{route(ADMIN_CONTACT_INDEX)}}" aria-expanded="false"><span
-                                    class="educate-icon educate-message icon-wrap" aria-hidden="true"></span>
+                                    class="educate-icon educate-interface icon-wrap" aria-hidden="true"></span>
                                 <span class="mini-click-non">Contact</span></a>
                         </li>
                     @endif

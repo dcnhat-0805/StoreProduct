@@ -840,6 +840,17 @@
                                     </li>
                                 @endif
 
+                                @if ($user->can('viewContact', App\Models\Contact::class))
+                                    <?php
+                                        $isShowContact = in_array(request()->route()->uri(), ['admin/contact']);
+                                    ?>
+                                    <li class=" {{ $isShowContact ? 'active' : '' }} ">
+                                        <a title="Comment" href="{{route(ADMIN_CONTACT_INDEX)}}" aria-expanded="false"><span
+                                                class="educate-icon educate-message icon-wrap" aria-hidden="true"></span>
+                                            <span class="mini-click-non">Contact</span></a>
+                                    </li>
+                                @endif
+
                                 <li>
                                     <a data-toggle="collapse" data-target="#pages" href="#">
                                         <span class="educate-icon educate-professor icon-wrap"></span>

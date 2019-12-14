@@ -28,7 +28,7 @@
 @endsection
 @section('content')
     <div class="sparkline13-list">
-        @if ($user->can('viewComment', Comment::class))
+        @if ($user->can('viewContact', App\Models\Contact::class))
             <div class="sparkline13-hd">
                 <div class="main-sparkline13-hd">
                     <h1 style="text-transform: capitalize;">List <span class="table-project-n">Of</span> Contact</h1>
@@ -131,15 +131,15 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="name">Created at</label>
-                                                <input type="text" readonly class="form-control jsDatepicker"
-                                                       name="created_at" value="{{ request()->get('created_at') }}">
-                                            </div>
-                                        </div>
-                                    </div>
+{{--                                    <div class="row">--}}
+{{--                                        <div class="col-sm-6">--}}
+{{--                                            <div class="form-group">--}}
+{{--                                                <label for="name">Created at</label>--}}
+{{--                                                <input type="text" readonly class="form-control jsDatepicker"--}}
+{{--                                                       name="created_at" value="{{ request()->get('created_at') }}">--}}
+{{--                                            </div>--}}
+{{--                                        </div>--}}
+{{--                                    </div>--}}
                                 </div><!-- /.box-body -->
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-custon-three btn-success"

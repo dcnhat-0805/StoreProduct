@@ -178,9 +178,9 @@ const ADMIN_SEND = 1;
 const PRODUCT_ATTRIBUTE = [
     '' => 'Please select a product attribute',
     '1' => 'Color',
-    '2' => 'Storage',
-    '3' => 'Size',
-    '4' => 'Materials',
+//    '2' => 'Storage',
+    '2' => 'Size',
+    '3' => 'Materials',
 ];
 
 const OPTION_DAY = array(
