@@ -122,7 +122,9 @@ class AdminController extends Controller
 
         if ($user->can('deleteAdmin', Admin::class)) {
             try {
-                Admin::deleteAdmin($id);
+                if ($id != ADMIN) {
+                    Admin::deleteAdmin($id);
+                }
 
                 Session::flash("success", trans("messages.admin.delete_success"));
                 return response()->json();

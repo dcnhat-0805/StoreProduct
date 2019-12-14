@@ -426,6 +426,11 @@ class Order extends Model
                 'order_status' => DELIVERY,
             ]);
         }
+        if ($order->order_status == DELIVERY) {
+            return $order->update([
+                'order_status' => FINISH,
+            ]);
+        }
 
         return;
     }

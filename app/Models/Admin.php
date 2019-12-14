@@ -92,7 +92,7 @@ class Admin extends Authenticatable
         $admin = self::filter($params);
         $order = Helper::getSortParam($params);
         if ($order == '1 = 1') {
-            $order = "id DESC ";
+            $order = "id ASC ";
         }
         $now = date('Y-m-d');
         $admin = $admin->whereNull('admins.deleted_at')

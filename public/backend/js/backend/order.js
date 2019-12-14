@@ -19,7 +19,7 @@ $(document).ready(function () {
 
         $('.btn__delivery').prop('disabled', true);
 
-        if (status == PENDING) {
+        if (status == PENDING || status == DELIVERY) {
             $('.btn__delivery').prop('disabled', false);
         }
         // $('#modal__order__title').text(name);

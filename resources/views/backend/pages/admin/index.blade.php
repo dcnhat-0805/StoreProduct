@@ -66,9 +66,11 @@
                                             data-email="{{ $ad->email }}" data-permission="{{ $ad->role }}"
                                             data-url="{{route(ADMIN_EDIT, ['id' => $ad->id])}}" data-status="{{ $ad->admin_status }}" type="button">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                                    <button data-toggle="modal" title="Delete {{ $ad->name }}" class="pd-setting-ed"
-                                            data-original-title="Trash" data-target="#delete" data-id="{{ $ad->id }}" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
-                                    </button>
+                                    @if($ad->id != ADMIN)
+                                        <button data-toggle="modal" title="Delete {{ $ad->name }}" class="pd-setting-ed"
+                                                data-original-title="Trash" data-target="#delete" data-id="{{ $ad->id }}" type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
+                                        </button>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
