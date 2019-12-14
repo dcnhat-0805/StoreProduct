@@ -81,7 +81,7 @@
                                                         @endif
                                                         @if($cart->options->material)
                                                             <div data-material="{{ $cart->options->material }}"
-                                                                 style="background-color: #fff;"
+                                                                 style="background-color: #fff; width: auto; padding: 0 4px;"
                                                                  class="attribute-item size-item size">{{ $cart->options->material }}</div>
                                                         @endif
                                                     </div>
@@ -100,7 +100,7 @@
                                             </td>
                                             <td class="text-center">
                                                 <input class="jsTouchSpin quantity-{{ $cart->rowId }}" type="text"
-                                                       value="{{ $cart->qty }}" readonly
+                                                       value="{{ $cart->qty }}" data-quantity="{{ \App\Helpers\Helper::getQuantityProductById($cart->id) }}" readonly
                                                        name="quantity" data-row_id="{{ $cart->rowId }}">
                                             </td>
                                             <td class="text-center"

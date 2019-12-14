@@ -17,6 +17,8 @@
 
 namespace App\Helpers;
 
+use App\Models\Order;
+use App\Models\Product;
 use App\Models\ProductAttribute;
 use App\Models\Rating;
 use App\Models\Wards;
@@ -496,5 +498,23 @@ class Helper
         $date_format = date('D - Y M d', strtotime($date));
 
         return $date_format;
+    }
+
+    public static function getQuantityProductById($productId)
+    {
+        return Product::getQuantityProductById($productId);
+    }
+
+    public static function isRatingProduct($productId, $userId)
+    {
+        return Order::where('orders.user_id', $userId)
+            ->where('product_id', $productId)
+            ->select(
+                'orders.id',
+                'orders.user_id',
+                'order_details.product_id'
+            )
+            ->join('order_details', 'order_details.order_id', 'orders.id')
+            ->exists();
     }
 }

@@ -227,6 +227,7 @@ Route::namespace('FrontEnd')->group(function(){
     Route::group(['prefix' => 'comments'], function () {
         Route::post('/sendComment', 'CommentController@sendComment')
             ->name(FRONT_SEND_COMMENT);
+        Route::get('/loadComment/{product_id}', 'CommentController@loadComment');
     });
 
     Route::group(['prefix' => 'contact'], function () {

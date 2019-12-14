@@ -31,9 +31,17 @@ class CommentController extends FrontEndController
 //            Session::flash("success", trans("messages.users.update_success"));
 
             DB::commit();
-            return back();
+            return response()->json(true);
         } else {
             DB::rollBack();
         }
+    }
+
+    public function loadComment($productId)
+    {
+        $comments = Comment::getDistinctDetailProduct($productId);
+        $html = view('frontend.pages.product._comment', compact('comments'))->render();
+
+        return response()->json($html);
     }
 }

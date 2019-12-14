@@ -1,5 +1,28 @@
 const HEIGHT = 780;
 $(document).ready(function () {
+    let max_qty = $('.product__quantity').val();
+    $('.jsQuantity1').TouchSpin({
+        buttondown_class: 'btn btn-edit__quantity btn-down btn-white',
+        buttonup_class: 'btn btn-edit__quantity btn-up btn-white',
+        initval: 1,
+        min: 1,
+        max: max_qty
+    });
+    $('.btn-down').prop('disabled', true);
+
+    $(document).on('click', '.btn-edit__quantity', function () {
+        let quantity = $(this).parent().parent().find('input[name=quantity]').val();
+
+        $('.btn-down').prop('disabled', false);
+        $('.btn-up').prop('disabled', false);
+        if (quantity === '1') {
+            $('.btn-down').prop('disabled', true);
+        }
+        if (quantity == max_qty) {
+            $('.btn-up').prop('disabled', true);
+        }
+    });
+
     function disableAddToCart() {
         let color = $('.color-item.active').data('color');
         let size = $('.size-item.active').data('size');
@@ -87,8 +110,51 @@ $(document).ready(function () {
         });
     });
 
+
+    loadComment();
+    function loadComment() {
+        $('.sop__comment_list').html('');
+        resetFormSendComment();
+        let productId = $('.product__id').val()
+        $.ajax({
+            url: "/comments/loadComment/" + productId,
+            dataType: 'JSON',
+            type: "GET",
+            success : function (result) {
+                $('.sop__comment_list').append(result);
+
+                $('html,body').animate({
+                    scrollTop: $('.sop__comment_list').offset().top
+                }, 0);
+            },
+            error : function (result) {
+                // location.reload();
+            }
+        });
+    }
+
+    function resetFormSendComment() {
+        $('#formSendComment')[0].reset();
+        $('#btnSendComment').prop('disabled', false);
+    }
+
     $('#btnSendComment').on('click', function () {
-        $('#formSendComment').submit();
+        let formData = $('#formSendComment').serialize();
+
+        $.ajax({
+            url: "/comments/sendComment",
+            dataType: 'JSON',
+            type: "POST",
+            data: formData,
+            success : function (result) {
+                loadComment();
+            },
+            error : function (data) {
+                let error = $.parseJSON(data.responseText).errors;
+
+                Commons.getErrorMessage(error, error.comment_contents, '.error_comment');
+            }
+        });
     })
 
     // $('input[name=rating]').on('change', function () {

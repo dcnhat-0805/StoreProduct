@@ -278,9 +278,14 @@ $(document).ready(function () {
 
     $('input[name=quantity]').each(function (index, value) {
         let val = $(value).val();
+        let max_qty = $(value).data('quantity');
 
         if (val === '1') {
             $(value).parent().find('.btn-down').prop('disabled', true);
+        }
+
+        if (val == max_qty) {
+            $(value).parent().find('.btn-up').prop('disabled', true);
         }
     });
 
@@ -328,12 +333,16 @@ function number_format (number, decimals = 0, decPoint = ',', thousandsSep = '.'
 
 $(document).on('click', '.btn-edit-quantity', function () {
     let quantity = $(this).parent().parent().find('input[name=quantity]').val();
+    let max_qty = $(this).parent().parent().find('input[name=quantity]').data('quantity');
     let rowId = $(this).parent().parent().find('input[name=quantity]').data('row_id');
     let cartId = $(this).parent().parent().find('input[name=quantity]').data('id');
 
     $('.btn-down').prop('disabled', false);
     if (quantity === '1') {
         $('.btn-down').prop('disabled', true);
+    }
+    if (quantity == max_qty) {
+        $('.btn-up').prop('disabled', true);
     }
 
     updateCart(rowId, quantity, cartId);
@@ -352,6 +361,7 @@ function updateCart(rowId, quantity) {
             let quantity = data['cart']['qty'];
             let price = data['cart']['price'];
             let subTotal = number_format(quantity * price);
+            CartJs.getAllCart();
 
             $('.cart_count > span').text(countCart);
             $('.quantity-' + rowId).val(quantity);

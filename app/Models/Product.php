@@ -20,7 +20,7 @@ class Product extends Model
         'category_id', 'product_category_id', 'product_type_id',
         'product_name', 'product_slug', 'product_image',
         'product_description','product_description_slug', 'product_content', 'product_price',
-        'product_meta_title', 'product_meta_description', 'product_weight',
+        'product_meta_title', 'product_meta_description', 'product_quantity',
         'product_is_shipping', 'product_option',
         'product_promotion', 'product_status',
     ];
@@ -801,5 +801,14 @@ class Product extends Model
             'product_view', 'product_status')
             ->orderby('id', 'DESC')->where('product_type_id', $product_type_id)->get();
         return $product;
+    }
+
+    public static function getQuantityProductById($productId)
+    {
+        return self::whereNull('deleted_at')
+            ->where('id', $productId)
+            ->select('product_quantity')
+            ->pluck('product_quantity')
+            ->first();
     }
 }

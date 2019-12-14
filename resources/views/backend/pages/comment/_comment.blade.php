@@ -7,14 +7,14 @@
                         @php
                             $repComments = \App\Models\ReplyComment::getCommentReply($comment->commentId);
                         @endphp
-                            <li class="comment__admin">
+                            <li class="comment__customer">
                                 <div class="message-data">
                                     <span class="message-data-name"><i class="fa fa-circle online"></i> {{ $comment->name }}</span>
                                     <span class="message-data-time">{{ date('Y M d H:i:s D', strtotime($comment->created_at)) }}</span>
                                 </div>
                                 <div class="message other-message">
                                     <div class="message__body">
-                                        {!! $comment->comment_contents !!}
+                                        {!! nl2br(e($comment->comment_contents)) !!}
                                     </div>
                                     <div class="col-sm-2 btn__rep-comment">
                                         <button type="button" class="btn btn-custon-three btn-primary btn__reply__comment"
@@ -35,14 +35,14 @@
 
                         @if($repComments)
                             @foreach($repComments as $repComment)
-                            <li class="clearfix comment__customer">
+                            <li class="clearfix comment__admin">
                                 <div class="message-data align-right">
                                     <span class="message-data-name">Admin</span> <i class="fa fa-circle me"></i>
                                     <span class="message-data-time">{{ date('Y M d H:i:s D', strtotime($repComment->created_at)) }}</span> &nbsp; &nbsp;
                                 </div>
                                 <div class="message my-message float-right">
                                     <div class="col-sm-10">
-                                        {!! $repComment->comment_reply !!}
+                                        {!! nl2br(e($repComment->comment_reply)) !!}
                                     </div>
                                     <div class="col-sm-2 btn__rep-comment">
                                         <button type="button" class="btn btn-custon-three btn-success btn__edit__comment__admin"

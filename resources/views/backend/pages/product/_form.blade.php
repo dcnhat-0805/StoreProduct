@@ -165,7 +165,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label for="product_option" class="required after">Product options</label>
+                        <label for="product_option" class="">Product options</label>
                         <div class="product-options">
                             <div class="jsRadio pull-left">
                                 <input type="radio" value="1" name="product_option"
@@ -214,6 +214,20 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
+                        <label for="product_quantity" class="required after">Product quantity</label>
+                        <input type="number" class="form-control" name="product_quantity"
+                               placeholder="Product quantity ..." value="{{ isset($product) && $product->product_quantity ? $product->product_quantity : old('product_quantity') }}">
+{{--                        <div class="jsCheckBox pull-left" style="margin: 10px 0">--}}
+{{--                            <input type="checkbox" name="product_is_shipping" value="1" checked {{ (isset($product) && $product->product_is_shipping === 1 || old('product_is_shipping')) ? 'checked' : '' }}>--}}
+{{--                            <label><i></i> Is shipping </label>--}}
+{{--                        </div>--}}
+                        <div class="error error_product_quantity {{ !$errors->has('product_quantity') ? 'hidden' : '' }}">{{ $errors->has('product_quantity') ? $errors->first('product_quantity') : '' }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
                         <label for="product_meta_title" class="">Meta title</label>
                         <input type="text" class="form-control" name="product_meta_title"
                                placeholder="Meta title ..." value="{{ isset($product) && $product->product_meta_title ? $product->product_meta_title : old('product_meta_title') }}">
@@ -228,20 +242,6 @@
                         <input type="text" class="form-control" name="product_meta_description"
                                placeholder="Meta description ..." value="{{ isset($product) && $product->product_meta_description ? $product->product_meta_description : old('product_meta_description') }}">
                         <div class="error error_product_meta_description {{ !$errors->has('product_meta_description') ? 'hidden' : '' }}">{{ $errors->has('product_meta_description') ? $errors->first('product_meta_description') : '' }}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="product_weight" class="">Product weight (grams)</label>
-                        <input type="number" class="form-control" name="product_weight"
-                               placeholder="Product weight ..." value="{{ isset($product) && $product->product_weight ? $product->product_weight : old('product_weight') }}">
-                        <div class="jsCheckBox pull-left" style="margin: 10px 0">
-                            <input type="checkbox" name="product_is_shipping" value="1" checked {{ (isset($product) && $product->product_is_shipping === 1 || old('product_is_shipping')) ? 'checked' : '' }}>
-                            <label><i></i> Is shipping </label>
-                        </div>
-                        <div class="error error_product_weight {{ !$errors->has('product_weight') ? 'hidden' : '' }}">{{ $errors->has('product_weight') ? $errors->first('product_weight') : '' }}</div>
                     </div>
                 </div>
             </div>

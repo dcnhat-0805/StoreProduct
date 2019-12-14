@@ -300,6 +300,10 @@ return [
         'product_content' => [
             'min' => ':attribute must be 50 characters.',
         ],
+        'product_quantity' => [
+            'min' => ':attribute must be a positive integer.',
+            'integer' => ':attribute must be a positive integer.',
+        ],
     ],
 
     'front_end' => [

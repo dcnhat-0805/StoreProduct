@@ -63,7 +63,10 @@ $(document).ready(function () {
                 $('#chatSend').val('');
 
                 if ($('.chat').hasClass('show')) {
-                    $('#chat_converse').append(data);
+                    $('#chat_converse').append(data['content']);
+                    $('#chat_converse').animate({
+                        scrollTop: Math.pow(data['countItem'], 4)
+                    }, 0);
                 }
             },
             error : function (data) {

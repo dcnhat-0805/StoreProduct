@@ -14,7 +14,10 @@ $(document).ready(function () {
                 user_id : userId,
             },
             success : function (data) {
-                $('.sop__box-comment').html(data);
+                $('.sop__box-comment').html(data['contact']);
+                $('.chat__comment').animate({
+                    scrollTop: Math.pow($('.message').length ? $('.message').length : data['countItem'], 3)
+                }, 1500);
             }
         });
     }

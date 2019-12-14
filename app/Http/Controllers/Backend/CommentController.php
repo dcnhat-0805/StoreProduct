@@ -51,7 +51,7 @@ class CommentController extends Controller
 
             $html = view('backend.pages.comment._comment', compact('comments'))->render();
 
-            return response()->json($html, 200);
+            return response()->json(['html' => $html, 'countItem' => count($comments)], 200);
         }
     }
 

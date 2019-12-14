@@ -15,6 +15,7 @@
 @section('content')
     @php
         $user = Auth::user();
+        $isRating = \App\Helpers\Helper::isRatingProduct($product->id, $user->id);
     @endphp
 
     @include('frontend.layouts.header_top', [
@@ -122,10 +123,10 @@
                     @if(count($materials))
                         <div class="attribute-list">
                             <p>
-                            <div class="label-attribute">Storage Capacity</div>
+                            <div class="label-attribute">Materials</div>
                             @foreach($materials as $key => $material)
                                 <div data-material="{{ $material->attribute_item_name }}"
-                                     style="background-color: #fff;"
+                                     style="background-color: #fff; width: auto; padding: 0 4px;"
                                      class="attribute-item material-item material">{{ $material->attribute_item_name }}</div>
                                 @endforeach
                                 </p>
@@ -135,7 +136,8 @@
 
                 <div class="product-single-w3l">
                     <p>
-                        <input class="jsQuantity quantity" type="text" name="quantity">
+                        <input type="hidden" class="product__quantity" value="{{ $product->product_quantity }}">
+                        <input class="jsQuantity1 quantity" type="text" name="quantity">
                     </p>
                 </div>
                 <div class="occasion-cart">
@@ -193,13 +195,14 @@
                         <div class="title__question text-center">You have problems need advice?</div>
 
                         <div class="btn-show__form-question text-center">
-                            <button class="btn btn-custon-three btn-primary btnShowFormQuestion" {{ !$user ? 'disabled' : '' }}>Send question</button>
+                            <input type="hidden" class="product__id" value="{{ $product->id }}">
+                            <button class="btn btn-custon-three btn-primary btnShowFormQuestion" {{ !$isRating ? 'disabled' : '' }}>Send comment</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="comment-form sop__comment_form">
-                <form action="{{ route(FRONT_SEND_COMMENT) }}" class="comment_form__client" id="formSendComment" method="POST">
+                <form class="comment_form__client" id="formSendComment" method="POST">
                     @csrf
                     <div class="col-sm-8 pull-left">
                         <div class="product-rating">
@@ -210,6 +213,7 @@
                         <div class="comment-content-text">
                             <textarea name="comment_contents" id="comment_contents"
                                       placeholder="Please leave a review, a comment..." rows="5"></textarea>
+                            <div class="error error_comment"></div>
                         </div>
 {{--                        <div class="comment-name-and-email">--}}
 {{--                            <input class="form-group" type="text" name="name" id="name" placeholder="Họ và Tên...">--}}
@@ -227,77 +231,77 @@
                     </div>
                 </form>
             </div>
-            @if(count($comments))
+{{--            @if(count($comments))--}}
                 <div class="comment__body sop__common_form sop__comment_list">
-                    @foreach($comments as $key => $comment)
-                        @php
-                            $commentProducts = \App\Models\Comment::getCommentByUserIdAndProductId($comment->user_id, $comment->product_id);
-                            $user = \App\Models\User::showUser($comment->user_id);
-                        @endphp
+{{--                    @foreach($comments as $key => $comment)--}}
+{{--                        @php--}}
+{{--                            $commentProducts = \App\Models\Comment::getCommentByUserIdAndProductId($comment->user_id, $comment->product_id);--}}
+{{--                            $user = \App\Models\User::showUser($comment->user_id);--}}
+{{--                        @endphp--}}
 
-                            <div class="comment-item">
-                                <div class="comment-avatar">
-                                    <div class="avatar">{{ $user->name[0] }}</div>
-                                </div>
-                                <div class="comment-info">
-                                <div class="comment-title">
-                                    <div class="comment-name">
-                                        <div class="name">{{ $user->name }}</div>
+{{--                            <div class="comment-item">--}}
+{{--                                <div class="comment-avatar">--}}
+{{--                                    <div class="avatar">{{ $user->name[0] }}</div>--}}
+{{--                                </div>--}}
+{{--                                <div class="comment-info">--}}
+{{--                                <div class="comment-title">--}}
+{{--                                    <div class="comment-name">--}}
+{{--                                        <div class="name">{{ $user->name }}</div>--}}
 {{--                                        @if($user->phone)--}}
 {{--                                            <div class="phone">{{ $user->phone }}</div>--}}
 {{--                                        @endif--}}
-                                    </div>
-                                    <div class="comment-star">
-                                        <div class="jsStarsComment{{ $key }}"></div>
-                                    </div>
-                                </div>
-                                @foreach($commentProducts as $key => $commentProduct)
-                                        @php
-                                            $repComments = \App\Models\ReplyComment::getCommentReply($commentProduct->commentId);
-                                        @endphp
-                                    <div class="comment-content" data-id="{{ $commentProduct->commentId }}">{!! $commentProduct->comment_contents !!}</div>
+{{--                                    </div>--}}
+{{--                                    <div class="comment-star">--}}
+{{--                                        <div class="jsStarsComment{{ $key }}"></div>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                @foreach($commentProducts as $key => $commentProduct)--}}
+{{--                                        @php--}}
+{{--                                            $repComments = \App\Models\ReplyComment::getCommentReply($commentProduct->commentId);--}}
+{{--                                        @endphp--}}
+{{--                                    <div class="comment-content" data-id="{{ $commentProduct->commentId }}">{!! $commentProduct->comment_contents !!}</div>--}}
 
-                                        @if(count($repComments))
-                                            <div class="comment-child-list">
-                                                <div class="comment-child-item">
-                                                    <div class="comment-avatar">
-                                                        <div class="avatar">AD</div>
-                                                    </div>
-                                                    <div class="comment-info">
-                                                        <div class="comment-title">
-                                                            <div class="comment-name">
-                                                                <div class="admin">Admin</div>
-                                                            </div>
-                                                        </div>
-                                                        @foreach($repComments as $repComment)
-                                                            <div class="comment-content">{!! $repComment->comment_reply !!}</div>
-                                                        @endforeach
-                                                        <div class="comment-footer">
-                                                            <div class="comment-like" data-id="66539">
-                                                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                                                <span class="value_like">0</span>
-                                                                <span class="action">Like</span>
-                                                            </div>
-                                                            <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($repComment->created_at)) }}</div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endif
-                                @endforeach
-                                <div class="comment-footer">
-                                    <div class="comment-like" data-id="66267">
-                                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
-                                        <span class="value_like">0</span>
-                                        <span class="action">Like</span>
-                                    </div>
-                                    <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($commentProduct->created_at)) }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
+{{--                                        @if(count($repComments))--}}
+{{--                                            <div class="comment-child-list">--}}
+{{--                                                <div class="comment-child-item">--}}
+{{--                                                    <div class="comment-avatar">--}}
+{{--                                                        <div class="avatar">AD</div>--}}
+{{--                                                    </div>--}}
+{{--                                                    <div class="comment-info">--}}
+{{--                                                        <div class="comment-title">--}}
+{{--                                                            <div class="comment-name">--}}
+{{--                                                                <div class="admin">Admin</div>--}}
+{{--                                                            </div>--}}
+{{--                                                        </div>--}}
+{{--                                                        @foreach($repComments as $repComment)--}}
+{{--                                                            <div class="comment-content">{!! $repComment->comment_reply !!}</div>--}}
+{{--                                                        @endforeach--}}
+{{--                                                        <div class="comment-footer">--}}
+{{--                                                            <div class="comment-like" data-id="66539">--}}
+{{--                                                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>--}}
+{{--                                                                <span class="value_like">0</span>--}}
+{{--                                                                <span class="action">Like</span>--}}
+{{--                                                            </div>--}}
+{{--                                                            <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($repComment->created_at)) }}</div>--}}
+{{--                                                        </div>--}}
+{{--                                                    </div>--}}
+{{--                                                </div>--}}
+{{--                                            </div>--}}
+{{--                                        @endif--}}
+{{--                                @endforeach--}}
+{{--                                <div class="comment-footer">--}}
+{{--                                    <div class="comment-like" data-id="66267">--}}
+{{--                                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>--}}
+{{--                                        <span class="value_like">0</span>--}}
+{{--                                        <span class="action">Like</span>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($commentProduct->created_at)) }}</div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    @endforeach--}}
                 </div>
-            @endif
+{{--            @endif--}}
         </div>
     </div>
     <!-- //top products -->
@@ -440,14 +444,14 @@
                 });
             }
 
-            @if(!empty($comments))
-                @for($i = 0; $i < count($comments); $i++)
-                    $('.jsStarsComment' + {{ $i }}).stars({
-                        stars : MAX_RATE,
-                        value : {{ App\Helpers\Helper::getPointRatingByUserIdAndProductId($comments[$i]->user_id, $comments[$i]->product_id) }}
-                    });
-                @endfor
-            @endif
+{{--            @if(!empty($comments))--}}
+{{--                @for($i = 0; $i < count($comments); $i++)--}}
+{{--                    $('.jsStarsComment' + {{ $i }}).stars({--}}
+{{--                        stars : MAX_RATE,--}}
+{{--                        value : {{ App\Helpers\Helper::getPointRatingByUserIdAndProductId($comments[$i]->user_id, $comments[$i]->product_id) }}--}}
+{{--                    });--}}
+{{--                @endfor--}}
+{{--            @endif--}}
         });
     </script>
 @endsection

@@ -11,7 +11,7 @@
         @endif
         @if($contact->type == CUSTOMER_SEND)
             <div class="chat_msg_item chat_msg_item_user">
-                {!! $contact->message !!}
+                {!! nl2br(e($contact->message)) !!}
             </div>
         @else
             <div class="chat_msg_item chat_msg_item_admin">
@@ -22,7 +22,7 @@
                         </div>
                     </div>
                 </div>
-                {!! $contact->message !!}
+                {!! nl2br(e($contact->message)) !!}
             </div>
         @endif
     @endforeach

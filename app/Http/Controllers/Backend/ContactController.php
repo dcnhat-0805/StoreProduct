@@ -27,11 +27,10 @@ class ContactController extends Controller
         if ($request->ajax()) {
             $userId = $request->get('user_id');
             $contacts = Contact::getContactOfUser($userId);
-//            dd($contacts);
 
-            $html = view('backend.pages.contact._contact', compact('contacts'))->render();
+            $contact = view('backend.pages.contact._contact', compact('contacts'))->render();
 
-            return response()->json($html, 200);
+            return response()->json(['contact' => $contact, 'countItem' => count($contacts)], 200);
         }
     }
 

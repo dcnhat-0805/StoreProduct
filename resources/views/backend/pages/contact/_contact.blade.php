@@ -20,7 +20,7 @@
                         </div>
                         <div class="message other-message">
                             <div class="message__body">
-                                {!! $contact->message !!}
+                                {!! nl2br(e($contact->message)) !!}
                             </div>
                         </div>
                     </li>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="message my-message float-right">
                             <div class="col-sm-10">
-                                {!! $contact->message !!}
+                                {!! nl2br(e($contact->message)) !!}
                             </div>
                         </div>
                     </li>

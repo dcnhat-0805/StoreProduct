@@ -33,6 +33,6 @@ class ContactController extends FrontEndController
         $contacts = Contact::getContactOfUser($user->id);
         $content = view('frontend.pages._chat_content', compact('contacts'))->render();
 
-        return response()->json($content);
+        return response()->json(['content' => $content, 'countItem' => count($contacts)]);
     }
 }

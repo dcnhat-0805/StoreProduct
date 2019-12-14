@@ -43,6 +43,7 @@ class ProductRequest extends FormRequest
             'product_price' => ['required', 'integer', 'min:1', new CheckPriceProduct(request()->product_price, request()->product_promotion)],
             'product_promotion' => ['nullable', 'integer', 'min:1', new CheckPromotionalProduct(request()->product_price, request()->product_promotion)],
             'product_image' => ($this->id ? 'nullable' : 'required'),
+            'product_quantity' => 'required|min:1|integer',
         ];
     }
 
@@ -68,6 +69,8 @@ class ProductRequest extends FormRequest
             'image' => trans("messages.product.image"),
             'product_price.min' => trans("messages.product.product_price.min"),
             'product_promotion.min' => trans("messages.product.product_promotion.min"),
+            'product_quantity.min' => trans("messages.product.product_quantity.min"),
+            'product_quantity.integer' => trans("messages.product.product_quantity.integer"),
         ];
     }
 
@@ -85,6 +88,7 @@ class ProductRequest extends FormRequest
             'product_price' => 'Product price',
             'product_promotion' => 'Product promotional',
             'product_image' => 'Product image',
+            'product_quantity' => 'Product quantity',
         ];
     }
 }

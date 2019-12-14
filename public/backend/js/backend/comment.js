@@ -15,7 +15,10 @@ $(document).ready(function () {
                 user_id : userId,
             },
             success : function (data) {
-                $('.sop__box-comment').html(data);
+                $('.sop__box-comment').html(data['html']);
+                $('.chat__comment').animate({
+                    scrollTop: Math.pow($('.sop__box-comment')[0].attributeStyleMap.size, 5)
+                }, 1500);
             }
         });
     }
