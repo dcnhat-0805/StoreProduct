@@ -57,7 +57,7 @@
                             <th data-field="product_type_name" data-editable="true">Product type name</th>
                             <th data-field="name" data-editable="true">Name</th>
                             <th data-field="image" data-editable="true">Image</th>
-                            <th data-field="quantity" data-editable="true">Quantity</th>
+                            <th data-field="quantity" data-editable="true">Exists/Quantity</th>
                             <th data-field="created_at" data-editable="true">Created date</th>
                             <th data-field="status" data-editable="true">Status</th>
                             <th data-field="action">Action</th>
@@ -83,7 +83,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td class="text-center">{{ $product->product_quantity }}</td>
+                                    <td class="text-center">{{ $product->exist . '/' . $product->product_quantity }}</td>
                                     <td class="text-center">{{ $product->created_at }}</td>
                                     <td class="text-center">{{ $product->product_status == 1 ? 'Display' : 'Not display' }}</td>
                                     <td class="datatable-ct text-center">

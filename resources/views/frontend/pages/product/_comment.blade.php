@@ -1,4 +1,5 @@
 @if(count($comments))
+<div class="comment__body sop__common_form sop__comment_list">
 @foreach($comments as $key => $comment)
     @php
         $commentProducts = \App\Models\Comment::getCommentByUserIdAndProductId($comment->user_id, $comment->product_id);
@@ -14,9 +15,11 @@
                 <div class="comment-name">
                     <div class="name">{{ $user->name }}</div>
                 </div>
-                <div class="comment-star">
-                    <div class="jsStarsComment{{ $key }}" style="pointer-events: none"></div>
-                </div>
+                @if(\App\Helpers\Helper::getPointRatingByUserIdAndProductId($comment->user_id, $comment->product_id))
+                    <div class="comment-star">
+                        <div class="jsStarsComment{{ $key }}" style="pointer-events: none"></div>
+                    </div>
+                @endif
             </div>
             @foreach($commentProducts as $key => $commentProduct)
                 @php
@@ -62,21 +65,24 @@
             @endforeach
         </div>
     </div>
-    <script>
-        $(document).ready(function () {
+@endforeach
+<script>
+    $(document).ready(function () {
 
-            const MAX_RATE = 5;
-            const MIN_RATE = 1;
+        const MAX_RATE = 5;
+        const MIN_RATE = 1;
 
-            @if(!empty($comments))
-                @for($i = 0; $i < count($comments); $i++)
+        @if(!empty($comments))
+            @for($i = 0; $i < count($comments); $i++)
+                @if(App\Helpers\Helper::getPointRatingByUserIdAndProductId($comments[$i]->user_id, $comments[$i]->product_id))
                     $('.jsStarsComment' + {{ $i }}).stars({
                         stars : MAX_RATE,
                         value : {{ App\Helpers\Helper::getPointRatingByUserIdAndProductId($comments[$i]->user_id, $comments[$i]->product_id) }}
                     });
-                @endfor
-            @endif
-        });
-    </script>
-@endforeach
+                @endif
+            @endfor
+        @endif
+    });
+</script>
+</div>
 @endif

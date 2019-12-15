@@ -505,8 +505,10 @@ class Helper
         return Product::getQuantityProductById($productId);
     }
 
-    public static function isRatingProduct($productId, $userId)
+    public static function isRatingProduct($productId, $userId = null)
     {
+        if (!$userId) return false;
+
         return Order::where('orders.user_id', $userId)
             ->where('product_id', $productId)
             ->select(

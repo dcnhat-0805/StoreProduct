@@ -61,7 +61,7 @@
                                                         @endif
                                                         @if($cart->options->material)
                                                             <div data-material="{{ $cart->options->material }}"
-                                                                 style="background-color: #fff;"
+                                                                 style="background-color: #fff; width: auto; padding: 0 4px;"
                                                                  class="attribute-item size-item size">{{ $cart->options->material }}</div>
                                                         @endif
                                                     </div>
@@ -88,7 +88,7 @@
                                                 {{--                                        <span class="cart-total-price item_price">{{ App\Helpers\Helper::loadMoney(Cart::subtotal(2,'.','')) }}</span>--}}
                                             </td>
                                             <td class="datatable-ct text-center">
-                                                @if(count($carts) > 1)
+                                                @if(count($carts))
                                                     <button data-toggle="modal" title="Delete cart" class="pd-setting-ed"
                                                             data-original-title="Trash" data-target="#deleteCart" data-id="1"
                                                             data-row_id="{{ $cart->rowId }}"
@@ -149,11 +149,11 @@
                                                 <input type="tel" id="phone" class="address-user-checkout" name="phone" placeholder="Enter your phone" value="{{ isset($user) ? $user->phone : null }}">
                                             </div>
                                         </div>
-                                        <div class="form-address-check-count name">
+                                        <div class="form-address-check-count address">
                                             <div class="col-sm-2">
                                                 <lable for="address" class="form-address-check-count-lable"><i class="fa fa-map-marker" aria-hidden="true"></i></lable>
                                             </div>
-                                            <div class="col-sm-10" style="padding: 0; margin-bottom: 20px;">
+                                            <div class="col-sm-10" style="padding: 0; margin-bottom: 30px;">
                                                 <div class="col-sm-4 city" style="padding: 0;">
                                                     {{
                                                         Form::select('city', $cities, isset($address->cityId) ? $address->cityId : old('city'),
@@ -177,6 +177,7 @@
                                                             'class' => 'form-control jsSelectWards address-user-checkout'
                                                         ])
                                                     }}
+                                                    <span class="address-user-checkout__error">Please select the shipping address.</span>
                                                 </div>
                                             </div>
                                         </div>

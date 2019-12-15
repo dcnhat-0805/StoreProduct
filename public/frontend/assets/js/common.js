@@ -219,17 +219,20 @@ let Commons = (function ($) {
         $('.jsSelectCity').on('change', function () {
             let cityId = $(this).val();
 
+            $('.address-user-checkout__error').hide();
             modules.loadDistrictByCityId(cityId);
         });
 
         $(document).on('change', '.jsSelectDistrict', function () {
             let districtId = $(this).val();
+            $('.address-user-checkout__error').hide();
             $("button.btn-success, .btn-login, .btn-place-order").prop('disabled', false);
 
             modules.loadWardsByDistrictId(districtId);
         });
 
         $(document).on('change', '.jsSelectWards', function () {
+            $('.address-user-checkout__error').hide();
             $("button.btn-success, .btn-login, .btn-place-order").prop('disabled', false);
         });
     };

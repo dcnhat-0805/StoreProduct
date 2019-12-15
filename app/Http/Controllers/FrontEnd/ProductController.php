@@ -41,11 +41,12 @@ class ProductController extends FrontEndController
         $user = Auth::user();
         $titleName = Product::getNameAndSlugBySlug($description);
         $product = Product::getProductBySlugAndId($description);
+//        dd($product);
         $products = Product::getListProductOnFrontEndByCategoryId($product->category_id);
 //        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
         $titleName['product_name'] = $product->product_description;
 
-        $ratePoint = 3;
+        $ratePoint = 0;
         if ($user) {
             $ratePoint = Rating::getRatingByUserIdAndProductId($user->id, $product->id);
         }

@@ -32,10 +32,15 @@ let CartJs = (function ($) {
                 let countCart = data['countCart'];
                 $('.cart_count > span').text(countCart);
 
-                jQuery.getMessageSuccess(data['success']);
+                if (data['success']) {
+                    jQuery.getMessageSuccess(data['success']);
+                }
+                if (data['error']) {
+                    jQuery.getMessageError(data['error']);
+                }
             },
             error : function (data) {
-                jQuery.getMessageSuccess(data['error']);
+                jQuery.getMessageError(data['error']);
             }
         });
     };
@@ -237,6 +242,25 @@ $(document).ready(function () {
         CartJs.addToCart(productId, quantity, color, size, storage, material);
     });
 
+    $('.address-user-checkout__error').hide();
+
+    $('#purchase_form').submit(function () {
+        let name = $('input[name=name]').val();
+        let email = $('input[name=email]').val();
+        let phone = $('input[name=phone]').val();
+        let city = $('.jsSelectCity').val();
+        let district = $('.jsSelectDistrict').val();
+        let wards = $('.jsSelectWards').val();
+
+        if (!city || !district) {
+            $('.address-user-checkout__error').show();
+        }
+
+        if (name && email && phone && city && district && wards) {
+            $('#loading').show();
+        }
+    });
+
     CartJs.reloadSelectAllCheckBox();
 
     $('.cartSelectItem').on('change', function () {
@@ -337,7 +361,10 @@ $(document).on('click', '.btn-edit-quantity', function () {
     let rowId = $(this).parent().parent().find('input[name=quantity]').data('row_id');
     let cartId = $(this).parent().parent().find('input[name=quantity]').data('id');
 
-    $('.btn-down').prop('disabled', false);
+    $('.btn-down, .btn-up').prop('disabled', false);
+    if ((max_qty - quantity) > max_qty) {
+        $('.btn-up').prop('disabled', true);
+    }
     if (quantity === '1') {
         $('.btn-down').prop('disabled', true);
     }

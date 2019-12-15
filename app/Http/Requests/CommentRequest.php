@@ -38,7 +38,7 @@ class CommentRequest extends FormRequest
     public function attributes()
     {
         return [
-            'comment_contents' => 'Comment contents'
+            'comment_contents' => 'Comment content'
         ];
     }
 }

@@ -75,6 +75,27 @@ class ShoppingCart extends Model
         return $total;
     }
 
+    public static function getQuantityProductOfCart($productId)
+    {
+        $quantity = Product::getQuantityProductById($productId);
+
+        $user = Auth::user();
+        $carts = Cart::content();
+        if ($user) {
+            $carts = ShoppingCart::getContentCart();
+        }
+        $total = 0;
+        if (count($carts)) {
+            foreach ($carts as $cart) {
+                if ($cart->id == $productId) {
+                    $total += $cart->qty;
+                }
+            }
+        }
+
+        return $quantity - $total;
+    }
+
     public static function getContentCart()
     {
         $user = Auth::user();

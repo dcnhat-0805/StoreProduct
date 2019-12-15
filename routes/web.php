@@ -160,7 +160,7 @@ Route::namespace('FrontEnd')->group(function(){
         ->name(FRONT_PRODUCT_LIST);
     Route::get('/searchByWord', 'HomeController@searchByWord')
         ->name(FRONT_SEARCH_BY_WORD);
-    Route::get('/catalog', 'HomeController@getDataSearch')
+    Route::get('/search', 'HomeController@getDataSearch')
         ->name(FRONT_LOAD_DATA_SEARCH);
     Route::get('/detail/{description}', 'ProductController@detail')
         ->name(FRONT_PRODUCT_DETAIL);

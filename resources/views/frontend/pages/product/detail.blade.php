@@ -15,7 +15,7 @@
 @section('content')
     @php
         $user = Auth::user();
-        $isRating = \App\Helpers\Helper::isRatingProduct($product->id, $user->id);
+        $isRating = \App\Helpers\Helper::isRatingProduct($product->id, $user ? $user->id : null);
     @endphp
 
     @include('frontend.layouts.header_top', [
@@ -67,11 +67,20 @@
             </div>
             <div class="col-md-7 single-right-left simpleCart_shelfItem">
                 <h3>{{ $product->product_description }}</h3>
-                <div class="jsRating disabled"></div>
+                <div class="row col-sm-12 box-info__product">
+                    @if(!empty($product->average_rating))
+                    <div class="jsRating info__detail disabled"><span>{{ number_format($product->average_rating, 0) }}</span></div>
+                    <div class="info__detail"><span class="rating__info">1,8k</span> rating</div>
+                    @else
+                        <div class="info__detail">No reviews yet</div>
+                    @endif
+                    <div class="info__detail"><span class="sold__info">1,7</span> sold</div>
+                    <div class="info__detail"><span class="sold__info">{{ $product->exist }}</span> available</div>
+                </div>
                 <p>
-                        <span class="item_price product-price-item">
-                            {{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}
-                        </span>
+                    <span class="item_price product-price-item">
+                        {{ App\Helpers\Helper::loadMoney($product->product_promotion > 0 ? $product->product_promotion : $product->product_price) }}
+                    </span>
                     @if(!empty($product->product_promotion) && $product->product_promotion > 0)
                         <del>{{ App\Helpers\Helper::loadMoney($product->product_price) }}</del>
                     @endif
@@ -79,10 +88,10 @@
 
                 @if(isset($product->productAttribute))
                     <?php
-                    $colors = $product->productAttribute->where('attribute_name', COLOR);
-                    $storages = $product->productAttribute->where('attribute_name', STORAGE);
-                    $sizes = $product->productAttribute->where('attribute_name', SIZE);
-                    $materials = $product->productAttribute->where('attribute_name', MATERIALS);
+                        $colors = $product->productAttribute->where('attribute_name', COLOR);
+                        $storages = $product->productAttribute->where('attribute_name', STORAGE);
+                        $sizes = $product->productAttribute->where('attribute_name', SIZE);
+                        $materials = $product->productAttribute->where('attribute_name', MATERIALS);
                     ?>
                     @if(count($colors))
                         <div class="attribute-list">
@@ -135,15 +144,15 @@
                 @endif
 
                 <div class="product-single-w3l">
-                    <p>
-                        <input type="hidden" class="product__quantity" value="{{ $product->product_quantity }}">
-                        <input class="jsQuantity1 quantity" type="text" name="quantity">
-                    </p>
+                    <div class="box__quantity">
+                        <input type="hidden" class="product__quantity" value="{{ $product->exist }}">
+                        <input class="jsQuantity1 quantity" type="text" name="quantity" id="jsQuantity1">
+                    </div>
                 </div>
                 <div class="occasion-cart">
                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                         <button type="button" class="button btn btn-custon-three btn-primary add-to-cart"
-                                data-id="{{ $product->id }}"
+                                data-id="{{ $product->id }}" {{ $product->product_is_exists == 0 ? 'disabled' : '' }}
                                 style="width: 100%; font-size: 20px">
                             Add to cart
                         </button>
@@ -211,6 +220,7 @@
                             <div class="jsRatingComment {{ !$user ? 'disabled' : '' }}"></div>
                         </div>
                         <div class="comment-content-text">
+                            <input type="hidden" name="rating">
                             <textarea name="comment_contents" id="comment_contents"
                                       placeholder="Please leave a review, a comment..." rows="5"></textarea>
                             <div class="error error_comment"></div>
@@ -231,77 +241,8 @@
                     </div>
                 </form>
             </div>
-{{--            @if(count($comments))--}}
-                <div class="comment__body sop__common_form sop__comment_list">
-{{--                    @foreach($comments as $key => $comment)--}}
-{{--                        @php--}}
-{{--                            $commentProducts = \App\Models\Comment::getCommentByUserIdAndProductId($comment->user_id, $comment->product_id);--}}
-{{--                            $user = \App\Models\User::showUser($comment->user_id);--}}
-{{--                        @endphp--}}
-
-{{--                            <div class="comment-item">--}}
-{{--                                <div class="comment-avatar">--}}
-{{--                                    <div class="avatar">{{ $user->name[0] }}</div>--}}
-{{--                                </div>--}}
-{{--                                <div class="comment-info">--}}
-{{--                                <div class="comment-title">--}}
-{{--                                    <div class="comment-name">--}}
-{{--                                        <div class="name">{{ $user->name }}</div>--}}
-{{--                                        @if($user->phone)--}}
-{{--                                            <div class="phone">{{ $user->phone }}</div>--}}
-{{--                                        @endif--}}
-{{--                                    </div>--}}
-{{--                                    <div class="comment-star">--}}
-{{--                                        <div class="jsStarsComment{{ $key }}"></div>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                                @foreach($commentProducts as $key => $commentProduct)--}}
-{{--                                        @php--}}
-{{--                                            $repComments = \App\Models\ReplyComment::getCommentReply($commentProduct->commentId);--}}
-{{--                                        @endphp--}}
-{{--                                    <div class="comment-content" data-id="{{ $commentProduct->commentId }}">{!! $commentProduct->comment_contents !!}</div>--}}
-
-{{--                                        @if(count($repComments))--}}
-{{--                                            <div class="comment-child-list">--}}
-{{--                                                <div class="comment-child-item">--}}
-{{--                                                    <div class="comment-avatar">--}}
-{{--                                                        <div class="avatar">AD</div>--}}
-{{--                                                    </div>--}}
-{{--                                                    <div class="comment-info">--}}
-{{--                                                        <div class="comment-title">--}}
-{{--                                                            <div class="comment-name">--}}
-{{--                                                                <div class="admin">Admin</div>--}}
-{{--                                                            </div>--}}
-{{--                                                        </div>--}}
-{{--                                                        @foreach($repComments as $repComment)--}}
-{{--                                                            <div class="comment-content">{!! $repComment->comment_reply !!}</div>--}}
-{{--                                                        @endforeach--}}
-{{--                                                        <div class="comment-footer">--}}
-{{--                                                            <div class="comment-like" data-id="66539">--}}
-{{--                                                                <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>--}}
-{{--                                                                <span class="value_like">0</span>--}}
-{{--                                                                <span class="action">Like</span>--}}
-{{--                                                            </div>--}}
-{{--                                                            <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($repComment->created_at)) }}</div>--}}
-{{--                                                        </div>--}}
-{{--                                                    </div>--}}
-{{--                                                </div>--}}
-{{--                                            </div>--}}
-{{--                                        @endif--}}
-{{--                                @endforeach--}}
-{{--                                <div class="comment-footer">--}}
-{{--                                    <div class="comment-like" data-id="66267">--}}
-{{--                                        <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>--}}
-{{--                                        <span class="value_like">0</span>--}}
-{{--                                        <span class="action">Like</span>--}}
-{{--                                    </div>--}}
-{{--                                    <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($commentProduct->created_at)) }}</div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    @endforeach--}}
-                </div>
-{{--            @endif--}}
+            <!-- Comment -->
+            <div class="list__comment"></div>
         </div>
     </div>
     <!-- //top products -->
@@ -392,32 +333,34 @@
 
             $('.jsRating').stars({
                 stars: MAX_RATE,
-                value: {{ $ratePoint }},
+                value: {{ number_format($product->average_rating, 0) }},
             });
 
             $('.jsRatingComment').stars({
                 stars: MAX_RATE,
-                value: {{ $avgRating }},
+                text: ["Very bad", "Unsatisfied", "Normal", "Satisfied", "Great"],
+                value: {{ $ratePoint }},
                 click: function (index) {
                     let productId = parseInt($('.product_id').val());
+                    $('input[name=rating]').val(index);
 
-                    if (index >= MIN_RATE && index <= MAX_RATE) {
-                        $.ajax({
-                            url: '/updateRating',
-                            dataType: 'JSON',
-                            type: 'POST',
-                            data: {
-                                productId: productId,
-                                point: index
-                            },
-                            success: function (data) {
-
-                            },
-                            error: function (data) {
-
-                            }
-                        });
-                    }
+                    // if (index >= MIN_RATE && index <= MAX_RATE) {
+                    //     $.ajax({
+                    //         url: '/updateRating',
+                    //         dataType: 'JSON',
+                    //         type: 'POST',
+                    //         data: {
+                    //             productId: productId,
+                    //             point: index
+                    //         },
+                    //         success: function (data) {
+                    //
+                    //         },
+                    //         error: function (data) {
+                    //
+                    //         }
+                    //     });
+                    // }
                 }
             });
 

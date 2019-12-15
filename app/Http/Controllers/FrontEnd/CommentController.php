@@ -4,6 +4,8 @@ namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Requests\CommentRequest;
 use App\Models\Comment;
+use App\Models\Product;
+use App\Models\Rating;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
@@ -20,6 +22,7 @@ class CommentController extends FrontEndController
         if (!$user) {
             return redirect()->route(FRONT_END_HOME_INDEX);
         }
+
         $comment = new Comment();
         $comment->user_id = $user->id;
         $comment->product_id = $input['product_id'];
@@ -28,12 +31,48 @@ class CommentController extends FrontEndController
 
         DB::beginTransaction();
         if ($comment->save()) {
+
+            if (!empty($input['rating'])) {
+                self::updateRating($input);
+                $ratePoint = Rating::getRatingByUserIdAndProductId($user->id, $comment->product_id);
+            }
 //            Session::flash("success", trans("messages.users.update_success"));
 
             DB::commit();
-            return response()->json(true);
+            return response()->json($ratePoint ?? true);
         } else {
             DB::rollBack();
+        }
+    }
+
+
+    public function updateRating($request)
+    {
+        $user = Auth::user();
+        $productId = $request['product_id'];
+
+        $productId = !$productId ? 0 : $productId;
+        $product = Product::showProduct($productId);
+
+        if (!$product) {
+            return response()->json(0);
+        } else {
+            $point = $request['rating'];
+
+            $rating = Rating::firstorNew([
+                'user_id' => $user->id,
+                'product_id' => $product->id,
+            ]);
+            $rating->point = $point;
+            $rating->save();
+
+//            if ($rating->save()) {
+//                $ratePoint = Rating::getRatingByUserIdAndProductId($user->id, $product->id);
+//
+//                return response()->json($ratePoint);
+//            } else {
+//                return response()->json(0);
+//            }
         }
     }
 

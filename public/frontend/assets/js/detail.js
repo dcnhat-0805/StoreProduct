@@ -8,7 +8,9 @@ $(document).ready(function () {
         min: 1,
         max: max_qty
     });
-    $('.btn-down').prop('disabled', true);
+    if (max_qty == 1) {
+        $('.btn-down, .btn-up').prop('disabled', true);
+    }
 
     $(document).on('click', '.btn-edit__quantity', function () {
         let quantity = $(this).parent().parent().find('input[name=quantity]').val();
@@ -113,7 +115,7 @@ $(document).ready(function () {
 
     loadComment();
     function loadComment() {
-        $('.sop__comment_list').html('');
+        $('.list__comment').html('');
         resetFormSendComment();
         let productId = $('.product__id').val()
         $.ajax({
@@ -121,11 +123,7 @@ $(document).ready(function () {
             dataType: 'JSON',
             type: "GET",
             success : function (result) {
-                $('.sop__comment_list').append(result);
-
-                $('html,body').animate({
-                    scrollTop: $('.sop__comment_list').offset().top
-                }, 0);
+                $('.list__comment').append(result);
             },
             error : function (result) {
                 // location.reload();

@@ -28,6 +28,8 @@ class CheckCountRequest extends FormRequest
             'name' => "required|min:5|max:50",
             'email' => 'required|email',
             'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|max:10',
+            'city' => 'required',
+            'district' => 'required',
             'wards' => 'required',
         ];
     }
@@ -35,6 +37,8 @@ class CheckCountRequest extends FormRequest
     {
         return [
             'required' => trans("messages.check_count.name.required"),
+            'city.required' => trans("messages.check_count.address.required"),
+            'district.required' => trans("messages.check_count.address.required"),
             'wards.required' => trans("messages.check_count.address.required"),
             'email' => trans("messages.check_count.email.email_format"),
             'min' => trans("messages.check_count.name.min"),

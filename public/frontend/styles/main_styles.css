@@ -1763,6 +1763,7 @@ select option
 .product_content
 {
 	width: 100%;
+    margin-top: 20px;
 }
 .product_price
 {
@@ -2058,6 +2059,7 @@ select option
 	text-align: center;
 	line-height: 36px;
 	font-size: 12px;
+    font-weight: 700;
     text-transform: uppercase;
 }
 .product_new
@@ -2067,6 +2069,21 @@ select option
 	visibility: hidden;
 	opacity: 0;
 }
+.product_over
+{
+	display: none;
+	background: #fc636b;
+	visibility: hidden;
+	opacity: 0;
+}
+.product_hot
+{
+    display: none;
+    background: #e6ca00;
+    color: red;
+    visibility: hidden;
+    opacity: 0;
+}
 .product_discount
 {
 	display: none;
@@ -2075,7 +2092,8 @@ select option
 	opacity: 0;
 }
 .product_item.is_new .product_new,
-.product_item.discount .product_discount
+.product_item.discount .product_discount,
+.product_over, .product_hot
 {
 	display: inline-block;
 	visibility: visible;

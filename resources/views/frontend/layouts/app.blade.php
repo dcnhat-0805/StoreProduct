@@ -131,7 +131,7 @@
 
 @if(Session::has('danger'))
     <script type="text/javascript">
-        jQuery.getMessageError("{{Session::get('danger')}}")
+        jQuery.getMessageInfo("{{Session::get('danger')}}")
     </script>
 @endif
 @yield('jsCustom')

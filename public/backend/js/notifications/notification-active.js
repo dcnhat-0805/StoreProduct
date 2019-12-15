@@ -378,11 +378,11 @@
                     size: 'mini',
                     position: 'bottom left',
                     delay: 5000,
-                    msg: 'Notification !   '+ error
+                    msg: 'Sorry !   '+ error
                 });
             }
 
-            jQuery.getMessageError = function(danger) {
+            jQuery.getMessageInfo = function(danger) {
                 Lobibox.notify('info', {
                     size: 'mini',
                     position: 'bottom left',

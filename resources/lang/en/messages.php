@@ -314,6 +314,7 @@ return [
             'update_cart_failed' => 'Unsuccessfully update cart.',
             'delete_cart_success' => 'Successfully delete cart.',
             'delete_cart_failed' => 'Unsuccessfully delete cart.',
+            'out_of_stock' => 'Sorry! Your product is out of stock.',
         ]
     ]
 ];

@@ -12,6 +12,11 @@ class Rating extends Model
 
     public static function getRatingByUserIdAndProductId($userId, $productId)
     {
+        $isRating = self::where('ratings.user_id', $userId)
+            ->where('ratings.product_id', $productId)
+            ->exists();
+        if (!$isRating) return 0;
+
         $rating = self::where('ratings.user_id', $userId)
                 ->where('ratings.product_id', $productId)
                 ->select('ratings.user_id', 'ratings.product_id', 'ratings.point')

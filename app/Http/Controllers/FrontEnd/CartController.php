@@ -46,24 +46,29 @@ class CartController extends FrontEndController
             $user = Auth::user();
 
             $cart = Helper::addToCart($products, $request->all());
-            DB::beginTransaction();
-            if (Cart::add($cart)) {
-                if ($user) {
-                    ShoppingCart::createShoppingCart();
-                }
 
-                $countCart = Cart::count();
-                if ($user) {
-                    $countCart = ShoppingCart::getCountCart();
-                }
-//                Cart::store($id);
-                DB::commit();
-//                Session::flash("success", trans("messages.front_end.cart.add_cart_success"));
-                return response()->json(['countCart' => $countCart, 'success' => trans("messages.front_end.cart.add_cart_success")], 200);
+            $exist = ShoppingCart::getQuantityProductOfCart($cart['id']);;
+            if ($exist == 0) {
+                return response()->json(['error' => trans("messages.front_end.cart.out_of_stock")]);
             } else {
-                DB::rollBack();
+                DB::beginTransaction();
+                if (Cart::add($cart)) {
+                    if ($user) {
+                        ShoppingCart::createShoppingCart();
+                    }
+
+                    $countCart = Cart::count();
+                    if ($user) {
+                        $countCart = ShoppingCart::getCountCart();
+                    }
+                    DB::commit();
+//                Session::flash("success", trans("messages.front_end.cart.add_cart_success"));
+                    return response()->json(['countCart' => $countCart, 'success' => trans("messages.front_end.cart.add_cart_success")], 200);
+                } else {
+                    DB::rollBack();
 //                Session::flash("error", trans("messages.front_end.cart.add_cart_failed"));
-                return response()->json(['error' => trans("messages.front_end.cart.add_cart_failed")], 200);
+                    return response()->json(['error' => trans("messages.front_end.cart.add_cart_failed")], 200);
+                }
             }
         }
     }
@@ -86,7 +91,6 @@ class CartController extends FrontEndController
                 if ($user) {
                     $countCart = ShoppingCart::getCountCart();
                 }
-//                Cart::store($cart->id);
                 DB::commit();
 //                Session::flash("success", trans("messages.front_end.cart.update_cart_success"));
                 return response()->json(['countCart' => $countCart, 'cart' => $cart, 'success' => trans("messages.front_end.cart.update_cart_success")], 200);
@@ -156,6 +160,11 @@ class CartController extends FrontEndController
                 $orderDetails[$key] = OrderDetail::create($orderDetail);
 
                 Product::updateCountBuy($cart->id);
+                $exist = Product::getQuantityProductById($cart->id);
+                if ($exist == 0) {
+                    Product::updateStatusNotExists($cart->id);
+                }
+
                 if ($user) {
                     ShoppingCart::deleteCart($cart->rowId);
                 } else {

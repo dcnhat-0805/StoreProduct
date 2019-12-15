@@ -127,27 +127,34 @@
                                             @foreach($products['best'] as $key => $productBest)
                                                 <div class="arrivals_slider_item sop__arrivals__{{ $key }}">
                                                     <div class="border_active"></div>
-                                                    <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                                    <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                        @if(isset($productBest->product_image) && $productBest->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $productBest->product_image))
-                                                            <img src="{{ FILE_PATH_PRODUCT . $productBest->product_image }}"alt="">
-                                                        @else
-                                                            <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" >
-                                                        @endif
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_price">{{ \App\Helpers\Helper::loadMoney($productBest->product_promotion ? $productBest->product_promotion : $productBest->product_price) }}</div>
-                                                        <div class="product_name"><div><a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($productBest->product_description)]) }}">{{ $productBest->product_description }}</a></div></div>
-                                                        <div class="product_extras">
-                                                            <button class="product_cart_button add-to-cart" data-id="{{ $productBest->id }}">Add to Cart</button>
+                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $productBest->product_description_slug]) }}">
+                                                        <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+                                                            <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                                                @if(isset($productBest->product_image) && $productBest->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $productBest->product_image))
+                                                                    <img src="{{ FILE_PATH_PRODUCT . $productBest->product_image }}"alt="">
+                                                                @else
+                                                                    <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" >
+                                                                @endif
+                                                            </div>
+                                                            <div class="product_content">
+                                                                <span class="item_price product-price-item">
+                                                                    {{ App\Helpers\Helper::loadMoney($productBest->product_promotion > 0 ? $productBest->product_promotion : $productBest->product_price) }}
+                                                                </span>
+                                                                @if(!empty($productBest->product_promotion) && $productBest->product_promotion > 0)
+                                                                    <del>{{ App\Helpers\Helper::loadMoney($productBest->product_price) }}</del>
+                                                                @endif
+                                                                <div class="product_name"><div><a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $productBest->product_description_slug]) }}">{{ $productBest->product_description }}</a></div></div>
+                                                                <div class="product_extras">
+                                                                    <button class="product_cart_button add-to-cart" data-id="{{ $productBest->id }}">Add to Cart</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                                            <ul class="product_marks">
+                                                                <li class="product_mark product_discount">-25%</li>
+                                                                <li class="product_mark {{ $productNew->product_is_exists == 0 ? 'product_over' : 'product_new' }}">{{ $productNew->product_is_exists == 0 ? 'Over' : 'best' }}</li>
+                                                            </ul>
                                                         </div>
-                                                    </div>
-                                                    <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                                    <ul class="product_marks">
-                                                        <li class="product_mark product_discount">-25%</li>
-                                                        <li class="product_mark product_new">best</li>
-                                                    </ul>
-                                                </div>
+                                                    </a>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -162,27 +169,34 @@
                                             @foreach($products['news'] as $key => $productNew)
                                                 <div class="arrivals_slider_item sop__arrivals__{{ $key }}">
                                                     <div class="border_active"></div>
-                                                    <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                                    <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                        @if(isset($productNew->product_image) && $productNew->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $productNew->product_image))
-                                                            <img src="{{ FILE_PATH_PRODUCT . $productNew->product_image }}"alt="">
-                                                        @else
-                                                            <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" >
-                                                        @endif
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_price">{{ \App\Helpers\Helper::loadMoney($productNew->product_promotion ? $productNew->product_promotion : $productNew->product_price) }}</div>
-                                                        <div class="product_name"><div><a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($productNew->product_description)]) }}">{{ $productNew->product_description }}</a></div></div>
-                                                        <div class="product_extras">
-                                                            <button class="product_cart_button add-to-cart" data-id="{{ $productNew->id }}">Add to Cart</button>
+                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $productNew->product_description_slug]) }}">
+                                                        <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+                                                            <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                                                @if(isset($productNew->product_image) && $productNew->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $productNew->product_image))
+                                                                    <img src="{{ FILE_PATH_PRODUCT . $productNew->product_image }}"alt="">
+                                                                @else
+                                                                    <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" >
+                                                                @endif
+                                                            </div>
+                                                            <div class="product_content">
+                                                                <span class="item_price product-price-item">
+                                                                    {{ App\Helpers\Helper::loadMoney($productNew->product_promotion > 0 ? $productNew->product_promotion : $productNew->product_price) }}
+                                                                </span>
+                                                                @if(!empty($productNew->product_promotion) && $productNew->product_promotion > 0)
+                                                                    <del>{{ App\Helpers\Helper::loadMoney($productNew->product_price) }}</del>
+                                                                @endif
+                                                                <div class="product_name"><div><a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $productNew->product_description_slug]) }}">{{ $productNew->product_description }}</a></div></div>
+                                                                <div class="product_extras">
+                                                                    <button class="product_cart_button add-to-cart" data-id="{{ $productNew->id }}">Add to Cart</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                                            <ul class="product_marks">
+                                                                <li class="product_mark product_discount">-25%</li>
+                                                                <li class="product_mark {{ $productNew->product_is_exists == 0 ? 'product_over' : 'product_new' }}">{{ $productNew->product_is_exists == 0 ? 'Over' : 'New' }}</li>
+                                                            </ul>
                                                         </div>
-                                                    </div>
-                                                    <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                                    <ul class="product_marks">
-                                                        <li class="product_mark product_discount">-25%</li>
-                                                        <li class="product_mark product_new">new</li>
-                                                    </ul>
-                                                </div>
+                                                    </a>
                                                 </div>
                                             @endforeach
                                         </div>
@@ -197,27 +211,34 @@
                                             @foreach($products['hot'] as $key => $productHot)
                                                 <div class="arrivals_slider_item sop__arrivals__{{ $key }}">
                                                     <div class="border_active"></div>
-                                                    <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                                    <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                        @if(isset($productHot->product_image) && $productHot->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $productHot->product_image))
-                                                            <img src="{{ FILE_PATH_PRODUCT . $productHot->product_image }}"alt="">
-                                                        @else
-                                                            <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" >
-                                                        @endif
-                                                    </div>
-                                                    <div class="product_content">
-                                                        <div class="product_price">{{ \App\Helpers\Helper::loadMoney($productHot->product_promotion ? $productHot->product_promotion : $productHot->product_price) }}</div>
-                                                        <div class="product_name"><div><a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($productHot->product_description)]) }}">{{ $productHot->product_description }}</a></div></div>
-                                                        <div class="product_extras">
-                                                            <button class="product_cart_button add-to-cart" data-id="{{ $productHot->id }}">Add to Cart</button>
+                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $productHot->product_description_slug]) }}">
+                                                        <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
+                                                            <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                                                @if(isset($productHot->product_image) && $productHot->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $productHot->product_image))
+                                                                    <img src="{{ FILE_PATH_PRODUCT . $productHot->product_image }}"alt="">
+                                                                @else
+                                                                    <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" >
+                                                                @endif
+                                                            </div>
+                                                            <div class="product_content">
+                                                                <span class="item_price product-price-item">
+                                                                    {{ App\Helpers\Helper::loadMoney($productHot->product_promotion > 0 ? $productHot->product_promotion : $productHot->product_price) }}
+                                                                </span>
+                                                                @if(!empty($productHot->product_promotion) && $productHot->product_promotion > 0)
+                                                                    <del>{{ App\Helpers\Helper::loadMoney($productHot->product_price) }}</del>
+                                                                @endif
+                                                                <div class="product_name"><div><a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $productHot->product_description_slug]) }}">{{ $productHot->product_description }}</a></div></div>
+                                                                <div class="product_extras">
+                                                                    <button class="product_cart_button add-to-cart" data-id="{{ $productHot->id }}">Add to Cart</button>
+                                                                </div>
+                                                            </div>
+                                                            <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                                            <ul class="product_marks">
+                                                                <li class="product_mark product_discount">-25%</li>
+                                                                <li class="product_mark {{ $productNew->product_is_exists == 0 ? 'product_over' : 'product_hot' }}">{{ $productNew->product_is_exists == 0 ? 'Over' : 'Hot' }}</li>
+                                                            </ul>
                                                         </div>
-                                                    </div>
-                                                    <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                                    <ul class="product_marks">
-                                                        <li class="product_mark product_discount">-25%</li>
-                                                        <li class="product_mark product_new">Hot</li>
-                                                    </ul>
-                                                </div>
+                                                    </a>
                                                 </div>
                                             @endforeach
                                         </div>
