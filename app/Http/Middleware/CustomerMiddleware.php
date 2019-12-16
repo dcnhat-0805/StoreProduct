@@ -51,7 +51,13 @@ class CustomerMiddleware
     public function getLastUrl()
     {
         if (!request()->ajax() && request()->method() == 'GET') {
-            return url()->current();
+            $param = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+
+            if (isset($param) && $param) {
+                return url()->current() . '?' . $param;
+            } else {
+                return url()->current();
+            }
         }
 
         return route(FRONT_END_HOME_INDEX);

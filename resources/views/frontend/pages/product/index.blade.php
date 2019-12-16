@@ -83,7 +83,7 @@
                                                     @if($product->product_option == NEWS)
                                                         <span class="product-new-top">New</span>
                                                     @endif
-                                                    @if($product->product_is_exists == 0)
+                                                    @if($product->exist == 0)
                                                         <span class="product-new-top">Over</span>
                                                     @endif
                                                 </div>
@@ -104,7 +104,7 @@
                                                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                                                         <button type="button" class="button btn btn-custon-three btn-primary add-to-cart" data-id="{{ $product->id }}"
 {{--                                                                onclick="window.location.href = '{{ route(FRONT_ADD_CART, ['id' => $product->id]) }}'"--}}
-                                                                style="width: 100%; font-size: 20px" {{ $product->product_is_exists == 0 ? 'disabled' : '' }}>
+                                                                style="width: 100%; font-size: 20px" {{ $product->exist == 0 ? 'disabled' : '' }}>
                                                             Add to cart
                                                         </button>
                                                     </div>

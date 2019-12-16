@@ -16,6 +16,7 @@
     @php
         $user = Auth::user();
         $isRating = \App\Helpers\Helper::isRatingProduct($product->id, $user ? $user->id : null);
+        $avgRating = $product->average_rating;
     @endphp
 
     @include('frontend.layouts.header_top', [
@@ -23,9 +24,9 @@
         'namePage' => null,
     ])
 
-    @include('frontend.layouts.banner')
+{{--    @include('frontend.layouts.banner')--}}
 
-    @include('frontend.layouts.logo')
+{{--    @include('frontend.layouts.logo')--}}
 
     <!-- Detail Products -->
     <div class="banner-bootom-w3-agileits">
@@ -69,13 +70,14 @@
                 <h3>{{ $product->product_description }}</h3>
                 <div class="row col-sm-12 box-info__product">
                     @if(!empty($product->average_rating))
-                    <div class="jsRating info__detail disabled"><span>{{ number_format($product->average_rating, 0) }}</span></div>
-                    <div class="info__detail"><span class="rating__info">1,8k</span> rating</div>
+                    <div class="jsRating info__detail disabled"><span>{{ $avgRating }}</span></div>
+                    <div class="info__detail"><span class="rating__info">{{ $product->count_rating }}</span> rating</div>
                     @else
                         <div class="info__detail">No reviews yet</div>
                     @endif
-                    <div class="info__detail"><span class="sold__info">1,7</span> sold</div>
+                    <div class="info__detail"><span class="sold__info">{{ $product->count_buy }}</span> sold</div>
                     <div class="info__detail"><span class="sold__info">{{ $product->exist }}</span> available</div>
+                    <div class="info__detail"><span class="sold__info">{{ $product->count_view }}</span> view</div>
                 </div>
                 <p>
                     <span class="item_price product-price-item">
@@ -152,7 +154,7 @@
                 <div class="occasion-cart">
                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                         <button type="button" class="button btn btn-custon-three btn-primary add-to-cart"
-                                data-id="{{ $product->id }}" {{ $product->product_is_exists == 0 ? 'disabled' : '' }}
+                                data-id="{{ $product->id }}" {{ $product->exist == 0 ? 'disabled' : '' }}
                                 style="width: 100%; font-size: 20px">
                             Add to cart
                         </button>
@@ -333,7 +335,7 @@
 
             $('.jsRating').stars({
                 stars: MAX_RATE,
-                value: {{ number_format($product->average_rating, 0) }},
+                value: {{ $avgRating }},
             });
 
             $('.jsRatingComment').stars({

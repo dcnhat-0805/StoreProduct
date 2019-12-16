@@ -289,6 +289,7 @@ span.address {
 }
 .rating__info, .sold__info {
     font-weight: 700;
+    border-bottom: 1px solid #a29c9c
 }
 .jsRatingComment i {
     font-size: 30px;

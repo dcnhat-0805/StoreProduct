@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class RenameColumnProductIsShippingToTableProducts extends Migration
+class DeleteColumnCountBuyOnTableProducts extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class RenameColumnProductIsShippingToTableProducts extends Migration
     public function up()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->renameColumn('product_is_shipping', 'product_is_free_ship');
+            $table->dropColumn('count_buy');
         });
     }
 
@@ -26,7 +26,7 @@ class RenameColumnProductIsShippingToTableProducts extends Migration
     public function down()
     {
         Schema::table('products', function (Blueprint $table) {
-            $table->renameColumn('product_is_free_ship', 'product_is_shipping');
+            $table->integer('count_buy')->after('product_option')->nullable();
         });
     }
 }

@@ -13,6 +13,7 @@ use Cart;
 use Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends FrontEndController
 {
@@ -41,8 +42,8 @@ class ProductController extends FrontEndController
         $user = Auth::user();
         $titleName = Product::getNameAndSlugBySlug($description);
         $product = Product::getProductBySlugAndId($description);
-//        dd($product);
         $products = Product::getListProductOnFrontEndByCategoryId($product->category_id);
+//        dd(Session::get(SESSION_LAST_URL_CUSTOMER));
 //        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
         $titleName['product_name'] = $product->product_description;
 

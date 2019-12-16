@@ -159,7 +159,6 @@ class CartController extends FrontEndController
                 $orderDetail['amount'] = $cart->price;
                 $orderDetails[$key] = OrderDetail::create($orderDetail);
 
-                Product::updateCountBuy($cart->id);
                 $exist = Product::getQuantityProductById($cart->id);
                 if ($exist == 0) {
                     Product::updateStatusNotExists($cart->id);

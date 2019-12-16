@@ -21,13 +21,14 @@ class Product extends Model
         'product_name', 'product_slug', 'product_image',
         'product_description','product_description_slug', 'product_content', 'product_price',
         'product_meta_title', 'product_meta_description', 'product_quantity',
-        'product_is_exists', 'product_option',
+        'product_is_free_ship', 'product_option',
         'product_promotion', 'product_status',
     ];
 
     public $guarded = [
         'count_buy',
         'product_view',
+        'count_view',
     ];
 
     protected $dates = [
@@ -343,8 +344,8 @@ class Product extends Model
             ->leftjoin('order_details', 'products.id', '=', 'order_details.product_id')
             ->selectRaw("products.*")
             ->selectRaw(
-                DB::raw("(CASE WHEN (products.product_quantity - (SELECT SUM(quantity) FROM order_details WHERE order_details.product_id = products.id GROUP BY product_id)) IS NOT NULL THEN
-                (products.product_quantity - (SELECT SUM(quantity) FROM order_details WHERE order_details.product_id = products.id GROUP BY product_id)) ELSE products.product_quantity END) as exist")
+                DB::raw("(CASE WHEN (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) ELSE products.product_quantity END) as exist")
             )
             ->with([
                 'category' => function ($category) {
@@ -509,10 +510,15 @@ class Product extends Model
             ->leftjoin('ratings', 'products.id', 'ratings.product_id')
             ->selectRaw("products.*")
             ->selectRaw(
-                DB::raw("(CASE WHEN (products.product_quantity - (SELECT SUM(quantity) FROM order_details WHERE order_details.product_id = products.id GROUP BY product_id)) IS NOT NULL THEN
-                (products.product_quantity - (SELECT SUM(quantity) FROM order_details WHERE order_details.product_id = products.id GROUP BY product_id)) ELSE products.product_quantity END) as exist")
+                DB::raw("(CASE WHEN (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) ELSE products.product_quantity END) AS exist")
             )
-            ->selectRaw('AVG(ratings.point) AS average_rating')
+            ->selectRaw(
+                DB::raw("(CASE WHEN ((SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status = 2 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                ((SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status = 2 GROUP BY order_details.product_id)) ELSE 0 END) AS count_buy")
+            )
+            ->selectRaw('(SELECT count(ratings.user_id) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS count_rating')
+            ->selectRaw('(SELECT FORMAT(AVG(ratings.point), 1) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS average_rating')
             ->with([
                 'category' => function ($category) {
                     $category->whereNull('categories.deleted_at');
@@ -677,21 +683,12 @@ class Product extends Model
         return $products;
     }
 
-    public static function updateCountBuy($productId)
-    {
-        $product = self::showProduct($productId);
-
-        return $product->update([
-            'count_buy' => $product->count_buy++,
-        ]);
-    }
-
     public static function updateProductView($productId)
     {
         $product = self::showProduct($productId);
 
         return $product->update([
-            'product_view' => $product->product_view++,
+            'count_view' => $product->count_view++,
         ]);
     }
 
@@ -701,8 +698,8 @@ class Product extends Model
             'category_id', 'product_category_id', 'product_id',
             'product_name', 'product_image',
             'product_description', 'product_content', 'product_price',
-            'product_promotion', 'count_buy',
-            'product_view', 'product_status')
+            'product_promotion',
+            'count_view', 'product_status')
             ->orderBy('id', 'DESC')->paginate(2);
     }
 
@@ -815,8 +812,8 @@ class Product extends Model
             'category_id', 'product_category_id', 'product_type_id',
             'product_name', 'product_image',
             'product_description', 'product_content', 'product_price',
-            'product_promotion', 'count_buy',
-            'product_view', 'product_status')
+            'product_promotion',
+            'count_view', 'product_status')
             ->orderby('id', 'DESC')->where('product_type_id', $product_type_id)->get();
         return $product;
     }
@@ -827,8 +824,8 @@ class Product extends Model
             ->where('products.id', $productId)
             ->leftjoin('order_details', 'products.id', '=', 'order_details.product_id')
             ->selectRaw(
-                DB::raw("(CASE WHEN (products.product_quantity - (SELECT SUM(quantity) FROM order_details WHERE order_details.product_id = products.id GROUP BY product_id)) IS NOT NULL THEN
-                (products.product_quantity - (SELECT SUM(quantity) FROM order_details WHERE order_details.product_id = products.id GROUP BY product_id)) ELSE products.product_quantity END) as exist")
+                DB::raw("(CASE WHEN (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) ELSE products.product_quantity END) as exist")
             )
             ->pluck('exist')
             ->first();
@@ -839,7 +836,7 @@ class Product extends Model
         $product = self::showProduct($productId);
 
         return $product->update([
-            'product_is_exists' => 0
+            'product_is_free_ship' => 0
         ]);
     }
 }
