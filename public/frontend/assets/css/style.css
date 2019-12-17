@@ -348,6 +348,9 @@ span.address {
 .filter__rating.active{
     color: #ec4445;
 }
+.filter__rating label:hover {
+    cursor: pointer;
+}
 .main__filter__price {
     padding-bottom: 20px;
 }

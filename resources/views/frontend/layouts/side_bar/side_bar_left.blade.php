@@ -14,6 +14,12 @@
     if (isset($_GET['rating'])) {
        unset($_GET['rating']);
     }
+    if (isset($params['rating'])) {
+       unset($params['rating']);
+    }
+    if (isset($searchParams['rating'])) {
+       unset($searchParams['rating']);
+    }
     $searchParams = array_merge($searchParams, $_GET);
 @endphp
 <input type="hidden" class="description" value="{{ isset($slug) ? $slug : '' }}">
