@@ -207,7 +207,6 @@ let CartJs = (function ($) {
             type: "GET",
             data: data,
             success : function (result) {
-                console.log(result, data);
                 let total = number_format(result['total']);
                 let quantity = result['quantity'];
                 $('.total-price, .subtotal-price').text(total);
