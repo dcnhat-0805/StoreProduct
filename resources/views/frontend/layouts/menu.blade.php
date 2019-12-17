@@ -54,7 +54,7 @@
 
                     <!-- Main Nav Menu -->
 
-                    <div class="main_nav_menu ml-auto" style="padding-right: 25px">
+                    <div class="main_nav_menu ml-auto hide" style="padding-right: 25px">
                         <ul class="standard_dropdown main_nav_dropdown">
                             <li><a href="#">Home<i class="fas fa-chevron-down"></i></a></li>
 {{--                            <li class="hassubs">--}}
@@ -111,7 +111,7 @@
 
                     <!-- Menu Trigger -->
 
-                    <div class="menu_trigger_container ml-auto">
+                    <div class="menu_trigger_container ml-auto hide">
                         <div class="menu_trigger d-flex flex-row align-items-center justify-content-end">
                             <div class="menu_burger">
                                 <div class="menu_trigger_text">menu</div>

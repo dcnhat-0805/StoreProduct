@@ -151,7 +151,7 @@
                                                             <div class="product_fav"><i class="fas fa-heart"></i></div>
                                                             <ul class="product_marks">
                                                                 <li class="product_mark product_discount">-25%</li>
-                                                                <li class="product_mark {{ $productNew->exist == 0 ? 'product_over' : 'product_new' }}">{{ $productNew->product_is_exists == 0 ? 'Over' : 'best' }}</li>
+                                                                <li class="product_mark {{ $productNew->exist == 0 ? 'product_over' : 'product_new' }}">{{ $productNew->exist == 0 ? 'Over' : 'best' }}</li>
                                                             </ul>
                                                         </div>
                                                     </a>
@@ -193,7 +193,7 @@
                                                             <div class="product_fav"><i class="fas fa-heart"></i></div>
                                                             <ul class="product_marks">
                                                                 <li class="product_mark product_discount">-25%</li>
-                                                                <li class="product_mark {{ $productNew->exist == 0 ? 'product_over' : 'product_new' }}">{{ $productNew->product_is_exists == 0 ? 'Over' : 'New' }}</li>
+                                                                <li class="product_mark {{ $productNew->exist == 0 ? 'product_over' : 'product_new' }}">{{ $productNew->exist == 0 ? 'Over' : 'New' }}</li>
                                                             </ul>
                                                         </div>
                                                     </a>
@@ -235,7 +235,7 @@
                                                             <div class="product_fav"><i class="fas fa-heart"></i></div>
                                                             <ul class="product_marks">
                                                                 <li class="product_mark product_discount">-25%</li>
-                                                                <li class="product_mark {{ $productNew->exist == 0 ? 'product_over' : 'product_hot' }}">{{ $productNew->product_is_exists == 0 ? 'Over' : 'Hot' }}</li>
+                                                                <li class="product_mark {{ $productNew->exist == 0 ? 'product_over' : 'product_hot' }}">{{ $productNew->exist == 0 ? 'Over' : 'Hot' }}</li>
                                                             </ul>
                                                         </div>
                                                     </a>

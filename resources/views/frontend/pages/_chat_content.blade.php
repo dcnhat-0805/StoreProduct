@@ -26,5 +26,12 @@
             </div>
         @endif
     @endforeach
+@else
+    <div class="no__chat">
+        <img src="/frontend/images/chat.png" width="200">
+        <br>
+        <br>
+        <span>No chat history</span>
+    </div>
 @endif
 

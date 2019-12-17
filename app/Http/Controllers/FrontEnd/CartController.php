@@ -193,9 +193,12 @@ class CartController extends FrontEndController
 
         if (count($carts)) {
             foreach ($carts as $cart) {
-                $data[] = [
-                    'row_id' => $cart->rowId
-                ];
+                $exist = Helper::getQuantityProductById($cart->id);
+                if ($exist > 0) {
+                    $data[] = [
+                        'row_id' => $cart->rowId
+                    ];
+                }
             }
         }
 
@@ -266,8 +269,11 @@ class CartController extends FrontEndController
 
         if (count($carts)) {
             foreach ($carts as $cart) {
-                $quantity += $cart->qty;
-                $total += $cart->qty * $cart->price;
+                $exist = Helper::getQuantityProductById($cart->id);
+                if ($exist > 0) {
+                    $quantity += $cart->qty;
+                    $total += $cart->qty * $cart->price;
+                }
             }
         }
 

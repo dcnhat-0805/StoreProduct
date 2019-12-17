@@ -15,7 +15,6 @@ class HomeController extends FrontEndController
 
     public function index(Request $request)
     {
-//        dd(ShoppingCart::getContentCart());
         $params = Product::getSearchParams();
         $products = [];
         $products['best'] = Product::getProductByOption(BEST);

@@ -47,13 +47,20 @@
                                 <tbody class="list-cart mod-list-cart">
                                 @if(isset($carts))
                                     @foreach($carts as $cart)
-                                        <tr id="cart-{{ $cart->rowId }}">
+                                        <?php
+                                            $exist = \App\Helpers\Helper::getQuantityProductById($cart->id);
+                                        ?>
+                                        <tr id="cart-{{ $cart->rowId }}" class="{{ $exist == 0 ? 'bg__out__stock' : '' }}">
                                             <td>
-                                                <div class="selectItem">
-                                                    <input type="checkbox" name="cartSelectItem"
+                                                @if($exist > 0)
+                                                    <div class="selectItem">
+                                                        <input type="checkbox" name="cartSelectItem"
                                                            class="cartSelectItem" data-num="{{ $cart->id }}"
                                                            id="item-{{ $cart->id }}" data-row_id="{{ $cart->rowId }}">
-                                                </div>
+                                                    </div>
+                                                @else
+                                                    <div class="ribbon__out__stock">Out stock</div>
+                                                @endif
                                             </td>
                                             <td class="text-center col-sm-4">
                                                 <div class="cart-product-name col-sm-10 text-left">

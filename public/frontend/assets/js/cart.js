@@ -125,9 +125,11 @@ let CartJs = (function ($) {
             dataType : 'JSON',
             type: "GET",
             success : function (data) {
-                Commons.setLocalStorageListIds(CART_IDS, data);
-                Commons.setLocalStorageDeleteAll(CART_CHECK_ALL, IS_DELETE_ALL);
-                modules.confirmCart();
+                if (data.length > 0) {
+                    Commons.setLocalStorageListIds(CART_IDS, data);
+                    Commons.setLocalStorageDeleteAll(CART_CHECK_ALL, IS_DELETE_ALL);
+                    modules.confirmCart();
+                }
             }
         });
     };
@@ -205,6 +207,7 @@ let CartJs = (function ($) {
             type: "GET",
             data: data,
             success : function (result) {
+                console.log(result, data);
                 let total = number_format(result['total']);
                 let quantity = result['quantity'];
                 $('.total-price, .subtotal-price').text(total);
@@ -304,7 +307,11 @@ $(document).ready(function () {
         let val = $(value).val();
         let max_qty = $(value).data('quantity');
 
-        if (val === '1') {
+        if (max_qty == 0) {
+            $(value).parent().find('.btn-down, .btn-up').prop('disabled', true);
+        }
+
+        if (val == 1) {
             $(value).parent().find('.btn-down').prop('disabled', true);
         }
 

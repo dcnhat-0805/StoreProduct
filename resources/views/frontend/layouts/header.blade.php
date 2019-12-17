@@ -136,7 +136,7 @@
 
     <!-- Menu -->
 
-    <div class="page_menu">
+    <div class="page_menu hide">
         <div class="container">
             <div class="row">
                 <div class="col">

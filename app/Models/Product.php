@@ -387,6 +387,16 @@ class Product extends Model
             ->leftjoin('product_attributes', 'product_attributes.product_id', '=', 'products.id')
 //            ->join('product_images', 'products.id', '=', 'product_images.product_id')
             ->selectRaw("products.*")
+            ->selectRaw(
+                DB::raw("(CASE WHEN (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) ELSE products.product_quantity END) AS exist")
+            )
+            ->selectRaw(
+                DB::raw("(CASE WHEN ((SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status = 2 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                ((SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status = 2 GROUP BY order_details.product_id)) ELSE 0 END) AS count_buy")
+            )
+            ->selectRaw('(SELECT count(ratings.user_id) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS count_rating')
+            ->selectRaw('(SELECT FORMAT(AVG(ratings.point), 1) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS average_rating')
             ->with([
                 'category' => function ($category) {
                     $category->whereNull('categories.deleted_at');
@@ -578,8 +588,23 @@ class Product extends Model
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
             ->leftjoin('product_categories', 'product_categories.id', '=', 'products.product_category_id')
-//            ->join('product_images', 'products.id', '=', 'product_images.product_id')
+            ->leftjoin('order_details', 'products.id', '=', 'order_details.product_id')
+            ->leftjoin('ratings', 'products.id', 'ratings.product_id')
             ->selectRaw("products.*")
+            ->whereRaw(
+                DB::raw("((CASE WHEN (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) ELSE products.product_quantity END)) > 0")
+            )
+            ->selectRaw(
+                DB::raw("(CASE WHEN (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) ELSE products.product_quantity END) AS exist")
+            )
+            ->selectRaw(
+                DB::raw("(CASE WHEN ((SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status = 2 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                ((SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status = 2 GROUP BY order_details.product_id)) ELSE 0 END) AS count_buy")
+            )
+            ->selectRaw('(SELECT count(ratings.user_id) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS count_rating')
+            ->selectRaw('(SELECT FORMAT(AVG(ratings.point), 1) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS average_rating')
             ->with([
                 'category' => function ($category) {
                     $category->whereNull('categories.deleted_at');
@@ -615,6 +640,16 @@ class Product extends Model
             ->leftjoin('product_categories', 'product_categories.id', '=', 'products.product_category_id')
 //            ->join('product_images', 'products.id', '=', 'product_images.product_id')
             ->selectRaw("products.*")
+            ->selectRaw(
+                DB::raw("(CASE WHEN (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) ELSE products.product_quantity END) AS exist")
+            )
+            ->selectRaw(
+                DB::raw("(CASE WHEN ((SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status = 2 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                ((SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status = 2 GROUP BY order_details.product_id)) ELSE 0 END) AS count_buy")
+            )
+            ->selectRaw('(SELECT count(ratings.user_id) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS count_rating')
+            ->selectRaw('(SELECT FORMAT(AVG(ratings.point), 1) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS average_rating')
             ->with([
                 'category' => function ($category) {
                     $category->whereNull('categories.deleted_at');
