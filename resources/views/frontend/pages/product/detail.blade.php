@@ -184,23 +184,25 @@
         <div class="container">
             <h4 class="label-product-content">Ratings & Reviews of {{ $product->product_description }}</h4>
             <div class="sop-body-product-content" style="height: auto !important;">
-                <div class="col-sm-4">
-                    <div class="summary">
-                        <div class="score"><span class="score-average">{{ $avgRating }}</span><span
-                                class="score-max">/{{ MAX_RATING }}</span></div>
-                        <div class="jsRatingUser disabled"></div>
-                        <div class="count">{{ $countRating }} Ratings</div>
+                @if($avgRating)
+                    <div class="col-sm-4">
+                        <div class="summary">
+                            <div class="score"><span class="score-average">{{ $avgRating }}</span><span
+                                    class="score-max">/{{ MAX_RATING }}</span></div>
+                            <div class="jsRatingUser disabled"></div>
+                            <div class="count">{{ $countRating }} Ratings</div>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-4">
-                    <div class="jsRatingUserDetail">
-                        <div class="jsRatingUserDetail5 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[5]) }}</span>
-                        <div class="jsRatingUserDetail4 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[4]) }}</span>
-                        <div class="jsRatingUserDetail3 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[3]) }}</span>
-                        <div class="jsRatingUserDetail2 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[2]) }}</span>
-                        <div class="jsRatingUserDetail1 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[1]) }}</span>
+                    <div class="col-sm-4">
+                        <div class="jsRatingUserDetail">
+                            <div class="jsRatingUserDetail5 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[5]) }}</span>
+                            <div class="jsRatingUserDetail4 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[4]) }}</span>
+                            <div class="jsRatingUserDetail3 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[3]) }}</span>
+                            <div class="jsRatingUserDetail2 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[2]) }}</span>
+                            <div class="jsRatingUserDetail1 disabled"></div><span>{{ App\Helpers\Helper::getCountRatingByProductIdAndPoint($product->id, RATING_POINT[1]) }}</span>
+                        </div>
                     </div>
-                </div>
+                @endif
                 <div class="col-sm-4">
                     <div class="sop-main-question">
                         <div class="title__question text-center">You have problems need advice?</div>
@@ -255,7 +257,7 @@
         <div class="featured-section" id="projects">
             <div class="container">
                 <!-- tittle heading -->
-                <h3 class="tittle-w3l">Special Offers
+                <h3 class="tittle-w3l">Related products
                     <span class="heading-style">
 					<i></i>
 					<i></i>

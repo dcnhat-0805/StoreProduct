@@ -32,7 +32,7 @@
                         <span class="value_like">0</span>
                         <span class="action">Like</span>
                     </div>
-                    <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($commentProduct->created_at)) }}</div>
+                    <div class="time">{{ App\Helpers\Helper::getTimeAgo($commentProduct->created_at) }}</div>
                 </div>
 
                 @if(count($repComments))
@@ -44,7 +44,7 @@
                             <div class="comment-info">
                                 <div class="comment-title">
                                     <div class="comment-name">
-                                        <div class="admin">Admin</div>
+                                        <div class="name">Admin</div>
                                     </div>
                                 </div>
                                 @foreach($repComments as $repComment)
@@ -56,7 +56,7 @@
                                         <span class="value_like">0</span>
                                         <span class="action">Like</span>
                                     </div>
-                                    <div class="time">{{ App\Helpers\Helper::getTimeAgo(strtotime($repComment->created_at)) }}</div>
+                                    <div class="time">{{ App\Helpers\Helper::getTimeAgo($repComment->created_at) }}</div>
                                 </div>
                             </div>
                         </div>

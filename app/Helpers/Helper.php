@@ -367,11 +367,13 @@ class Helper
     }
     public static function getTimeAgo($time)
     {
+        $time = strtotime($time);
         $etime = time() - $time;
 
         if( $etime < 1 )
         {
-            return 'less than '. $etime .' second ago';
+//            return 'less than '. $etime .' second ago';
+            return 'Just finish';
         }
 
         $array = array( 12 * 30 * 24 * 60 * 60  =>  'year',

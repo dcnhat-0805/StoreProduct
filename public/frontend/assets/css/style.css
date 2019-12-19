@@ -533,6 +533,7 @@ span.address {
     font-weight: 700;
     color: #777;
     line-height: 25px;
+    text-transform: capitalize;
 }
 .comment-info .comment-title .comment-name .phone {
     float: left;
