@@ -124,6 +124,14 @@ let CustomerJs = (function ($) {
             url: "/admin/customer/list_all_customer",
             dataType : 'JSON',
             type: "GET",
+            data : {
+                keyword: $.urlParam('keyword'),
+                status: url.searchParams.getAll("status[]"),
+                created_at: $.urlParam('created_at'),
+                city: $.urlParam('city'),
+                district: $.urlParam('district'),
+                wards: $.urlParam('wards'),
+            },
             success : function (data) {
                 Commons.setLocalStorageListIds(CUSTOMER_IDS, data);
                 Commons.setLocalStorageDeleteAll(CUSTOMER_DELETE_ALL, IS_DELETE_ALL);
@@ -172,6 +180,73 @@ let CustomerJs = (function ($) {
         });
     };
 
+    modules.loadAddressSelectBox = function () {
+        modules.loadDistrictByCityId = function(cityId, districtId = null) {
+            $.ajax({
+                url : '/account/ajaxGetDistricts',
+                dataType : 'JSON',
+                type : 'GET',
+                data : {
+                    city_id : cityId,
+                    district_id : districtId
+                },
+                success : function (data) {
+                    $('.district').html(data)
+                }
+            });
+        };
+
+        modules.loadWardsByDistrictId = function (districtId, wardsId = null) {
+            $.ajax({
+                url : '/account/ajaxGetWards',
+                dataType : 'JSON',
+                type : 'GET',
+                data : {
+                    district_id : districtId,
+                    wards_id : wardsId
+                },
+                success : function (data) {
+                    $('.wards').html(data)
+                }
+            });
+        };
+
+        $('.jsSelectCity').on('change', function () {
+            let cityId = $(this).val();
+
+            $('.address-user-checkout__error').hide();
+            modules.loadDistrictByCityId(cityId);
+        });
+
+        $(document).on('change', '.jsSelectDistrict', function () {
+            let districtId = $(this).val();
+            $('.address-user-checkout__error').hide();
+
+            modules.loadWardsByDistrictId(districtId);
+        });
+
+        let cityId = $.urlParam('city');
+        let districtId = $.urlParam('district');
+        let wardsId = $.urlParam('wards');
+
+        $('select[name=city]').prop('disabled', false).trigger("chosen:updated");
+        $('select[name=district]').prop('disabled', false).trigger("chosen:updated");
+        $('select[name=wards]').prop('disabled', false).trigger("chosen:updated");
+
+        if (!cityId) {
+            $('select[name=district]').prop('disabled', true).trigger("chosen:updated");
+            $('select[name=wards]').prop('disabled', true).trigger("chosen:updated");
+        } else {
+            modules.loadDistrictByCityId(cityId, districtId);
+        }
+
+        if (!districtId) {
+            $('select[name=wards]').prop('disabled', true).trigger("chosen:updated");
+        } else {
+            modules.loadWardsByDistrictId(districtId, wardsId);
+        }
+    };
+
     return modules;
 })(window.jQuery, window, document);
 
@@ -181,6 +256,7 @@ $.ajaxSetup({
     }
 });
 $(document).ready(function () {
+    CustomerJs.loadAddressSelectBox();
 
     btnDeleteCustomer.on('click', function () {
         let id = $('#customer_id').val();

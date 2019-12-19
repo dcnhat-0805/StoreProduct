@@ -171,6 +171,12 @@ let AdminJs = (function ($) {
             url: "/admin/list_admin",
             dataType : 'JSON',
             type: "GET",
+            data : {
+                keyword: $.urlParam('keyword'),
+                status: url.searchParams.getAll("status[]"),
+                created_at: $.urlParam('created_at'),
+                role: $.urlParam('role'),
+            },
             success : function (data) {
                 Commons.setLocalStorageListIds(ADMIN_IDS, data);
                 Commons.setLocalStorageDeleteAll(ADMIN_DELETE_ALL, IS_DELETE_ALL);

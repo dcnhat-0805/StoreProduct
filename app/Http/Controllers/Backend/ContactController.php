@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,6 +19,12 @@ class ContactController extends Controller
     {
         $params = \request()->all();
         $contacts = Contact::getDistinct($params);
+
+        if (!count($contacts) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($contacts);
+
+            return redirect($route);
+        }
 
         return view('backend.pages.contact.index', compact('contacts'));
     }

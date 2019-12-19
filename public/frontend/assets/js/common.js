@@ -12,7 +12,7 @@ $.urlParam = function(name){
         return null;
     }
     else{
-        return decodeURI(results[1]);
+        return decodeURIComponent(results[1]);
     }
 };
 
@@ -174,27 +174,16 @@ let Commons = (function ($) {
         $("button.btn-success").prop('disabled', false);
     });
 
+
     modules.loadAddressSelectBox = function () {
-        let cityId = $('select[name=city]').val();
-        let districtId = $('select[name=district]').val();
-        let wardsId = $('select[name=wards]').val();
-
-        $('select[name=city]').prop('disabled', false);
-        $('select[name=district]').prop('disabled', false);
-        $('select[name=wards]').prop('disabled', false);
-
-        if (!cityId) {
-            $('select[name=district]').prop('disabled', true);
-            $('select[name=wards]').prop('disabled', true);
-        }
-
-        modules.loadDistrictByCityId = function(cityId) {
+        modules.loadDistrictByCityId = function(cityId, districtId = null) {
             $.ajax({
                 url : '/account/ajaxGetDistricts',
                 dataType : 'JSON',
                 type : 'GET',
                 data : {
-                    city_id : cityId
+                    city_id : cityId,
+                    district_id : districtId
                 },
                 success : function (data) {
                     $('.district').html(data)
@@ -202,13 +191,14 @@ let Commons = (function ($) {
             });
         };
 
-        modules.loadWardsByDistrictId = function (districtId) {
+        modules.loadWardsByDistrictId = function (districtId, wardsId = null) {
             $.ajax({
                 url : '/account/ajaxGetWards',
                 dataType : 'JSON',
                 type : 'GET',
                 data : {
-                    district_id : districtId
+                    district_id : districtId,
+                    wards_id : wardsId
                 },
                 success : function (data) {
                     $('.wards').html(data)
@@ -235,7 +225,29 @@ let Commons = (function ($) {
             $('.address-user-checkout__error').hide();
             $("button.btn-success, .btn-login, .btn-place-order").prop('disabled', false);
         });
+
+        let cityId = $('select[name=city]').val();
+        let districtId = $('select[name=district]').val();
+        let wardsId = $('select[name=wards]').val();
+
+        $('select[name=city]').prop('disabled', false);
+        $('select[name=district]').prop('disabled', false);
+        $('select[name=wards]').prop('disabled', false);
+
+        if (!cityId) {
+            $('select[name=district]').prop('disabled', true);
+            $('select[name=wards]').prop('disabled', true);
+        } else {
+            modules.loadDistrictByCityId(cityId, districtId);
+        }
+
+        if (!districtId) {
+            $('select[name=wards]').prop('disabled', true);
+        } else {
+            modules.loadWardsByDistrictId(districtId, wardsId);
+        }
     };
+
     $('form').each(function (index, value) {
         for (let i=0; i < value.length; i++) {
             $(value[i]).bind("keyup change", function () {

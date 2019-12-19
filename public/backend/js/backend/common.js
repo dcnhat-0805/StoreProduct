@@ -22,12 +22,12 @@ const PRODUCT_CATEGORY_ID = localStorage.getItem('jsSelectProductCategory') ? lo
 const PRODUCT_TYPE_ID = localStorage.getItem('jsSelectProductType') ? localStorage.getItem('jsSelectProductType') : null;
 
 $.urlParam = function(name){
-    let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
+    let results = new RegExp('[\?&]+' + name + '=([^&#]+)').exec(window.location.href);
+    if (results == null){
         return null;
     }
     else{
-        return decodeURI(results[1]);
+        return decodeURIComponent(results[1]);
     }
 };
 
@@ -255,7 +255,7 @@ let Commons = (function ($) {
         $(formId).each(function (index, value) {
             for (let i=0; i < value.length; i++) {
                 $(value[i]).bind("keyup change", function () {
-                    $(this).find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
+                    $(formId).parent().parent().parent().parent().find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
                     let name = $(this).attr('name');
                     let className = (!ARRAY_NAME.includes(name)) ? $(this).next()[0].classList[1] : $(this).parent().next()[0].classList[1];
                     let val = $(this).val();
@@ -287,24 +287,61 @@ let Commons = (function ($) {
                 $(this).parent().parent().parent().parent().parent().parent().parent().next().children().children().children().children().prop('disabled', false).trigger("chosen:updated");
                 $('.error_' + name).text('');
             }
-            $(this).find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
+            $(this).parent().parent().parent().parent().find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
             $('input[name=submit]').val('');
         });
 
         if (summerNoteId) {
-            $(summerNoteId).on("summernote.change", function (e) {
-                let val = $(this).summernote('code');
-                let name = $(this).attr('name');
-                let className = $(this).next().next()[0].classList[1];
+            $(summerNoteId).summernote({
+                height: 200,
+                placeholder: "Product contents ...",
+                toolbar: [
+                    ['undo', ['undo', 'redo']],
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph', 'height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview']],
+                ],
+                callbacks: {
+                    onKeydown: function(e) {
+                        let t = e.currentTarget.innerText;
+                        validateSummernote($(this), e);
+                    },
+                    onKeyup: function(e) {
+                        let t = e.currentTarget.innerText;
+                        validateSummernote($(this), e);
+                    },
+                    onPaste: function(e, contents, $editable) {
+                        validateSummernote($(this), e);
+                        let t = e.currentTarget.innerText;
+                        let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                        e.preventDefault();
+                        let all = t + bufferText;
+                        document.execCommand('insertText', false, all.trim().substring(0, 400));
+                    },
+                }
+            });
+
+            function validateSummernote(editor, event = null) {
+                let val = editor.summernote('code');
+                let t = event.currentTarget.innerText;
+                let name = editor.attr('name');
+                let className = editor.next().next()[0].classList[1];
 
                 if (val === '<p><br></p>' || (val.length <= 48 || val.length > 262)) {
                     modules.getMessageValidation(url, name, className, formId);
                 } else {
                     $('.' + className).text('');
                 }
-                $(this).find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
+                editor.parent().parent().parent().parent().find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
                 $('input[name=submit]').val('');
-            });
+            }
         }
     };
 
@@ -378,7 +415,7 @@ $.enableButtonSubmitWhenUploadedImage = function () {
 
 $(document).ready(function () {
 
-    $('.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType').chosen({
+    $('.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType, .jsSelectCity, .jsSelectDistrict, .jsSelectWards').chosen({
         width: "100%"
     });
 

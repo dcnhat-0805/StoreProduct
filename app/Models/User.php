@@ -70,7 +70,6 @@ class User extends Authenticatable
             }
         }
 
-
         if (isset($params['status'])) {
             $status = $params['status'];
 
@@ -81,6 +80,38 @@ class User extends Authenticatable
                 if (in_array(1, $status)) {
                     $query->orWhereRaw("(users.status = 1)");
                 }
+            });
+        }
+
+        if (isset($params['city'])) {
+            $city = $params['city'];
+
+            $user = $user->where(function ($query) use ($city) {
+                $query->orWhereRaw("cities.code = ? ", [$city]);
+            });
+        }
+
+        if (isset($params['city'])) {
+            $city = $params['city'];
+
+            $user = $user->where(function ($query) use ($city) {
+                $query->orWhereRaw("cities.code = ? ", [$city]);
+            });
+        }
+
+        if (isset($params['district'])) {
+            $district = $params['district'];
+
+            $user = $user->where(function ($query) use ($district) {
+                $query->orWhereRaw("districts.code = ? ", [$district]);
+            });
+        }
+
+        if (isset($params['district'])) {
+            $district = $params['district'];
+
+            $user = $user->where(function ($query) use ($district) {
+                $query->orWhereRaw("districts.code = ? ", [$district]);
             });
         }
 
@@ -110,9 +141,9 @@ class User extends Authenticatable
             $order = "users.id desc";
         }
         $users = $users->whereNull('social_id')
-            ->join('wards', 'wards.code', 'users.address')
-            ->join('districts', 'wards.parent_code', 'districts.code')
-            ->join('cities', 'districts.parent_code', 'cities.code')
+            ->leftjoin('wards', 'wards.code', 'users.address')
+            ->leftjoin('districts', 'wards.parent_code', 'districts.code')
+            ->leftjoin('cities', 'districts.parent_code', 'cities.code')
             ->select(
                 'users.id', 'users.name', 'users.email', 'users.created_at', 'users.address', 'users.gender',
                 'users.phone', 'wards.path_with_type as address_user', 'users.birthday', 'users.status',

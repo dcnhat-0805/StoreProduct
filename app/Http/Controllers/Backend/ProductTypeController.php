@@ -108,7 +108,8 @@ class ProductTypeController extends Controller
 
     public function getListProductType()
     {
-        $productTypes = ProductType::getListAllProductType();
+        $params = request()->all();
+        $productTypes = ProductType::getListAllProductType($params);
         $data = [];
 
         if (count($productTypes)) {

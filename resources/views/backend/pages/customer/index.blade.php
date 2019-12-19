@@ -120,7 +120,7 @@
                 <div class="modal-body">
                     <div class="row" style="margin: 5px">
                         <div class="col-lg-12">
-                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_INDEX) }}">
+                            <form role="form" method="GET" id="formSearch" action="{{ route(ADMIN_CUSTOMER_INDEX) }}">
                                 <div class="box-body">
                                     <div class="row">
                                         <div class="col-sm-12">
@@ -131,20 +131,36 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="name">Created at</label>
-                                                <input type="text" readonly class="form-control jsDatepicker" name="created_at" value="{{ request()->get('created_at') }}" >
-                                            </div>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <div class="form-group">
-                                                <label for="name">Permission</label>
-                                                <div class="permission">
+                                        <div class="form-address">
+                                            <div class="col-sm-4 form-group">
+                                                <label for="city">City</label>
+                                                <div class="city">
                                                     {{
-                                                        Form::select('role', PERMISSION, request()->get('role'),
+                                                        Form::select('city', $cities, request()->get('city'),
                                                         [
-                                                            'class' => 'form-control jsSelectPermission'
+                                                            'class' => 'form-control jsSelectCity',
+                                                        ])
+                                                    }}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 form-group">
+                                                <label for="district">District</label>
+                                                <div class="district">
+                                                    {{
+                                                        Form::select('district', $districts, old('district'),
+                                                        [
+                                                            'class' => 'form-control jsSelectDistrict',
+                                                        ])
+                                                    }}
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4 form-group">
+                                                <label for="wards">Wards</label>
+                                                <div class="wards">
+                                                    {{
+                                                        Form::select('wards', $wards, old('wards'),
+                                                        [
+                                                            'class' => 'form-control jsSelectWards',
                                                         ])
                                                     }}
                                                 </div>
@@ -152,14 +168,22 @@
                                         </div>
                                     </div>
                                     <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="name">Created at</label>
+                                                <input type="text" readonly class="form-control jsDatepicker" name="created_at" value="{{ request()->get('created_at') }}" >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-sm-12">
                                             <div class="form-group">
-                                                <label for="status" class="required after">Status</label>
+                                                <label for="status" class="">Status</label>
                                                 <div class="status">
                                                     <input type="checkbox" class="jsCheckBox" id="display" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>
-                                                    <label for="display" class="label__status">Display</label>
+                                                    <label for="display" class="label__status">Active</label>
                                                     <input type="checkbox" class="jsCheckBox" id="not__display" name="status[]" value="{{ NOT_DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', NOT_DISPLAY, 'checked') }}>
-                                                    <label for="not__display" class="label__status">Not display</label>
+                                                    <label for="not__display" class="label__status">Not active</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -169,7 +193,7 @@
                                     <button type="submit" class="btn btn-custon-three btn-success" id="btnSearch"><i
                                             class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Search
                                     </button>
-                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" id="btnClear" onclick="window.location.href = '{{route(ADMIN_INDEX)}}'">
+                                    <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal" id="btnClear" onclick="window.location.href = '{{route(ADMIN_CUSTOMER_INDEX)}}'">
                                         <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
                                     </button>
                                 </div>

@@ -186,13 +186,23 @@ class Comment extends Model
 
         $order = Helper::getSortParam($params);
         if ($order == '1 = 1') {
-            $order = "comments.product_id DESC ";
+            $order = "created_at DESC ";
         }
 
-        $comments = $comments->selectRaw("DISTINCT(comments.product_id), comments.user_id")
+        $comments = $comments->selectRaw("
+                    comments.user_id,
+                    comments.product_id,
+                    products.product_name,
+                    products.product_description,
+                    users.id,
+                    users.name,
+                    users.email,
+                    users.phone,
+                    min(comments.created_at) as created_at
+                ")
                 ->join('users', 'users.id', '=', 'comments.user_id')
                 ->join('products', 'products.id', '=', 'comments.product_id')
-                ->distinct()
+                ->groupBy('comments.product_id', 'comments.user_id')
                 ->orderByRaw($order)
                 ->paginate(LIMIT);
 
@@ -205,14 +215,14 @@ class Comment extends Model
 
         $order = Helper::getSortParam($params);
         if ($order == '1 = 1') {
-            $order = "comments.product_id DESC ";
+            $order = "created_at DESC ";
         }
 
-        $comments = $comments->selectRaw("DISTINCT(comments.user_id), product_id")
+        $comments = $comments->selectRaw("comments.user_id, comments.product_id, min(comments.created_at) as created_at")
                 ->where('comments.product_id', $productId)
                 ->join('users', 'users.id', '=', 'comments.user_id')
 //                ->join('products', 'products.id', '=', 'comments.product_id')
-                ->distinct()
+                ->groupBy('comments.product_id', 'comments.user_id')
                 ->orderByRaw($order)
                 ->paginate(LIMIT);
 

@@ -852,14 +852,14 @@
                                 @endif
 
                                 <li>
-                                    <a data-toggle="collapse" data-target="#pages" href="#">
+                                    <a data-toggle="collapse" data-target="#users">
                                         <span class="educate-icon educate-professor icon-wrap"></span>
                                         <span class="mini-click-non">User</span>
                                     </a>
-                                    <ul id="pages" class="collapse dropdown-header-top">
+                                    <ul id="users" class="collapse dropdown-header-top">
                                         <li class="">
                                             <a title="User" href="{{route(ADMIN_INDEX)}}">
-                                                <span class="mini-sub-pro">User</span>
+                                                <span class="mini-sub-pro">Admin</span>
                                             </a>
                                         </li>
                                         <li class="{{request()->route()->getPrefix() == 'admin/customer' ? 'active' : ''}}">

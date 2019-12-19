@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
 use App\Models\Comment;
 use App\Models\Product;
 use App\Models\ReplyComment;
@@ -22,6 +23,12 @@ class CommentController extends Controller
 //        $product = Product::getCommentOfUser();
         $params = $request->all();
         $comments = Comment::getDistinct($params);
+
+        if (!count($comments) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($comments);
+
+            return redirect($route);
+        }
 
         return view('backend.pages.comment.index', compact('comments', 'products'));
     }

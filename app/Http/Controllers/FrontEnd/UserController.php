@@ -37,9 +37,10 @@ class UserController extends FrontEndController
     {
         if (request()->ajax()) {
             $city_id = request()->get('city_id');
+            $districtId = request()->get('district_id');
             $districts = District::getOptionDistrict($city_id);
 
-            $html = view('frontend.pages.user._select_district', ['districts' => $districts])->render();
+            $html = view('frontend.pages.user._select_district', ['districts' => $districts, 'district_id' => $districtId])->render();
 
             return response()->json($html);
         }
@@ -49,9 +50,10 @@ class UserController extends FrontEndController
     {
         if (request()->ajax()) {
             $district_id = request()->get('district_id');
+            $wards_id = request()->get('wards_id');
             $wards = Wards::getOptionWards($district_id);
 
-            $html = view('frontend.pages.user._select_wards', ['wards' => $wards])->render();
+            $html = view('frontend.pages.user._select_wards', ['wards' => $wards, 'wards_id' => $wards_id])->render();
 
             return response()->json($html);
         }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
 use App\Models\City;
 use App\Models\District;
 use App\Models\User;
@@ -21,12 +22,19 @@ class CustomerController extends Controller
         $districts = District::getOptionDistrict();
         $wards = Wards::getOptionWards();
 
+        if (!count($users) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($users);
+
+            return redirect($route);
+        }
+
         return view('backend.pages.customer.index', compact('users', 'cities', 'districts', 'wards'));
     }
 
     public function getListAllCustomer(Request $request)
     {
-        $users = User::getAllUser();
+        $params = \request()->all();
+        $users = User::getAllUser($params);
         $data = [];
 
         if (count($users)) {

@@ -62,29 +62,31 @@
                             <th data-field="user_name" data-editable="true">User Name</th>
                             <th data-field="user_email" data-editable="true">User Email</th>
                             <th data-field="user_phone" data-editable="true">Order Phone</th>
+                            <th data-field="created_at" data-editable="true">Order Phone</th>
                             <th data-field="action">Action</th>
                         </tr>
                         </thead>
                         <tbody class="list-category">
                         @if($comments)
                             @foreach($comments as $comment)
-                                @php
-                                    $product = App\Models\Product::showProduct($comment->product_id);
-                                    $user = App\Models\User::showUser($comment->user_id);
-                                @endphp
-                                <tr id="comment-{{ $user->id }}" data-id="{{ $comment->product_id }}">
+{{--                                @php--}}
+{{--                                    $product = App\Models\Product::showProduct($comment->product_id);--}}
+{{--                                    $user = App\Models\User::showUser($comment->user_id);--}}
+{{--                                @endphp--}}
+                                <tr id="comment-{{ $comment->user_id }}" data-id="{{ $comment->product_id }}">
                                     <td></td>
                                     <td class="text-center hide">{{ $user->commentId }}</td>
-                                    <td class="">{{ $product->product_name }}</td>
-                                    <td class="">{{ $user->name }}</td>
-                                    <td class="">{{ $user->email }}</td>
-                                    <td class="">{{ $user->phone }}</td>
+                                    <td class="">{{ $comment->product_name }}</td>
+                                    <td class="">{{ $comment->name }}</td>
+                                    <td class="">{{ $comment->email }}</td>
+                                    <td class="">{{ $comment->phone }}</td>
+                                    <td class="">{{ date('Y-m-d H:i:s', strtotime($comment->created_at)) }}</td>
                                     <td class="datatable-ct text-center">
-                                        <button data-toggle="modal" title="Reply {{ $user->name }}"
+                                        <button data-toggle="modal" title="Reply {{ $comment->name }}"
                                                 class="pd-setting-ed"
                                                 data-original-title="Edit" data-target="#replyComment"
                                                 data-product_id="{{ $comment->product_id }}"
-                                                data-user_id="{{ $user->id }}" type="button">
+                                                data-user_id="{{ $comment->user_id }}" type="button">
                                             <i class="fa fa-eye" aria-hidden="true"></i>
                                         </button>
                                     </td>
@@ -97,7 +99,7 @@
                     <!-- Pagination -->
                     <div class="pagination-wrapper header" style="margin-top: 20px;">
                         <nav class="nav-pagination store-unit clearfix" aria-label="Page navigation">
-                            <span class="info">{{ $comments->currentPage() }} / {{ $comments->lastPage() }} pages（total of {{ count($comments) }}）</span>
+                            <span class="info">{{ $comments->currentPage() }} / {{ $comments->lastPage() }} pages（total of {{ $comments->total() }}）</span>
                             <ul class="pull-right">
                                 <li> {{ $comments->appends($_GET)->links('backend.pagination') }}</li>
                             </ul>

@@ -3,7 +3,7 @@ const btnAaddProductAttribute = $('#addProductAttribute');
 // const btnUpdateProduct = $('#btnUpdateProduct');
 const formId = '#createProduct';
 const url = $(formId).attr('action');
-const summerNoteId = '#descriptionProduct, #contentProduct';
+const summerNoteId = '#contentProduct';
 const chosenId = '.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType';
 const arrayName = ['category_id', 'product_category_id', 'product_type_id', 'product_name', 'product_image', 'product_description', 'product_content', 'product_price', 'product_promotion'];
 const MAX_ATTRIBUTE = 3;
@@ -52,17 +52,17 @@ let productRegisterJs = (function ($) {
         $('#contentProduct').summernote({
             height: 200,
             toolbar: [
+                ['undo', ['undo', 'redo']],
                 ['style', ['style']],
                 ['font', ['bold', 'underline', 'clear']],
                 ['fontname', ['fontname']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
+                ['para', ['ul', 'ol', 'paragraph', 'height']],
                 ['table', ['table']],
                 ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']],
-                ['height', ['height']]
+                ['view', ['fullscreen', 'codeview']],
             ],
         });
 

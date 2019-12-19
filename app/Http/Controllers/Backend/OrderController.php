@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Backend;
 
+use App\Helpers\Helper;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,6 +20,12 @@ class OrderController extends Controller
     {
         $params = $request->all();
         $orders = Order::getListAllOrder($params);
+
+        if (!count($orders) && isset($params['page']) && $params['page']) {
+            $route = Helper::isHasDataByPages($orders);
+
+            return redirect($route);
+        }
 
         return view('backend.pages.order.index', compact('orders'));
     }

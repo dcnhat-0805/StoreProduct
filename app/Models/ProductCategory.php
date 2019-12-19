@@ -38,14 +38,6 @@ class ProductCategory extends Model
     {
         $productCategory = new ProductCategory();
 
-        if (isset($params['keyword'])) {
-            $keyword = addslashes($params['keyword']);
-            if ($keyword != 0 || $keyword != null) {
-                $productCategory = $productCategory->where('product_category_name', 'like', "%$keyword%")
-                    ->orWhere('product_category_slug', 'like', "%$keyword%");
-            }
-        }
-
         if (isset($params['created_at'])) {
             $publishDate = $params['created_at'];
             if ($publishDate != 0) {
@@ -74,6 +66,16 @@ class ProductCategory extends Model
                     $query->orWhereRaw("(product_categories.product_category_status = 1)");
                 }
             });
+        }
+
+        if (isset($params['keyword'])) {
+            $keyword = addslashes($params['keyword']);
+            $keyword = preg_replace("([+])", " ", $keyword);
+            $keyword_slug = convertStringToUrl($keyword);
+            if ($keyword != 0 || $keyword != null) {
+                $productCategory = $productCategory->where('product_categories.product_category_slug', 'like', "%$keyword_slug%")
+                    ->orWhere('product_categories.id', (int) $keyword);
+            }
         }
 
         return $productCategory;

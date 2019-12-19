@@ -37,7 +37,7 @@ class Contact extends Model
             if ($publishDate != 0) {
                 $publishDate = str_replace('+', ' ', $publishDate);
                 $publishDate = explode(' - ', $publishDate);
-                $contact = $contact->whereRaw("contacts.created_at BETWEEN ? AND ?", [date('Y/m', strtotime($publishDate[0])), date('Y/m', strtotime("+1 day", strtotime($publishDate[1])))]);
+                $contact = $contact->whereRaw("contacts.created_at BETWEEN ? AND ?", [date('Y/m/d', strtotime($publishDate[0])), date('Y/m/d', strtotime("+1 day", strtotime($publishDate[1])))]);
             }
         }
 
@@ -79,12 +79,12 @@ class Contact extends Model
 
         $order = Helper::getSortParam($params);
         if ($order == '1 = 1') {
-            $order = "contacts.user_id DESC ";
+            $order = "created_at DESC ";
         }
 
-        $contact = $contact->selectRaw("DISTINCT(contacts.user_id) as user_id, users.name, users.email, users.phone")
+        $contact = $contact->selectRaw("contacts.user_id, users.name, users.email, users.phone, max(contacts.created_at) as created_at")
             ->join('users', 'users.id', '=', 'contacts.user_id')
-            ->distinct()
+            ->groupBy('contacts.user_id')
             ->orderByRaw($order)
             ->paginate(LIMIT);
 

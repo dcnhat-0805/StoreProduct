@@ -93,7 +93,7 @@
                     <!-- Pagination -->
                     <div class="pagination-wrapper header" style="margin-top: 20px;">
                         <nav class="nav-pagination store-unit clearfix" aria-label="Page navigation">
-                            <span class="info">{{ $contacts->currentPage() }} / {{ $contacts->lastPage() }} pages（total of {{ count($contacts) }}）</span>
+                            <span class="info">{{ $contacts->currentPage() }} / {{ $contacts->lastPage() }} pages（total of {{ $contacts->total() }}）</span>
                             <ul class="pull-right">
                                 <li> {{ $contacts->appends($_GET)->links('backend.pagination') }}</li>
                             </ul>
@@ -131,15 +131,15 @@
                                             </div>
                                         </div>
                                     </div>
-{{--                                    <div class="row">--}}
-{{--                                        <div class="col-sm-6">--}}
-{{--                                            <div class="form-group">--}}
-{{--                                                <label for="name">Created at</label>--}}
-{{--                                                <input type="text" readonly class="form-control jsDatepicker"--}}
-{{--                                                       name="created_at" value="{{ request()->get('created_at') }}">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label for="name">Created at</label>
+                                                <input type="text" readonly class="form-control jsDatepicker"
+                                                       name="created_at" value="{{ request()->get('created_at') }}">
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div><!-- /.box-body -->
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-custon-three btn-success"

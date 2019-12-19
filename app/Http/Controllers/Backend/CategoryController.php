@@ -67,28 +67,6 @@ class CategoryController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -137,7 +115,8 @@ class CategoryController extends Controller
 
     public function getListCategory()
     {
-        $category = Category::getListAllCategory();
+        $params = \request()->all();
+        $category = Category::getListAllCategory($params);
         $data = [];
 
         if (count($category)) {

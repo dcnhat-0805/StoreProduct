@@ -143,10 +143,10 @@
                                             <div class="form-group">
                                                 <label for="status" class="required after">Status</label>
                                                 <div class="status">
-                                                    <input type="checkbox" class="jsCheckBox" id="display" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>
-                                                    <label for="display" class="label__status">Active</label>
-                                                    <input type="checkbox" class="jsCheckBox" id="not__display" name="status[]" value="{{ NOT_DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', NOT_DISPLAY, 'checked') }}>
-                                                    <label for="not__display" class="label__status">Not active</label>
+                                                    <input type="checkbox" class="jsCheckBox" id="display1" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>
+                                                    <label for="display1" class="label__status">Active</label>
+                                                    <input type="checkbox" class="jsCheckBox" id="not__display1" name="status[]" value="{{ NOT_DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', NOT_DISPLAY, 'checked') }}>
+                                                    <label for="not__display1" class="label__status">Not active</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -235,12 +235,12 @@
                                             <label for="status" class="required after">Status</label>
                                             <div class="admin-status">
                                                 <div class="jsRadio pull-left">
-                                                    <input type="radio" value="1" id="display" name="admin_status" checked {{ old('admin_status') ? 'checked' : '' }}>
-                                                    <label for="display" class="label__radio"><i></i> Active </label>
+                                                    <input type="radio" value="1" id="display2" name="admin_status" checked {{ old('admin_status') ? 'checked' : '' }}>
+                                                    <label for="display2" class="label__radio"><i></i> Active </label>
                                                 </div>
                                                 <div class="jsRadio pull-left">
-                                                    <input type="radio" value="0" id="not__display" name="admin_status" {{ old('admin_status') == 0 && old('admin_status') != null ? 'checked' : '' }}>
-                                                    <label for="not__display" class="label__radio"><i></i> Not active </label>
+                                                    <input type="radio" value="0" id="not__display2" name="admin_status" {{ old('admin_status') == 0 && old('admin_status') != null ? 'checked' : '' }}>
+                                                    <label for="not__display2" class="label__radio"><i></i> Not active </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -319,12 +319,12 @@
                                             <label for="status" class="required after">Status</label>
                                             <div class="admin-status">
                                                 <div class="jsRadio pull-left">
-                                                    <input type="radio" value="1" id="display" name="admin_status" checked {{ old('admin_status') ? 'checked' : '' }}>
-                                                    <label for="display" class="label__radio"><i></i> Active </label>
+                                                    <input type="radio" value="1" id="display3" name="admin_status" {{ old('admin_status') ? 'checked' : '' }}>
+                                                    <label for="display3" class="label__radio"><i></i> Active </label>
                                                 </div>
                                                 <div class="jsRadio pull-left">
-                                                    <input type="radio" value="0" id="not__display" name="admin_status" {{ old('admin_status') == 0 && old('admin_status') != null ? 'checked' : '' }}>
-                                                    <label for="not__display" class="label__radio"><i></i> Not active </label>
+                                                    <input type="radio" value="0" id="not__display3" name="admin_status" {{ old('admin_status') == 0 && old('admin_status') != null ? 'checked' : '' }}>
+                                                    <label for="not__display3" class="label__radio"><i></i> Not active </label>
                                                 </div>
                                             </div>
                                         </div>

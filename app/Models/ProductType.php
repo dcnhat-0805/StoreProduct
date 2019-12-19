@@ -41,9 +41,11 @@ class ProductType extends Model
 
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
+            $keyword = preg_replace("([+])", " ", $keyword);
+            $keyword_slug = convertStringToUrl($keyword);
             if ($keyword != 0 || $keyword != null) {
-                $productType = $productType->where('product_type_name', 'like', "%$keyword%")
-                    ->orWhere('product_type_slug', 'like', "%$keyword%");
+                $productType = $productType->where('product_types.product_type_slug', 'like', "%$keyword_slug%")
+                    ->orWhere('product_types.id', (int) $keyword);
             }
         }
 
@@ -59,7 +61,7 @@ class ProductType extends Model
         if (isset($params['category_id'])) {
             $category_id = $params['category_id'];
             if ($category_id != 0) {
-                $productType = $productType->whereIn('categories.id', explode(',', $category_id));
+                $productType = $productType->where('categories.id', explode(',', $category_id));
             }
         }
 

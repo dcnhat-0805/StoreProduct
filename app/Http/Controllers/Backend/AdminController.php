@@ -35,16 +35,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -65,28 +55,6 @@ class AdminController extends Controller
 //                Session::flash("error", trans("messages.admin.update_fail"));
             }
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -137,7 +105,8 @@ class AdminController extends Controller
 
     public function getListAdmin()
     {
-        $admin = Admin::getListAllAdmin();
+        $params = request()->all();
+        $admin = Admin::getListAllAdmin($params);
         $data = [];
 
         if (count($admin)) {

@@ -46,8 +46,16 @@ class Admin extends Authenticatable
     {
         $admin = new Admin();
 
+        if (isset($params['role'])) {
+            $role = $params['role'];
+            if ($role != 0) {
+                $admin = $admin->whereIn('admins.role', explode(',', $role));
+            }
+        }
+
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
+            $keyword = preg_replace("([+])", " ", $keyword);
             if ($keyword != 0 || $keyword != null) {
                 $admin = $admin->where('admins.name', 'like', "%$keyword%")
                     ->orWhere('admins.email', 'like', "%$keyword%");
@@ -60,13 +68,6 @@ class Admin extends Authenticatable
                 $publishDate = str_replace('+', ' ', $publishDate);
                 $publishDate = explode(' - ', $publishDate);
                 $admin = $admin->whereRaw("admins.created_at BETWEEN ? AND ?", [$publishDate[0], date('Y/m/d', strtotime("+1 day", strtotime($publishDate[1])))]);
-            }
-        }
-
-        if (isset($params['role'])) {
-            $role = $params['role'];
-            if ($role != 0) {
-                $admin = $admin->whereIn('admins.role', explode(',', $role));
             }
         }
 
