@@ -193,7 +193,7 @@
                             </div><!-- /.box-body -->
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-custon-three btn-success btn__delivery" data-toggle="modal" data-target="#deliveryOrder">
-                                    <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Apply
+                                    <i class="fa fa-check edu-checked-pro" aria-hidden="true"></i> <span class="txt__button">Apply</span>
                                 </button>
                                 <button type="button" class="btn btn-custon-three btn-danger" data-dismiss="modal">
                                     <i class="fa fa-times edu-danger-error" aria-hidden="true"></i> Cancel
@@ -205,7 +205,7 @@
             </div>
         </div>
     </div>
-    <!-- delete Modal-->
+    <!-- Delivery Modal-->
     <div class="modal fade" id="deliveryOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -218,7 +218,7 @@
                 <div class="modal-body">
                     <form style="min-height: 70px;">
                         <input type="hidden" name="id" id="order__id">
-                        <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">Do you want to delivery ?</h5>
+                        <h5 class="modal-title text__confirm" id="exampleModalLabel" style="line-height: 70px; text-align: center">Do you want to delivery ?</h5>
                     </form>
                 </div>
                 <div class="modal-footer modal-delete">

@@ -17,10 +17,17 @@ $(document).ready(function () {
         let status = $(e.relatedTarget).data('status');
         $('#order__id').val(id);
 
-        $('.btn__delivery').prop('disabled', true);
+        $('.btn__delivery').hide().prop('disabled', true);
 
         if (status == PENDING || status == DELIVERY) {
-            $('.btn__delivery').prop('disabled', false);
+            $('.btn__delivery').show().prop('disabled', false);
+        }
+        if (status == PENDING) {
+            $('.txt__button').text('Delivery');
+        }
+        if (status == DELIVERY) {
+            $('.txt__button').text('Finish');
+            $('.text__confirm').text('The order has been delivered successfully!');
         }
         // $('#modal__order__title').text(name);
 

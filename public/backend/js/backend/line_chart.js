@@ -58,18 +58,18 @@
         data: {
             labels: dateLabel,
             datasets: [
-                {
-                    label: "Customer",
-                    data: dateAnalyticsUser,
-                    lineTension: 0,
-                    fill: !1,
-                    borderColor: "#006DF0",
-                    pointBorderColor: "#006DF0",
-                    pointBackgroundColor: "#006DF0",
-                    pointBorderWidth: 2,
-                    pointHoverBorderWidth: 2,
-                    pointRadius: 4
-                },
+                // {
+                //     label: "Customer",
+                //     data: dateAnalyticsUser,
+                //     lineTension: 0,
+                //     fill: !1,
+                //     borderColor: "#006DF0",
+                //     pointBorderColor: "#006DF0",
+                //     pointBackgroundColor: "#006DF0",
+                //     pointBorderWidth: 2,
+                //     pointHoverBorderWidth: 2,
+                //     pointRadius: 4
+                // },
                 {
                     label: "Delivery",
                     data: dateAnalyticsOrderDelivery,
