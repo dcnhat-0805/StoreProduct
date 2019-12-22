@@ -65,10 +65,12 @@ class Comment extends Model
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
             if ($keyword != 0 || $keyword != null) {
-                $comment = $comment->where('users.name', 'like', "%$keyword%")
-                    ->orWhere('users.email', 'like', "%$keyword%")
-                    ->orWhere('users.phone', 'like', "%$keyword%")
-                    ->orWhere('products.product_name', 'like', "%$keyword%");
+                $comment = $comment->where(function ($query) use ($keyword) {
+                    $query->where('users.name', 'like', "%$keyword%")
+                        ->orWhere('users.email', 'like', "%$keyword%")
+                        ->orWhere('users.phone', 'like', "%$keyword%")
+                        ->orWhere('products.product_name', 'like', "%$keyword%");
+                });
             }
         }
 
@@ -198,7 +200,7 @@ class Comment extends Model
                     users.name,
                     users.email,
                     users.phone,
-                    min(comments.created_at) as created_at
+                    max(comments.created_at) as created_at
                 ")
                 ->join('users', 'users.id', '=', 'comments.user_id')
                 ->join('products', 'products.id', '=', 'comments.product_id')

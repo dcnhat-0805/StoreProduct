@@ -26,9 +26,11 @@ class Contact extends Model
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
             if ($keyword != 0 || $keyword != null) {
-                $contact = $contact->where('users.name', 'like', "%$keyword%")
-                    ->orWhere('users.email', 'like', "%$keyword%")
-                    ->orWhere('users.phone', 'like', "%$keyword%");
+                $contact = $contact->where(function ($query) use ($keyword) {
+                    $query->where('users.name', 'like', "%$keyword%")
+                        ->orWhere('users.email', 'like', "%$keyword%")
+                        ->orWhere('users.phone', 'like', "%$keyword%");
+                });
             }
         }
 

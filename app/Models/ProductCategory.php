@@ -71,10 +71,15 @@ class ProductCategory extends Model
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
             $keyword = preg_replace("([+])", " ", $keyword);
-            $keyword_slug = convertStringToUrl($keyword);
             if ($keyword != 0 || $keyword != null) {
-                $productCategory = $productCategory->where('product_categories.product_category_slug', 'like', "%$keyword_slug%")
-                    ->orWhere('product_categories.id', (int) $keyword);
+                $productCategory = $productCategory->where(function ($query) use ($keyword) {
+                    $keyword_slug = convertStringToUrl($keyword);
+                    $query->where('product_categories.product_category_name', 'like', "%$keyword%")
+                        ->orWhere('product_categories.product_category_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('categories.category_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('categories.category_name', 'like', "%$keyword%")
+                        ->orWhere('product_categories.id', (int) $keyword);
+                });
             }
         }
 

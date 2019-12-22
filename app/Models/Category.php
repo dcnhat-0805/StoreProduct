@@ -67,10 +67,13 @@ class Category extends Model
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
             $keyword = preg_replace("([+])", " ", $keyword);
-            $keyword_slug = convertStringToUrl($keyword);
             if ($keyword != 0 || $keyword != null) {
-                $category = $category->where('category_slug', 'like', "%$keyword_slug%")
-                    ->orWhere('id', (int) $keyword);
+                $category = $category->where(function ($query) use ($keyword) {
+                    $keyword_slug = convertStringToUrl($keyword);
+                    $query->where('category_name', 'like', "%$keyword%")
+                        ->orWhere('category_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('id', (int) $keyword);
+                });
             }
         }
 

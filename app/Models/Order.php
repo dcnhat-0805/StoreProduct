@@ -160,12 +160,14 @@ class Order extends Model
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
             if ($keyword != 0 || $keyword != null) {
-                $orders = $orders->where('users.name', 'like', "%$keyword%")
-                    ->orWhere('users.email', 'like', "%$keyword%")
-                    ->orWhere('orders.order_name', 'like', "%$keyword%")
-                    ->orWhere('orders.order_email', 'like', "%$keyword%")
-                    ->orWhere('orders.order_phone', 'like', "%$keyword%")
-                    ->orWhere('orders.order_monney', 'like', "%$keyword%");
+                $orders = $orders->where(function ($query) use ($keyword) {
+                    $query->where('users.name', 'like', "%$keyword%")
+                        ->orWhere('users.email', 'like', "%$keyword%")
+                        ->orWhere('orders.order_name', 'like', "%$keyword%")
+                        ->orWhere('orders.order_email', 'like', "%$keyword%")
+                        ->orWhere('orders.order_phone', 'like', "%$keyword%")
+                        ->orWhere('orders.order_monney', 'like', "%$keyword%");
+                });
             }
         }
 
@@ -223,7 +225,7 @@ class Order extends Model
                     $orderDetail->whereNull('order_details.deleted_at');
                 },
             ])
-            ->groupBy('orders.id')
+            ->groupBy('orders.id', 'order_details.order_id')
             ->orderByRaw($order)
             ->paginate(LIMIT);
 

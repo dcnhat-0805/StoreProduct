@@ -264,10 +264,13 @@ class Product extends Model
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
             $keyword = preg_replace("([+])", " ", $keyword);
-            $keyword_slug = convertStringToUrl($keyword);
             if ($keyword != 0 || $keyword != null) {
-                $products = $products->where('products.product_slug', 'like', "%$keyword_slug%")
-                    ->orWhere('products.id', (int) $keyword);
+                $products = $products->where(function ($query) use ($keyword) {
+                    $keyword_slug = convertStringToUrl($keyword);
+                    $query->where('products.product_name', 'like', "%$keyword%")
+                        ->orWhere('products.product_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('products.id', (int) $keyword);
+                });
             }
         }
 

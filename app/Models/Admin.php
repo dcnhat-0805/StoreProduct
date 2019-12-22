@@ -57,8 +57,10 @@ class Admin extends Authenticatable
             $keyword = addslashes($params['keyword']);
             $keyword = preg_replace("([+])", " ", $keyword);
             if ($keyword != 0 || $keyword != null) {
-                $admin = $admin->where('admins.name', 'like', "%$keyword%")
-                    ->orWhere('admins.email', 'like', "%$keyword%");
+                $admin = $admin->where(function ($query) use ($keyword) {
+                    $query->where('admins.name', 'like', "%$keyword%")
+                        ->orWhere('admins.email', 'like', "%$keyword%");
+                });
             }
         }
 

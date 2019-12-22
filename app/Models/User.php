@@ -56,8 +56,10 @@ class User extends Authenticatable
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
             if ($keyword != 0 || $keyword != null) {
-                $user = $user->where('users.name', 'like', "%$keyword%")
-                    ->orWhere('users.email', 'like', "%$keyword%");
+                $user = $user->where(function ($query) use ($keyword) {
+                    $query->where('users.name', 'like', "%$keyword%")
+                        ->orWhere('users.email', 'like', "%$keyword%");
+                });
             }
         }
 
