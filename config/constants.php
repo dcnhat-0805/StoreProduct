@@ -76,7 +76,7 @@ const EMAIL_SUBJECT = '[StoreOnline] Please reset your password !';
 const EMAIL_SUBJECT_USER = '[StoreOnline] Confirm your account on StoreOnline !';
 const EMAIL_SUBJECT_SHOPPING = '[StoreOnline] Notice of successful orders !';
 
-const LIMIT = 10;
+const LIMIT = 5;
 const FRONT_LIMIT = 25;
 
 const ACCEPT = 1;
