@@ -365,6 +365,19 @@ class Helper
             return 'Pending';
         }
     }
+
+    public static function loadClassStatusOrder($status)
+    {
+        if ($status == DELIVERY) {
+            return 'status__delivery';
+        } elseif ($status == FINISH) {
+            return 'status__finish';
+        } elseif ($status == CANCEL) {
+            return 'status__cancel';
+        } else {
+            return 'status__pending';
+        }
+    }
     public static function getTimeAgo($time)
     {
         $time = strtotime($time);

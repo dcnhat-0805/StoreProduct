@@ -4864,3 +4864,25 @@ input.form-control.jsDatepickerDashboard {
 .box__chart {
     margin-top: 30px;
 }
+.order__status {
+    border: 1.5px dashed red;
+    border-radius: 5px;
+    padding: 2px 5px 0 5px;
+    margin: 6px 10px;
+}
+.status__pending {
+    border-color: #757575;
+    color: #757575;
+}
+.status__delivery {
+    border-color: #337ab7;
+    color: #337ab7;
+}
+.status__finish {
+    border-color: #5cb85c;
+    color: #5cb85c;
+}
+.status__cancel {
+    border-color: #d9534f;
+    color: #d9534f;
+}

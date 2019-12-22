@@ -73,7 +73,7 @@
                                     <td class="">{{ $order->order_phone }}</td>
                                     <td class="">{{ App\Helpers\Helper::loadMoney($order->order_monney) }}</td>
                                     <td class="text-center">{{ $order->created_at }}</td>
-                                    <td class="text-center">{{ App\Helpers\Helper::loadStatusOrder($order->order_status) }}</td>
+                                    <td class="text-center"><div class="order__status {{ App\Helpers\Helper::loadClassStatusOrder($order->order_status) }}">{{ App\Helpers\Helper::loadStatusOrder($order->order_status) }}</div></td>
                                     <td class="datatable-ct text-center">
                                         <button data-toggle="modal" title="Detail {{ $order->order_code }}" class="pd-setting-ed"
                                                 data-original-title="Detail" data-target="#detailOrder"
