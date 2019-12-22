@@ -189,6 +189,22 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
+                                            <label for="name">Options</label>
+                                            <div class="form-group">
+                                                <input type="checkbox" class="jsCheckBox" id="best" name="option[]" value="{{ BEST }}" {{ App\Helpers\Helper::setCheckedForm('option', BEST, 'checked') }}>
+                                                <label for="best" class="label__status">Best</label>
+                                                <input type="checkbox" class="jsCheckBox" id="new" name="option[]" value="{{ NEWS }}" {{ App\Helpers\Helper::setCheckedForm('option', NEWS, 'checked') }}>
+                                                <label for="new" class="label__status">New</label>
+                                                <input type="checkbox" class="jsCheckBox" id="hot" name="option[]" value="{{ HOT }}" {{ App\Helpers\Helper::setCheckedForm('option', HOT, 'checked') }}>
+                                                <label for="hot" class="label__status">Hot</label>
+                                                <input type="checkbox" class="jsCheckBox" id="promotion" name="option[]" value="{{ PROMOTION }}" {{ App\Helpers\Helper::setCheckedForm('option', PROMOTION, 'checked') }}>
+                                                <label for="promotion" class="label__status">Promotion</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <label for="name">Status</label>
                                             <div class="form-group">
                                                 <input type="checkbox" class="jsCheckBox" id="display" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>
                                                 <label for="display" class="label__status">Display</label>

@@ -315,6 +315,25 @@ class Product extends Model
             });
         }
 
+        if (isset($params['option'])) {
+            $option = $params['option'];
+
+            $products = $products->where(function ($query) use ($option) {
+                if (in_array(BEST, $option)) {
+                    $query->orWhereRaw("(products.product_option = 1)");
+                }
+                if (in_array(NEWS, $option)) {
+                    $query->orWhereRaw("(products.product_option = 2)");
+                }
+                if (in_array(HOT, $option)) {
+                    $query->orWhereRaw("(products.product_option = 3)");
+                }
+                if (in_array(PROMOTION, $option)) {
+                    $query->orWhereRaw("(products.product_option = 4)");
+                }
+            });
+        }
+
         return $products;
     }
 
