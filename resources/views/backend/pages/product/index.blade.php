@@ -83,7 +83,11 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td class="text-center">{{ $product->exist . '/' . $product->product_quantity }}</td>
+                                    <td class="text-center">{{ $product->exist . '/' . $product->product_quantity }}
+                                        @if($product->exist == 0)
+                                            <div class="exist__status">Out stock</div>
+                                        @endif
+                                    </td>
                                     <td class="text-center">{{ $product->created_at }}</td>
                                     <td class="text-center">{{ $product->product_status == 1 ? 'Display' : 'Not display' }}</td>
                                     <td class="datatable-ct text-center">

@@ -4864,11 +4864,33 @@ input.form-control.jsDatepickerDashboard {
 .box__chart {
     margin-top: 30px;
 }
+.exist__status {
+    border: 1.5px dashed red;
+    border-radius: 5px;
+    /* padding: 2px 5px 0 5px; */
+    margin: 6px 10px;
+    text-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-align: center;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    display: -webkit-box;
+}
 .order__status {
     border: 1.5px dashed red;
     border-radius: 5px;
-    padding: 2px 5px 0 5px;
+    /* padding: 2px 5px 0 5px; */
     margin: 6px 10px;
+    text-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-box-align: center;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: horizontal;
+    -webkit-box-pack: center;
+    display: -webkit-box;
 }
 .status__pending {
     border-color: #757575;
