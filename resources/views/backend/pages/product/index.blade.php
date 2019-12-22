@@ -207,7 +207,16 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-12">
+                                        <div class="col-sm-6">
+                                            <label for="name">Exists</label>
+                                            <div class="form-group">
+                                                <input type="checkbox" class="jsCheckBox" id="exists" name="exist[]" value="{{ AVAILABLE }}" {{ App\Helpers\Helper::setCheckedForm('exist', AVAILABLE, 'checked') }}>
+                                                <label for="exists" class="label__status">Available</label>
+                                                <input type="checkbox" class="jsCheckBox" id="not__exists" name="exist[]" value="{{ OUT_STOCK }}" {{ App\Helpers\Helper::setCheckedForm('exist', OUT_STOCK, 'checked') }}>
+                                                <label for="not__exists" class="label__status">Out stock</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
                                             <label for="name">Status</label>
                                             <div class="form-group">
                                                 <input type="checkbox" class="jsCheckBox" id="display" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>

@@ -90,6 +90,9 @@ const CANCEL = 3;
 const DISPLAY = 1;
 const NOT_DISPLAY = 0;
 
+const AVAILABLE = 1;
+const OUT_STOCK = 0;
+
 const ADMIN = 1;
 const CATEGORY = 2;
 const PRODUCT_CATEGORY = 3;

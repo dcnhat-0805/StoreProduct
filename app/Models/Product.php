@@ -318,6 +318,25 @@ class Product extends Model
             });
         }
 
+        if (isset($params['exist'])) {
+            $exist = $params['exist'];
+
+            $products = $products->where(function ($query) use ($exist) {
+                if (in_array(0, $exist)) {
+                    $query->orWhereRaw(
+                        DB::raw("((CASE WHEN (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                            (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) ELSE products.product_quantity END)) = 0")
+                    );
+                }
+                if (in_array(1, $exist)) {
+                    $query->orWhereRaw(
+                        DB::raw("((CASE WHEN (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) IS NOT NULL THEN
+                            (products.product_quantity - (SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status < 3 GROUP BY order_details.product_id)) ELSE products.product_quantity END)) > 0")
+                    );
+                }
+            });
+        }
+
         if (isset($params['option'])) {
             $option = $params['option'];
 
