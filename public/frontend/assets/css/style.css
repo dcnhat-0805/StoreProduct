@@ -280,6 +280,19 @@ span.address {
     top: 5px;
     bottom: 0;
 }
+.rating__text {
+    display: inline-block;
+    line-height: 20px;
+    color: #e4ae36;
+    font-weight: 600;
+    font-size: 16px;
+    margin-left: 10px;
+    align-self: center;
+    position: absolute;
+    top: 5px;
+    left: 155px;
+    bottom: 0;
+}
 .fa.fa-star-o {
     color: #9e9a98 !important;
     opacity: .5;

@@ -185,7 +185,7 @@ class ProductController extends Controller
                 ProductAttribute::createProductAttribute($input, $id);
             }
             Product::commit();
-            Session::flash("success", trans("messages.product.create_success"));
+            Session::flash("success", trans("messages.product.update_success"));
         } else {
             Product::rollBack();
 //                    Session::flash("error", trans("messages.product.create_failed"));

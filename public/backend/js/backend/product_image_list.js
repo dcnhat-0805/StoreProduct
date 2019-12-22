@@ -12,7 +12,7 @@ $(document).ready(function () {
 
         function configUPloadImage(target, num) {
 
-            let maxSizeFileImage = 1024 * 100;
+            let maxSizeFileImage = 1024 * 1024 * 25;
             let targetId = '#' + target + num.toString().padStart(2, '0');
             let previewsId = '#' + target + 'Previews' + num.toString().padStart(2, '0');
             let imageType = num.toString().padStart(1, '0');
@@ -94,6 +94,9 @@ $(document).ready(function () {
                             if (file.size < maxSizeFileImage) {
                                 file.acceptDimensions();
                             }
+                            if (file.size > maxSizeFileImage) {
+                                file.rejectDimensions();
+                            }
                         }else if(file.status == 'error'){
                             $('.error_product_image_list').removeClass('hidden').text('');
                         }
@@ -107,7 +110,7 @@ $(document).ready(function () {
                 },
                 accept: function(file, done) {
                     file.rejectDimensions = function() {
-                        done("Please make sure the image width and height are not larger than 2500px.");
+                        done("Please make sure the image are not larger than 2500px.");
                     };
                     file.acceptDimensions = done;
                 },

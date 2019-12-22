@@ -35,7 +35,22 @@ $(document).ready(function () {
     }
 
     $('#fab_send').on('click', function () {
+        $(this).prop('disabled', true);
         let message = $('#chatSend').val();
+
+        $('#chatSend').on('keyup', function () {
+            $('#fab_send').prop('disabled', false);
+            $('#chatSend').css({
+                'border' : 'none',
+            });
+        });
+        if (!message) {
+            $('#chatSend').css({
+               'border' : '1px solid red',
+                'border-radius': '5px',
+            });
+            return;
+        }
 
         $.ajax({
             url : '/contact/sendContact',
@@ -45,6 +60,7 @@ $(document).ready(function () {
                 message : message
             },
             success : function (data) {
+                $(this).prop('disabled', false);
                 loadMessage();
             },
             error : function (data) {
