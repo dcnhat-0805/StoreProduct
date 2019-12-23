@@ -175,6 +175,10 @@ return [
             'max' => ':attribute must be between 5-50 characters.',
             'unique' => ':attribute was used in the database.',
         ],
+        'address_detail' => [
+            'min' => ':attribute must be between 10-255 characters.',
+            'max' => ':attribute must be between 10-255 characters.',
+        ],
         'email' => [
             'required' => ':attribute cannot be left blank.',
             'unique' => ':attribute was used in the database.',
@@ -315,6 +319,7 @@ return [
             'delete_cart_success' => 'Successfully delete cart.',
             'delete_cart_failed' => 'Unsuccessfully delete cart.',
             'out_of_stock' => 'Sorry! Your product is out of stock.',
+            'cannot_delete_cart' => 'There must be at least 1 product to process a payment.',
         ]
     ]
 ];

@@ -31,6 +31,7 @@ class CheckCountRequest extends FormRequest
             'city' => 'required',
             'district' => 'required',
             'wards' => 'required',
+            'address_detail' => 'nullable|min:10|max:255',
         ];
     }
     public function messages()
@@ -43,6 +44,8 @@ class CheckCountRequest extends FormRequest
             'email' => trans("messages.check_count.email.email_format"),
             'min' => trans("messages.check_count.name.min"),
             'max' => trans("messages.check_count.name.max"),
+            'address_detail.min' => trans("messages.check_count.address_detail.min"),
+            'address_detail.max' => trans("messages.check_count.address_detail.max"),
             'phone.regex' => trans("messages.check_count.phone.regex"),
             'phone.max' => trans("messages.check_count.phone.max"),
         ];
@@ -53,6 +56,7 @@ class CheckCountRequest extends FormRequest
             'name' => 'Name',
             'email' => 'Email',
             'phone' => 'Phone number',
+            'address_detail' => 'Delivery address',
         ];
     }
 }

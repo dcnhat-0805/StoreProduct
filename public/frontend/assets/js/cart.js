@@ -13,7 +13,7 @@ $.ajaxSetup({
 let CartJs = (function ($) {
     let modules = {};
 
-    modules.addToCart = function (productId, quantity, color = null, size = null, storage = null, material = null) {
+    modules.addToCart = function (productId, quantity, color = null, size = null, storage = null, material = null, btnAddCart = null) {
         $.ajax({
             url : '/cart/addCart/' + productId,
             dataType : 'JSON',
@@ -28,7 +28,7 @@ let CartJs = (function ($) {
             },
             success : function (data) {
                 Commons.hideLoading();
-                btnAddToCart.prop('disabled', false);
+                btnAddCart.prop('disabled', false);
                 let countCart = data['countCart'];
                 $('.cart_count > span').text(countCart);
 
@@ -156,11 +156,13 @@ let CartJs = (function ($) {
     };
 
     modules.deleteCart = function (rowId) {
+        let url = window.location.href;
         $.ajax({
             url: "/cart/delete/" + rowId,
             type: "DELETE",
             data: {
-                rowId : rowId
+                rowId : rowId,
+                url : url,
             },
             success : function (data) {
                 Commons.removeLocalStorage(CART_IDS);
@@ -241,7 +243,7 @@ $(document).ready(function () {
         let storage = $('.storage-item.active').data('storage');
         let material = $('.material-item.active').data('material');
 
-        CartJs.addToCart(productId, quantity, color, size, storage, material);
+        CartJs.addToCart(productId, quantity, color, size, storage, material, $(this));
     });
 
     $('.address-user-checkout__error').hide();

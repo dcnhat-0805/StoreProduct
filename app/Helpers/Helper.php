@@ -520,6 +520,11 @@ class Helper
         return Product::getQuantityProductById($productId);
     }
 
+    public static function getProductById($productId)
+    {
+        return Product::showProduct($productId);
+    }
+
     public static function isRatingProduct($productId, $userId = null)
     {
         if (!$userId) return false;

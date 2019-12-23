@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\Helper;
 use Illuminate\Database\Eloquent\Model;
 use Auth;
 use Cart;
@@ -69,7 +70,11 @@ class ShoppingCart extends Model
         $total = 0;
         foreach ($carts as $cart) {
             $contents = unserialize($cart->content);
-            $total += $contents->qty;
+
+            $exist = Helper::getQuantityProductById($contents->id);
+            if ($exist > 0) {
+                $total += $contents->qty;
+            }
         }
 
         return $total;

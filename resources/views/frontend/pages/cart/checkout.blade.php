@@ -1,6 +1,5 @@
 @extends('frontend.layouts.app')
-@section('cssCustom')
-@endsection
+@section('title', 'Place Order')
 @section('content')
 {{--    @include('frontend.layouts.header_top', [--}}
 {{--        'titleName' => null,--}}
@@ -34,14 +33,18 @@
                                 <tbody class="list-cart mod-list-cart">
                                 @if(isset($carts))
                                     @foreach($carts as $cart)
+                                        <?php
+                                            $exist = \App\Helpers\Helper::getQuantityProductById($cart->id);
+                                            $product = \App\Helpers\Helper::getProductById($cart->id);
+                                        ?>
                                         <tr id="cart-{{ $cart->id }}">
                                             <td class="text-center col-sm-4">
                                                 <div class="cart-product-name col-sm-10 text-left">
-                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($cart->options->description)]) }}">{{ $cart->options->description }}</a>
+                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $product->product_description_slug]) }}">{{ $product->product_description }}</a>
                                                 </div>
                                                 <div class="col-sm-10">
-                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($cart->options->description)]) }}" class="" style="padding: 0; float: left">
-                                                        <img src="{{ FILE_PATH_PRODUCT . $cart->options->image }}" alt="" style="width: 50px; height: 30px; object-fit: scale-down;">
+                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $product->product_description_slug]) }}" class="" style="padding: 0; float: left">
+                                                        <img src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="" style="width: 50px; height: 30px; object-fit: scale-down;">
                                                     </a>
                                                     <div class="col">
                                                         @if($cart->options->color)
@@ -181,6 +184,13 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="form-address-check-count phone">
+                                            <div class="col-sm-2">
+                                            </div>
+                                            <div class="col-sm-10" style="padding: 0; margin-bottom: 20px;">
+                                                <textarea class="address-user-checkout" name="address_detail" placeholder="Enter your building, street name" rows="3"></textarea>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -251,7 +261,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Remove from checkout ?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -260,7 +270,7 @@
                     <form style="min-height: 70px;">
                         <input type="hidden" name="id" id="rowId">
                         <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">
-                            Do you want to delete this product from the cart ?
+                            Item(s) will be removed from checkout ?
                         </h5>
                     </form>
                 </div>

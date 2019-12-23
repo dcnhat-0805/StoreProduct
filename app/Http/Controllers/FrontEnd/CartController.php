@@ -140,6 +140,7 @@ class CartController extends FrontEndController
         $data['order_phone'] = $request->get('phone');
         $data['order_address'] = $request->get('wards');
         $data['order_monney'] = $request->get('total_price');
+        $data['order_message'] = $request->get('address_detail');
         $data['status'] = 0;
         $order = Order::create($data);
 
@@ -290,13 +291,30 @@ class CartController extends FrontEndController
 
     public function delete($rowId)
     {
+        if (\request()->get('url') == route(FRONT_CHECK_COUNT_CART)) {
+            $rowIds = Session::get(SESSION_ROW_IDS);
+            $carts = $this->getCart($rowIds);
+            if (count($carts) == 1) {
+                Session::flash("error", trans("messages.front_end.cart.cannot_delete_cart"));
+            } else {
+                self::removeCart($rowId);
+                Session::flash("success", trans("messages.front_end.cart.delete_cart_success"));
+            }
+        } else {
+            self::removeCart($rowId);
+            Session::flash("success", trans("messages.front_end.cart.delete_cart_success"));
+        }
+
+        return response()->json(trans("messages.front_end.cart.delete_cart_success"), 200);
+    }
+
+    public static function removeCart($rowId)
+    {
         $user = Auth::user();
         if ($user) {
             ShoppingCart::deleteCart($rowId);
         } else {
             Cart::remove($rowId);
         }
-
-        return response()->json(trans("messages.front_end.cart.delete_cart_success"), 200);
     }
 }

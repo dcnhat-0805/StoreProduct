@@ -5887,4 +5887,7 @@ select.form-control.option-w3ls {
     text-transform: capitalize;
 }
 
+#btn-place-order, .btn-place-order {
+    text-transform: uppercase;
+}
 /*--//responsive--*/
