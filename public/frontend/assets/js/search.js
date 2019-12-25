@@ -80,6 +80,31 @@ $(document).ready(function () {
         }
     }
 
+    function removeURLParameter(url, parameter) {
+        //prefer to use l.search if you have a location/link object
+        let urlParts = url.split('?');
+
+        if (urlParts.length >= 2) {
+
+            let prefix = encodeURIComponent(parameter)+'=';
+            let pars = urlParts[1].split(/[&;]/g);
+
+            //reverse iteration as may be destructive
+            for (let i = pars.length; i-- > 0;) {
+                //idiom for string.startsWith
+                if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                    pars.splice(i, 1);
+                }
+            }
+
+            url = urlParts[0]+'?'+pars.join('&');
+
+            return url;
+        } else {
+            return url;
+        }
+    }
+
     function convertArrayStringToArrayFloat(array) {
         let newArray = array.split(',').map(function(item) {
             return parseFloat(item, 10);
@@ -109,6 +134,7 @@ $(document).ready(function () {
                 let param = $(this).attr('name');
                 let value = $(this).val();
                 let url = setNewHref($('input.jsCheckBox[name="'+ filter +'"]'), param, value);
+
                 window.location.href = url;
 
                 // $('input.jsCheckBox:not(:checked)[name=brand]').parent().parent().hide();
@@ -117,6 +143,9 @@ $(document).ready(function () {
                 let param = $(this).attr('name');
                 let value = '';
                 let url = setNewHref($('input.jsCheckBox[name="'+ filter +'"]'), param, value);
+                url = removeURLParameter(url.href, param);
+                url = new URL(url);
+
                 window.location.href = url;
 
                 // $('input.jsCheckBox:not(:checked)[name=brand]').parent().parent().hide();
@@ -148,6 +177,24 @@ $(document).ready(function () {
             }
         }
     }
+
+    $('.filter__rating').each(function (index, value) {
+        $(value).on('click', function (e) {
+            e.preventDefault();
+            $(this).toggleClass('active');
+            let param = $(this).data('name');
+            let value = $(this).data('rating');
+            let url = setNewHref($(this), param, value);
+            if (!$(this).hasClass('active')) {
+                url = removeURLParameter(url.href, param);
+                url = new URL(url);
+            } else {
+                url = setNewHref($(this), param, value);
+            }
+
+            window.location.href = url;
+        });
+    });
 
     let filterRating = urlParam(RATING);
     if(filterRating) {

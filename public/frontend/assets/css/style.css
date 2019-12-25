@@ -358,6 +358,21 @@ span.address {
 .jsRatingDetail.disabled {
     pointer-events: none;
 }
+.filter__rating{
+    color: #337ab7;
+}
+.filter__rating:not([href]){
+     color: #337ab7 !important;
+    text-decoration: none;
+}
+.filter__rating:not([href]):hover {
+     color: #ec4445 !important;
+    text-decoration: none;
+}
+.filter__rating.active:not([href]) {
+     color: #ec4445 !important;
+    text-decoration: none;
+}
 .filter__rating.active{
     color: #ec4445;
 }

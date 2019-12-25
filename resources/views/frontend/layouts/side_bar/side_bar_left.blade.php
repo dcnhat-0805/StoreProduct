@@ -84,8 +84,8 @@
         <h3 class="agileits-sear-head">Rating</h3>
         <ul>
             <li>
-                <a class="filter__rating" href="{{ route($route, array_merge(['rating' => 5], $searchParams)) }}"
-                   data-rating="5">
+                <a class="filter__rating" data-href="{{ request()->fullUrl() }}"
+                   data-rating="5" data-name="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -95,8 +95,8 @@
                 </a>
             </li>
             <li>
-                <a class="filter__rating" href="{{ route($route, array_merge(['rating' => 4], $searchParams)) }}"
-                   data-rating="4">
+                <a class="filter__rating" data-href="{{ request()->fullUrl() }}"
+                   data-rating="4" data-name="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -106,8 +106,8 @@
                 </a>
             </li>
             <li>
-                <a class="filter__rating" href="{{ route($route, array_merge(['rating' => 3.5], $searchParams)) }}"
-                   data-rating="3.5">
+                <a class="filter__rating" data-href="{{ request()->fullUrl() }}"
+                   data-rating="3.5" data-name="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -117,8 +117,8 @@
                 </a>
             </li>
             <li>
-                <a class="filter__rating" href="{{ route($route, array_merge(['rating' => 3], $searchParams)) }}"
-                   data-rating="3">
+                <a class="filter__rating" data-href="{{ request()->fullUrl() }}"
+                   data-rating="3" data-name="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -128,8 +128,8 @@
                 </a>
             </li>
             <li>
-                <a class="filter__rating" href="{{ route($route, array_merge(['rating' => 2.5], $searchParams)) }}"
-                   data-rating="2.5">
+                <a class="filter__rating" data-href="{{ request()->fullUrl() }}"
+                   data-rating="2.5" data-name="rating">
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star" aria-hidden="true"></i>
                     <i class="fa fa-star-half-o" aria-hidden="true"></i>
