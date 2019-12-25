@@ -99,6 +99,11 @@ $(document).ready(function () {
 
             url = urlParts[0]+'?'+pars.join('&');
 
+
+            let newParts = url.split('?');
+
+            if (!newParts[1].length) return url.replace('?', '');
+
             return url;
         } else {
             return url;
@@ -218,13 +223,21 @@ $(document).ready(function () {
 
     $('.btn-search__by__price').on('click', function () {
         let price = [];
+        let param = 'price';
         let min = $('.filter__price__min').val();
         let max = $('.filter__price__max').val();
 
         price.push([min, max]);
         $('.filter__price-value').val(price);
 
-        let url = setNewHref($(this), 'price', price);
+        let url = setNewHref($(this), param, price);
+        if (!min && !max) {
+            url = removeURLParameter(url.href, param);
+            url = new URL(url);
+        } else {
+            url = setNewHref($(this), param, price);
+        }
+
         window.location.href = url;
     });
 

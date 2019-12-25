@@ -368,6 +368,7 @@ span.address {
 .filter__rating:not([href]):hover {
      color: #ec4445 !important;
     text-decoration: none;
+    cursor: pointer;
 }
 .filter__rating.active:not([href]) {
      color: #ec4445 !important;
