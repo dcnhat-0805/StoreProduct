@@ -81,6 +81,7 @@ class ProductAttribute extends Model
     {
         $attributes = self::whereIn('product_id', $arrayProductId)
             ->where('attribute_name', $attributeName)
+            ->where('is_filterable', true)
             ->select('attribute_item_name', DB::raw('count(product_id) as total'))
             ->groupBy('attribute_item_name')
             ->pluck('attribute_item_name');

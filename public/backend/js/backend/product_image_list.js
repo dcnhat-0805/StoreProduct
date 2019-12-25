@@ -75,8 +75,8 @@ $(document).ready(function () {
                             mockFile.previewElement.classList.add('dz-success');
                             mockFile.previewElement.classList.add('dz-complete');
                             mockFile.previewElement.querySelector("[data-dz-size]").innerHTML = image.size;
-                            $(mockFile.previewElement).find('img').attr('data-image', image.name    );
-                            $(mockFile.previewElement).append('<input type="hidden" name="image_list' + '[]" value="' + image.name + '" class="dropzone-input-hidden" id="input2">');
+                            $(mockFile.previewElement).find('img').attr('data-image', image.name);
+                            $(mockFile.previewElement).append('<input type="hidden" name="image_list' + '[]" value="' + image.name + '" class="dropzone-input-hidden">');
 
                             let file = new File([''], mockFile.name);
                             file.accepted = true;

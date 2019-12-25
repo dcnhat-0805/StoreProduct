@@ -227,9 +227,9 @@ class Product extends Model
         }
 
         if (isset($params[RATING])) {
-            $rating = (int) $params[RATING];
+            $rating = (float) $params[RATING];
             $rating = number_format($rating, 4, '.', ',');
-            if ($rating) {
+            if ($rating >= 2.5) {
                 $model = $model->selectRaw('AVG(ratings.point) AS average_rating')
                     ->havingRaw('AVG(ratings.point) >= ?', [$rating])
 //                    ->havingRaw('AVG(ratings.point) <= ?', [6.0000])
@@ -241,16 +241,29 @@ class Product extends Model
             $price = $params[PRICE];
             $price = explode(',', $price);
             if (count($price)) {
-
-                if (!$price[0] && $price[1]) {
-                    $model = $model->whereRaw("(CASE WHEN products.product_promotion IS NOT NULL AND products.product_promotion > 0 THEN products.product_promotion ELSE products.product_price END) <= ? ", [(int) $price[1]]);
-                }
-                if ($price[0] && !$price[1]) {
-                    $model = $model->whereRaw("(CASE WHEN products.product_promotion IS NOT NULL AND products.product_promotion > 0 THEN products.product_promotion ELSE products.product_price END) >= ? ", [(int) $price[0]]);
-                }
-                if ($price[0] && $price[1]) {
-                    $model = $model->whereRaw("(CASE WHEN products.product_promotion IS NOT NULL AND products.product_promotion > 0 THEN products.product_promotion ELSE products.product_price END) BETWEEN ? AND ? ", [(int) $price[0], (int) $price[1]]);
-                }
+                $model = $model->where(function ($query) use ($price) {
+//                    if (!$price[0] && $price[1]) {
+//                        $model = $model->whereRaw("(CASE WHEN products.product_promotion IS NOT NULL AND products.product_promotion > 0 THEN products.product_promotion ELSE products.product_price END) <= ? ", [(int)$price[1]]);
+//                    }
+//                    if ($price[0] && !$price[1]) {
+//                        $model = $model->whereRaw("(CASE WHEN products.product_promotion IS NOT NULL AND products.product_promotion > 0 THEN products.product_promotion ELSE products.product_price END) >= ? ", [(int)$price[0]]);
+//                    }
+//                    if ($price[0] && $price[1]) {
+//                        $model = $model->whereRaw("(CASE WHEN products.product_promotion IS NOT NULL AND products.product_promotion > 0 THEN products.product_promotion ELSE products.product_price END) BETWEEN ? AND ? ", [(int)$price[0], (int)$price[1]]);
+//                    }
+                    if (!$price[0] && $price[1]) {
+                        $query->orWhereRaw("products.product_promotion <= ? ", [(int)$price[1]])
+                            ->orWhereRaw("products.product_price <= ? ", [(int)$price[1]]);
+                    }
+                    if ($price[0] && !$price[1]) {
+                        $query->orWhereRaw("products.product_promotion >= ? ", [(int)$price[0]])
+                            ->orWhereRaw("products.product_price >= ? ", [(int)$price[0]]);
+                    }
+                    if ($price[0] && $price[1]) {
+                        $query->orWhereRaw("products.product_promotion BETWEEN ? AND ? ", [(int)$price[0], (int)$price[1]])
+                            ->orWhereRaw("products.product_price BETWEEN ? AND ? ", [(int)$price[0], (int)$price[1]]);
+                    }
+                });
             }
         }
 

@@ -241,6 +241,10 @@ let Commons = (function ($) {
             // $('.jsSelectProductType').parent().prev().addClass('required after');
         }
 
+        if ($('.jsSelectProductType').val()) {
+            $('.jsSelectProductType').parent().prev().addClass('required after');
+        }
+
         $('.jsSelectCategory').chosen().change(function (event, params) {
             let categoryId = $(event.target).val();
 

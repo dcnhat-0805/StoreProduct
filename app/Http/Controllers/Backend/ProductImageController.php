@@ -92,7 +92,7 @@ class ProductImageController extends Controller
             $fileName = request()->get('fileName');
             $type = request()->get('type');
             $sessionProductImages = Session::get(SESSION_LIST_PRODUCT_IMAGE.$type);
-            ProductImage::deleteProductImageByName($fileName);
+//            ProductImage::deleteProductImageByName($fileName);
 
             return response('success', 200);
 //            if ($sessionProductImages !== null) {
