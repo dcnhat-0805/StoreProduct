@@ -692,6 +692,7 @@ class Product extends Model
             ->join('categories', 'categories.id', '=', 'products.category_id')
             ->leftjoin('product_types', 'product_types.id', '=', 'products.product_type_id')
             ->leftjoin('product_categories', 'product_categories.id', '=', 'products.product_category_id')
+            ->leftjoin('product_attributes', 'product_attributes.product_id', '=', 'products.id')
 //            ->join('product_images', 'products.id', '=', 'product_images.product_id')
             ->selectRaw("products.*")
             ->selectRaw(
