@@ -217,11 +217,11 @@
                         <label for="product_quantity" class="required after">Product quantity</label>
                         <input type="number" class="form-control" name="product_quantity"
                                placeholder="Product quantity ..." value="{{ isset($product) && $product->product_quantity ? $product->product_quantity : old('product_quantity') }}">
+                        <div class="error error_product_quantity {{ !$errors->has('product_quantity') ? 'hidden' : '' }}">{{ $errors->has('product_quantity') ? $errors->first('product_quantity') : '' }}</div>
                         <div class="jsCheckBox pull-left" style="margin: 10px 0">
                             <input type="checkbox" name="product_is_free_ship" value="1" checked {{ (isset($product) && $product->product_is_free_ship === 1 || old('product_is_free_ship')) ? 'checked' : '' }}>
                             <label><i></i> Is free shipping </label>
                         </div>
-                        <div class="error error_product_quantity {{ !$errors->has('product_quantity') ? 'hidden' : '' }}">{{ $errors->has('product_quantity') ? $errors->first('product_quantity') : '' }}</div>
                     </div>
                 </div>
             </div>
