@@ -1,9 +1,9 @@
 <div class="col-md-3">
-    <div class="sop-playground-nav">
-        <div class="member-info">
-            <p><span>Hello,&nbsp;</span><span id="sop_current_logon_user_name">{{ $user->name }}</span></p>
-        </div>
-        @if(Auth::check())
+    @if(Auth::check())
+        <div class="sop-playground-nav">
+            <div class="member-info">
+                <p><span>Hello,&nbsp;</span><span id="sop_current_logon_user_name">{{ Auth::user()->name }}</span></p>
+            </div>
             <ul class="nav-container">
                 <li class="item" id="Manage-My-Account" data-spm-anchor-id="a2o4n.order_list.0.i1.4f515d0a0VTrig">
                     <a href="" data-spm="Manage-My-Account"><span>Manage My Account</span></a>
@@ -12,7 +12,8 @@
                             <a href="{{ route(FRONT_SHOW_EDIT_EMAIL) }}" data-spm="change-email">Change Email</a>
                         </li>
                         <li id="Address-book" class="sub">
-                            <a href="{{ route(FRONT_SHOW_EDIT_PASSWORD) }}" data-spm="change-password">Change Password</a>
+                            <a href="{{ route(FRONT_SHOW_EDIT_PASSWORD) }}" data-spm="change-password">Change
+                                Password</a>
                         </li>
                     </ul>
                 </li>
@@ -22,6 +23,6 @@
                        data-spm="My-Orders"><span>My Orders</span></a>
                 </li>
             </ul>
-        @endif
-    </div>
+        </div>
+    @endif
 </div>

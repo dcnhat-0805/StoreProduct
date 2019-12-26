@@ -43,7 +43,6 @@ class ProductController extends FrontEndController
         $titleName = Product::getNameAndSlugBySlug($description);
         $product = Product::getProductBySlugAndId($description);
         $products = Product::getListProductOnFrontEndByCategoryId($product->category_id);
-//        dd(Session::get(SESSION_LAST_URL_CUSTOMER));
 //        $product->attribute = ProductAttribute::getProductAttributeByProductId($id);
         $titleName['product_name'] = $product->product_description;
 

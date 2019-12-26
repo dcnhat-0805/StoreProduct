@@ -582,7 +582,7 @@ class Product extends Model
                 ((SELECT SUM(order_details.quantity) FROM orders INNER JOIN order_details ON orders.id = order_details.order_id WHERE order_details.product_id = products.id AND orders.order_status = 2 GROUP BY order_details.product_id)) ELSE 0 END) AS count_buy")
             )
             ->selectRaw('(SELECT count(ratings.user_id) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS count_rating')
-            ->selectRaw('(SELECT FORMAT(AVG(ratings.point), 1) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) AS average_rating')
+            ->selectRaw('(CASE WHEN (SELECT FORMAT(AVG(ratings.point), 1) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) > 0 THEN (SELECT FORMAT(AVG(ratings.point), 1) FROM ratings WHERE ratings.product_id = products.id GROUP BY ratings.product_id) ELSE 0 END) AS average_rating')
             ->with([
                 'category' => function ($category) {
                     $category->whereNull('categories.deleted_at');

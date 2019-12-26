@@ -25,13 +25,17 @@ class OrderController extends FrontEndController
     {
         $user  = Auth::user();
 
-        if ($user) {
-            $order = Order::getListOrderByOrderCode($orderCode);
+//        if ($user) {
+//            $order = Order::getListOrderByOrderCode($orderCode);
+//
+//            return view('frontend.pages.order.detail', compact('order', 'orderCode', 'user'));
+//        } else {
+//            abort(404);
+//        }
 
-            return view('frontend.pages.order.detail', compact('order', 'orderCode', 'user'));
-        } else {
-            abort(404);
-        }
+        $order = Order::getListOrderByOrderCode($orderCode);
+
+        return view('frontend.pages.order.detail', compact('order', 'orderCode'));
     }
 
     public function cancelOrder($orderCode)

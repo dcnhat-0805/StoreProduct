@@ -1,6 +1,7 @@
 const HEIGHT = 780;
 $(document).ready(function () {
     let max_qty = $('.product__quantity').val();
+    console.log(max_qty);
     $('.jsQuantity1').TouchSpin({
         buttondown_class: 'btn btn-edit__quantity btn-down btn-white',
         buttonup_class: 'btn btn-edit__quantity btn-up btn-white',
@@ -10,6 +11,10 @@ $(document).ready(function () {
     });
     if (max_qty == 1) {
         $('.btn-down, .btn-up').prop('disabled', true);
+    }
+    if (max_qty == 0) {
+        $('.btn-down, .btn-up').prop('disabled', true);
+        $('#jsQuantity1').prop('disabled', true);
     }
 
     $(document).on('click', '.btn-edit__quantity', function () {
@@ -22,6 +27,14 @@ $(document).ready(function () {
         }
         if (quantity == max_qty) {
             $('.btn-up').prop('disabled', true);
+        }
+    });
+
+    $('#jsQuantity1').on('keyup keydown', function() {
+        let quantity = $(this).val();
+        if (quantity > max_qty) {
+            $(this).val(max_qty);
+            jQuery.getMessageError('Sorry! Your product is out of stock.');
         }
     });
 
