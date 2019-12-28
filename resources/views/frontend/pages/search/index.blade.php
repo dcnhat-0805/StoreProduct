@@ -56,8 +56,8 @@
                                         <div class="col-xs-4 product-men">
                                             <div class="men-pro-item simpleCart_shelfItem">
                                                 <div class="men-thumb-item">
-                                                    @if(isset($product->product_image) && $product->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $product->product_image))
-                                                        <img class="image-product" src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="">
+                                                    @if(isset($product->product_image) && $product->product_image !== '0')
+                                                        <img class="image-product" src="{{ \App\Helpers\Helper::getUrlFile($product->product_image) }}" alt="">
                                                         <div class="men-cart-pro">
                                                             <div class="inner-men-cart-pro">
                                                                 <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}" class="link-product-add-cart">Quick View</a>
@@ -92,7 +92,7 @@
                                                     <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
                                                         <button type="button" class="button btn btn-custon-three btn-primary add-to-cart" data-id="{{ $product->id }}"
                                                                 {{--                                                                onclick="window.location.href = '{{ route(FRONT_ADD_CART, ['id' => $product->id]) }}'"--}}
-                                                                style="width: 100%; font-size: 20px">
+                                                                style="width: 100%; font-size: 20px" {{ $product->exist == 0 ? 'disabled' : '' }}>
                                                             Add to cart
                                                         </button>
                                                     </div>

@@ -337,7 +337,6 @@ $(document).ready(function () {
                             },
                             success: function (data) {
                                 let isMessengerError =  $("#uploadProductImage").find("div.error_product_image").hasClass('hidden');
-                                console.log(isMessengerError);
                                 if (isMessengerError) {
                                     $('.error_product_image').removeClass('hidden').text('Product image cannot be left blank.');
                                 }

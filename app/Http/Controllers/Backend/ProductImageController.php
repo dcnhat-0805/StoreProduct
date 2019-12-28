@@ -17,38 +17,14 @@ class ProductImageController extends Controller
     {
         if ($request->ajax()) {
             if ($request->hasFile('file')) {
-//                $type = $request->get('type');
-//                $fileExtExplode = explode('.', $_FILES['file']['name']);
-//                $file_ext = end($fileExtExplode);
-//                $helper_text = uniqid() . "-" . time();
-//                $fileName = 'product-' . $helper_text . ".$file_ext";
-//                $path_upload = FILE_PATH_PRODUCT . $fileName;
-//                move_uploaded_file($_FILES["file"]["tmp_name"], $path_upload);
-//
-//                ImageOptimizer::optimize($path_upload);
-//                Helper::createResizeImage($path_upload, IMAGE_RESIZE_WIDTH, IMAGE_RESIZE_HEIGHT);
-//
-//                // upload to s3
-//                \Storage::disk('local')->put($fileName, file_get_contents($path_upload), 'public');
-//
-//                $data = [
-//                    'name' => $fileName,
-////                    'url' => FILE_PATH_PRODUCT . $fileName,
-//                    'url' => \Storage::url($fileName),
-//                    'size' => Helper::getRemoteFileSize(\Storage::size($fileName)),
-//                ];
-//
-//                Session::push(SESSION_LIST_PRODUCT_IMAGE.$type, $data);
-//
-//                return $data;
-                $fileName = UploadService::moveImage(FILE_PATH_PRODUCT_IMAGE, $request->file('file'), PREFIX_PRODUCT_DETAIL);
+                $fileName = UploadService::uploadImage($request->file('file'));
                 $type = $request->get('type');
                 $size = UploadService::getFileSize($request->file('file'));
                 $size = Helper::getRemoteFilesize($size);
 
                 $data = [
                     'name' => $fileName,
-                    'url' => asset(FILE_PATH_PRODUCT_IMAGE . $fileName),
+                    'url' => Helper::getUrlFile($fileName),
                     'size' => $size
                 ];
 

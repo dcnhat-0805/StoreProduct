@@ -69,7 +69,7 @@
                                                 </div>
                                                 <div class="col-sm-10">
                                                     <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $product->product_description_slug]) }}" class="" style="padding: 0; float: left">
-                                                        <img src="{{ FILE_PATH_PRODUCT . $product->product_image }}" alt="" style="width: 50px; height: 30px; object-fit: scale-down;">
+                                                        <img src="{{ \App\Helpers\Helper::getUrlFile($product->product_image) }}" alt="" style="width: 50px; height: 30px; object-fit: scale-down;">
                                                     </a>
                                                     <div class="col">
                                                         @if($cart->options->color)

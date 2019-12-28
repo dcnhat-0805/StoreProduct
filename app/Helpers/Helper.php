@@ -33,6 +33,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Arr;
 use Intervention\Image\ImageManagerStatic as ImageResize;
+use File;
 
 /**
  * Class Helper
@@ -171,16 +172,19 @@ class Helper
         return $size;
     }
 
+    public static function getUrlFile($fileName)
+    {
+        return str_replace('/public', '', url('storage/' . $fileName));
+    }
+
     public static function getDataImage($filePath, $images)
     {
         $response['images'] = [];
         if (isset($images) && $images !== '0') {
                 $dataImage = [];
                 $dataImage['name'] = $images;
-                $dataImage['url'] = $filePath . $images;
-                $dataImage['size'] = Helper::getRemoteFileSize(file_exists($dataImage['url']) ? filesize($dataImage['url']) : 0 . 'KB');
-//            $dataImage['url'] = asset(\Storage::url('app/' . $images));
-//            $dataImage['size'] = Helper::getRemoteFileSize(\Storage::size($images));
+                $dataImage['url'] = Helper::getUrlFile($images);
+                $dataImage['size'] = Helper::getRemoteFileSize(\Storage::size($images));
                 $response['images'][] = $dataImage;
         }
 
@@ -195,9 +199,8 @@ class Helper
                 if ($image !== '0') {
                     $dataImage = [];
                     $dataImage['name'] = $image;
-                    $dataImage['url'] = $filePath . $image;
-//                    $dataImage['url'] = \Storage::url($image);
-                    $dataImage['size'] = Helper::getRemoteFileSize(file_exists($dataImage['url']) ? filesize($dataImage['url']) : 0 . 'KB');
+                    $dataImage['url'] = Helper::getUrlFile($image);
+                    $dataImage['size'] = Helper::getRemoteFileSize(\Storage::size($image));
                     $response['images'][] = $dataImage;
                 }
             }

@@ -61,4 +61,12 @@ class UploadService
 
         return 0;
     }
+
+    public static function uploadImage($file)
+    {
+        if (self::checkFile($file) == 1) {
+            return \Storage::putFile('public/product', $file);
+        }
+        return 0;
+    }
 }

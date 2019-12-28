@@ -130,8 +130,8 @@
                                                     <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $productBest->product_description_slug]) }}">
                                                         <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
                                                             <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                                @if(isset($productBest->product_image) && $productBest->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $productBest->product_image))
-                                                                    <img src="{{ FILE_PATH_PRODUCT . $productBest->product_image }}"alt="">
+                                                                @if(isset($productBest->product_image) && $productBest->product_image !== '0')
+                                                                    <img src="{{ \App\Helpers\Helper::getUrlFile($productBest->product_image) }}"alt="">
                                                                 @else
                                                                     <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" >
                                                                 @endif
@@ -172,8 +172,8 @@
                                                     <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $productNew->product_description_slug]) }}">
                                                         <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
                                                             <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                                @if(isset($productNew->product_image) && $productNew->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $productNew->product_image))
-                                                                    <img src="{{ FILE_PATH_PRODUCT . $productNew->product_image }}"alt="">
+                                                                @if(isset($productNew->product_image) && $productNew->product_image !== '0')
+                                                                    <img src="{{ \App\Helpers\Helper::getUrlFile($productNew->product_image) }}"alt="">
                                                                 @else
                                                                     <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" >
                                                                 @endif
@@ -214,8 +214,8 @@
                                                     <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $productHot->product_description_slug]) }}">
                                                         <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
                                                             <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                                @if(isset($productHot->product_image) && $productHot->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $productHot->product_image))
-                                                                    <img src="{{ FILE_PATH_PRODUCT . $productHot->product_image }}"alt="">
+                                                                @if(isset($productHot->product_image) && $productHot->product_image !== '0')
+                                                                    <img src="{{ \App\Helpers\Helper::getUrlFile($productHot->product_image) }}"alt="">
                                                                 @else
                                                                     <img src="{{ FILE_PATH_PRODUCT_THUMP }}" alt="" >
                                                                 @endif

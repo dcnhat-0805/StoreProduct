@@ -74,11 +74,11 @@
                                     <td class="">{{ $product->product_type_id ? $product->productType->product_type_name : '' }}</td>
                                     <td class="">{{ $product->product_name }}</td>
                                     <td class="">
-                                        <img class="product-image text-center" src="{{ FILE_PATH_PRODUCT .  $product->product_image }}" alt="">
+                                        <img class="product-image text-center" src="{{ \App\Helpers\Helper::getUrlFile($product->product_image) }}" alt="">
                                         <div class="list-image">
                                             @if(count($product->productImage))
                                                 @foreach($product->productImage as $productImage)
-                                                    <img class="product-image text-center" src="{{ FILE_PATH_PRODUCT_IMAGE .  $productImage->product_image_name }}" alt="">
+                                                    <img class="product-image text-center" src="{{ \App\Helpers\Helper::getUrlFile($productImage->product_image_name) }}" alt="">
                                                 @endforeach
                                             @endif
                                         </div>

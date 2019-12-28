@@ -36,10 +36,10 @@
                 <div class="grid images_3_of_2">
                     <div class="jsFlexSlider">
                         <ul class="slides">
-                            @if(isset($product->product_image) && $product->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $product->product_image))
-                                <li data-thumb="{{ FILE_PATH_PRODUCT . $product->product_image }}">
+                            @if(isset($product->product_image) && $product->product_image !== '0')
+                                <li data-thumb="{{ \App\Helpers\Helper::getUrlFile($product->product_image) }}">
                                     <div class="thumb-image">
-                                        <img src="{{ FILE_PATH_PRODUCT . $product->product_image }}"
+                                        <img src="{{ \App\Helpers\Helper::getUrlFile($product->product_image) }}"
                                              data-imagezoom="true" class="img-responsive" alt="">
                                     </div>
                                 </li>
@@ -52,10 +52,10 @@
                                 </li>
                             @endif
                             @foreach($product->productImage as $productImage)
-                                @if(isset($productImage->product_image_name) && $productImage->product_image_name !== '0' && file_exists(FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name))
-                                    <li data-thumb="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}">
+                                @if(isset($productImage->product_image_name) && $productImage->product_image_name !== '0')
+                                    <li data-thumb="{{ \App\Helpers\Helper::getUrlFile($productImage->product_image_name) }}">
                                         <div class="thumb-image">
-                                            <img src="{{ FILE_PATH_PRODUCT_IMAGE . $productImage->product_image_name }}"
+                                            <img src="{{ \App\Helpers\Helper::getUrlFile($productImage->product_image_name) }}"
                                                  data-imagezoom="true" class="img-responsive" alt="">
                                         </div>
                                     </li>
@@ -272,10 +272,10 @@
                                 <li>
                                     <div class="w3l-specilamk">
                                         <div class="speioffer-agile">
-                                            @if(isset($product->product_image) && $product->product_image !== '0' && file_exists(FILE_PATH_PRODUCT . $product->product_image))
+                                            @if(isset($product->product_image) && $product->product_image !== '0')
                                                 <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => convertStringToUrl($product->product_description)]) }}">
                                                     <img class="image-product"
-                                                         src="{{ FILE_PATH_PRODUCT . $product->product_image }}"
+                                                         src="{{ \App\Helpers\Helper::getUrlFile($product->product_image) }}"
                                                          alt="{{ $product->product_image }}">
                                                 </a>
                                             @else
@@ -303,7 +303,7 @@
                                                         class="button btn btn-custon-three btn-primary add-to-cart"
                                                         data-id="{{ $product->id }}"
                                                         {{--                                                                onclick="window.location.href = '{{ route(FRONT_ADD_CART, ['id' => $product->id]) }}'"--}}
-                                                        style="width: 100%; font-size: 20px">
+                                                        style="width: 100%; font-size: 20px" {{ $product->exist == 0 ? 'disabled' : '' }}>
                                                     Add to cart
                                                 </button>
                                             </div>
