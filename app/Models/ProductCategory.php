@@ -38,14 +38,6 @@ class ProductCategory extends Model
     {
         $productCategory = new ProductCategory();
 
-        if (isset($params['keyword'])) {
-            $keyword = addslashes($params['keyword']);
-            if ($keyword != 0 || $keyword != null) {
-                $productCategory = $productCategory->where('product_category_name', 'like', "%$keyword%")
-                    ->orWhere('product_category_slug', 'like', "%$keyword%");
-            }
-        }
-
         if (isset($params['created_at'])) {
             $publishDate = $params['created_at'];
             if ($publishDate != 0) {
@@ -74,6 +66,21 @@ class ProductCategory extends Model
                     $query->orWhereRaw("(product_categories.product_category_status = 1)");
                 }
             });
+        }
+
+        if (isset($params['keyword'])) {
+            $keyword = addslashes($params['keyword']);
+            $keyword = preg_replace("([+])", " ", $keyword);
+            if ($keyword != 0 || $keyword != null) {
+                $productCategory = $productCategory->where(function ($query) use ($keyword) {
+                    $keyword_slug = convertStringToUrl($keyword);
+                    $query->where('product_categories.product_category_name', 'like', "%$keyword%")
+                        ->orWhere('product_categories.product_category_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('categories.category_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('categories.category_name', 'like', "%$keyword%")
+                        ->orWhere('product_categories.id', (int) $keyword);
+                });
+            }
         }
 
         return $productCategory;
@@ -139,16 +146,25 @@ class ProductCategory extends Model
             ->first();
     }
 
-    public static function getNameAndSlugBySlug($slug)
+    public static function isProductCategorySlug($slug)
+    {
+        return self::whereNull('deleted_at')
+            ->where('product_category_slug', $slug)
+            ->exists();
+    }
+
+    public static function getNameAndSlugBySlug($description)
     {
         $products = self::join('categories', 'categories.id', '=', 'product_categories.category_id')
             ->leftjoin('product_types', 'product_categories.id', '=', 'product_types.product_category_id')
+            ->leftjoin('products', 'product_categories.id', '=', 'products.product_category_id')
             ->selectRaw("categories.category_name, product_categories.product_category_name, product_types.product_type_name,
                         categories.category_slug, product_categories.product_category_slug, product_types.product_type_slug"
             )
-            ->where('categories.category_slug', $slug)
-            ->orWhere('product_categories.product_category_slug', $slug)
-            ->orWhere('product_types.product_type_slug', $slug)
+            ->where('products.product_slug', utf8convert($description))
+            ->orWhere('product_categories.product_category_slug', $description)
+            ->orWhere('product_types.product_type_slug', $description)
+            ->orWhere('products.product_slug', $description)
             ->first();
 
         return $products;

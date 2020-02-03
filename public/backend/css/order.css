@@ -1,0 +1,121 @@
+
+.page-root {
+    background: #fff;
+    width: 100%;
+    box-shadow: 0px 0px 15px 0px #e8e8e8;
+}
+.detail-info {
+    padding: 8px 12px;
+    min-height: 50px;
+    background-color: #fff;
+    width: 100%;
+}
+.detail-info .detail-info-left {
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+}
+.detail-info .order-number {
+    margin-bottom: 4px;
+    height: 16px;
+    line-height: 16px;
+    color: #000;
+}
+.text.light-gray {
+    color: #9e9e9e;
+    font-style: italic;
+}
+.text.desc {
+    font-size: 12px;
+}
+.text {
+    color: #212121;
+    word-break: break-word;
+    margin: 0;
+}
+.order-detail-lable {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+.order-code {
+    color: #0a6aa1;
+}
+.detail-info .detail-right-info {
+    height: 32px;
+    line-height: 32px;
+}
+.detail-info .detail-info-total-title {
+    color: #9e9e9e;
+}
+.detail-info .detail-info-total-title, .detail-info .detail-info-total-value {
+    font-size: 18px;
+}
+.box-info-order {
+    margin-bottom: 20px;
+}
+.order-image {
+    /*width: 100%;*/
+    height: 100%;
+    padding: 8px 12px;
+}
+.image-detail {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    object-fit: cover;
+    border: 1px dashed #0e8ce4;
+}
+.order-name {
+    padding: 10px 30px;
+}
+.title.name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+.order-total {
+    padding: 10px 12px;
+}
+.order-quantity {
+    padding: 10px 12px;
+}
+.attribute-list {
+    margin-bottom: 10px;
+    height: 30px;
+}
+.attribute-list .label-attribute {
+    height: 30px;
+    line-height: 30px;
+    float: left;
+    padding-right: 5px;
+    font-size: 14px;
+    color: #3e3e3e;
+}
+.attribute-item {
+    width: 50px;
+    height: 30px;
+    float: left;
+    margin: 0 15px 15px 0px;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    position: relative;
+    z-index: 1000;
+    font-size: 13px;
+    text-align: center;
+    line-height: 30px;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: #d64a48;
+}
+.attribute-item.active{
+    border: 1px solid black;
+}
+/*.modal-backdrop + .modal-backdrop {*/
+/*    z-index: 1090;*/
+/*}*/

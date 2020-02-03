@@ -12,7 +12,7 @@ $(document).ready(function () {
 
         function configUPloadImage(target, num) {
 
-            let maxSizeFileImage = 1024 * 25;
+            let maxSizeFileImage = 1024 * 1024 * 25;
             let targetId = '#' + target + num.toString().padStart(2, '0');
             let previewsId = '#' + target + 'Previews' + num.toString().padStart(2, '0');
             let imageType = num.toString().padStart(1, '0');
@@ -33,8 +33,8 @@ $(document).ready(function () {
                 previewsContainer: previewsId,
                 thumbnailWidth: 120,
                 thumbnailHeight: 120,
-                dictCancelUpload: 'キャンセル',
-                dictCancelUploadConfirmation: 'アップロードをキャンセルします。よろしいですか？',
+                dictCancelUpload: 'Cancel',
+                dictCancelUploadConfirmation: 'Cancel upload. Is it OK ?',
                 // dictRemoveFileConfirmation: 'ファイルを削除します。よろしいですか？',
 
                 init: function() {
@@ -75,8 +75,8 @@ $(document).ready(function () {
                             mockFile.previewElement.classList.add('dz-success');
                             mockFile.previewElement.classList.add('dz-complete');
                             mockFile.previewElement.querySelector("[data-dz-size]").innerHTML = image.size;
-                            $(mockFile.previewElement).find('img').attr('data-image', image.name    );
-                            $(mockFile.previewElement).append('<input type="hidden" name="image_list' + '[]" value="' + image.name + '" class="dropzone-input-hidden" id="input2">');
+                            $(mockFile.previewElement).find('img').attr('data-image', image.name);
+                            $(mockFile.previewElement).append('<input type="hidden" name="image_list' + '[]" value="' + image.name + '" class="dropzone-input-hidden">');
 
                             let file = new File([''], mockFile.name);
                             file.accepted = true;
@@ -94,6 +94,9 @@ $(document).ready(function () {
                             if (file.size < maxSizeFileImage) {
                                 file.acceptDimensions();
                             }
+                            if (file.size > maxSizeFileImage) {
+                                file.rejectDimensions();
+                            }
                         }else if(file.status == 'error'){
                             $('.error_product_image_list').removeClass('hidden').text('');
                         }
@@ -107,7 +110,7 @@ $(document).ready(function () {
                 },
                 accept: function(file, done) {
                     file.rejectDimensions = function() {
-                        done("Please make sure the image width and height are not larger than 2500px.");
+                        done("Please make sure the image are not larger than 2500px.");
                     };
                     file.acceptDimensions = done;
                 },

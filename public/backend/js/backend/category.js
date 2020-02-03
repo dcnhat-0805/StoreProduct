@@ -165,6 +165,11 @@ let CategoryJs = (function ($) {
             url: "/admin/category/list-category",
             dataType : 'JSON',
             type: "GET",
+            data : {
+                keyword: $.urlParam('keyword'),
+                status: url.searchParams.getAll("status[]"),
+                created_at: $.urlParam('created_at'),
+            },
             success : function (data) {
                 Commons.setLocalStorageListIds(CATEGORY_IDS, data);
                 Commons.setLocalStorageDeleteAll(CATEGORY_DELETE_ALL, IS_DELETE_ALL);

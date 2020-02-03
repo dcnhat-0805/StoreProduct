@@ -8,6 +8,7 @@ use App\Services\UploadService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Spatie\LaravelImageOptimizer\Facades\ImageOptimizer;
 
 class ProductImageController extends Controller
 {
@@ -16,14 +17,14 @@ class ProductImageController extends Controller
     {
         if ($request->ajax()) {
             if ($request->hasFile('file')) {
-                $fileName = UploadService::moveImage(FILE_PATH_PRODUCT_IMAGE, $request->file('file'), PREFIX_PRODUCT_DETAIL);
+                $fileName = UploadService::uploadImage($request->file('file'));
                 $type = $request->get('type');
                 $size = UploadService::getFileSize($request->file('file'));
                 $size = Helper::getRemoteFilesize($size);
 
                 $data = [
                     'name' => $fileName,
-                    'url' => asset(FILE_PATH_PRODUCT_IMAGE . $fileName),
+                    'url' => Helper::getUrlFile($fileName),
                     'size' => $size
                 ];
 
@@ -67,7 +68,7 @@ class ProductImageController extends Controller
             $fileName = request()->get('fileName');
             $type = request()->get('type');
             $sessionProductImages = Session::get(SESSION_LIST_PRODUCT_IMAGE.$type);
-            ProductImage::deleteProductImageByName($fileName);
+//            ProductImage::deleteProductImageByName($fileName);
 
             return response('success', 200);
 //            if ($sessionProductImages !== null) {

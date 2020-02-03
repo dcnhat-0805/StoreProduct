@@ -13,9 +13,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-//    return view('welcome');
-});
+//Route::get('/', function () {
+////    return view('welcome');
+//});
 
 Route::namespace('Backend')->group(function(){
     Route::group(['prefix' => 'admin'], function () {
@@ -35,16 +35,25 @@ Route::namespace('Backend')->group(function(){
             ->name(ADMIN_FORGET_PASSWORD);
         Route::post('/checkEmailAdmin', 'PasswordResetController@checkEmailAdmin');
         Route::post('/updatePassword', 'PasswordResetController@updatePasswordAjax');
-    }
-    );
+    });
     Route::group(['prefix' => 'admin', 'middleware' => 'adminLogin'], function(){
-        Route::get('/', 'HomeController@index')->name(ADMIN_DASHBOARD);
+        Route::get('/', 'HomeController@daily')->name(ADMIN_DASHBOARD_DAILY);
+        Route::get('/monthly', 'HomeController@monthly')->name(ADMIN_DASHBOARD_MONTHLY);
         Route::get('/list', 'AdminController@index')->name(ADMIN_INDEX);
         Route::post('add', 'AdminController@store')->name(ADMIN_ADD);
         Route::post('edit/{id}', 'AdminController@update')->name(ADMIN_EDIT);
         Route::delete('delete/{id}', 'AdminController@delete')->name(ADMIN_DELETE);
         Route::get('/list_admin', 'AdminController@getListAdmin');
         Route::delete('/destroy', 'AdminController@destroy');
+
+        Route::group(['prefix' => 'account'], function(){
+            Route::get('/edit', 'AccountController@editAccount')->name(ADMIN_ACCOUNT_EDIT);
+            Route::post('/update', 'AccountController@updateAccount')->name(ADMIN_ACCOUNT_UPDATE);
+            Route::get('edit_email', 'AccountController@editEmail')->name(ADMIN_ACCOUNT_EDIT_EMAIL);
+            Route::post('update_email', 'AccountController@updateEmail')->name(ADMIN_ACCOUNT_UPDATE_EMAIL);
+            Route::get('edit_password', 'AccountController@editPassword')->name(ADMIN_ACCOUNT_EDIT_PASSWORD);
+            Route::post('update_password', 'AccountController@updatePassword')->name(ADMIN_ACCOUNT_UPDATE_PASSWORD);
+        });
 
         Route::group(['prefix' => 'category'], function(){
             Route::get('/', 'CategoryController@index')->name(ADMIN_CATEGORY_INDEX);
@@ -93,6 +102,50 @@ Route::namespace('Backend')->group(function(){
             });
         });
 
+        Route::group(['prefix' => 'order'], function () {
+            Route::get('/', 'OrderController@index')
+                ->name(ADMIN_ORDER_INDEX);
+            Route::get('/detail/{code}', 'OrderController@detail')
+                ->name(ADMIN_ORDER_DETAIL);
+            Route::post('/delivery/{id}', 'OrderController@delivery')
+                ->name(ADMIN_ORDER_DELIVERY);
+        });
+
+        Route::group(['prefix' => 'comment'], function () {
+            Route::get('/', 'CommentController@index')
+                ->name(ADMIN_COMMENT_INDEX);
+            Route::get('/detail', 'CommentController@detail')
+                ->name(ADMIN_COMMENT_REPLY);
+            Route::post('/reply', 'CommentController@reply');
+            Route::post('/delete/{id}', 'CommentController@delete')
+                ->name(ADMIN_COMMENT_DELETE);
+            Route::post('/deleteReply/{id}', 'CommentController@deleteReply');
+            Route::post('/destroy', 'CommentController@destroy')
+                ->name(ADMIN_COMMENT_DESTROY);
+        });
+
+        Route::group(['prefix' => 'contact'], function () {
+            Route::get('/', 'ContactController@index')
+                ->name(ADMIN_CONTACT_INDEX);
+            Route::get('/detail', 'ContactController@detail');
+            Route::post('/reply', 'ContactController@reply');
+            Route::post('/delete/{id}', 'ContactController@delete')
+                ->name(ADMIN_COMMENT_DELETE);
+            Route::post('/deleteReply/{id}', 'ContactController@deleteReply');
+            Route::post('/destroy', 'ContactController@destroy')
+                ->name(ADMIN_COMMENT_DESTROY);
+        });
+
+        Route::group(['prefix' => 'customer'], function () {
+            Route::get('/', 'CustomerController@index')
+                ->name(ADMIN_CUSTOMER_INDEX);
+            Route::get('/list_all_customer', 'CustomerController@getListAllCustomer');
+            Route::delete('/delete/{id}', 'CustomerController@delete')
+                ->name(ADMIN_CUSTOMER_DELETE);
+            Route::delete('/destroy', 'CustomerController@destroy')
+                ->name(ADMIN_CUSTOMER_DESTROY);
+        });
+
         Route::group(['prefix' => 'ajax'], function(){
             Route::get('/list_product_category', 'AjaxController@getProductCategory');
             Route::get('/listProductType', 'AjaxController@getProductType');
@@ -100,14 +153,18 @@ Route::namespace('Backend')->group(function(){
     });
 });
 
-
 Route::namespace('FrontEnd')->group(function(){
     Route::get('/', 'HomeController@index')
         ->name(FRONT_END_HOME_INDEX);
-    Route::get('/{slug}', 'ProductController@index')
+    Route::get('sop/{slug}', 'ProductController@index')
         ->name(FRONT_PRODUCT_LIST);
-    Route::get('/{slug}/detail/{id}', 'ProductController@detail')
+    Route::get('/searchByWord', 'HomeController@searchByWord')
+        ->name(FRONT_SEARCH_BY_WORD);
+    Route::get('/search', 'HomeController@getDataSearch')
+        ->name(FRONT_LOAD_DATA_SEARCH);
+    Route::get('/detail/{description}', 'ProductController@detail')
         ->name(FRONT_PRODUCT_DETAIL);
+    Route::post('/updateRating', 'ProductController@updateRating');
 
     Route::group(['prefix' => 'cart'], function(){
         Route::get('/list', 'CartController@index')
@@ -116,10 +173,74 @@ Route::namespace('FrontEnd')->group(function(){
             ->name(FRONT_ADD_CART);
         Route::post('updateCart/{rowId}', 'CartController@updateCart')
             ->name(FRONT_UPDATE_CART);
+        Route::post('checkCount', 'CartController@checkCount')
+            ->name(FRONT_CHECK_COUNT_CART);
+        Route::post('purchase', 'CartController@purchase')
+            ->name(FRONT_PURCHASE);
         Route::get('/listALLCart', 'CartController@listALLCart');
         Route::get('/getTotalCart', 'CartController@getTotalCart');
         Route::delete('/destroy', 'CartController@destroy');
         Route::delete('/delete/{rowId}', 'CartController@delete');
+    });
+
+    Route::group(['prefix' => 'account'], function () {
+        Route::get('/profile', 'ProfileController@showProfile')
+            ->name(FRONT_SHOW_PROFILE);
+        Route::get('/profile/edit', 'ProfileController@showEditProfile')
+            ->name(FRONT_SHOW_EDIT_PROFILE);
+        Route::post('/profile/edit', 'ProfileController@editProfile')
+            ->name(FRONT_EDIT_PROFILE);
+        Route::get('/profile/edit_mail', 'ProfileController@showFormEditEmail')
+            ->name(FRONT_SHOW_EDIT_EMAIL);
+        Route::post('/profile/edit_mail', 'ProfileController@editEmail')
+            ->name(FRONT_EDIT_EMAIL);
+        Route::get('/profile/change_password', 'ProfileController@showFormEditPassword')
+            ->name(FRONT_SHOW_EDIT_PASSWORD);
+        Route::post('/profile/change_password', 'ProfileController@changePassword')
+            ->name(FRONT_EDIT_PASSWORD);
+        Route::get('/register', 'UserController@showRegisterForm')
+            ->name(FRONT_REGISTER);
+        Route::post('/store', 'UserController@store')
+            ->name(FRONT_STORE);
+        Route::get('/accept/{code}', 'UserController@accept')
+            ->name(FRONT_ACCEPT);
+        Route::get('/ajaxGetDistricts', 'UserController@getDistrictByCityId');
+        Route::get('/ajaxGetWards', 'UserController@getWardsByDistrictId');
+        Route::post('/login', 'LoginController@login')
+            ->name(FRONT_END_LOGIN);
+        Route::get('/login', 'LoginController@showLoginForm')
+            ->name(FRONT_LOGIN);
+        Route::get('/logout', 'LoginController@logout')
+            ->name(FRONT_LOGOUT);
+        Route::get('/forget-password', 'UserController@showFormForgetPassword')
+            ->name(FRONT_FORGET_PASSWORD);
+        Route::post('/checkEmailUser', 'UserController@checkEmailUser');
+        Route::post('/updatePassword', 'UserController@updatePassword');
+        Route::get('/order', 'OrderController@myOrder')
+            ->name(FRONT_MY_ORDERS);
+        Route::get('/order/view/{code}', 'OrderController@orderDetail')
+            ->name(FRONT_ORDER_DETAIL);
+        Route::get('/order/cancel/{code}', 'OrderController@cancelOrder')
+            ->name(FRONT_ORDER_CANCEL);
+    });
+
+    Route::group(['prefix' => 'comments'], function () {
+        Route::post('/sendComment', 'CommentController@sendComment')
+            ->name(FRONT_SEND_COMMENT);
+        Route::get('/loadComment/{product_id}', 'CommentController@loadComment');
+    });
+
+    Route::group(['prefix' => 'contact'], function () {
+        Route::post('/sendContact', 'ContactController@sendContact')
+            ->name(FRONT_SEND_CONTACT);
+        Route::get('/getContact', 'ContactController@getContact');
+    });
+
+    Route::group(['prefix' => 'socialite'], function () {
+        Route::get('/login/{social}', 'LoginController@loginSocial')
+            ->name(FRONT_LOGIN_SOCIALITE);
+        Route::get('/callback/{social}', 'LoginController@callbackSocial')
+            ->name(FRONT_LOGIN_SOCIALITE);
     });
 
 });

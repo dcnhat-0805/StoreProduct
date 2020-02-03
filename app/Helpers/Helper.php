@@ -17,6 +17,11 @@
 
 namespace App\Helpers;
 
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\ProductAttribute;
+use App\Models\Rating;
+use App\Models\Wards;
 use DateTime;
 use DatePeriod;
 use DateInterval;
@@ -26,7 +31,9 @@ use App\Models\Category;
 use Cart;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Arr;
 use Intervention\Image\ImageManagerStatic as ImageResize;
+use File;
 
 /**
  * Class Helper
@@ -76,6 +83,30 @@ class Helper
         return $order;
     }
 
+    /**
+     * Get Sort Param
+     *
+     * @param array $params param
+     *
+     * @return string
+     */
+    public static function getSortParamFrontEnd($params)
+    {
+        $order = 'products.id desc';
+
+        if (isset($params[SORT]) && $params[SORT] == 'popularity') {
+            $order = 'products.id desc';
+        }
+        if (isset($params[SORT]) && $params[SORT] == 'priceasc') {
+            $order = 'products.product_price asc, products.product_promotion asc';
+        }
+        if (isset($params[SORT]) && $params[SORT] == 'pricedesc') {
+            $order = 'products.product_price desc, products.product_promotion desc';
+        }
+
+        return $order;
+    }
+
     public static function setCheckedForm($name, $value, $status)
     {
         return isset($_GET[$name]) && (in_array($value, $_GET[$name])) || !isset($_GET[$name]) ? $status : "";
@@ -96,7 +127,7 @@ class Helper
         $fileName = Helper::convertUnsupportedExtension($imageResize->basename);
         $pathUpload = $imageResize->dirname . "/". IMAGE_RESIZE_PREFIX . $fileName;
         $imageResize->save($pathUpload);
-//        \Storage::disk('s3')->put(IMAGE_RESIZE_PREFIX.$fileName, file_get_contents($pathUpload), 'public');
+        \Storage::disk('local')->put(IMAGE_RESIZE_PREFIX.$fileName, file_get_contents($pathUpload), 'public');
     }
 
     /**
@@ -141,14 +172,19 @@ class Helper
         return $size;
     }
 
+    public static function getUrlFile($fileName)
+    {
+        return str_replace('/public', '', url('storage/' . $fileName));
+    }
+
     public static function getDataImage($filePath, $images)
     {
         $response['images'] = [];
-        if (isset($images)) {
+        if (isset($images) && $images !== '0') {
                 $dataImage = [];
                 $dataImage['name'] = $images;
-                $dataImage['url'] = $filePath . $images;
-                $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
+                $dataImage['url'] = Helper::getUrlFile($images);
+                $dataImage['size'] = Helper::getRemoteFileSize(\Storage::size($images));
                 $response['images'][] = $dataImage;
         }
 
@@ -160,11 +196,13 @@ class Helper
         $response['images'] = [];
         if (isset($images) && count($images)) {
             foreach ($images as $image) {
-                $dataImage = [];
-                $dataImage['name'] = $image;
-                $dataImage['url'] = $filePath . $image;
-                $dataImage['size'] = Helper::getRemoteFileSize(filesize($dataImage['url']));
-                $response['images'][] = $dataImage;
+                if ($image !== '0') {
+                    $dataImage = [];
+                    $dataImage['name'] = $image;
+                    $dataImage['url'] = Helper::getUrlFile($image);
+                    $dataImage['size'] = Helper::getRemoteFileSize(\Storage::size($image));
+                    $response['images'][] = $dataImage;
+                }
             }
         }
 
@@ -269,4 +307,239 @@ class Helper
         return number_format($price,0,",",".") . ' ₫';
     }
 
+    public static function loadPercentage($percentage)
+    {
+        return number_format($percentage,0,",",".") . '%';
+    }
+
+    public static function randomArrayKey($data)
+    {
+        $data = $data->pluck('id')->toArray();
+
+        return Arr::random($data, 3);
+    }
+
+    public static function loadAddressByWardsId($wardsId)
+    {
+        $address = Wards::select('wards.path_with_type')
+                ->join('districts', 'wards.parent_code', 'districts.code')
+                ->join('cities', 'districts.parent_code', 'cities.code')
+                ->where('wards.code', '=' , $wardsId)
+                ->pluck('wards.path_with_type')
+                ->first();
+
+        return $address;
+    }
+
+    public static function getAddressByWardsId($wardsId)
+    {
+        $address = Wards::where('wards.code', '=' , $wardsId)
+                ->select([
+                    'wards.code as wardsId',
+                    'districts.code as districtId',
+                    'cities.code as cityId',
+                ])
+                ->join('districts', 'wards.parent_code', 'districts.code')
+                ->join('cities', 'districts.parent_code', 'cities.code')
+                ->first();
+
+        return $address;
+    }
+
+    public static function getCountRatingByProductIdAndPoint($productId, $point)
+    {
+        return Rating::getCountRatingByPoint($productId, $point);
+    }
+
+    public static function getPointRatingByUserIdAndProductId($userId, $productId)
+    {
+        return Rating::getRatingByUserIdAndProductId($userId, $productId);
+    }
+
+    public static function loadStatusOrder($status)
+    {
+        if ($status == DELIVERY) {
+            return 'Delivery';
+        } elseif ($status == FINISH) {
+            return 'Finish';
+        } elseif ($status == CANCEL) {
+            return 'Cancel';
+        } else {
+            return 'Pending';
+        }
+    }
+
+    public static function loadClassStatusOrder($status)
+    {
+        if ($status == DELIVERY) {
+            return 'status__delivery';
+        } elseif ($status == FINISH) {
+            return 'status__finish';
+        } elseif ($status == CANCEL) {
+            return 'status__cancel';
+        } else {
+            return 'status__pending';
+        }
+    }
+    public static function getTimeAgo($time)
+    {
+        $time = strtotime($time);
+        $etime = time() - $time;
+
+        if( $etime < 1 )
+        {
+//            return 'less than '. $etime .' second ago';
+            return 'Just finish';
+        }
+
+        $array = array( 12 * 30 * 24 * 60 * 60  =>  'year',
+            30 * 24 * 60 * 60                   =>  'month',
+            24 * 60 * 60                        =>  'day',
+            60 * 60                             =>  'hour',
+            60                                  =>  'minute',
+            1                                   =>  'second'
+        );
+
+        foreach( $array as $secs => $str )
+        {
+            $d = $etime / $secs;
+
+            if( $d >= 1 )
+            {
+                $r = round( $d );
+                return $r . ' ' . $str . ( $r > 1 ? 's' : '' ) . ' ago';
+            }
+        }
+    }
+
+    public static function getAttributeFilter($arrayProductId, $attributeName)
+    {
+        return ProductAttribute::getAttributeItemName($arrayProductId, $attributeName);
+    }
+
+    public static function getArrayProductId($products)
+    {
+        $arrayProductId = [];
+
+        foreach ($products as $product) {
+            array_push($arrayProductId, $product->id);
+        }
+
+        return $arrayProductId;
+    }
+
+    public static function getArrayDateBetweenFromTo($from, $to)
+    {
+        $begin = new \DateTime($from);
+        $end = new \DateTime($to);
+
+        $period = new \DatePeriod(
+            $begin,
+            new \DateInterval('P1D'),
+            $end->modify('+1 day')
+        );
+        $date = [];
+        foreach ($period as $key => $dt) {
+            array_push($date, $dt->format("Y/m/d"));
+        }
+
+        return $date;
+    }
+
+    public static function getArrayStringDateBetweenFromTo($from, $to)
+    {
+        $arrayDates = self::getArrayDateBetweenFromTo($from, $to);
+
+        $date = [];
+        foreach ($arrayDates as $arrayDate) {
+            array_push($date, $arrayDate . ',');
+        }
+
+        return $date;
+    }
+
+    public static function getArrayDateBetweenFromToMonth($from, $to)
+    {
+        $begin = new \DateTime($from);
+        $end = new \DateTime($to);
+
+
+        $interval = DateInterval::createFromDateString('1 month');
+        $period   = new DatePeriod($begin, $interval, $end);
+        $date = [];
+
+        foreach ($period as $key => $dt) {
+            array_push($date, $dt->format("Y/m"));
+        }
+
+        return $date;
+    }
+
+    public static function getArrayStringDateBetweenFromToMonth($from, $to)
+    {
+        $arrayDates = self::getArrayDateBetweenFromToMonth($from, $to);
+
+        $date = [];
+        foreach ($arrayDates as $arrayDate) {
+            array_push($date, $arrayDate . ',');
+        }
+
+        return $date;
+    }
+
+    /**
+     * Is sort field by order
+     *
+     * @param $fieldName
+     * @param $order
+     *
+     * @return bool
+     */
+    public static function isSortFieldByOrder($fieldName, $order)
+    {
+        if ($order == "asc") {
+            return isset($_GET['sort']) && $_GET['sort'] == $fieldName && !isset($_GET['desc']);
+        } else if ($order == "desc") {
+            return isset($_GET['sort']) && $_GET['sort'] == $fieldName && isset($_GET['desc']);
+        } else return false;
+    }
+
+
+
+    /**
+     * @param $date
+     * @return string
+     */
+    public static function formatDateWeekday($date)
+    {
+        $days = array("Sun","Mon","Tue","Wed","Thu","Fri","Sat");
+        $date_format = date('D - Y M d', strtotime($date));
+
+        return $date_format;
+    }
+
+    public static function getQuantityProductById($productId)
+    {
+        return Product::getQuantityProductById($productId);
+    }
+
+    public static function getProductById($productId)
+    {
+        return Product::showProduct($productId);
+    }
+
+    public static function isRatingProduct($productId, $userId = null)
+    {
+        if (!$userId) return false;
+
+        return Order::where('orders.user_id', $userId)
+            ->where('product_id', $productId)
+            ->select(
+                'orders.id',
+                'orders.user_id',
+                'order_details.product_id'
+            )
+            ->join('order_details', 'order_details.order_id', 'orders.id')
+            ->exists();
+    }
 }

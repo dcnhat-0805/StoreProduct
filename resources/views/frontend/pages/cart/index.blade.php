@@ -1,4 +1,5 @@
 @extends('frontend.layouts.app')
+@section('title', 'My cart')
 @section('cssCustom')
 @endsection
 @section('content')
@@ -36,72 +37,84 @@
                                     <th data-field="quantity" data-editable="true" class="text-center">Quantity</th>
                                     <th data-field="total" data-editable="true" class="text-center">Total</th>
                                     <th data-field="action" class="text-center deleteParent">
-                                        <button data-toggle="modal" title="Delete cart" class="pd-setting-ed deleteAllCart"
-                                                data-original-title="Trash" data-target="#deleteCart" data-id="1"
-                                                type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>
-                                        </button>
+{{--                                        <button data-toggle="modal" title="Delete cart" class="pd-setting-ed deleteAllCart"--}}
+{{--                                                data-original-title="Trash" data-target="#deleteCart" data-id="1"--}}
+{{--                                                type="button"><i class="fa fa-trash-o" aria-hidden="true"></i>--}}
+{{--                                        </button>--}}
                                     </th>
                                 </tr>
                                 </thead>
-                                <tbody class="list-cart">
+                                <tbody class="list-cart mod-list-cart">
                                 @if(isset($carts))
                                     @foreach($carts as $cart)
-                                        <tr id="cart-{{ $cart->id }}">
+                                        <?php
+                                            $exist = \App\Helpers\Helper::getQuantityProductById($cart->id);
+                                            $product = \App\Helpers\Helper::getProductById($cart->id);
+                                        ?>
+                                        <tr id="cart-{{ $cart->rowId }}" class="{{ $exist == 0 ? 'bg__out__stock' : '' }}">
                                             <td>
-                                                <div class="selectItem">
-                                                    <input type="checkbox" name="cartSelectItem"
+                                                @if($exist > 0)
+                                                    <div class="selectItem">
+                                                        <input type="checkbox" name="cartSelectItem"
                                                            class="cartSelectItem" data-num="{{ $cart->id }}"
                                                            id="item-{{ $cart->id }}" data-row_id="{{ $cart->rowId }}">
-                                                </div>
+                                                    </div>
+                                                @else
+                                                    <div class="ribbon__out__stock">Out stock</div>
+                                                @endif
                                             </td>
                                             <td class="text-center col-sm-4">
-                                                <a href="" class="col-sm-2" style="padding: 0;">
-                                                    <img src="{{ FILE_PATH_PRODUCT . $cart->options->image }}" alt=""
-                                                         width="100%">
-                                                </a>
                                                 <div class="cart-product-name col-sm-10 text-left">
-                                                    <a href="">{{ $cart->name }}</a>
+                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $product->product_description_slug]) }}">{{ $product->product_description }}</a>
                                                 </div>
                                                 <div class="col-sm-10">
-                                                    @if($cart->options->color)
-                                                        <div data-color="{{ $cart->options->color }}"
-                                                             style="background-color: {{ $cart->options->color }};"
-                                                             class="attribute-item size-item size"></div>
-                                                    @endif
-                                                    @if($cart->options->size)
-                                                        <div data-size="{{ $cart->options->size }}"
-                                                             style="background-color: #fff;"
-                                                             class="attribute-item size-item size">{{ $cart->options->size }}</div>
-                                                    @endif
-                                                    @if($cart->options->storage)
-                                                        <div data-storage="{{ $cart->options->storage }}"
-                                                             style="background-color: #fff;"
-                                                             class="attribute-item size-item size">{{ $cart->options->storage }}</div>
-                                                    @endif
-                                                    @if($cart->options->material)
-                                                        <div data-material="{{ $cart->options->material }}"
-                                                             style="background-color: #fff;"
-                                                             class="attribute-item size-item size">{{ $cart->options->material }}</div>
-                                                    @endif
+                                                    <a href="{{ route(FRONT_PRODUCT_DETAIL, ['description' => $product->product_description_slug]) }}" class="" style="padding: 0; float: left">
+                                                        <img src="{{ \App\Helpers\Helper::getUrlFile($product->product_image) }}" alt="" style="width: 50px; height: 30px; object-fit: scale-down;">
+                                                    </a>
+                                                    <div class="col">
+                                                        @if($cart->options->color)
+                                                            <div data-color="{{ $cart->options->color }}"
+                                                                 style="background-color: {{ $cart->options->color }};"
+                                                                 class="attribute-item size-item size"></div>
+                                                        @endif
+                                                        @if($cart->options->size)
+                                                            <div data-size="{{ $cart->options->size }}"
+                                                                 style="background-color: #fff;"
+                                                                 class="attribute-item size-item size">{{ $cart->options->size }}</div>
+                                                        @endif
+                                                        @if($cart->options->storage)
+                                                            <div data-storage="{{ $cart->options->storage }}"
+                                                                 style="background-color: #fff;"
+                                                                 class="attribute-item size-item size">{{ $cart->options->storage }}</div>
+                                                        @endif
+                                                        @if($cart->options->material)
+                                                            <div data-material="{{ $cart->options->material }}"
+                                                                 style="background-color: #fff; width: auto; padding: 0 4px;"
+                                                                 class="attribute-item size-item size">{{ $cart->options->material }}</div>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td class="text-center">
                                                 <div class="cart-price">
-                                                    <span
-                                                        class="cart-item-price cart-item-price-before item_price">{{ App\Helpers\Helper::loadMoney($cart->price) }}</span>
-                                                    <del>{{ App\Helpers\Helper::loadMoney($cart->options->promotion) }}</del>
+                                                    <span class="cart-item-price cart-item-price-before item_price">
+                                                        {{ App\Helpers\Helper::loadMoney($cart->price) }}
+                                                    </span>
+
+                                                    @if(!empty($cart->options->promotion) && $cart->options->promotion > 0)
+                                                        <del>{{ App\Helpers\Helper::loadMoney($cart->options->promotion) }}</del>
+                                                    @endif
                                                 </div>
                                             </td>
                                             <td class="text-center">
-                                                <input class="jsTouchSpin quantity-{{ $cart->id }}" type="text"
-                                                       value="{{ $cart->qty }}"
-                                                       name="quantity" data-row_id="{{ $cart->rowId }}"
-                                                       data-id="{{ $cart->id }}">
+                                                <input class="jsTouchSpin quantity-{{ $cart->rowId }}" type="text"
+                                                       value="{{ $cart->qty }}" data-quantity="{{ \App\Helpers\Helper::getQuantityProductById($cart->id) }}" readonly
+                                                       name="quantity" data-row_id="{{ $cart->rowId }}">
                                             </td>
                                             <td class="text-center"
                                                 style="padding-left: 0 !important; padding-right: 0 !important;">
                                                 <span
-                                                    class="cart-total-price item_price subtotal-{{ $cart->id }}">{{ App\Helpers\Helper::loadMoney($cart->price * $cart->qty) }}</span>
+                                                    class="cart-total-price item_price subtotal-{{ $cart->rowId }}">{{ App\Helpers\Helper::loadMoney($cart->price * $cart->qty) }}</span>
                                                 {{--                                        <span class="cart-total-price item_price">{{ App\Helpers\Helper::loadMoney(Cart::subtotal(2,'.','')) }}</span>--}}
                                             </td>
                                             <td class="datatable-ct text-center">
@@ -117,15 +130,15 @@
                                 </tbody>
                             </table>
 
-                            @if (!Cart::count())
+                            @if (!count($carts))
                                 <div class="not-cart" style="margin-top: 10%">
                                     <div class="text-not-cart text-center pb-2">There are no items in this cart</div>
                                     <div class="button-back-home text-center">
-                                        <button class="btn btn-custon-three btn-primary btn-block"
-                                                onclick="window.location.href = '{{ route(FRONT_END_HOME_INDEX) }}'"
+                                        <a class="btn btn-custon-three btn-primary btn-block cart-list"
+                                                href="{{ route(FRONT_END_HOME_INDEX) }}"
                                                 style="width: 30%; text-transform: uppercase;">
                                             continue shopping
-                                        </button>
+                                        </a>
                                     </div>
                                 </div>
                             @endif
@@ -134,7 +147,8 @@
                 </div>
                 <div class="col-sm-3">
                     <div class="col-sm-12 cart-sidebar-right">
-                        <form action="">
+                        <form action="{{ route(FRONT_CHECK_COUNT_CART) }}" method="POST">
+                            @csrf
                             <div class="row col-sm-12 location-box">
                                 <div class="col-sm-12">
                                     <div class="location-label">Location</div>
@@ -147,8 +161,7 @@
                                 </div>
                             </div>
                             <div class="summary-section">
-                                <div class="summary-section-heading">Order Summary
-                                </div>
+                                <div class="summary-section-heading">Order Summary</div>
                                 <div class="summary-section-content">
                                     <div class="  checkout-summary">
                                         <div class="checkout-summary-rows">
@@ -191,7 +204,8 @@
                                                         applicable</small>
                                                 </div>
                                             </div>
-                                            <button type="button" class="next-btn checkout-order-total-button automation-checkout-order-total-button-button btn btn-custon-three btn-warning">
+                                            <input type="hidden" name="row_id_checkout" class="row_id_checkout">
+                                            <button type="submit" class="next-btn checkout-order-total-button automation-checkout-order-total-button-button btn btn-custon-three btn-warning">
                                                 CONFIRM CART
                                             </button>
                                         </div>
@@ -518,7 +532,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Remove from cart ?</h5>
                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -527,7 +541,7 @@
                     <form style="min-height: 70px;">
                         <input type="hidden" name="id" id="rowId">
                         <h5 class="modal-title" id="exampleModalLabel" style="line-height: 70px; text-align: center">
-                            Do you want to delete this product from the cart ?
+                            Item(s) will be removed from order ?
                         </h5>
                     </form>
                 </div>

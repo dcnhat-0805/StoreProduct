@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Store Online</title>
+    <title>Store Online - @yield('title')</title>
     <link rel="shortcut icon" type="image/x-icon" href="backend/img/store-online.ico">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="OneTech shop project">
+    @yield('metaTile')
+    @yield('metaDescription')
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <base href="{{ asset('') }}">
@@ -38,10 +39,18 @@
     <!-- touchspin CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/touchspin/jquery.bootstrap-touchspin.min.css">
+    <link rel="stylesheet" href="backend/css/loading.css">
+
+    @if(Auth::check())
+    <!-- chart CSS
+		============================================ -->
+    <link rel="stylesheet" href="frontend/assets/css/chat.css">
+    @endif
     @yield('cssCustom')
 </head>
 
 <body>
+@include('backend.loading')
 
 <div class="super_container">
 
@@ -50,6 +59,10 @@
     <div class="container main-container">
         @yield('content')
     </div>
+
+    @if(Auth::check())
+        @include('frontend.pages.chat')
+    @endif
 
     @include('frontend.layouts.footer')
 </div>
@@ -69,7 +82,7 @@
 <script src="frontend/js/custom.js"></script>
 <!-- tawk chat JS
     ============================================ -->
-    <script src="backend/js/tawk-chat.js"></script>
+{{--    <script src="backend/js/tawk-chat.js"></script>--}}
 <!-- start-smooth-scrolling -->
 <script src="frontend/assets/js/move-top.js"></script>
 <script src="frontend/assets/js/easing.js"></script>
@@ -96,7 +109,13 @@
     ============================================ -->
 <script src="backend/js/touchspin/jquery.bootstrap-touchspin.min.js"></script>
 <script src="frontend/assets/js/common.js"></script>
+<script src="frontend/assets/js/loading.js"></script>
 <script src="frontend/assets/js/jquery.flexslider.js"></script>
+<script src="frontend/assets/js/disabled_button_submit.js"></script>
+
+@if(Auth::check())
+<script src="frontend/assets/js/chat.js"></script>
+@endif
 
 @if(Session::has('success'))
     <script type="text/javascript">
@@ -107,6 +126,12 @@
 @if(Session::has('error'))
     <script type="text/javascript">
         jQuery.getMessageError("{{Session::get('error')}}")
+    </script>
+@endif
+
+@if(Session::has('danger'))
+    <script type="text/javascript">
+        jQuery.getMessageInfo("{{Session::get('danger')}}")
     </script>
 @endif
 @yield('jsCustom')

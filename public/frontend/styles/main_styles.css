@@ -455,6 +455,19 @@ section
 {
 	display: inline-block;
 }
+.top_bar_user div.dropdown-menu
+{
+	display: none;
+}
+div.dropdown-menu .dropdown-item
+{
+	line-height: 20px;
+}
+div.dropdown-menu .dropdown-item.active,
+div.dropdown-menu .dropdown-item:active
+{
+    background-color: #8a8a8a;
+}
 .top_bar_user div:nth-child(2)
 {
 	margin-right: 21px;
@@ -535,7 +548,7 @@ section
 }
 .header_search
 {
-	height: 70px;
+	height: 71px;
 }
 .header_search_content
 {
@@ -962,7 +975,7 @@ select option
 	width: auto;
 	height: 33px;
 	border-bottom: solid 1px #f2f2f2;
-    padding: 0 15px;
+    padding: 0 10px;
 	white-space: nowrap;
 }
 .cat_menu li.hassubs > a i
@@ -1261,7 +1274,7 @@ select option
     object-fit: contain;
 }
 .main-container {
-    margin-top: 175px;
+    margin-top: 155px;
 }
 .banner
 {
@@ -1690,8 +1703,8 @@ select option
 .product_panel
 {
 	display: none;
-	margin-left: -60px;
-	margin-right: -60px;
+	/*margin-left: -60px;*/
+	/*margin-right: -60px;*/
 }
 .product_panel.active
 {
@@ -1744,17 +1757,20 @@ select option
 {
 	display: block;
 	position: relative;
+    height: 100%;
 	max-width: 100%;
 }
 .product_content
 {
 	width: 100%;
+    margin-top: 20px;
 }
 .product_price
 {
 	font-size: 16px;
 	font-weight: 500;
 	margin-top: 25px;
+    color: #df3b3b;
 }
 .product_price.discount
 {
@@ -1771,16 +1787,20 @@ select option
 {
 	margin-top: 4px;
 	overflow: hidden;
+    padding: 0 20px;
 }
 .product_name div
 {
 	width: 100%;
-
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 .product_name div a
 {
 	font-size: 14px;
 	font-weight: 400;
+    text-transform: capitalize;
 	color: #000000;
 	white-space: nowrap;
 	-webkit-transition: all 200ms ease;
@@ -2039,6 +2059,8 @@ select option
 	text-align: center;
 	line-height: 36px;
 	font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
 }
 .product_new
 {
@@ -2046,6 +2068,21 @@ select option
 	background: #0e8ce4;
 	visibility: hidden;
 	opacity: 0;
+}
+.product_over
+{
+	display: none;
+	background: #fc636b;
+	visibility: hidden;
+	opacity: 0;
+}
+.product_hot
+{
+    display: none;
+    background: #e6ca00;
+    color: red;
+    visibility: hidden;
+    opacity: 0;
 }
 .product_discount
 {
@@ -2055,7 +2092,8 @@ select option
 	opacity: 0;
 }
 .product_item.is_new .product_new,
-.product_item.discount .product_discount
+.product_item.discount .product_discount,
+.product_over, .product_hot
 {
 	display: inline-block;
 	visibility: visible;
@@ -2068,8 +2106,8 @@ select option
 
 .popular_categories
 {
-	padding-top: 88px;
-	padding-bottom: 90px;
+	padding-top: 30px;
+	/*padding-bottom: 90px;*/
 }
 .popular_categories_title
 {
@@ -2282,8 +2320,9 @@ select option
 .new_arrivals
 {
 	width: 100%;
-	padding-top: 96px;
-	padding-bottom: 96px;
+	padding-top: 30px;
+    background: #eff6fa;
+	/*padding-bottom: 96px;*/
 }
 .new_arrivals_title
 {
@@ -2588,10 +2627,10 @@ select option
 
 .best_sellers
 {
-	padding-top: 56px;
+	padding-top: 30px;
 	background: #eff6fa;
-	padding-bottom: 50px;
-	margin-top: -77px;
+	/*padding-bottom: 50px;*/
+	margin-top: 20px;
 }
 .bestsellers_panel
 {
@@ -2878,8 +2917,8 @@ select option
 
 .trends
 {
-	padding-top: 80px;
-	padding-bottom: 80px;
+	padding-top: 30px;
+	/*padding-bottom: 80px;*/
 }
 .trends_overlay
 {
@@ -3106,8 +3145,8 @@ select option
 
 .reviews
 {
-	padding-top: 96px;
-	padding-bottom: 125px;
+	padding-top: 30px;
+	padding-bottom: 80px;
 }
 .reviews_title_container
 {
@@ -3597,8 +3636,8 @@ select option
 .footer .logo_container
 {
 	height: auto;
-	margin-bottom: 18px;
-	margin-top: -10px;
+	margin-bottom: 45px;
+	/*margin-top: -10px;*/
 }
 .footer .logo
 {
@@ -3739,4 +3778,7 @@ select option
 }
 .list-cart:focus {
     outline: none;
+}
+.panel {
+    padding: 0 30px;
 }

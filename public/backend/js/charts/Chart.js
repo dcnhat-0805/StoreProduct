@@ -1444,11 +1444,11 @@ for (var func in conversions) {
   // export rgb2hsl and ["rgb"]["hsl"]
   convert[from] = convert[from] || {};
 
-  convert[from][to] = convert[func] = (function(func) { 
+  convert[from][to] = convert[func] = (function(func) {
     return function(arg) {
       if (typeof arg == "number")
         arg = Array.prototype.slice.call(arguments);
-      
+
       var val = conversions[func](arg);
       if (typeof val == "string" || val === undefined)
         return val; // keyword
@@ -1476,12 +1476,12 @@ Converter.prototype.routeSpace = function(space, args) {
    }
    // color.rgb(10, 10, 10)
    if (typeof values == "number") {
-      values = Array.prototype.slice.call(args);        
+      values = Array.prototype.slice.call(args);
    }
 
    return this.setValues(space, values);
 };
-  
+
 /* Set the values for a space, invalidating cache */
 Converter.prototype.setValues = function(space, values) {
    this.space = space;
@@ -3836,7 +3836,7 @@ module.exports = function(Chart) {
 				// the chart initialization but after setting basic chart / controller properties that
 				// can help to figure out that the chart is not valid (e.g chart.canvas !== null);
 				// https://github.com/chartjs/Chart.js/issues/2807
-				console.error("Failed to create chart: can't acquire context from the given item");
+				// console.error("Failed to create chart: can't acquire context from the given item");
 				return;
 			}
 
@@ -9850,7 +9850,7 @@ module.exports = function(Chart) {
 		acquireContext: function(item, config) {
 			if (typeof item === 'string') {
 				item = document.getElementById(item);
-			} else if (item.length) {
+			} else if (item != null && item.length) {
 				// Support for array based queries (such as jQuery)
 				item = item[0];
 			}

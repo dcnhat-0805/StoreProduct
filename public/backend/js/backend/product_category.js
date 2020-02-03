@@ -165,6 +165,12 @@ let productCategoryJs = (function ($) {
             url: "/admin/product_category/list_product_category",
             dataType : 'JSON',
             type: "GET",
+            data : {
+                keyword: $.urlParam('keyword'),
+                status: url.searchParams.getAll("status[]"),
+                created_at: $.urlParam('created_at'),
+                category_id: $.urlParam('category_id'),
+            },
             success : function (data) {
                 Commons.setLocalStorageListIds(PRODUCT_CATEGORY_IDS, data);
                 Commons.setLocalStorageDeleteAll(PRODUCT_CATEGORY_DELETE_ALL, IS_DELETE_ALL);

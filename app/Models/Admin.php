@@ -46,11 +46,21 @@ class Admin extends Authenticatable
     {
         $admin = new Admin();
 
+        if (isset($params['role'])) {
+            $role = $params['role'];
+            if ($role != 0) {
+                $admin = $admin->whereIn('admins.role', explode(',', $role));
+            }
+        }
+
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
+            $keyword = preg_replace("([+])", " ", $keyword);
             if ($keyword != 0 || $keyword != null) {
-                $admin = $admin->where('admins.name', 'like', "%$keyword%")
-                    ->orWhere('admins.email', 'like', "%$keyword%");
+                $admin = $admin->where(function ($query) use ($keyword) {
+                    $query->where('admins.name', 'like', "%$keyword%")
+                        ->orWhere('admins.email', 'like', "%$keyword%");
+                });
             }
         }
 
@@ -60,13 +70,6 @@ class Admin extends Authenticatable
                 $publishDate = str_replace('+', ' ', $publishDate);
                 $publishDate = explode(' - ', $publishDate);
                 $admin = $admin->whereRaw("admins.created_at BETWEEN ? AND ?", [$publishDate[0], date('Y/m/d', strtotime("+1 day", strtotime($publishDate[1])))]);
-            }
-        }
-
-        if (isset($params['role'])) {
-            $role = $params['role'];
-            if ($role != 0) {
-                $admin = $admin->whereIn('admins.role', explode(',', $role));
             }
         }
 
@@ -92,7 +95,7 @@ class Admin extends Authenticatable
         $admin = self::filter($params);
         $order = Helper::getSortParam($params);
         if ($order == '1 = 1') {
-            $order = "id DESC ";
+            $order = "id ASC ";
         }
         $now = date('Y-m-d');
         $admin = $admin->whereNull('admins.deleted_at')
@@ -127,6 +130,22 @@ class Admin extends Authenticatable
         if ($request['submit']) {
             return $user->update($request);
         }
+    }
+
+    public static function updateAccountAdmin($id, $request)
+    {
+        $user = self::showAdmin($id);
+
+        return $user->update($request);
+    }
+
+    public static function updateEmailAccount($id, $request)
+    {
+        $user = self::showAdmin($id);
+
+        return $user->update([
+            'email' => $request['email']
+        ]);
     }
 
     public static function deleteAdmin($id)

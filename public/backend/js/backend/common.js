@@ -13,19 +13,21 @@ const PRODUCT_IDS = 'product.ids';
 const PRODUCT_DELETE_ALL = 'product.delete.all';
 const ADMIN_IDS = 'admin.ids';
 const ADMIN_DELETE_ALL = 'admin.delete.all';
-const ARRAY_NAME = ['category_id', 'product_category_id', 'product_type_id', 'admin_group_id', 'product_weight'];
+const CUSTOMER_IDS = 'customer.ids';
+const CUSTOMER_DELETE_ALL = 'customer.delete.all';
+const ARRAY_NAME = ['category_id', 'product_category_id', 'product_type_id', 'product_weight', 'role', 'product_quantity'];
 const SUBMIT = 1;
 const CATEGORY_ID = localStorage.getItem('jsSelectCategory') ? localStorage.getItem('jsSelectCategory') : null;
 const PRODUCT_CATEGORY_ID = localStorage.getItem('jsSelectProductCategory') ? localStorage.getItem('jsSelectProductCategory') : null;
 const PRODUCT_TYPE_ID = localStorage.getItem('jsSelectProductType') ? localStorage.getItem('jsSelectProductType') : null;
 
 $.urlParam = function(name){
-    let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.href);
-    if (results==null){
+    let results = new RegExp('[\?&]+' + name + '=([^&#]+)').exec(window.location.href);
+    if (results == null){
         return null;
     }
     else{
-        return decodeURI(results[1]);
+        return decodeURIComponent(results[1]);
     }
 };
 
@@ -94,7 +96,17 @@ let Commons = (function ($) {
         $('input[name=id]').val('');
         $('#url_edit, #urlDelete').val('');
         $('form').trigger("reset");
+        $('.jsSelectCategory').val('').trigger('chosen:updated');
+        Commons.loadProductCategory();
         $(e.currentTarget).find('input[type=radio]').parent().removeClass('checked');
+    });
+
+    $('.modal').on('hide.bs.modal, show.bs.modal', function () {
+        $(this).find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment, .btn__reply-contact").prop('disabled', false);
+    });
+
+    $('#search').on('show.bs.modal', function () {
+        $('label').removeClass('required after');
     });
 
     modules.getProductCategory = function (categoryId) {
@@ -140,7 +152,7 @@ let Commons = (function ($) {
                     $('.jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
                     $('.jsSelectProductType').parent().prev().removeClass('required after');
                 } else {
-                    // $('.jsSelectProductType').parent().prev().addClass('required after');
+                    $('.jsSelectProductType').parent().prev().addClass('required after');
                 }
 
                 let option = [];
@@ -186,7 +198,11 @@ let Commons = (function ($) {
         } else {
             // $('select.product-category-id').prop('disabled', false);
             $('.jsSelectProductCategory').prop('disabled', false).trigger("chosen:updated");
-            $('.jsSelectProductCategory').parent().prev().addClass('required after');
+            if ($('#search').hasClass('in')) {
+                $('.jsSelectProductCategory, .jsSelectProductType').parent().prev().removeClass('required after');
+            } else {
+                $('.jsSelectProductCategory').parent().prev().addClass('required after');
+            }
 
             modules.getProductCategory(categoryId);
         }
@@ -204,6 +220,42 @@ let Commons = (function ($) {
 
             modules.getProductType(productCategoryId);
         }
+    };
+
+    modules.loadProductCategory = function () {
+        if (!$('.jsSelectCategory').val() && !$('.jsSelectProductCategory').val() && !$('.jsSelectProductType').val()) {
+
+            $('.jsSelectProductCategory, .jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
+            $('.jsSelectProductCategory, .jsSelectProductType').parent().prev().removeClass('required after');
+        } else if ($('.jsSelectCategory').val() && !$('.jsSelectProductCategory').val() && !$('.jsSelectProductType').val()) {
+            Commons.getOptionProductCategory($('.jsSelectCategory').val());
+            $('.jsSelectProductCategory').prop('disabled', false).trigger("chosen:updated");
+            $('.jsSelectProductCategory').parent().prev().addClass('required after');
+            $('.jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
+            $('.jsSelectProductType').parent().prev().removeClass('required after');
+
+        } else if ($('.jsSelectCategory').val() && $('.jsSelectProductCategory').val() && !$('.jsSelectProductType').val()) {
+
+            Commons.getOptionProductType($('.jsSelectProductCategory').val());
+            $('.jsSelectProductType').prop('disabled', false).trigger("chosen:updated");
+            // $('.jsSelectProductType').parent().prev().addClass('required after');
+        }
+
+        if ($('.jsSelectProductType').val()) {
+            $('.jsSelectProductType').parent().prev().addClass('required after');
+        }
+
+        $('.jsSelectCategory').chosen().change(function (event, params) {
+            let categoryId = $(event.target).val();
+
+            Commons.getOptionProductCategory(categoryId);
+        });
+
+        $('.jsSelectProductCategory').chosen().change(function (event, params) {
+            let productCategoryId = $(event.target).val();
+
+            Commons.getOptionProductType(productCategoryId);
+        });
     };
 
     modules.getMessageValidation = function(url, name, className, formId) {
@@ -229,10 +281,27 @@ let Commons = (function ($) {
         });
     };
 
+    $("button.btn-success:not('.product, #btnSearch, .btn__delivery, .btn__reply-comment, .btn__remove__comment, .btn__edit__account, .btn__reply-contact')").on('click', function () {
+        $(this).prop('disabled', true);
+    });
+
+    $('#loginForm').each(function (index, value) {
+        for (let i=0; i < value.length; i++) {
+            $(value[i]).bind("keyup change", function () {
+                $('#loginForm').find("button.btn-success, .loginbtn, .btn__delivery").prop('disabled', false);
+            });
+        }
+
+        $(this).find('input[name=remember_token]').on('ifChanged', function () {
+            $('#loginForm').find("button.btn-success, .loginbtn, .btn__delivery").prop('disabled', false);
+        });
+    });
+
     modules.formValidation = function (url, formId, summerNoteId = null) {
         $(formId).each(function (index, value) {
             for (let i=0; i < value.length; i++) {
                 $(value[i]).bind("keyup change", function () {
+                    $(formId).parent().parent().parent().parent().find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
                     let name = $(this).attr('name');
                     let className = (!ARRAY_NAME.includes(name)) ? $(this).next()[0].classList[1] : $(this).parent().next()[0].classList[1];
                     let val = $(this).val();
@@ -242,6 +311,8 @@ let Commons = (function ($) {
                     }
 
                     $('.' + className).text('');
+                    $('.error').text('');
+                    $('input[name=submit]').val('');
                 });
             }
         });
@@ -262,20 +333,61 @@ let Commons = (function ($) {
                 $(this).parent().parent().parent().parent().parent().parent().parent().next().children().children().children().children().prop('disabled', false).trigger("chosen:updated");
                 $('.error_' + name).text('');
             }
+            $(this).parent().parent().parent().parent().find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
+            $('input[name=submit]').val('');
         });
 
         if (summerNoteId) {
-            $(summerNoteId).on("summernote.change", function (e) {
-                let val = $(this).summernote('code');
-                let name = $(this).attr('name');
-                let className = $(this).next().next()[0].classList[1];
+            $(summerNoteId).summernote({
+                height: 200,
+                placeholder: "Product contents ...",
+                toolbar: [
+                    ['undo', ['undo', 'redo']],
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph', 'height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview']],
+                ],
+                callbacks: {
+                    onKeydown: function(e) {
+                        let t = e.currentTarget.innerText;
+                        validateSummernote($(this), e);
+                    },
+                    onKeyup: function(e) {
+                        let t = e.currentTarget.innerText;
+                        validateSummernote($(this), e);
+                    },
+                    onPaste: function(e, contents, $editable) {
+                        validateSummernote($(this), e);
+                        let t = e.currentTarget.innerText;
+                        let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                        e.preventDefault();
+                        let all = t + bufferText;
+                        document.execCommand('insertText', false, all.trim().substring(0, 400));
+                    },
+                }
+            });
+
+            function validateSummernote(editor, event = null) {
+                let val = editor.summernote('code');
+                let t = event.currentTarget.innerText;
+                let name = editor.attr('name');
+                let className = editor.next().next()[0].classList[1];
 
                 if (val === '<p><br></p>' || (val.length <= 48 || val.length > 262)) {
                     modules.getMessageValidation(url, name, className, formId);
                 } else {
                     $('.' + className).text('');
                 }
-            });
+                editor.parent().parent().parent().parent().find("button.btn-success, .loginbtn, .btn__delivery, .btn__reply-comment").prop('disabled', false);
+                $('input[name=submit]').val('');
+            }
         }
     };
 
@@ -329,7 +441,7 @@ let Commons = (function ($) {
                 $(content).removeAttr('style');
             }
         }
-    }
+    };
 
     return modules;
 
@@ -349,7 +461,7 @@ $.enableButtonSubmitWhenUploadedImage = function () {
 
 $(document).ready(function () {
 
-    $('.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType').chosen({
+    $('.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType, .jsSelectCity, .jsSelectDistrict, .jsSelectWards').chosen({
         width: "100%"
     });
 
@@ -361,35 +473,7 @@ $(document).ready(function () {
         radioClass: 'iradio_square-green',
     });
 
-    if (!$('.jsSelectCategory').val() && !$('.jsSelectProductCategory').val() && !$('.jsSelectProductType').val()) {
-
-        $('.jsSelectProductCategory, .jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
-        $('.jsSelectProductCategory, .jsSelectProductType').parent().prev().removeClass('required after');
-    } else if ($('.jsSelectCategory').val() && !$('.jsSelectProductCategory').val() && !$('.jsSelectProductType').val()) {
-        Commons.getOptionProductCategory($('.jsSelectCategory').val());
-        $('.jsSelectProductCategory').prop('disabled', false).trigger("chosen:updated");
-        $('.jsSelectProductCategory').parent().prev().addClass('required after');
-        $('.jsSelectProductType').prop('disabled', true).trigger("chosen:updated");
-        $('.jsSelectProductType').parent().prev().removeClass('required after');
-
-    } else if ($('.jsSelectCategory').val() && $('.jsSelectProductCategory').val() && !$('.jsSelectProductType').val()) {
-
-        Commons.getOptionProductType($('.jsSelectProductCategory').val());
-        $('.jsSelectProductType').prop('disabled', false).trigger("chosen:updated");
-        // $('.jsSelectProductType').parent().prev().addClass('required after');
-    }
-
-    $('.jsSelectCategory').chosen().change(function (event, params) {
-        let categoryId = $(event.target).val();
-
-        Commons.getOptionProductCategory(categoryId);
-    });
-
-    $('.jsSelectProductCategory').chosen().change(function (event, params) {
-        let productCategoryId = $(event.target).val();
-
-        Commons.getOptionProductType(productCategoryId);
-    });
+    Commons.loadProductCategory();
 
     // $('select.category-id').on('change', function () {
     //     let categoryId = $(this).val();
@@ -404,21 +488,23 @@ $(document).ready(function () {
     //     Commons.getOptionProductType(productCategoryId);
     // });
 
-    function preventEnter(ev) {
-        if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {
-            return false;
-        } else {
-            return true;
+    if (window.location.pathname !== '/admin/login') {
+        function preventEnter(ev) {
+            if ((ev.which && ev.which === 13) || (ev.keyCode && ev.keyCode === 13)) {
+                return false;
+            } else {
+                return true;
+            }
         }
-    }
 
-    let inputArr = [
-        "input[type=text]", "input[type=email]",
-        "input[type=password]", "input[type=url]",
-        "input[type=datetime]", "input[type=date]",
-        "input[type=month]", "input[type=week]",
-        "input[type=time]", "input[datetime-local]",
-        "input[number]", "input[range]", "input[radio]"
-    ];
-    inputArr.forEach(e => $(e).keypress(preventEnter));
+        let inputArr = [
+            "input[type=text]", "input[type=email]",
+            "input[type=password]", "input[type=url]",
+            "input[type=datetime]", "input[type=date]",
+            "input[type=month]", "input[type=week]",
+            "input[type=time]", "input[datetime-local]",
+            "input[number]", "input[range]", "input[radio]"
+        ];
+        inputArr.forEach(e => $(e).keypress(preventEnter));
+    }
 });

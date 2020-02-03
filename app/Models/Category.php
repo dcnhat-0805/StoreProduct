@@ -41,15 +41,6 @@ class Category extends Model
     {
         $category = new Category();
 
-        if (isset($params['keyword'])) {
-            $keyword = addslashes($params['keyword']);
-            if ($keyword != 0 || $keyword != null) {
-                $category = $category->where('category_name', 'like', "%$keyword%")
-                    ->orWhere('category_slug', 'like', "%$keyword%")
-                    ->orWhere('category_order', 'like', "%$keyword%");
-            }
-        }
-
         if (isset($params['created_at'])) {
             $publishDate = $params['created_at'];
             if ($publishDate != 0) {
@@ -64,19 +55,6 @@ class Category extends Model
             $status = $params['status'];
 
             $category = $category->where(function ($query) use ($status) {
-//                if (in_array(2, $status)) {
-//                    $query->orWhereRaw("(status = 1 AND date_from > '" . date("Y-m-d") . "')");
-//                }
-//
-//                if (in_array(1, $status)) {
-//                    $query->orWhereRaw("(status = 1 AND date_from <= '" . date("Y-m-d")
-//                        . "' AND (date_to is null OR date_to >= '" . date('Y-m-d') . "'))");
-//                }
-//
-//                if (in_array(3, $status)) {
-//                    $query->orWhereRaw("(status = 1 AND (date_to < '" . date('Y-m-d') . "'))");
-//                }
-
                 if (in_array(0, $status)) {
                     $query->orWhereRaw("(category_status = 0)");
                 }
@@ -84,6 +62,19 @@ class Category extends Model
                     $query->orWhereRaw("(category_status = 1)");
                 }
             });
+        }
+
+        if (isset($params['keyword'])) {
+            $keyword = addslashes($params['keyword']);
+            $keyword = preg_replace("([+])", " ", $keyword);
+            if ($keyword != 0 || $keyword != null) {
+                $category = $category->where(function ($query) use ($keyword) {
+                    $keyword_slug = convertStringToUrl($keyword);
+                    $query->where('category_name', 'like', "%$keyword%")
+                        ->orWhere('category_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('id', (int) $keyword);
+                });
+            }
         }
 
         return $category;
@@ -178,6 +169,13 @@ class Category extends Model
                 ->where('category_slug', $slug)
                 ->pluck('category_name')
                 ->first();
+    }
+
+    public static function isCategorySlug($slug)
+    {
+        return self::whereNull('deleted_at')
+            ->where('category_slug', $slug)
+            ->exists();
     }
 
     public function searchCategory($keyWord, $length)

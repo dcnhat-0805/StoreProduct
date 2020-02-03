@@ -22,7 +22,7 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (Auth::guard('admins')->check()) {
-            return redirect(route(ADMIN_DASHBOARD));
+            return redirect(route(ADMIN_DASHBOARD_DAILY));
         }
 
         return view('backend.login');
@@ -45,18 +45,22 @@ class LoginController extends Controller
         $remember = $request->get('remember_token');
         Session::put(SESSION_REMEMBER_TOKEN, $remember);
 
-        $userLogModel = new UserLog();
         if (Auth::guard('admins')->attempt($dataLogin, $remember)) {
-            $userLogModel->saveData($message, $email);
+            UserLog::saveAdminLog($message, $email);
             Session::flash("success", trans("messages.admin.login_success"));
             Session::forget(SESSION_REMEMBER_TOKEN);
+            $lastUrl = Session::get(SESSION_LAST_URL);
 
-            return redirect(route(ADMIN_DASHBOARD));
+            if ($lastUrl && $lastUrl !== route(ADMIN_SHOW_LOGIN)) {
+                return redirect($lastUrl);
+            }
+
+            return redirect(route(ADMIN_DASHBOARD_DAILY));
         } else {
             $count_user = Admin::where("email", $email)->count();
             if ($count_user) {
                 $message = trans("messages.admin.login_failed");
-                $userLogModel->saveData($message, $email);
+                UserLog::saveAdminLog($message, $email);
             }
             Session::flash("danger", trans("messages.admin.login_failed"));
 
@@ -73,6 +77,8 @@ class LoginController extends Controller
     {
         Auth::guard('admins')->logout();
         Session::flash("success", trans("messages.admin.logout_success"));
+        Session::forget(SESSION_LAST_URL);
+
         return redirect(route(ADMIN_LOGIN));
     }
 }

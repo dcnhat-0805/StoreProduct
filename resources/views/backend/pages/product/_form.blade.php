@@ -165,7 +165,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <label for="product_option" class="required after">Product options</label>
+                        <label for="product_option" class="">Product options</label>
                         <div class="product-options">
                             <div class="jsRadio pull-left">
                                 <input type="radio" value="1" name="product_option"
@@ -204,10 +204,24 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label for="product_promotion" class="required after">Promotion product </label>
+                        <label for="product_promotion" class="">Promotion product </label>
                         <input type="number" class="form-control" name="product_promotion"
                                placeholder="Promotional product ..." value="{{ isset($product) && $product->product_promotion ? $product->product_promotion : old('product_promotion') }}" min="0">
                         <div class="error error_product_promotion {{ !$errors->has('product_promotion') ? 'hidden' : '' }}">{{ $errors->has('product_promotion') ? $errors->first('product_promotion') : '' }}</div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="product_quantity" class="required after">Product quantity</label>
+                        <input type="number" class="form-control" name="product_quantity"
+                               placeholder="Product quantity ..." value="{{ isset($product) && $product->product_quantity ? $product->product_quantity : old('product_quantity') }}">
+                        <div class="error error_product_quantity {{ !$errors->has('product_quantity') ? 'hidden' : '' }}">{{ $errors->has('product_quantity') ? $errors->first('product_quantity') : '' }}</div>
+                        <div class="jsCheckBox pull-left" style="margin: 10px 0">
+                            <input type="checkbox" name="product_is_free_ship" value="1" checked {{ (isset($product) && $product->product_is_free_ship === 1 || old('product_is_free_ship')) ? 'checked' : '' }}>
+                            <label><i></i> Is free shipping </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -228,20 +242,6 @@
                         <input type="text" class="form-control" name="product_meta_description"
                                placeholder="Meta description ..." value="{{ isset($product) && $product->product_meta_description ? $product->product_meta_description : old('product_meta_description') }}">
                         <div class="error error_product_meta_description {{ !$errors->has('product_meta_description') ? 'hidden' : '' }}">{{ $errors->has('product_meta_description') ? $errors->first('product_meta_description') : '' }}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="product_weight" class="">Product weight (grams)</label>
-                        <input type="number" class="form-control" name="product_weight"
-                               placeholder="Product weight ..." value="{{ isset($product) && $product->product_weight ? $product->product_weight : old('product_weight') }}">
-                        <div class="jsCheckBox pull-left" style="margin: 10px 0">
-                            <input type="checkbox" name="product_is_shipping" value="1" checked {{ (isset($product) && $product->product_is_shipping === 1 || old('product_is_shipping')) ? 'checked' : '' }}>
-                            <label><i></i> Is shipping </label>
-                        </div>
-                        <div class="error error_product_weight {{ !$errors->has('product_weight') ? 'hidden' : '' }}">{{ $errors->has('product_weight') ? $errors->first('product_weight') : '' }}</div>
                     </div>
                 </div>
             </div>
@@ -271,11 +271,11 @@
             <div class="modal-footer form_footer">
                 <input type="hidden" name="submit">
                 @if(isset($is_page_register))
-                <button type="submit" class="btn btn-custon-three btn-success add-category" id="btnAddProduct"><i
+                <button type="submit" class="btn btn-custon-three btn-success add-category product" id="btnAddProduct"><i
                         class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Add
                 </button>
                 @else
-                    <button type="submit" class="btn btn-custon-three btn-success" id="btnUpdateProduct"><i
+                    <button type="submit" class="btn btn-custon-three btn-success product" id="btnUpdateProduct"><i
                             class="fa fa-check edu-checked-pro" aria-hidden="true"></i> Update
                     </button>
                 @endif

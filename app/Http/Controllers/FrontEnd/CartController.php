@@ -3,15 +3,25 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Helpers\Helper;
+use App\Http\Requests\CheckCountRequest;
+use App\Mail\FrontEnd\ShoppingMail;
+use App\Models\City;
+use App\Models\District;
+use App\Models\Order;
+use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\ShoppingCart;
+use App\Models\Wards;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 use Cart;
 use DB;
+use Auth;
 use Closure;
 
-class CartController extends Controller
+class CartController extends FrontEndController
 {
     /**
      * Display a listing of the resource.
@@ -20,7 +30,11 @@ class CartController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $carts = Cart::content();
+        if ($user) {
+            $carts = ShoppingCart::getContentCart();
+        }
 
         return view('frontend.pages.cart.index', compact('carts'));
     }
@@ -29,19 +43,32 @@ class CartController extends Controller
     {
         if ($request->ajax()) {
             $products = Product::showProduct($id);
+            $user = Auth::user();
 
             $cart = Helper::addToCart($products, $request->all());
-            DB::beginTransaction();
-            if (Cart::add($cart)) {
 
-                Cart::store($id);
-                DB::commit();
-//                Session::flash("success", trans("messages.front_end.cart.add_cart_success"));
-                return response()->json(['countCart' => Cart::count(), 'success' => trans("messages.front_end.cart.add_cart_success")], 200);
+            $exist = ShoppingCart::getQuantityProductOfCart($cart['id']);;
+            if ($exist == 0) {
+                return response()->json(['error' => trans("messages.front_end.cart.out_of_stock")]);
             } else {
-                DB::rollBack();
+                DB::beginTransaction();
+                if (Cart::add($cart)) {
+                    if ($user) {
+                        ShoppingCart::createShoppingCart();
+                    }
+
+                    $countCart = Cart::count();
+                    if ($user) {
+                        $countCart = ShoppingCart::getCountCart();
+                    }
+                    DB::commit();
+//                Session::flash("success", trans("messages.front_end.cart.add_cart_success"));
+                    return response()->json(['countCart' => $countCart, 'success' => trans("messages.front_end.cart.add_cart_success")], 200);
+                } else {
+                    DB::rollBack();
 //                Session::flash("error", trans("messages.front_end.cart.add_cart_failed"));
-                return response()->json(['error' => trans("messages.front_end.cart.add_cart_failed")], 200);
+                    return response()->json(['error' => trans("messages.front_end.cart.add_cart_failed")], 200);
+                }
             }
         }
     }
@@ -49,15 +76,24 @@ class CartController extends Controller
     public function updateCart(Request $request, $rowId)
     {
         if ($request->ajax()) {
-            $cart = Helper::updateCart($request->all(), $rowId);
+            $user = Auth::user();
+            if ($user) {
+                ShoppingCart::updateCart($request->all(), $rowId);
+                $cart = ShoppingCart::getContentCartByRowId($rowId);
+            } else {
+                $cart = Helper::updateCart($request->all(), $rowId);
+            }
 
             DB::beginTransaction();
             if ($cart) {
 
-                Cart::store($cart->id);
+                $countCart = Cart::count();
+                if ($user) {
+                    $countCart = ShoppingCart::getCountCart();
+                }
                 DB::commit();
 //                Session::flash("success", trans("messages.front_end.cart.update_cart_success"));
-                return response()->json(['countCart' => Cart::count(), 'cart' => $cart, 'success' => trans("messages.front_end.cart.update_cart_success")], 200);
+                return response()->json(['countCart' => $countCart, 'cart' => $cart, 'success' => trans("messages.front_end.cart.update_cart_success")], 200);
             } else {
                 DB::rollBack();
 //                Session::flash("error", trans("messages.category.update_cart_failed"));
@@ -66,17 +102,104 @@ class CartController extends Controller
         }
     }
 
+    public function checkCount(Request $request)
+    {
+        $cities = City::getOptionCity();
+        $districts = District::getOptionDistrict();
+        $wards = Wards::getOptionWards();
+        $rowIds = explode(',', $request->get('row_id_checkout'));
+        $total = 0;
+        $quantity = 0;
+
+        if ($rowIds) {
+            $carts = $this->getCart($rowIds);
+            Session::put(SESSION_ROW_IDS, $rowIds);
+
+            if (count($carts)) {
+                foreach ($carts as $cart) {
+                    $quantity += $cart->qty;
+                    $total += $cart->qty * $cart->price;
+                }
+            }
+
+            return view('frontend.pages.cart.checkout', compact('carts', 'cities', 'districts', 'wards', 'total', 'quantity'));
+        }
+
+        abort(400, 'Page not found!');
+    }
+
+    public function purchase(CheckCountRequest $request)
+    {
+        $user = Auth::user();
+        $data = $request->all();
+        $rowIds = Session::get(SESSION_ROW_IDS);
+        $data['order_code'] = 'SOP_' . uniqid() . '_' . time();
+        $data['user_id'] = Auth::user() ? Auth::user()->id : null;
+        $data['order_name'] = $request->get('name');
+        $data['order_email'] = $request->get('email');
+        $data['order_phone'] = $request->get('phone');
+        $data['order_address'] = $request->get('wards');
+        $data['order_monney'] = $request->get('total_price');
+        $data['order_message'] = $request->get('address_detail');
+        $data['status'] = 0;
+        $order = Order::create($data);
+
+        $orderDetail = [];
+        $orderDetails = [];
+
+        DB::beginTransaction();
+        if ($order) {
+            $idOrder = $order->id;
+            $carts = $this->getCart($rowIds);
+
+            foreach( $carts as $key => $cart ) {
+                $orderDetail['order_id'] = $idOrder;
+                $orderDetail['product_id'] = $cart->id;
+                $orderDetail['quantity'] = $cart->qty;
+                $orderDetail['options'] = serialize($cart->options);
+                $orderDetail['amount'] = $cart->price;
+                $orderDetails[$key] = OrderDetail::create($orderDetail);
+
+                $exist = Product::getQuantityProductById($cart->id);
+                if ($exist == 0) {
+                    Product::updateStatusNotExists($cart->id);
+                }
+
+                if ($user) {
+                    ShoppingCart::deleteCart($cart->rowId);
+                } else {
+                    Cart::remove($cart->rowId);
+                }
+                Session::forget(SESSION_ROW_IDS);
+            }
+
+            Mail::to($order->order_email)->send(new ShoppingMail($order, $orderDetails));
+            DB::commit();
+
+            Session::flash("success", trans("messages.users.shopping_success"));
+            return redirect()->route(FRONT_END_HOME_INDEX);
+        } else {
+            DB::rollBack();
+        }
+    }
+
     public function listALLCart()
     {
-
+        $user = Auth::user();
         $carts = Cart::content();
+        if ($user) {
+            $carts = ShoppingCart::getContentCart();
+        }
         $data = [];
 
         if (count($carts)) {
             foreach ($carts as $cart) {
-                $data[] = [
-                    'row_id' => $cart->rowId
-                ];
+                $exist = Helper::getQuantityProductById($cart->id);
+                if ($exist > 0) {
+                    $data[] = [
+                        'row_id' => $cart->rowId
+                    ];
+                }
             }
         }
 
@@ -85,8 +208,11 @@ class CartController extends Controller
 
     public function getAllCart()
     {
-
+        $user = Auth::user();
         $carts = Cart::content();
+        if ($user) {
+            $carts = ShoppingCart::getContentCart();
+        }
         $data = [];
 
         if (count($carts)) {
@@ -102,9 +228,27 @@ class CartController extends Controller
     {
         $carts = [];
 
-        if (count($arrRowId)) {
+        if (isset($arrRowId) && $arrRowId) {
             foreach ($arrRowId as $rowId) {
-                array_push($carts, Cart::get($rowId));
+                $user = Auth::user();
+                $contents = Cart::content();
+                if ($user) {
+                    $contents = ShoppingCart::getContentCart();
+                }
+
+                if ($user) {
+                    foreach ($contents as $content) {
+                        if ($content->rowId == $rowId) {
+                            $cartItem = ShoppingCart::getContentCartByRowId($rowId);
+                            array_push($carts, $cartItem);
+                        }
+                    }
+                } else {
+                    if ($contents->has($rowId)) {
+                        $cartItem = Cart::get($rowId);
+                        array_push($carts, $cartItem);
+                    }
+                }
             }
         }
 
@@ -122,13 +266,15 @@ class CartController extends Controller
             $rowIds = $this->getAllCart();
         }
 
-
         $carts = $this->getCart($rowIds);
 
         if (count($carts)) {
             foreach ($carts as $cart) {
-                $quantity += $cart->qty;
-                $total += $cart->qty * $cart->price;
+                $exist = Helper::getQuantityProductById($cart->id);
+                if ($exist > 0) {
+                    $quantity += $cart->qty;
+                    $total += $cart->qty * $cart->price;
+                }
             }
         }
 
@@ -145,8 +291,30 @@ class CartController extends Controller
 
     public function delete($rowId)
     {
-        Cart::remove($rowId);
+        if (\request()->get('url') == route(FRONT_CHECK_COUNT_CART)) {
+            $rowIds = Session::get(SESSION_ROW_IDS);
+            $carts = $this->getCart($rowIds);
+            if (count($carts) == 1) {
+                Session::flash("error", trans("messages.front_end.cart.cannot_delete_cart"));
+            } else {
+                self::removeCart($rowId);
+                Session::flash("success", trans("messages.front_end.cart.delete_cart_success"));
+            }
+        } else {
+            self::removeCart($rowId);
+            Session::flash("success", trans("messages.front_end.cart.delete_cart_success"));
+        }
 
         return response()->json(trans("messages.front_end.cart.delete_cart_success"), 200);
+    }
+
+    public static function removeCart($rowId)
+    {
+        $user = Auth::user();
+        if ($user) {
+            ShoppingCart::deleteCart($rowId);
+        } else {
+            Cart::remove($rowId);
+        }
     }
 }

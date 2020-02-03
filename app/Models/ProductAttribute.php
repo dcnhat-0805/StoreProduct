@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 
 class ProductAttribute extends Model
 {
@@ -74,5 +75,17 @@ class ProductAttribute extends Model
     {
         return self::whereIn('product_id', $arrayProductId)
             ->delete();
+    }
+
+    public static function getAttributeItemName($arrayProductId, $attributeName)
+    {
+        $attributes = self::whereIn('product_id', $arrayProductId)
+            ->where('attribute_name', $attributeName)
+            ->where('is_filterable', true)
+            ->select('attribute_item_name', DB::raw('count(product_id) as total'))
+            ->groupBy('attribute_item_name')
+            ->pluck('attribute_item_name');
+
+        return $attributes;
     }
 }

@@ -189,19 +189,20 @@
                                             </a>
                                             <ul role="menu"
                                                 class="dropdown-header-top author-log dropdown-menu animated zoomIn">
-                                                <li><a href="#"><span
+                                                <li>
+                                                    <a href="{{ route(ADMIN_ACCOUNT_EDIT) }}"><span
                                                             class="edu-icon edu-home-admin author-log-ic"></span>My
                                                         Account</a>
                                                 </li>
-                                                <li><a href="#"><span
-                                                            class="edu-icon edu-user-rounded author-log-ic"></span>My
-                                                        Profile</a>
+                                                <li>
+                                                    <a href="{{ route(ADMIN_ACCOUNT_EDIT_EMAIL) }}"><span
+                                                            class="edu-icon edu-user-rounded author-log-ic"></span>Change email
+                                                    </a>
                                                 </li>
-                                                <li><a href="#"><span class="edu-icon edu-money author-log-ic"></span>User
-                                                        Billing</a>
-                                                </li>
-                                                <li><a href="#"><span
-                                                            class="edu-icon edu-settings author-log-ic"></span>Settings</a>
+                                                <li>
+                                                    <a href="{{ route(ADMIN_ACCOUNT_EDIT_PASSWORD) }}">
+                                                        <span class="edu-icon edu-money author-log-ic"></span>Change password
+                                                    </a>
                                                 </li>
                                                 <li><a href="{{ route(ADMIN_LOGOUT) }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();"><span class="edu-icon edu-locked author-log-ic"></span>Log Out</a>
@@ -781,7 +782,7 @@
                         <nav id="dropdown">
                             <ul class="mobile-menu-nav">
                                 <li>
-                                    <a title="Landing Page" href="{{route(ADMIN_DASHBOARD)}}" aria-expanded="false"><span
+                                    <a title="Landing Page" href="{{ route(ADMIN_DASHBOARD_DAILY) }}" aria-expanded="false"><span
                                             class="educate-icon educate-home icon-wrap sub-icon-mg" aria-hidden="true"></span>
                                         <span class="mini-click-non">Dashboard</span></a>
                                 </li>
@@ -795,38 +796,75 @@
                                         $isShowPages = in_array(request()->route()->getPrefix(), ['admin/category', 'admin/product_category', 'admin/product_type', 'admin/product']);
                                     @endphp
                                     <ul id="pages" class="collapse dropdown-header-top">
-                                        <li class="{{request()->route()->getPrefix() == 'admin/category' ? 'active' : ''}}">
+                                        <li class="">
                                             <a title="Category" href="{{route(ADMIN_CATEGORY_INDEX)}}">
                                                 <span class="mini-sub-pro">Category</span>
                                             </a>
                                         </li>
-                                        <li class="{{request()->route()->getPrefix() == 'admin/product_category' ? 'active' : ''}}">
-                                            <a title="Category" href="{{route(ADMIN_PRODUCT_CATEGORY_INDEX)}}">
+                                        <li class="">
+                                            <a title="Product category" href="{{route(ADMIN_PRODUCT_CATEGORY_INDEX)}}">
                                                 <span class="mini-sub-pro">Product category</span>
                                             </a>
                                         </li>
-                                        <li class="{{request()->route()->getPrefix() == 'admin/product_type' ? 'active' : ''}}">
-                                            <a title="Category" href="{{route(ADMIN_PRODUCT_TYPE_INDEX)}}">
+                                        <li class="">
+                                            <a title="Product type" href="{{route(ADMIN_PRODUCT_TYPE_INDEX)}}">
                                                 <span class="mini-sub-pro">Product type</span>
                                             </a>
                                         </li>
-                                        <li class="{{request()->route()->getPrefix() == 'admin/product' ? 'active' : ''}}">
-                                            <a title="Category" href="{{route(ADMIN_PRODUCT_INDEX)}}">
+                                        <li class="">
+                                            <a title="Product" href="{{route(ADMIN_PRODUCT_INDEX)}}">
                                                 <span class="mini-sub-pro">Product</span>
                                             </a>
                                         </li>
                                     </ul>
                                 </li>
 
+                                <?php
+                                $isShowOrder = in_array(request()->route()->uri(), ['admin/order']);
+                                ?>
+
+                                <li class=" {{ $isShowOrder ? 'active' : '' }} ">
+                                    <a title="Order" href="{{route(ADMIN_ORDER_INDEX)}}" aria-expanded="false"><span
+                                            class="educate-icon educate-course icon-wrap" aria-hidden="true"></span>
+                                        <span class="mini-click-non">Order</span></a>
+                                </li>
+
+                                @if ($user->can('viewContact', App\Models\Contact::class))
+                                    <?php
+                                    $isShowContact = in_array(request()->route()->uri(), ['admin/contact']);
+                                    ?>
+                                    <li class=" {{ $isShowContact ? 'active' : '' }} ">
+                                        <a title="Contact" href="{{route(ADMIN_CONTACT_INDEX)}}" aria-expanded="false"><span
+                                                class="educate-icon educate-interface icon-wrap" aria-hidden="true"></span>
+                                            <span class="mini-click-non">Contact</span></a>
+                                    </li>
+                                @endif
+
+                                @if ($user->can('viewComment', App\Models\Comment::class))
+                                    <?php
+                                        $isShowComment = in_array(request()->route()->uri(), ['admin/comment']);
+                                    ?>
+                                    <li class=" {{ $isShowComment ? 'active' : '' }} ">
+                                        <a title="Comment" href="{{route(ADMIN_COMMENT_INDEX)}}" aria-expanded="false"><span
+                                                class="educate-icon educate-message icon-wrap" aria-hidden="true"></span>
+                                            <span class="mini-click-non">Comment</span></a>
+                                    </li>
+                                @endif
+
                                 <li>
-                                    <a data-toggle="collapse" data-target="#pages" href="#">
+                                    <a data-toggle="collapse" data-target="#users">
                                         <span class="educate-icon educate-professor icon-wrap"></span>
                                         <span class="mini-click-non">User</span>
                                     </a>
-                                    <ul id="pages" class="collapse dropdown-header-top">
-                                        <li class="{{request()->route()->getPrefix() == 'admin/category' ? 'active' : ''}}">
-                                            <a title="Category" href="{{route(ADMIN_INDEX)}}">
-                                                <span class="mini-sub-pro">Category</span>
+                                    <ul id="users" class="collapse dropdown-header-top">
+                                        <li class="">
+                                            <a title="User" href="{{route(ADMIN_INDEX)}}">
+                                                <span class="mini-sub-pro">Admin</span>
+                                            </a>
+                                        </li>
+                                        <li class="{{request()->route()->getPrefix() == 'admin/customer' ? 'active' : ''}}">
+                                            <a title="Customer" href="{{route(ADMIN_CUSTOMER_INDEX)}}">
+                                                <span class="mini-sub-pro">Customer</span>
                                             </a>
                                         </li>
                                     </ul>
@@ -845,9 +883,9 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="breadcome-list">
                         <div class="row">
-                            <div class="col-xs-9 col-sm-9">
+                            <div class="col-xs-6 col-sm-6">
                                 <ul class="breadcome-menu">
-                                    <li><a href="#">Dashboard</a> <span class="bread-slash">/</span>
+                                    <li><a href="{{ route(ADMIN_DASHBOARD_DAILY) }}">Dashboard</a> <span class="bread-slash">@hasSection('titleMenu')/@endif</span>
                                     </li>
                                     <li><span class="bread-blod">@yield('titleMenu')</span>
                                     </li>
@@ -855,16 +893,54 @@
                             </div>
 
                             <?php
-                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create']);
+                                $isShowBtnSearch = in_array(request()->route()->uri(), ['admin/product/create', 'admin', 'admin/monthly']) || in_array(request()->route()->getPrefix(), ['admin/account']);
                             ?>
                             @if(!$isShowBtnSearch)
-                            <div class="col-xs-3 col-sm-3">
-                                <div class="breadcome-heading text-right">
-                                    <button type="button" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#search" id="modalSearch">
-                                        <i class="fa fa-tasks" aria-hidden="true"></i>
-                                    </button>
+                                <div class="col-xs-6 col-sm-6">
+                                    <div class="breadcome-heading text-right">
+                                        <button type="button" class="btn btn-custon-three btn-default" data-toggle="modal" data-target="#search" id="modalSearch">
+                                            <i class="fa fa-tasks" aria-hidden="true"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
+
+                            <?php
+                                $isShowSearchDate = in_array(request()->route()->uri(), ['admin', 'admin/monthly']);
+
+                                $route = ADMIN_DASHBOARD_DAILY;
+                                if (request()->route()->uri() == 'admin/monthly') {
+                                    $route = ADMIN_DASHBOARD_MONTHLY;
+                                }
+                                $searchParams = [];
+                                $searchParams = array_merge($searchParams, $_GET);
+                            ?>
+                            @if($isShowSearchDate)
+                                <div class="col-xs-6 col-sm-6">
+                                    <div class="breadcome-heading text-right">
+                                        <form action="{{ route($route, $searchParams) }}" id="formSearchByDate">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="box__search_by__date">
+                                                        <input type="text" readonly class="form-control jsDatepickerDashboard" name="date_range" value="{{ request()->get('created_at') }}" >
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="box__search_by__date">
+                                                        <a class="dashboard__analytics dashboard__daily daily {{ request()->route()->uri() == 'admin' ? 'active' : '' }}" href="{{ route(ADMIN_DASHBOARD_DAILY, $searchParams) }}">
+                                                            Daily
+                                                        </a>
+                                                        <a class="dashboard__analytics dashboard__monthly monthly {{ request()->route()->uri() == 'admin/monthly' ? 'active' : '' }}"
+                                                           href="{{ route(ADMIN_DASHBOARD_MONTHLY, $searchParams) }}"
+                                                        >
+                                                            Monthly
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             @endif
                         </div>
                     </div>
@@ -874,15 +950,15 @@
     </div>
 </div>
 @section('jsCustomTwo')
-    @if($isShowPages)
-    <script>
-        $(document).ready(function () {
-            $('#pages').css('display', 'block');
-            $('.meanmenu-reveal').addClass('meanclose').css({"right": "0px", "left": "auto", "text-align": "center", "text-indent": "0px", "font-size": "18px" }).text('X');
-            $('.mobile-menu-nav').show();
-            $('.mean-expand:first').addClass('mean-clicked').text('-');
-        });
-    </script>
-    @endif
+{{--    @if($isShowPages)--}}
+{{--        <script>--}}
+{{--            $(document).ready(function () {--}}
+{{--                $('#pages').css('display', 'block');--}}
+{{--                $('.meanmenu-reveal').addClass('meanclose').css({"right": "0px", "left": "auto", "text-align": "center", "text-indent": "0px", "font-size": "18px" }).text('X');--}}
+{{--                $('.mobile-menu-nav').show();--}}
+{{--                $('.mean-expand:first').addClass('mean-clicked').text('-');--}}
+{{--            });--}}
+{{--        </script>--}}
+{{--    @endif--}}
 @endsection
 

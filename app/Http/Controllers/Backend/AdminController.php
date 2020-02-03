@@ -35,16 +35,6 @@ class AdminController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -65,28 +55,6 @@ class AdminController extends Controller
 //                Session::flash("error", trans("messages.admin.update_fail"));
             }
         }
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -119,27 +87,35 @@ class AdminController extends Controller
     public function delete($id)
     {
         $user = Auth::guard('admins')->user();
-        $admin = Admin::deleteAdmin($id);
 
-        if ($user->can('deleteAdmin', Admin::class) && isset($admin)) {
-            Session::flash("success", trans("messages.admin.delete_success"));
-            return response()->json();
-        } else {
-            Session::flash("error", trans("messages.admin.delete_failed"));
-            return response()->json();
+        if ($user->can('deleteAdmin', Admin::class)) {
+            try {
+                if ($id != ADMIN) {
+                    Admin::deleteAdmin($id);
+                }
+
+                Session::flash("success", trans("messages.admin.delete_success"));
+                return response()->json();
+            } catch (\Exception $e) {
+                Session::flash("error", trans("messages.admin.delete_failed"));
+                return response()->json();
+            }
         }
     }
 
     public function getListAdmin()
     {
-        $admin = Admin::getListAllAdmin();
+        $params = request()->all();
+        $admin = Admin::getListAllAdmin($params);
         $data = [];
 
         if (count($admin)) {
             foreach ($admin as $ad) {
-                $data[] = [
-                    'id' => $ad->id
-                ];
+                if ($ad->id !== ADMIN) {
+                    $data[] = [
+                        'id' => $ad->id
+                    ];
+                }
             }
         }
 
@@ -152,7 +128,7 @@ class AdminController extends Controller
 
         if ($user->can('deleteAdmin', Admin::class)) {
             try {
-                Admin::destroy($request->input('ids'));
+                Admin::destroy($request->get('ids'));
                 Session::flash("success", trans("messages.admin.delete_success"));
             } catch (\Exception $e) {
                 Session::flash("error", trans("messages.admin.delete_failed"));

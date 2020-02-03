@@ -169,6 +169,13 @@ let productTypeJs = (function ($) {
             url: "/admin/product_type/list_product_type",
             dataType : 'JSON',
             type: "GET",
+            data : {
+                keyword: $.urlParam('keyword'),
+                status: url.searchParams.getAll("status[]"),
+                created_at: $.urlParam('created_at'),
+                category_id: $.urlParam('category_id'),
+                product_category_id: $.urlParam('product_category_id'),
+            },
             success : function (data) {
                 Commons.setLocalStorageListIds(PRODUCT_TYPE_IDS, data);
                 Commons.setLocalStorageDeleteAll(PRODUCT_TYPE_DELETE_ALL, IS_DELETE_ALL);

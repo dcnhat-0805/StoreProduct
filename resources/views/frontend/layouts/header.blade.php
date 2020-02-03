@@ -36,11 +36,32 @@
 {{--                                </li>--}}
 {{--                            </ul>--}}
 {{--                        </div>--}}
+                        @if(Auth::check())
                         <div class="top_bar_user">
-                            <div class="user_icon"><img src="frontend/images/user.svg" alt=""></div>
-                            <div><a href="#">Register</a></div>
-                            <div><a href="#">Sign in</a></div>
+{{--                            <div class="user_icon"><img src="frontend/images/user.svg" alt=""></div>--}}
+                            <div class="nav-user">
+                                <a class="nav-link dropdown-toggle" href="#" id="navBarDropdownAccount" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                                    {{ Auth::user()->name }}'s account
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navBarDropdownAccount">
+                                    <a class="dropdown-item" href="{{ route(FRONT_SHOW_PROFILE) }}">
+                                        <i class="fa fa-user-circle-o dropdown-item-icon" aria-hidden="true"></i>Manage my account</a>
+                                    <a class="dropdown-item" href="{{ route(FRONT_MY_ORDERS, ['sop' => convertStringToUrl(Auth::user()->name)]) }}">
+                                        <i class="fa fa-suitcase dropdown-item-icon" aria-hidden="true"></i>My orders</a>
+                                    <a class="dropdown-item" href="{{ route(FRONT_LOGOUT) }}">
+                                        <i class="fa fa-sign-out dropdown-item-icon" aria-hidden="true"></i>Logout
+                                    </a>
+                                </div>
+                            </div>
                         </div>
+                        @else
+                            <div class="top_bar_user">
+                                <div class="user_icon"><i class="fa fa-user-o" aria-hidden="true"></i></div>
+                                <div><a href="{{ route(FRONT_REGISTER) }}" style="text-transform: capitalize">sign up</a></div>
+                                <div><a href="{{ route(FRONT_LOGIN) }}" style="text-transform: capitalize">login</a></div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -57,7 +78,7 @@
                 <div class="col-lg-2 col-sm-3 col-3 order-1">
                     <div class="logo_container">
                         <div class="logo">
-                            <a href="{{route(FRONT_END_HOME_INDEX)}}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
+                            <a href="{{ route(FRONT_END_HOME_INDEX) }}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
                         </div>
                     </div>
                 </div>
@@ -67,23 +88,10 @@
                     <div class="header_search">
                         <div class="header_search_content">
                             <div class="header_search_form_container">
-                                <form action="#" class="header_search_form clearfix">
-                                    <input type="search" required="required" class="header_search_input"
-                                           placeholder="Search for products...">
-{{--                                    <div class="custom_dropdown">--}}
-{{--                                        <div class="custom_dropdown_list">--}}
-{{--                                            <span class="custom_dropdown_placeholder clc">All Categories</span>--}}
-{{--                                            <i class="fas fa-chevron-down"></i>--}}
-{{--                                            <ul class="custom_list clc">--}}
-{{--                                                <li><a class="clc" href="#">All Categories</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Computers</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Laptops</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Cameras</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Hardware</a></li>--}}
-{{--                                                <li><a class="clc" href="#">Smartphones</a></li>--}}
-{{--                                            </ul>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+                                <form action="{{ route(FRONT_SEARCH_BY_WORD) }}" class="header_search_form clearfix" method="get">
+                                    @csrf
+                                    <input type="search" name="keyword" class="header_search_input"
+                                           placeholder="Search for products..." value="{{ request()->get('keyword') }}">
                                     <button type="submit" class="header_search_button trans_300" value="Submit"><img
                                             src="frontend/images/search.png" alt=""></button>
                                 </form>
@@ -128,7 +136,7 @@
 
     <!-- Menu -->
 
-    <div class="page_menu">
+    <div class="page_menu hide">
         <div class="container">
             <div class="row">
                 <div class="col">

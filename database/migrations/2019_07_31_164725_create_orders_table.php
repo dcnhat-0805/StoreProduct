@@ -15,20 +15,23 @@ class CreateOrdersTable extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('order_code');
-            $table->integer('transaction_id')->unsigned();
-            $table->foreign('transaction_id')
-                ->references('id')->on('transactions')
-                ->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')
-                ->references('id')->on('users')
-                ->onDelete('cascade')->onUpdate('cascade');
-            $table->string('order_name');
-            $table->string('order_adress');
-            $table->string('order_email');
-            $table->string('order_phone');
-            $table->decimal('order_monney');
+            $table->string('order_code')->nullable();
+            $table->string('cart_row_id')->nullable();
+            $table->integer('transaction_id')->nullable();
+//            $table->integer('transaction_id')->nullable()->unsigned();
+//            $table->foreign('transaction_id')
+//                ->references('id')->on('transactions')
+//                ->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('user_id')->nullable();
+//            $table->integer('user_id')->nullable()->unsigned();
+//            $table->foreign('user_id')
+//                ->references('id')->on('users')
+//                ->onDelete('cascade')->onUpdate('cascade');
+            $table->string('order_name')->nullable();
+            $table->string('order_address')->nullable();
+            $table->string('order_email')->nullable();
+            $table->string('order_phone')->nullable();
+            $table->float('order_monney', 20, 0)->nullable();
             $table->text('order_message')->nullable();
             $table->integer('order_status')->default(0);//Don hang da dong goi hay duyet chua
             $table->timestamps();

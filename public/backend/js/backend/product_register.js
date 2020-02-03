@@ -3,7 +3,7 @@ const btnAaddProductAttribute = $('#addProductAttribute');
 // const btnUpdateProduct = $('#btnUpdateProduct');
 const formId = '#createProduct';
 const url = $(formId).attr('action');
-const summerNoteId = '#descriptionProduct, #contentProduct';
+const summerNoteId = '#contentProduct';
 const chosenId = '.jsSelectCategory, .jsSelectProductCategory, .jsSelectProductType';
 const arrayName = ['category_id', 'product_category_id', 'product_type_id', 'product_name', 'product_image', 'product_description', 'product_content', 'product_price', 'product_promotion'];
 const MAX_ATTRIBUTE = 3;
@@ -52,17 +52,17 @@ let productRegisterJs = (function ($) {
         $('#contentProduct').summernote({
             height: 200,
             toolbar: [
+                ['undo', ['undo', 'redo']],
                 ['style', ['style']],
                 ['font', ['bold', 'underline', 'clear']],
                 ['fontname', ['fontname']],
                 ['font', ['strikethrough', 'superscript', 'subscript']],
                 ['fontsize', ['fontsize']],
                 ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
+                ['para', ['ul', 'ol', 'paragraph', 'height']],
                 ['table', ['table']],
                 ['insert', ['link', 'picture', 'video']],
-                ['view', ['fullscreen', 'codeview', 'help']],
-                ['height', ['height']]
+                ['view', ['fullscreen', 'codeview']],
             ],
         });
 
@@ -96,7 +96,7 @@ let productRegisterJs = (function ($) {
                                     + '<select class="form-control product-attribute" name="attributes['+ count +'][attribute_name]">\n' +
     '                                        <option value="" selected="selected">Please select a product attribute</option>\n' +
     '                                        <option value="1">Color</option>\n' +
-    '                                        <option value="2">Storage</option>\n' +
+    // '                                        <option value="2">Storage</option>\n' +
     '                                        <option value="3">Size</option>\n' +
     '                                        <option value="4">Materials</option>\n' +
     '                                    </select>'
@@ -161,7 +161,7 @@ $(document).ready(function () {
 
         function configUPloadImage(target, num) {
 
-            let maxSizeFileImage = 1024 * 25;
+            let maxSizeFileImage = 1024 * 1024 * 25;
             let targetId = '#' + target + num.toString().padStart(2, '0');
             let previewsId = '#' + target + 'Previews' + num.toString().padStart(2, '0');
             let imageType = num.toString().padStart(1, '0');
@@ -256,6 +256,10 @@ $(document).ready(function () {
                                 file.acceptDimensions();
                             }
 
+                            if (file.size > maxSizeFileImage) {
+                                file.rejectDimensions();
+                            }
+
                             this.on("error", function (file) {
                                 if (!file.accepted) {
                                     this.removeFile(file);
@@ -268,7 +272,7 @@ $(document).ready(function () {
                 },
                 accept: function(file, done) {
                     file.rejectDimensions = function() {
-                        done("Please make sure the image width and height are not larger than 2500px.");
+                        done("Please make sure the image are not larger than 2500px.");
                     };
                     file.acceptDimensions = done;
                 },
@@ -333,7 +337,6 @@ $(document).ready(function () {
                             },
                             success: function (data) {
                                 let isMessengerError =  $("#uploadProductImage").find("div.error_product_image").hasClass('hidden');
-                                console.log(isMessengerError);
                                 if (isMessengerError) {
                                     $('.error_product_image').removeClass('hidden').text('Product image cannot be left blank.');
                                 }

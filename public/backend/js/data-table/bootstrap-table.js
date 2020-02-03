@@ -516,7 +516,7 @@
         falign: undefined, // left, right, center
         valign: undefined, // top, middle, bottom
         width: undefined,
-        sortable: false,
+        sortable: true,
         order: 'asc', // asc, desc
         visible: true,
         switchable: true,
@@ -817,7 +817,9 @@
                     "tabindex='0'",
                     '>');
 
-                html.push(sprintf('<div class="th-inner %s text-center">', that.options.sortable && column.sortable ?
+                let isNotSortable = column.field !== 'state' && column.field !== 'action';
+
+                html.push(sprintf('<div class="th-inner %s text-center">', that.options.sortable && column.sortable && isNotSortable ?
                     'sortable both' : ''));
 
                 text = that.options.escape ? escapeHTML(column.title) : column.title;

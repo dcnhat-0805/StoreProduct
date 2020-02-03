@@ -1,5 +1,5 @@
 @php
-    use App\Models\ProductType;
+    use App\Models\Product;
     $params = $_GET;
     unset($params['sort']);
     unset($params['desc']);
@@ -23,7 +23,7 @@
 @endsection
 @section('content')
     <div class="sparkline13-list">
-        @if ($user->can('viewProductType', ProductType::class))
+        @if ($user->can('viewProduct', Product::class))
             <div class="sparkline13-hd">
                 <div class="main-sparkline13-hd">
                     <h1 style="text-transform: capitalize;">List <span class="table-project-n">Of</span> Product</h1>
@@ -33,7 +33,7 @@
                 <div class="datatable-dashv1-list custom-datatable-overright">
                     <div id="toolbar">
                         <!-- Button to Open the Add Modal -->
-                        <button id="addProductType" class="btn btn-custon-three btn-default" type="button"
+                        <button id="addProduct" class="btn btn-custon-three btn-default" type="button"
                                 onclick="window.location.href = '{{ route(ADMIN_PRODUCT_ADD_INDEX) }}'"
                                 title="Add new product"><i class="fa fa-plus"></i> Register
                         </button>
@@ -57,6 +57,7 @@
                             <th data-field="product_type_name" data-editable="true">Product type name</th>
                             <th data-field="name" data-editable="true">Name</th>
                             <th data-field="image" data-editable="true">Image</th>
+                            <th data-field="quantity" data-editable="true">Exists/Quantity</th>
                             <th data-field="created_at" data-editable="true">Created date</th>
                             <th data-field="status" data-editable="true">Status</th>
                             <th data-field="action">Action</th>
@@ -65,7 +66,7 @@
                         <tbody class="list-category">
                         @if($products)
                             @foreach($products as $product)
-                                <tr id="category-{{ $product->id }}" data-id="{{ $product->id }}">
+                                <tr id="product-{{ $product->id }}" data-id="{{ $product->id }}">
                                     <td></td>
                                     <td class="text-center">{{ $product->id }}</td>
                                     <td class="">{{ $product->category->category_name }}</td>
@@ -73,14 +74,19 @@
                                     <td class="">{{ $product->product_type_id ? $product->productType->product_type_name : '' }}</td>
                                     <td class="">{{ $product->product_name }}</td>
                                     <td class="">
-                                        <img class="product-image text-center" src="{{ FILE_PATH_PRODUCT .  $product->product_image }}" alt="">
+                                        <img class="product-image text-center" src="{{ \App\Helpers\Helper::getUrlFile($product->product_image) }}" alt="">
                                         <div class="list-image">
                                             @if(count($product->productImage))
                                                 @foreach($product->productImage as $productImage)
-                                                    <img class="product-image text-center" src="{{ FILE_PATH_PRODUCT_IMAGE .  $productImage->product_image_name }}" alt="">
+                                                    <img class="product-image text-center" src="{{ \App\Helpers\Helper::getUrlFile($productImage->product_image_name) }}" alt="">
                                                 @endforeach
                                             @endif
                                         </div>
+                                    </td>
+                                    <td class="text-center">{{ $product->exist . '/' . $product->product_quantity }}
+                                        @if($product->exist == 0)
+                                            <div class="exist__status">Out stock</div>
+                                        @endif
                                     </td>
                                     <td class="text-center">{{ $product->created_at }}</td>
                                     <td class="text-center">{{ $product->product_status == 1 ? 'Display' : 'Not display' }}</td>
@@ -92,7 +98,7 @@
                                             <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                                         </button>
                                         <button data-toggle="modal" title="Delete {{$product->product_type_name}}" class="pd-setting-ed"
-                                                data-id="{{ $product->id }}" data-url="{{route(ADMIN_PRODUCT_DELETE, ['id' => $product->id])}}"
+                                                data-id="{{ $product->id }}" data-url="{{ route(ADMIN_PRODUCT_DELETE, ['id' => $product->id]) }}"
                                                 data-original-title="Trash" data-target="#delete" type="button">
                                             <i class="fa fa-trash-o" aria-hidden="true"></i>
                                         </button>
@@ -146,7 +152,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label for="name">Created at</label>
-                                                <input type="text" readonly class="form-control jsDatepcker" name="created_at" value="{{ request()->get('created_at') }}" >
+                                                <input type="text" readonly class="form-control jsDatepicker" name="created_at" value="{{ request()->get('created_at') }}" >
                                             </div>
                                         </div>
                                         <div class="col-sm-6">
@@ -187,11 +193,36 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12">
+                                            <label for="name">Options</label>
                                             <div class="form-group">
-                                                <input type="checkbox" class="i-checks" name="status[]" value="1" {{ App\Helpers\Helper::setCheckedForm('status', 1, 'checked') }}>
-                                                <label for="status" style="margin-right: 20px;">Display</label>
-                                                <input type="checkbox" class="i-checks"  name="status[]" value="0" {{ App\Helpers\Helper::setCheckedForm('status', 0, 'checked') }}>
-                                                <label for="status">Not display</label>
+                                                <input type="checkbox" class="jsCheckBox" id="best" name="option[]" value="{{ BEST }}" {{ App\Helpers\Helper::setCheckedForm('option', BEST, 'checked') }}>
+                                                <label for="best" class="label__status">Best</label>
+                                                <input type="checkbox" class="jsCheckBox" id="new" name="option[]" value="{{ NEWS }}" {{ App\Helpers\Helper::setCheckedForm('option', NEWS, 'checked') }}>
+                                                <label for="new" class="label__status">New</label>
+                                                <input type="checkbox" class="jsCheckBox" id="hot" name="option[]" value="{{ HOT }}" {{ App\Helpers\Helper::setCheckedForm('option', HOT, 'checked') }}>
+                                                <label for="hot" class="label__status">Hot</label>
+                                                <input type="checkbox" class="jsCheckBox" id="promotion" name="option[]" value="{{ PROMOTION }}" {{ App\Helpers\Helper::setCheckedForm('option', PROMOTION, 'checked') }}>
+                                                <label for="promotion" class="label__status">Promotion</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <label for="name">Exists</label>
+                                            <div class="form-group">
+                                                <input type="checkbox" class="jsCheckBox" id="exists" name="exist[]" value="{{ AVAILABLE }}" {{ App\Helpers\Helper::setCheckedForm('exist', AVAILABLE, 'checked') }}>
+                                                <label for="exists" class="label__status">Available</label>
+                                                <input type="checkbox" class="jsCheckBox" id="not__exists" name="exist[]" value="{{ OUT_STOCK }}" {{ App\Helpers\Helper::setCheckedForm('exist', OUT_STOCK, 'checked') }}>
+                                                <label for="not__exists" class="label__status">Out stock</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="name">Status</label>
+                                            <div class="form-group">
+                                                <input type="checkbox" class="jsCheckBox" id="display" name="status[]" value="{{ DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', DISPLAY, 'checked') }}>
+                                                <label for="display" class="label__status">Display</label>
+                                                <input type="checkbox" class="jsCheckBox" id="not__display" name="status[]" value="{{ NOT_DISPLAY }}" {{ App\Helpers\Helper::setCheckedForm('status', NOT_DISPLAY, 'checked') }}>
+                                                <label for="not__display" class="label__status">Not display</label>
                                             </div>
                                         </div>
                                     </div>
@@ -245,7 +276,7 @@
     <script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote.min.js') }}"></script>
     <script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote-active.js') }}"></script>
     <script src="{{ App\Helpers\Helper::asset('backend/js/backend/product.js') }}"></script>
-    @if ($user->cannot('updateProductType', ProductType::class))
+    @if ($user->cannot('updateProduct', Product::class))
         <script src="{{ App\Helpers\Helper::asset('backend/js/backend/disabled_checkbox.js') }}"></script>
     @endif
 @endsection

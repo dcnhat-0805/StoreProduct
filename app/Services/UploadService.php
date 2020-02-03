@@ -32,7 +32,7 @@ class UploadService
         $size = self::getFileSize($file);
         $type_image = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
         if (in_array($type, $type_image)) {
-            if ($size <= 25600) return 1;
+            if ($size <= (1024 * 1024 * 25)) return 1;
             return 0;
         }
         return -1;
@@ -59,6 +59,14 @@ class UploadService
             }
         }
 
+        return 0;
+    }
+
+    public static function uploadImage($file)
+    {
+        if (self::checkFile($file) == 1) {
+            return \Storage::putFile('public/product', $file);
+        }
         return 0;
     }
 }

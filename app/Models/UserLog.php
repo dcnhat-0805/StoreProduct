@@ -20,15 +20,27 @@ class UserLog extends Model
      *
      * @return void
      */
-    public function saveData($message, $username)
+    public static function saveAdminLog($message, $username)
     {
-        $useLog = UserLog::firstOrNew([
+        $useLog = UserLog::create([
             'admin_id' => (Auth::guard("admins") != null) ? Auth::guard("admins")->id() : null,
+            'user_id' => null,
+            'message' => $message,
+            'username' => $username,
+        ]);
+
+        $useLog->save();
+    }
+
+    public static function saveUserLog($message, $username)
+    {
+        $useLog = UserLog::create([
+            'admin_id' => null,
             'user_id' => (Auth::user() != null) ? Auth::user()->id : null,
             'message' => $message,
             'username' => $username,
         ]);
 
-        $useLog->touch();
+        $useLog->save();
     }
 }

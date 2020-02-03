@@ -8,7 +8,7 @@
                     <div class="col-sm-5 text-center">Product attribute items name</div>
                     <div class="col-sm-2">Is filterable</div>
                 </div>
-                @if(count($product->product_attribute))
+                @if(isset($product->product_attribute))
                     @foreach($product->product_attribute as $key => $attributes)
                         <div class="row jsProductAttribute ">
                             <div class="productAttribute">

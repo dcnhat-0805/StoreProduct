@@ -89,6 +89,7 @@
     <!-- responsive CSS
 		============================================ -->
     <link rel="stylesheet" href="backend/css/responsive.css">
+    <link rel="stylesheet" href="backend/css/loading.css">
     <!-- select2 CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/select2/select2.min.css') }}">
@@ -98,6 +99,10 @@
     <!-- summernote CSS
 		============================================ -->
     <link rel="stylesheet" href="{{ App\Helpers\Helper::asset('backend/css/summernote/summernote.css') }}">
+    <!-- Datepicker -->
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/colorpicker.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/datapicker/datepicker3.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ App\Helpers\Helper::asset('backend/css/daterangepicker/daterangepicker.css') }}"/>
 
     <!-- modernizr JS
 		============================================ -->
@@ -112,150 +117,152 @@
 </head>
 
 <body>
-<!--[if lt IE 8]>
-<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
-<![endif]-->
-<!-- Start Left menu area -->
-@include('backend.layouts.menu')
-<!-- End Left menu area -->
-<!-- Start Welcome area -->
-<div class="all-content-wrapper">
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="logo-pro">
-                    <a href="{{route(ADMIN_DASHBOARD)}}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
-                </div>
-            </div>
-        </div>
-    </div>
-@include('backend.layouts.header')
-<!-- Static Table Start -->
-    <div class="data-table-area mg-b-15">
+@include('backend.loading')
+    <!--[if lt IE 8]>
+    <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+        your browser</a> to improve your experience.</p>
+    <![endif]-->
+    <!-- Start Left menu area -->
+    @include('backend.layouts.menu')
+    <!-- End Left menu area -->
+    <!-- Start Welcome area -->
+    <div class="all-content-wrapper">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    @yield('content')
+                    <div class="logo-pro">
+                        <a href="{{ route(ADMIN_DASHBOARD_DAILY) }}"><img class="main-logo" src="backend/img/logo/store-online.png" alt=""/></a>
+                    </div>
                 </div>
             </div>
         </div>
+    @include('backend.layouts.header')
+    <!-- Static Table Start -->
+        <div class="data-table-area mg-b-15">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        @yield('content')
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Static Table End -->
+        @include('backend.layouts.footer')
     </div>
-    <!-- Static Table End -->
-    @include('backend.layouts.footer')
-</div>
 
-<!-- jquery
-    ============================================ -->
-<script src="backend/js/vendor/jquery-1.12.4.min.js"></script>
-<!-- bootstrap JS
-    ============================================ -->
-<script src="backend/js/bootstrap.min.js"></script>
-<!-- wow JS
-    ============================================ -->
-<script src="backend/js/wow.min.js"></script>
-<!-- price-slider JS
-    ============================================ -->
-<script src="backend/js/jquery-price-slider.js"></script>
-<!-- meanmenu JS
-    ============================================ -->
-<script src="backend/js/jquery.meanmenu.js"></script>
-<!-- owl.carousel JS
-    ============================================ -->
-<script src="backend/js/owl.carousel.min.js"></script>
-<!-- sticky JS
-    ============================================ -->
-<script src="backend/js/jquery.sticky.js"></script>
-<!-- scrollUp JS
-    ============================================ -->
-<script src="backend/js/jquery.scrollUp.min.js"></script>
-<!-- mCustomScrollbar JS
-    ============================================ -->
-<script src="backend/js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="backend/js/scrollbar/mCustomScrollbar-active.js"></script>
-<!-- metisMenu JS
-    ============================================ -->
-<script src="backend/js/metisMenu/metisMenu.min.js"></script>
-<script src="backend/js/metisMenu/metisMenu-active.js"></script>
-<!-- data table JS
-    ============================================ -->
-<script src="backend/js/data-table/bootstrap-table.js"></script>
-<script src="backend/js/data-table/tableExport.js"></script>
-<script src="backend/js/data-table/data-table-active.js"></script>
-{{--<script src="backend/js/data-table/bootstrap-table-editable.js"></script>--}}
-<script src="backend/js/data-table/bootstrap-editable.js"></script>
-<script src="backend/js/data-table/bootstrap-table-resizable.js"></script>
-<script src="backend/js/data-table/colResizable-1.5.source.js"></script>
-<script src="backend/js/data-table/bootstrap-table-export.js"></script>
-<!--  editable JS
-    ============================================ -->
-<script src="backend/js/editable/jquery.mockjax.js"></script>
-<script src="backend/js/editable/mock-active.js"></script>
-<script src="backend/js/editable/select2.js"></script>
-<script src="backend/js/editable/moment.min.js"></script>
-<script src="backend/js/editable/bootstrap-datetimepicker.js"></script>
-<script src="backend/js/editable/bootstrap-editable.js"></script>
-<script src="backend/js/editable/xediable-active.js"></script>
-<!-- Chart JS
-    ============================================ -->
-<script src="backend/js/chart/jquery.peity.min.js"></script>
-<script src="backend/js/peity/peity-active.js"></script>
-<!-- dropzone JS
-    ============================================ -->
-<script src="backend/js/dropzone/dropzone.js"></script>
-<!-- tab JS
-    ============================================ -->
-<script src="backend/js/tab.js"></script>
-<!-- plugins JS
-    ============================================ -->
-<script src="backend/js/plugins.js"></script>
-<!-- main JS
-    ============================================ -->
-<script src="backend/js/main.js"></script>
-<!-- notification JS
-    ============================================ -->
-<script src="backend/js/notifications/Lobibox.js"></script>
-<script src="backend/js/notifications/notification-active.js"></script>
-<!-- icheck JS
-    ============================================ -->
-<script src="backend/js/icheck/icheck.min.js"></script>
-<!-- tawk chat JS
-    ============================================ -->
-{{--    <script src="backend/js/tawk-chat.js"></script>--}}
-<!-- Laravel Javascript Validation
-    ============================================ -->
-<script src="backend/js/backend/common.js"></script>
-<!-- calendar JS
-    ============================================ -->
-<script src="backend/js/calendar/moment.min.js"></script>
-<script src="backend/js/calendar/fullcalendar.min.js"></script>
-<script src="{{ App\Helpers\Helper::asset('backend/js/datepicker/jquery-ui.min.js') }}"></script>
+    <!-- jquery
+        ============================================ -->
+    <script src="backend/js/vendor/jquery-1.12.4.min.js"></script>
+    <!-- bootstrap JS
+        ============================================ -->
+    <script src="backend/js/bootstrap.min.js"></script>
+    <!-- wow JS
+        ============================================ -->
+    <script src="backend/js/wow.min.js"></script>
+    <!-- price-slider JS
+        ============================================ -->
+    <script src="backend/js/jquery-price-slider.js"></script>
+    <!-- meanmenu JS
+        ============================================ -->
+    <script src="backend/js/jquery.meanmenu.js"></script>
+    <!-- owl.carousel JS
+        ============================================ -->
+    <script src="backend/js/owl.carousel.min.js"></script>
+    <!-- sticky JS
+        ============================================ -->
+    <script src="backend/js/jquery.sticky.js"></script>
+    <!-- scrollUp JS
+        ============================================ -->
+{{--    <script src="backend/js/jquery.scrollUp.min.js"></script>--}}
+    <!-- mCustomScrollbar JS
+        ============================================ -->
+    <script src="backend/js/scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="backend/js/scrollbar/mCustomScrollbar-active.js"></script>
+    <!-- metisMenu JS
+        ============================================ -->
+    <script src="backend/js/metisMenu/metisMenu.min.js"></script>
+    <script src="backend/js/metisMenu/metisMenu-active.js"></script>
+    <!-- data table JS
+        ============================================ -->
+    <script src="backend/js/data-table/bootstrap-table.js"></script>
+    <script src="backend/js/data-table/tableExport.js"></script>
+    <script src="backend/js/data-table/data-table-active.js"></script>
+    {{--<script src="backend/js/data-table/bootstrap-table-editable.js"></script>--}}
+    <script src="backend/js/data-table/bootstrap-editable.js"></script>
+    <script src="backend/js/data-table/bootstrap-table-resizable.js"></script>
+    <script src="backend/js/data-table/colResizable-1.5.source.js"></script>
+    <script src="backend/js/data-table/bootstrap-table-export.js"></script>
+    <!--  editable JS
+        ============================================ -->
+    <script src="backend/js/editable/jquery.mockjax.js"></script>
+    <script src="backend/js/editable/mock-active.js"></script>
+    <script src="backend/js/editable/select2.js"></script>
+    <script src="backend/js/editable/moment.min.js"></script>
+    <script src="backend/js/editable/bootstrap-datetimepicker.js"></script>
+    <script src="backend/js/editable/bootstrap-editable.js"></script>
+    <script src="backend/js/editable/xediable-active.js"></script>
+    <!-- Chart JS
+        ============================================ -->
+    <script src="backend/js/chart/jquery.peity.min.js"></script>
+    <script src="backend/js/peity/peity-active.js"></script>
+    <!-- dropzone JS
+        ============================================ -->
+    <script src="backend/js/dropzone/dropzone.js"></script>
+    <!-- tab JS
+        ============================================ -->
+    <script src="backend/js/tab.js"></script>
+    <!-- plugins JS
+        ============================================ -->
+    <script src="backend/js/plugins.js"></script>
+    <!-- main JS
+        ============================================ -->
+    <script src="backend/js/main.js"></script>
+    <!-- notification JS
+        ============================================ -->
+    <script src="backend/js/notifications/Lobibox.js"></script>
+    <script src="backend/js/notifications/notification-active.js"></script>
+    <!-- icheck JS
+        ============================================ -->
+    <script src="backend/js/icheck/icheck.min.js"></script>
+    <!-- tawk chat JS
+        ============================================ -->
+    {{--    <script src="backend/js/tawk-chat.js"></script>--}}
+    <!-- Laravel Javascript Validation
+        ============================================ -->
+    <script src="backend/js/backend/common.js"></script>
+    <!-- calendar JS
+        ============================================ -->
+    <script src="backend/js/calendar/moment.min.js"></script>
+    <script src="backend/js/calendar/fullcalendar.min.js"></script>
+    <script src="frontend/assets/js/loading.js"></script>
+    <script src="{{ App\Helpers\Helper::asset('backend/js/datepicker/jquery-ui.min.js') }}"></script>
 
-<!-- Date picker
-    ============================================ -->
-<script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/daterangepicker.min.js') }}"></script>
-<script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/datepicker_range.js') }}"></script>
-<!-- summernote JS
-    ============================================ -->
-<script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote.min.js') }}"></script>
-<!-- chosen JS
-    ============================================ -->
-<script src="{{ App\Helpers\Helper::asset('backend/js/chosen/chosen.jquery.js') }}"></script>
-{{--<script src="{{ App\Helpers\Helper::asset('backend/assets/dropzone/common.js') }}"></script>--}}
-@yield('jsCustom')
-@yield('jsCustomTwo')
+    <!-- Date picker
+        ============================================ -->
+    <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/daterangepicker.min.js') }}"></script>
+    <script src="{{ App\Helpers\Helper::asset('backend/js/daterangepicker/datepicker_range.js') }}"></script>
+    <!-- summernote JS
+        ============================================ -->
+    <script src="{{ App\Helpers\Helper::asset('backend/js/summernote/summernote.min.js') }}"></script>
+    <!-- chosen JS
+        ============================================ -->
+    <script src="{{ App\Helpers\Helper::asset('backend/js/chosen/chosen.jquery.js') }}"></script>
+    {{--<script src="{{ App\Helpers\Helper::asset('backend/assets/dropzone/common.js') }}"></script>--}}
+    @yield('jsCustom')
+    @yield('jsCustomTwo')
 
-@if(Session::has('success'))
-    <script type="text/javascript">
-        jQuery.getMessageSuccess("{{Session::get('success')}}")
-    </script>
-@endif
+    @if(Session::has('success'))
+        <script type="text/javascript">
+            jQuery.getMessageSuccess("{{Session::get('success')}}")
+        </script>
+    @endif
 
-@if(Session::has('error'))
-    <script type="text/javascript">
-        jQuery.getMessageError("{{Session::get('error')}}")
-    </script>
-@endif
+    @if(Session::has('error'))
+        <script type="text/javascript">
+            jQuery.getMessageError("{{Session::get('error')}}")
+        </script>
+    @endif
 </body>
 
 </html>

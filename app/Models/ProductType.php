@@ -41,9 +41,18 @@ class ProductType extends Model
 
         if (isset($params['keyword'])) {
             $keyword = addslashes($params['keyword']);
+            $keyword = preg_replace("([+])", " ", $keyword);
             if ($keyword != 0 || $keyword != null) {
-                $productType = $productType->where('product_type_name', 'like', "%$keyword%")
-                    ->orWhere('product_type_slug', 'like', "%$keyword%");
+                $productType = $productType->where(function ($query) use ($keyword) {
+                    $keyword_slug = convertStringToUrl($keyword);
+                    $query->where('product_types.product_type_name', 'like', "%$keyword%")
+                        ->orWhere('product_types.product_type_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('categories.category_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('categories.category_name', 'like', "%$keyword%")
+                        ->orWhere('product_categories.product_category_slug', 'like', "%$keyword_slug%")
+                        ->orWhere('product_categories.product_category_name', 'like', "%$keyword%")
+                        ->orWhere('product_types.id', (int) $keyword);
+                });
             }
         }
 
@@ -59,7 +68,7 @@ class ProductType extends Model
         if (isset($params['category_id'])) {
             $category_id = $params['category_id'];
             if ($category_id != 0) {
-                $productType = $productType->whereIn('categories.id', explode(',', $category_id));
+                $productType = $productType->where('categories.id', explode(',', $category_id));
             }
         }
 
@@ -202,5 +211,12 @@ class ProductType extends Model
         }
 
         return $productTypeOption;
+    }
+
+    public static function isProductTypeSlug($slug)
+    {
+        return self::whereNull('deleted_at')
+            ->where('product_type_slug', $slug)
+            ->exists();
     }
 }

@@ -364,12 +364,12 @@
             });
 
             //function
-            jQuery.getMessageSuccess = function(message) {
+            jQuery.getMessageSuccess = function(success) {
                 Lobibox.notify('success', {
                     size: 'mini',
                     position: 'bottom left',
                     delay: 5000,
-                    msg: 'Notification !   '+ message
+                    msg: 'Notification !   '+ success
                 });
             }
 
@@ -378,7 +378,16 @@
                     size: 'mini',
                     position: 'bottom left',
                     delay: 5000,
-                    msg: 'Notification !   '+ error
+                    msg: 'Sorry !   '+ error
+                });
+            }
+
+            jQuery.getMessageInfo = function(danger) {
+                Lobibox.notify('info', {
+                    size: 'mini',
+                    position: 'bottom left',
+                    delay: 5000,
+                    msg: 'Notification !   '+ danger
                 });
             }
 
