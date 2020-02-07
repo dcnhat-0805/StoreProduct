@@ -3,10 +3,12 @@
 namespace App\Providers;
 
 use App\Models\Category;
+use App\Models\ShoppingCart;
 use Illuminate\Support\ServiceProvider;
 use App\Services\UploadService;
 use Cart;
 use URL;
+use Auth;
 use function foo\func;
 
 class AppServiceProvider extends ServiceProvider
@@ -18,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        URL::forceScheme('https');
+//        URL::forceScheme('https');
 
         //Category
         view()->composer('frontend.layouts.menu', function ($view) {
@@ -33,6 +35,11 @@ class AppServiceProvider extends ServiceProvider
         //Cart
         view()->composer('frontend.layouts.header', function ($view) {
             $countCart = Cart::count() ? Cart::count() : 0;
+            $user = Auth::user();
+
+            if ($user) {
+                $countCart = ShoppingCart::getCountCart();
+            }
 
             $view->with([
                 'countCart' => $countCart
